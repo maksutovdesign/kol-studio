@@ -1,0 +1,57 @@
+# KOL Studio — robots.txt
+User-agent: *
+Allow: /
+
+# Block private/auth pages from indexing
+Disallow: /splash.html
+Disallow: /age-gate.html
+Disallow: /onboarding.html
+Disallow: /checkout.html
+Disallow: /messages.html
+Disallow: /notifications.html
+Disallow: /model-cabinet.html
+Disallow: /user-cabinet.html
+Disallow: /wallet.html
+Disallow: /payouts.html
+Disallow: /tip-history.html
+Disallow: /subscription-manage.html
+Disallow: /account-security.html
+Disallow: /2fa.html
+Disallow: /upload.html
+Disallow: /schedule.html
+Disallow: /promo.html
+Disallow: /analytics.html
+Disallow: /referral.html
+Disallow: /ppv-unlock.html
+Disallow: /verify-email.html
+Disallow: /forgot-password.html
+
+# Block English duplicates to avoid duplicate content (use hreflang instead)
+Disallow: /en/
+
+# Allow important pages explicitly
+Allow: /landing.html
+Allow: /index.html
+Allow: /feed.html
+Allow: /search.html
+Allow: /pricing.html
+Allow: /creator-landing.html
+Allow: /blog.html
+Allow: /blog-post.html
+Allow: /help.html
+Allow: /terms.html
+Allow: /privacy.html
+Allow: /cookie.html
+Allow: /dmca.html
+Allow: /2257.html
+Allow: /status.html
+Allow: /sitemap.html
+Allow: /leaderboard.html
+Allow: /icons/
+Allow: /manifest.json
+
+# Sitemaps
+Sitemap: https://kolstudio.com/sitemap.xml
+
+# Crawl-delay for bots
+Crawl-delay: 1

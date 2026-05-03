@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet — KOL Studio</title>
+  <link rel="apple-touch-icon" href="../icons/icon.svg">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07071A;
+      --card: #111128;
+      --card2: #181835;
+      --border: #22224A;
+      --accent: #D42B6A;
+      --accent2: #8B2BE2;
+      --green: #00E676;
+      --gold: #FFB300;
+      --danger: #FF4444;
+      --text: #FFFFFF;
+      --text2: rgba(255,255,255,0.6);
+      --text3: rgba(255,255,255,0.35);
+    }
+
+    @keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+    body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+    body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7,7,26,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+    }
+    .top-bar-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+    .top-bar-back svg { width: 18px; height: 18px; }
+    .top-bar-title {
+      font-size: 18px;
+      font-weight: 700;
+      flex: 1;
+      text-align: center;
+    }
+    .role-toggle {
+      display: flex;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .role-btn {
+      padding: 5px 14px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--text2);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .role-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+    }
+
+    /* MAIN CONTAINER */
+    .container { max-width: 640px; margin: 0 auto; padding: 20px 16px; }
+
+    /* VIEWS */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* HERO BALANCE CARD */
+    .hero-card {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      border-radius: 20px;
+      padding: 28px 24px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -20px;
+      width: 220px; height: 220px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .hero-label {
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0.8;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .hero-amount {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-frozen {
+      font-size: 13px;
+      opacity: 0.75;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: help;
+      position: relative;
+      z-index: 1;
+    }
+    .tooltip-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px; height: 16px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .tooltip-wrap { position: relative; display: inline-block; }
+    .tooltip-text {
+      display: none;
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      background: rgba(0,0,0,0.9);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 200;
+      pointer-events: none;
+    }
+    .tooltip-wrap:hover .tooltip-text { display: block; }
+    .hero-actions { display: flex; gap: 10px; position: relative; z-index: 1; }
+    .btn-hero-primary {
+      flex: 1;
+      background: #fff;
+      color: var(--accent);
+      border: none;
+      border-radius: 12px;
+      padding: 13px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-hero-primary:active { transform: scale(0.97); }
+    .btn-hero-outline {
+      flex: 1;
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 12px;
+      padding: 13px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-hero-outline:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+    /* MINI CARDS ROW */
+    .mini-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .mini-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .mini-card-icon { font-size: 20px; margin-bottom: 6px; }
+    .mini-card-label { font-size: 11px; color: var(--text2); margin-bottom: 4px; font-weight: 500; }
+    .mini-card-value { font-size: 20px; font-weight: 800; }
+    .mini-card-value.green { color: var(--green); }
+
+    /* SECTION CARD */
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title-badge {
+      font-size: 11px;
+      background: rgba(212,43,106,0.15);
+      color: var(--accent);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-weight: 600;
+    }
+
+    /* INPUT */
+    .input-group { margin-bottom: 14px; }
+    .input-label {
+      font-size: 12px;
+      color: var(--text2);
+      font-weight: 500;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .input-field {
+      width: 100%;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-field:focus { border-color: var(--accent); }
+    .input-amount-wrap { position: relative; }
+    .input-amount-wrap .currency {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text2);
+    }
+    .input-amount-wrap .input-field { padding-left: 28px; font-size: 20px; font-weight: 700; }
+
+    /* PAYMENT TABS */
+    .pay-tabs {
+      display: flex;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+    .pay-tab {
+      flex: 1;
+      padding: 9px 6px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--text2);
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .pay-tab.active {
+      background: var(--card);
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    /* PAY PANELS */
+    .pay-panel { display: none; }
+    .pay-panel.active { display: block; }
+
+    /* INFO ROW */
+    .info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-row-label { color: var(--text2); }
+    .info-row-value { font-weight: 600; }
+    .info-row-value.green { color: var(--green); }
+
+    /* GRADIENT BUTTON */
+    .btn-gradient {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      border: none;
+      border-radius: 13px;
+      padding: 15px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      margin-top: 14px;
+    }
+    .btn-gradient:hover { opacity: 0.9; }
+    .btn-gradient:active { transform: scale(0.98); }
+
+    /* NOTICE */
+    .notice {
+      font-size: 12px;
+      color: var(--text2);
+      text-align: center;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .notice svg { flex-shrink: 0; }
+
+    /* TABLE */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 12px 10px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(34,34,74,0.5);
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+    }
+    .status-paid { background: rgba(0,230,118,0.12); color: var(--green); }
+    .status-pending { background: rgba(255,179,0,0.12); color: var(--gold); }
+
+    /* TRANSACTION FEED */
+    .tx-feed { display: flex; flex-direction: column; gap: 0; }
+    .tx-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(34,34,74,0.5);
+    }
+    .tx-item:last-child { border-bottom: none; }
+    .tx-icon {
+      width: 40px; height: 40px;
+      background: var(--card2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .tx-info { flex: 1; min-width: 0; }
+    .tx-type { font-size: 13px; font-weight: 600; color: var(--text2); }
+    .tx-desc { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tx-right { text-align: right; flex-shrink: 0; }
+    .tx-amount { font-size: 15px; font-weight: 700; color: var(--green); }
+    .tx-amount.negative { color: var(--danger); }
+    .tx-date { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+    /* LOAD MORE */
+    .btn-load-more {
+      width: 100%;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--text2);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-load-more:hover { color: var(--text); border-color: var(--accent); }
+
+    /* FAN BALANCE CARD */
+    .fan-hero {
+      background: linear-gradient(135deg, #1a1a40 0%, #0d0d2e 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .fan-hero-left {}
+    .fan-hero-label { font-size: 12px; color: var(--text2); margin-bottom: 6px; font-weight: 500; }
+    .fan-hero-amount { font-size: 36px; font-weight: 900; }
+    .btn-topup {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 22px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* AMOUNT PRESETS */
+    .amount-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .preset-btn {
+      padding: 9px 18px;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .preset-btn.active, .preset-btn:hover {
+      background: rgba(212,43,106,0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* CARD FORM */
+    .card-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* APPLE PAY */
+    .apple-pay-btn {
+      width: 100%;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 13px;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* SBP */
+    .sbp-info {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .sbp-qr {
+      width: 120px; height: 120px;
+      background: #fff;
+      border-radius: 10px;
+      margin: 12px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #333;
+      padding: 8px;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    /* CHIP */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(139,43,226,0.12);
+      border: 1px solid rgba(139,43,226,0.3);
+      color: var(--accent2);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* GRID 2 */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* HIDDEN TXNS */
+    .tx-hidden { display: none; }
+
+    @media (max-width: 480px) {
+      .mini-cards { grid-template-columns: 1fr 1fr; }
+      .hero-amount { font-size: 34px; }
+      .data-table th, .data-table td { padding: 8px 6px; font-size: 12px; }
+    }
+  </style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/wallet.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/wallet.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/wallet.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/wallet.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+
+<style id="kol-skeleton-css">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skel-title{height:22px;width:60%;margin-bottom:12px;border-radius:6px}
+.skel-avatar{width:44px;height:44px;border-radius:50%}
+.skel-thumb{width:100%;height:180px;border-radius:12px}
+.skel-btn{height:38px;width:120px;border-radius:10px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px}
+.skel-row{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #22224A}
+.skel-body{display:flex;flex-direction:column;gap:8px;flex:1}
+</style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <a href="model-cabinet.html" class="top-bar-back" id="backLink">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      Назад
+    </a>
+    <div class="top-bar-title">Кошелёк</div>
+    <div class="role-toggle">
+      <button class="role-btn active" onclick="switchRole('model')" id="btnModel">Модель</button>
+      <button class="role-btn" onclick="switchRole('fan')" id="btnFan">Фан</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- ==================== MODEL VIEW ==================== -->
+    <div class="view active" id="modelView">
+
+      <!-- HERO BALANCE -->
+      <div class="hero-card">
+        <div class="hero-label">Доступно к выводу</div>
+        <div class="hero-amount">$3,847.20</div>
+        <div class="hero-frozen">
+          <span>Заморожено (3 дня): $312.00</span>
+          <div class="tooltip-wrap">
+            <span class="tooltip-icon">?</span>
+            <div class="tooltip-text">Средства удерживаются 3 дня<br>на период рассмотрения споров</div>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn-hero-primary" onclick="scrollToWithdraw()">Withdraw Funds</button>
+          <button class="btn-hero-outline" onclick="scrollToHistory()">History</button>
+        </div>
+      </div>
+
+      <!-- INCOME BREAKDOWN -->
+      <div class="mini-cards">
+        <div class="mini-card">
+          <div class="mini-card-icon">📅</div>
+          <div class="mini-card-label">Этот месяц</div>
+          <div class="mini-card-value green">$1,240</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon">📈</div>
+          <div class="mini-card-label">Total Earned</div>
+          <div class="mini-card-value">$28,450</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon">👥</div>
+          <div class="mini-card-label">Активных subscribers</div>
+          <div class="mini-card-value">847</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon">💎</div>
+          <div class="mini-card-label">PPV продаж</div>
+          <div class="mini-card-value">134</div>
+        </div>
+      </div>
+
+      <!-- WITHDRAW SECTION -->
+      <div class="section-card" id="withdrawSection">
+        <div class="section-title">
+          💳 Вывод средств
+          <span class="chip">Без комиссии</span>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Amount вывода</label>
+          <div class="input-amount-wrap">
+            <span class="currency">$</span>
+            <input type="number" class="input-field" id="withdrawAmount" value="3847.20" min="50" step="0.01">
+          </div>
+        </div>
+
+        <div class="pay-tabs">
+          <button class="pay-tab active" onclick="switchPayMethod(this,'bank')">🏦 Bank Transfer</button>
+          <button class="pay-tab" onclick="switchPayMethod(this,'crypto')">₿ Crypto</button>
+          <button class="pay-tab" onclick="switchPayMethod(this,'paypal')">💳 PayPal</button>
+        </div>
+
+        <!-- BANK PANEL -->
+        <div class="pay-panel active" id="panel-bank">
+          <div class="input-group">
+            <label class="input-label">ИНН</label>
+            <input type="text" class="input-field" value="7701234567" placeholder="ИНН">
+          </div>
+          <div class="input-group">
+            <label class="input-label">БИК банка</label>
+            <input type="text" class="input-field" value="044525225" placeholder="БИК">
+          </div>
+          <div class="input-group">
+            <label class="input-label">Расчётный счёт</label>
+            <input type="text" class="input-field" value="40817810099910004312" placeholder="Номер счёта">
+          </div>
+        </div>
+
+        <!-- CRYPTO PANEL -->
+        <div class="pay-panel" id="panel-crypto">
+          <div class="input-group">
+            <label class="input-label">USDT TRC20 адрес</label>
+            <input type="text" class="input-field" value="TJRabPrwbZy45sbavfcjinPJC2GqqdpsZE" placeholder="Tron адрес">
+          </div>
+          <div style="font-size:12px;color:var(--text2);padding:8px 12px;background:rgba(255,179,0,0.08);border:1px solid rgba(255,179,0,0.2);border-radius:10px;">
+            ⚠️ Минимальный вывод: $50. Убедитесь в правильности адреса сети TRC20.
+          </div>
+        </div>
+
+        <!-- PAYPAL PANEL -->
+        <div class="pay-panel" id="panel-paypal">
+          <div class="input-group">
+            <label class="input-label">Email PayPal</label>
+            <input type="email" class="input-field" value="model@example.com" placeholder="Email">
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="info-row">
+          <span class="info-row-label">Минимальная сумма</span>
+          <span class="info-row-value">$50.00</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-label">Комиссия платформы</span>
+          <span class="info-row-value green">0%</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-label">Вы получите</span>
+          <span class="info-row-value" id="willReceive">$3,847.20</span>
+        </div>
+
+        <button class="btn-gradient" id="withdrawBtn" onclick="handleWithdraw()">Вывести $3,847.20</button>
+        <div class="notice">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>
+          </svg>
+          Weekly payouts every Friday до 18:00 МСК
+        </div>
+      </div>
+
+      <!-- PENDING PAYOUTS TABLE -->
+      <div class="section-card">
+        <div class="section-title">📋 Ожидающие выплаты</div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Метод</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>3 мая 2026</td>
+                <td style="font-weight:700;">$1,240.00</td>
+                <td>Банк</td>
+                <td><span class="status-badge status-paid">✅ Paid</span></td>
+              </tr>
+              <tr>
+                <td>26 апр 2026</td>
+                <td style="font-weight:700;">$890.50</td>
+                <td>Банк</td>
+                <td><span class="status-badge status-paid">✅ Paid</span></td>
+              </tr>
+              <tr>
+                <td>19 апр 2026</td>
+                <td style="font-weight:700;">$1,102.30</td>
+                <td>USDT</td>
+                <td><span class="status-badge status-paid">✅ Paid</span></td>
+              </tr>
+              <tr>
+                <td style="color:var(--gold);">Pendingся 10 мая</td>
+                <td style="font-weight:700;color:var(--gold);">$3,847.20</td>
+                <td>—</td>
+                <td><span class="status-badge status-pending">⏳ Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- INCOME HISTORY -->
+      <div class="section-card" id="historySection">
+        <div class="section-title">
+          💰 History доходов
+          <span class="section-title-badge">Последние 15</span>
+        </div>
+        <div class="tx-feed" id="txFeed">
+          <!-- Transactions populated by JS -->
+        </div>
+        <button class="btn-load-more" id="loadMoreBtn" onclick="loadMoreTx()">⬇ Load More (5)</button>
+      </div>
+
+    </div><!-- /modelView -->
+
+
+    <!-- ==================== FAN VIEW ==================== -->
+    <div class="view" id="fanView">
+
+      <!-- FAN BALANCE HERO -->
+      <div class="fan-hero">
+        <div class="fan-hero-left">
+          <div class="fan-hero-label">Balance KOL Studio</div>
+          <div class="fan-hero-amount">$47.50</div>
+        </div>
+        <button class="btn-topup" onclick="document.getElementById('topupSection').scrollIntoView({behavior:'smooth'})">
+          + Top Up
+        </button>
+      </div>
+
+      <!-- TOP UP SECTION -->
+      <div class="section-card" id="topupSection">
+        <div class="section-title">💳 Пополнение кошелька</div>
+
+        <div class="input-label" style="margin-bottom:8px;">Select сумму</div>
+        <div class="amount-presets">
+          <button class="preset-btn" onclick="selectPreset(this, 10)">$10</button>
+          <button class="preset-btn active" onclick="selectPreset(this, 25)">$25</button>
+          <button class="preset-btn" onclick="selectPreset(this, 50)">$50</button>
+          <button class="preset-btn" onclick="selectPreset(this, 100)">$100</button>
+          <button class="preset-btn" onclick="selectPreset(this, 'custom')" id="customPreset">Своя сумма</button>
+        </div>
+
+        <div class="input-group" id="customAmountWrap" style="display:none;">
+          <label class="input-label">Своя сумма</label>
+          <div class="input-amount-wrap">
+            <span class="currency">$</span>
+            <input type="number" class="input-field" id="customAmount" placeholder="0.00" min="5">
+          </div>
+        </div>
+
+        <div class="pay-tabs">
+          <button class="pay-tab active" onclick="switchFanPayMethod(this,'card')">Visa / MC</button>
+          <button class="pay-tab" onclick="switchFanPayMethod(this,'sbp')">СБП</button>
+          <button class="pay-tab" onclick="switchFanPayMethod(this,'usdt')">USDT</button>
+          <button class="pay-tab" onclick="switchFanPayMethod(this,'applepay')">Apple Pay</button>
+        </div>
+
+        <!-- CARD PANEL -->
+        <div class="pay-panel active" id="fpanel-card">
+          <div class="input-group">
+            <label class="input-label">Card Number</label>
+            <input type="text" class="input-field" placeholder="0000 0000 0000 0000" maxlength="19" id="cardNum" oninput="formatCard(this)">
+          </div>
+          <div class="card-form-row">
+            <div class="input-group">
+              <label class="input-label">Срок</label>
+              <input type="text" class="input-field" placeholder="ММ / ГГ" maxlength="7" id="cardExp" oninput="formatExp(this)">
+            </div>
+            <div class="input-group">
+              <label class="input-label">CVV</label>
+              <input type="password" class="input-field" placeholder="•••" maxlength="4">
+            </div>
+          </div>
+        </div>
+
+        <!-- SBP PANEL -->
+        <div class="pay-panel" id="fpanel-sbp">
+          <div class="sbp-info">
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Оплата через СБП</div>
+            <div style="font-size:12px;color:var(--text2);">Отсканируйте QR-код в приложении банка</div>
+            <div class="sbp-qr">
+              <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" fill="white"/>
+                <rect x="5" y="5" width="30" height="30" rx="3" fill="none" stroke="#000" stroke-width="3"/>
+                <rect x="12" y="12" width="16" height="16" fill="#000"/>
+                <rect x="65" y="5" width="30" height="30" rx="3" fill="none" stroke="#000" stroke-width="3"/>
+                <rect x="72" y="12" width="16" height="16" fill="#000"/>
+                <rect x="5" y="65" width="30" height="30" rx="3" fill="none" stroke="#000" stroke-width="3"/>
+                <rect x="12" y="72" width="16" height="16" fill="#000"/>
+                <rect x="42" y="5" width="5" height="5" fill="#000"/>
+                <rect x="52" y="5" width="5" height="5" fill="#000"/>
+                <rect x="42" y="15" width="5" height="5" fill="#000"/>
+                <rect x="52" y="25" width="5" height="5" fill="#000"/>
+                <rect x="42" y="35" width="5" height="5" fill="#000"/>
+                <rect x="5" y="42" width="5" height="5" fill="#000"/>
+                <rect x="15" y="42" width="5" height="5" fill="#000"/>
+                <rect x="25" y="52" width="5" height="5" fill="#000"/>
+                <rect x="42" y="42" width="16" height="16" fill="#000"/>
+                <rect x="65" y="42" width="5" height="5" fill="#000"/>
+                <rect x="75" y="42" width="5" height="5" fill="#000"/>
+                <rect x="85" y="52" width="5" height="5" fill="#000"/>
+                <rect x="65" y="65" width="5" height="5" fill="#000"/>
+                <rect x="75" y="75" width="5" height="5" fill="#000"/>
+                <rect x="85" y="65" width="5" height="5" fill="#000"/>
+                <rect x="65" y="85" width="5" height="5" fill="#000"/>
+                <rect x="5" y="85" width="5" height="5" fill="#000"/>
+                <rect x="25" y="75" width="5" height="5" fill="#000"/>
+              </svg>
+            </div>
+            <div style="font-size:12px;color:var(--text2);">Или переведите по номеру телефона</div>
+            <div style="font-size:14px;font-weight:700;margin-top:6px;">+7 (900) 123-45-67</div>
+          </div>
+        </div>
+
+        <!-- USDT PANEL -->
+        <div class="pay-panel" id="fpanel-usdt">
+          <div class="sbp-info">
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Депозит USDT TRC20</div>
+            <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Отправьте USDT на адрес ниже</div>
+            <div style="font-size:12px;font-family:monospace;background:var(--bg);padding:12px;border-radius:10px;word-break:break-all;color:var(--green);">
+              TJRabPrwbZy45sbavfcjinPJC2GqqdpsZE
+            </div>
+            <div style="font-size:11px;color:var(--text3);margin-top:8px;">Только сеть TRC20. Минимум: $10</div>
+          </div>
+        </div>
+
+        <!-- APPLE PAY PANEL -->
+        <div class="pay-panel" id="fpanel-applepay">
+          <button class="apple-pay-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#000">
+              <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
+            </svg>
+            Pay через Apple Pay
+          </button>
+        </div>
+
+        <button class="btn-gradient" onclick="handleTopup()">Top Up кошелёк</button>
+      </div>
+
+      <!-- SPENDING HISTORY -->
+      <div class="section-card">
+        <div class="section-title">
+          📊 History расходов
+          <span class="section-title-badge">10 транзакций</span>
+        </div>
+        <div class="tx-feed">
+          <div class="tx-item">
+            <div class="tx-icon">💜</div>
+            <div class="tx-info">
+              <div class="tx-type">Подписка</div>
+              <div class="tx-desc">на @anna_m</div>
+            </div>
+            <div class="tx-right">
+              <div class="tx-amount negative">−$14.99</div>
+              <div class="tx-date">1 мая 2026</div>
+            </div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon">💎</div>
+            <div class="tx-info">
+              <div class="tx-type">PPV контент</div>
+              <div class="tx-desc">от @kira_s</div>
+            </div>
+            <div class="tx-right">
+              <div class="tx-amount negative">−$8.00</div>
+              <div class="tx-date">30 апр 2026</div>
+            </div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon">💰</div>
+            <div class="tx-info">
+              <div class="tx-type">Чаевые</div>
+              <div class="tx-desc">@diana_v</div>
+            </div>
+            <div class="tx-right">
+              <div class="tx-amount negative">−$20.00</div>
+              <div class="tx-date">29 апр 2026</div>
+            </div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon">📺</div>
+            <div class="tx-info">
+              <div class="tx-type">Private Show</div>
+              <div class="tx-desc">45 мин с @stella_night</div>
+            </div>
+            <div class="tx-right">
+              <div class="tx-amount negative">−$59.85</div>
+              <div class="tx-date">28 апр 2026</div>
+            </div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon">💜</div>
+            <div class="tx-info">
+              <div class="tx-type">Подписка</div>
+              <div class="tx-desc">на @luna_x • Продление</div>
+            </div>
+            <div class="tx-right">
+              <div class="tx-amount negative">−$9.99</div>
+              <div class="tx-date">27 апр 2026</div>
+            </div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon">🎁</div>
+            <div class="tx-info">
+              <div class="tx-type">Подарок</div>
+              <div class="tx-desc">Roses × 10 для @anna_m</div>
+            </div>
+            <div class="tx-right">
+              <div class="tx-amount negative">−$5.00</div>
+              <div class="tx-date">26 апр 2026</div>
+            </div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon">💎</div>
+            <div class="tx-info">
+              <div class="tx-type">PPV контент</div>
+              <div class="tx-desc">Video "Пляжный закат"</div>
+            </div>
+            <div class="tx-right">
+              <div class="tx-amount negative">−$15.00</div>
+              <div class="tx-date">25 апр 2026</div>
+            </div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon">💰</div>
+            <div class="tx-info">
+              <div class="tx-type">Чаевые</div>
+              <div class="tx-desc">@nova_girl</div>
+            </div>
+            <div class="tx-right">
+              <div class="tx-amount negative">−$10.00</div>
+              <div class="tx-date">24 апр 2026</div>
+            </div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon">🔒</div>
+            <div class="tx-info">
+              <div class="tx-type">Закрытый контент</div>
+              <div class="tx-desc">Photoсет @kira_s</div>
+            </div>
+            <div class="tx-right">
+              <div class="tx-amount negative">−$12.00</div>
+              <div class="tx-date">23 апр 2026</div>
+            </div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon">⬆️</div>
+            <div class="tx-info">
+              <div class="tx-type">Пополнение</div>
+              <div class="tx-desc">Visa •••• 4242</div>
+            </div>
+            <div class="tx-right">
+              <div class="tx-amount" style="color:var(--green);">+$100.00</div>
+              <div class="tx-date">22 апр 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /fanView -->
+
+  </div><!-- /container -->
+
+  <!-- SUCCESS TOAST -->
+  <div id="toast" style="
+    position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff;padding:14px 24px;border-radius:14px;font-size:14px;font-weight:700;
+    box-shadow:0 8px 32px rgba(212,43,106,0.4);transition:transform 0.3s;
+    z-index:1000;white-space:nowrap;pointer-events:none;
+  " id="toastEl">
+    ✅ Запрос на вывод отправлен!
+  </div>
+
+<script>
+  // ── ROLE SWITCHER ──
+  function switchRole(role) {
+    document.getElementById('modelView').classList.toggle('active', role === 'model');
+    document.getElementById('fanView').classList.toggle('active', role === 'fan');
+    document.getElementById('btnModel').classList.toggle('active', role === 'model');
+    document.getElementById('btnFan').classList.toggle('active', role === 'fan');
+    document.getElementById('backLink').href = role === 'model' ? 'model-cabinet.html' : 'user-cabinet.html';
+  }
+
+  // ── PAYMENT METHOD TABS (Model) ──
+  function switchPayMethod(btn, method) {
+    document.querySelectorAll('#withdrawSection .pay-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#withdrawSection .pay-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + method).classList.add('active');
+  }
+
+  // ── PAYMENT METHOD TABS (Fan) ──
+  function switchFanPayMethod(btn, method) {
+    document.querySelectorAll('#topupSection .pay-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#topupSection .pay-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('fpanel-' + method).classList.add('active');
+  }
+
+  // ── AMOUNT PRESETS ──
+  let selectedAmount = 25;
+  function selectPreset(btn, value) {
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (value === 'custom') {
+      document.getElementById('customAmountWrap').style.display = 'block';
+      document.getElementById('customAmount').focus();
+      selectedAmount = null;
+    } else {
+      document.getElementById('customAmountWrap').style.display = 'none';
+      selectedAmount = value;
+    }
+  }
+
+  // ── WITHDRAW AMOUNT UPDATE ──
+  const withdrawAmountInput = document.getElementById('withdrawAmount');
+  const withdrawBtn = document.getElementById('withdrawBtn');
+  const willReceive = document.getElementById('willReceive');
+  withdrawAmountInput.addEventListener('input', function() {
+    const v = parseFloat(this.value) || 0;
+    const fmt = v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    withdrawBtn.textContent = `Вывести $${fmt}`;
+    willReceive.textContent = `$${fmt}`;
+  });
+
+  // ── CARD FORMATTING ──
+  function formatCard(el) {
+    let v = el.value.replace(/\D/g,'').substring(0,16);
+    el.value = v.match(/.{1,4}/g)?.join(' ') || v;
+  }
+  function formatExp(el) {
+    let v = el.value.replace(/\D/g,'').substring(0,4);
+    if(v.length > 2) v = v.substring(0,2) + ' / ' + v.substring(2);
+    el.value = v;
+  }
+
+  // ── SCROLL HELPERS ──
+  function scrollToWithdraw() {
+    document.getElementById('withdrawSection').scrollIntoView({behavior:'smooth'});
+  }
+  function scrollToHistory() {
+    document.getElementById('historySection').scrollIntoView({behavior:'smooth'});
+  }
+
+  // ── TOAST ──
+  function showToast(msg) {
+    const t = document.getElementById('toastEl');
+    t.textContent = msg;
+    t.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => { t.style.transform = 'translateX(-50%) translateY(80px)'; }, 2800);
+  }
+
+  function handleWithdraw() {
+    const amount = parseFloat(withdrawAmountInput.value) || 0;
+    if(amount < 50) {
+      showToast('❌ Минимальная сумма вывода: $50');
+      return;
+    }
+    showToast('✅ Запрос на вывод $' + amount.toFixed(2) + ' отправлен!');
+  }
+
+  function handleTopup() {
+    const amt = selectedAmount || parseFloat(document.getElementById('customAmount')?.value) || 0;
+    if(!amt || amt < 5) { showToast('❌ Минимальная сумма: $5'); return; }
+    showToast('✅ Счёт пополнен на $' + amt);
+  }
+
+  // ── TRANSACTION FEED ──
+  const transactions = [
+    {icon:'💜', type:'Подписка', desc:'@phantom_leo • Premium 3 месяца', amount:'+$44.97', date:'3 мая, 14:22'},
+    {icon:'💎', type:'PPV', desc:"Photo-сет «Белое кружево»", amount:'+$12.00', date:'3 мая, 12:08'},
+    {icon:'💰', type:'Чаевые', desc:'@dark_wolf отправил чаевые', amount:'+$25.00', date:'2 мая, 23:41'},
+    {icon:'📺', type:'Private Show', desc:'30 мин с @cosmos_fan', amount:'+$119.70', date:'2 мая, 21:15'},
+    {icon:'🔄', type:'Продление', desc:'@user_kate • Basic', amount:'+$7.99', date:'2 мая, 18:30'},
+    {icon:'💜', type:'Подписка', desc:'@luna_reader • VIP 1 месяц', amount:'+$19.99', date:'2 мая, 15:00'},
+    {icon:'💎', type:'PPV', desc:"Video «Ночной город»", amount:'+$18.00', date:'1 мая, 22:47'},
+    {icon:'💰', type:'Чаевые', desc:'@midnight_x отправил чаевые', amount:'+$50.00', date:'1 мая, 20:10'},
+    {icon:'📺', type:'Private Show', desc:'60 мин с @neon_fan23', amount:'+$179.40', date:'1 мая, 17:55'},
+    {icon:'🔄', type:'Продление', desc:'@alex_sub • Premium', amount:'+$14.99', date:'1 мая, 10:00'},
+    {icon:'💜', type:'Подписка', desc:'@new_guy42 • Basic', amount:'+$7.99', date:'30 апр, 23:12'},
+    {icon:'💎', type:'PPV', desc:"Photo-сет «Розовый закат»", amount:'+$9.00', date:'30 апр, 20:33'},
+    {icon:'💰', type:'Чаевые', desc:'@phantom_leo отправил чаевые', amount:'+$100.00', date:'30 апр, 18:00'},
+    {icon:'📺', type:'Private Show', desc:'45 мин с @vibe_master', amount:'+$134.55', date:'30 апр, 15:20'},
+    {icon:'💜', type:'Подписка', desc:'@silent_watcher • VIP', amount:'+$29.99', date:'30 апр, 12:05'},
+    {icon:'🎁', type:'Подарок', desc:'Roses × 50 от @dark_wolf', amount:'+$25.00', date:'29 апр, 21:40'},
+    {icon:'💎', type:'PPV', desc:"Video «Летний бриз»", amount:'+$15.00', date:'29 апр, 19:00'},
+    {icon:'💰', type:'Чаевые', desc:'@cosmos_fan отправил чаевые', amount:'+$75.00', date:'29 апр, 17:30'},
+    {icon:'🔄', type:'Продление', desc:'@beta_user99 • Basic', amount:'+$7.99', date:'29 апр, 09:15'},
+    {icon:'💜', type:'Подписка', desc:'@night_owl • Premium', amount:'+$14.99', date:'28 апр, 22:00'},
+  ];
+
+  let shownTx = 15;
+  function renderTx(count) {
+    const feed = document.getElementById('txFeed');
+    feed.innerHTML = '';
+    const toShow = transactions.slice(0, count);
+    toShow.forEach(tx => {
+      const div = document.createElement('div');
+      div.className = 'tx-item';
+      div.innerHTML = `
+        <div class="tx-icon">${tx.icon}</div>
+        <div class="tx-info">
+          <div class="tx-type">${tx.type}</div>
+          <div class="tx-desc">${tx.desc}</div>
+        </div>
+        <div class="tx-right">
+          <div class="tx-amount">${tx.amount}</div>
+          <div class="tx-date">${tx.date}</div>
+        </div>`;
+      feed.appendChild(div);
+    });
+    if(count >= transactions.length) {
+      document.getElementById('loadMoreBtn').style.display = 'none';
+    } else {
+      const rem = Math.min(5, transactions.length - count);
+      document.getElementById('loadMoreBtn').textContent = `⬇ Load More (${rem})`;
+    }
+  }
+
+  function loadMoreTx() {
+    shownTx = Math.min(shownTx + 5, transactions.length);
+    renderTx(shownTx);
+  }
+
+  renderTx(shownTx);
+</script>
+
+<script>
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+</script>
+
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../wallet.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="wallet.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
+<style>
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline}
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A}
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+</style>
+<div id="kol-cookie-banner">
+  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
+  </div>
+</div>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div style="flex:1;min-width:0"><strong style="font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:#E8E8F0">Install KOL Studio</strong><span style="font-size:12px;color:#A0A0C0">Works offline • Faster than browser</span></div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="document.getElementById('kol-pwa-prompt').classList.remove('show')">×</button>
+</div>
+<script>
+(function(){
+  var CONSENT_KEY='kol_consent_v2',THEME_KEY='kol_theme';
+  window.kolAcceptCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:true,marketing:true,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  window.kolRejectCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:false,marketing:false,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  var btn=document.getElementById('kol-theme-btn');
+  window.kolToggleTheme=function(){var c=localStorage.getItem(THEME_KEY)||'dark';var n=c==='dark'?'light':'dark';localStorage.setItem(THEME_KEY,n);if(n==='light'){document.body.classList.add('kol-light');btn.textContent='☀️'}else{document.body.classList.remove('kol-light');btn.textContent='🌙'}};
+  var st=localStorage.getItem(THEME_KEY);if(st==='light'){document.body.classList.add('kol-light');if(btn)btn.textContent='☀️'}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!sessionStorage.getItem('kol_pwa_dismissed')&&!localStorage.getItem('kol_pwa_installed'))setTimeout(function(){document.getElementById('kol-pwa-prompt').classList.add('show')},4000)});
+  var ib=document.getElementById('kol-pwa-install-btn');if(ib)ib.addEventListener('click',function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')localStorage.setItem('kol_pwa_installed','1');document.getElementById('kol-pwa-prompt').classList.remove('show');deferredPrompt=null})});
+  document.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem(CONSENT_KEY))setTimeout(function(){document.getElementById('kol-cookie-banner').classList.add('show')},1500)});
+})();
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

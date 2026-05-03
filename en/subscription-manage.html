@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#D42B6A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KOL Studio">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<meta name="description" content="Управление подписками — KOL Studio">
+<title>KOL Studio — Мои подписки</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1}to{opacity:0}}
+body{animation:kol-fade-in 0.3s ease both}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07071A;--card:#111128;--card2:#181835;--border:#22224A;--bh:#3A3A70;
+  --accent:#D42B6A;--accent2:#8B2BE2;--text:#E8E8F0;--text2:#A0A0C0;--text3:#6A6A8A;
+  --green:#00E676;--gold:#FFB300;--r:12px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+.glow-tl{position:fixed;top:-150px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(212,43,106,0.1) 0%,transparent 70%);pointer-events:none;z-index:0}
+.glow-br{position:fixed;bottom:-150px;right:-150px;width:600px;height:600px;background:radial-gradient(circle,rgba(139,43,226,0.08) 0%,transparent 70%);pointer-events:none;z-index:0}
+.layout{display:flex;flex:1;position:relative;z-index:1}
+
+/* SIDEBAR */
+.sidebar{width:240px;min-width:240px;background:#0A0A1E;border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sb-logo{padding:20px 20px 16px;border-bottom:1px solid var(--border)}
+.sb-logo .logo-name{font-size:20px;font-weight:900;color:var(--accent);letter-spacing:3px}
+.sb-logo .logo-sub{font-size:7px;color:var(--accent2);letter-spacing:4px;margin-top:1px}
+.sb-user{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.sb-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#5C1A7A,#D42B6A);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.sb-user-name{font-size:13px;font-weight:600}
+.sb-user-handle{font-size:11px;color:var(--text3)}
+.sb-section-title{padding:14px 20px 6px;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 20px;cursor:pointer;border-left:3px solid transparent;transition:all 0.2s;font-size:13px;color:var(--text2);text-decoration:none}
+.nav-item:hover{background:var(--card);color:var(--text)}
+.nav-item.active{background:rgba(212,43,106,0.1);border-left-color:var(--accent);color:var(--text)}
+.nav-item .icon{font-size:15px;width:20px;text-align:center}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;padding:32px 40px}
+
+/* HEADER */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.page-header h1{font-size:24px;font-weight:800}
+.count-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:10px}
+
+/* FILTER TABS */
+.filter-tabs{display:flex;gap:4px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:24px;width:fit-content;flex-wrap:wrap}
+.filter-tab{padding:7px 16px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text2);font-family:'Inter',sans-serif;transition:all 0.2s}
+.filter-tab.active{background:var(--card2);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.3)}
+.filter-tab:hover:not(.active){color:var(--text)}
+
+/* SUBSCRIPTION GRID */
+.subs-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px}
+.sub-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:border-color 0.2s;position:relative}
+.sub-card:hover{border-color:var(--bh)}
+.sub-card.expiring{border-color:rgba(255,179,0,0.4)}
+.sub-card.paused{opacity:0.6}
+.sub-card-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.creator-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;flex-shrink:0}
+.creator-info{flex:1}
+.creator-name{font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px}
+.verified{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;background:var(--accent2);border-radius:50%;font-size:10px;color:#fff}
+.tier-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:4px}
+.tier-vip{background:rgba(255,179,0,0.15);color:var(--gold);border:1px solid rgba(255,179,0,0.3)}
+.tier-fan{background:rgba(212,43,106,0.12);color:var(--accent);border:1px solid rgba(212,43,106,0.25)}
+.sub-price{font-size:20px;font-weight:800;color:var(--text)}
+.sub-price span{font-size:13px;font-weight:400;color:var(--text2)}
+.sub-billing{font-size:12px;margin-top:4px;display:flex;align-items:center;gap:6px}
+.billing-warn{color:var(--gold)}
+.billing-ok{color:var(--text3)}
+.sub-card-divider{border:none;border-top:1px solid var(--border);margin:14px 0}
+.sub-actions-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.autorenew-wrap{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2)}
+.toggle-sm{position:relative;width:36px;height:20px;cursor:pointer}
+.toggle-sm input{opacity:0;width:0;height:0;position:absolute}
+.toggle-sm-track{position:absolute;inset:0;background:var(--border);border-radius:10px;transition:background 0.3s}
+.toggle-sm input:checked ~ .toggle-sm-track{background:var(--green)}
+.toggle-sm-thumb{position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform 0.3s}
+.toggle-sm input:checked ~ .toggle-sm-thumb{transform:translateX(16px)}
+.sub-btns{display:flex;gap:6px;flex-wrap:wrap}
+.paused-banner{background:rgba(160,160,192,0.08);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--text2);text-align:center;margin-top:8px}
+
+/* DROPDOWN */
+.dropdown-wrap{position:relative}
+.dropdown-menu{position:absolute;right:0;top:calc(100%+4px);background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:6px;min-width:160px;z-index:100;display:none;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
+.dropdown-menu.open{display:block}
+.dropdown-item{display:block;width:100%;padding:9px 14px;font-size:13px;color:var(--text2);background:none;border:none;font-family:'Inter',sans-serif;cursor:pointer;text-align:left;border-radius:7px;transition:all 0.15s;white-space:nowrap}
+.dropdown-item:hover{background:rgba(255,255,255,0.05);color:var(--text)}
+.dropdown-item.danger{color:#FF4757}
+.dropdown-item.danger:hover{background:rgba(255,71,87,0.1)}
+
+/* PAYMENT METHODS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:20px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.payment-card-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--card2);border:1px solid var(--border);border-radius:10px;margin-bottom:10px}
+.card-logo{width:40px;height:26px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;letter-spacing:0.5px}
+.card-visa{background:#1A1F71;color:#fff}
+.card-mc{background:linear-gradient(135deg,#EB001B 0%,#F79E1B 100%);color:#fff}
+.card-number{font-family:monospace;font-size:14px;color:var(--text);margin-left:12px}
+.card-expiry{font-size:12px;color:var(--text3);margin-left:auto;margin-right:16px}
+.card-default{display:inline-block;padding:2px 8px;background:rgba(0,230,118,0.1);color:var(--green);border-radius:6px;font-size:11px;font-weight:600;margin-right:10px}
+
+/* BILLING TABLE */
+.billing-table{width:100%;border-collapse:collapse}
+.billing-table th{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;padding:8px 12px;border-bottom:1px solid var(--border);text-align:left}
+.billing-table td{padding:11px 12px;border-bottom:1px solid rgba(34,34,74,0.5);font-size:13px;color:var(--text2)}
+.billing-table tr:last-child td{border-bottom:none}
+.billing-table tr:hover td{background:rgba(255,255,255,0.02)}
+.amount-col{font-weight:600;color:var(--text);font-family:monospace}
+.status-badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.badge-ok{background:rgba(0,230,118,0.12);color:var(--green)}
+.badge-pending{background:rgba(255,179,0,0.12);color:var(--gold)}
+.receipt-link{color:var(--accent2);text-decoration:none;font-size:12px}
+.receipt-link:hover{text-decoration:underline}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border:none;transition:all 0.2s;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#a0205a);color:#fff}
+.btn-primary:hover{opacity:0.9}
+.btn-outline{background:none;border:1px solid var(--border);color:var(--text2)}
+.btn-outline:hover{border-color:var(--bh);color:var(--text)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-xs{padding:5px 10px;font-size:11px}
+.btn-ghost{background:none;border:none;color:var(--text2);padding:6px 10px}
+.btn-ghost:hover{color:var(--text)}
+.btn-msg{background:rgba(139,43,226,0.12);border:1px solid rgba(139,43,226,0.25);color:var(--accent2)}
+.btn-msg:hover{background:rgba(139,43,226,0.2)}
+.btn-green-s{background:rgba(0,230,118,0.12);border:1px solid rgba(0,230,118,0.25);color:var(--green)}
+.btn-green-s:hover{background:rgba(0,230,118,0.2)}
+
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;max-width:460px;width:92%;transform:translateY(12px);transition:transform 0.25s;max-height:90vh;overflow-y:auto}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal h3{font-size:18px;font-weight:800;margin-bottom:8px}
+.modal p{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6}
+.modal-step{display:none}
+.modal-step.active{display:block}
+
+/* RADIO REASONS */
+.reason-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.reason-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--card2);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color 0.2s}
+.reason-item:hover{border-color:var(--bh)}
+.reason-item input[type=radio]{margin-top:2px;accent-color:var(--accent);flex-shrink:0}
+.reason-item label{font-size:13px;color:var(--text2);cursor:pointer}
+.reason-other{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;outline:none;resize:vertical;min-height:80px;margin-bottom:12px;transition:border-color 0.2s}
+.reason-other:focus{border-color:var(--accent)}
+
+/* OFFER CARD */
+.offer-card{background:linear-gradient(135deg,rgba(212,43,106,0.12),rgba(139,43,226,0.12));border:1px solid rgba(212,43,106,0.3);border-radius:12px;padding:20px;text-align:center;margin-bottom:16px}
+.offer-tag{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:0.5px}
+.offer-price{font-size:28px;font-weight:900;margin-bottom:4px}
+.offer-price s{font-size:16px;color:var(--text3);margin-right:8px;font-weight:400}
+.offer-desc{font-size:13px;color:var(--text2)}
+
+/* BILLING ADDRESS */
+.billing-address{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.billing-address-info{font-size:13px;color:var(--text2);line-height:1.6}
+.billing-address-info strong{color:var(--text);display:block;font-size:14px;margin-bottom:2px}
+
+@media(max-width:900px){.subs-grid{grid-template-columns:1fr}}
+@media(max-width:768px){
+  .layout{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:static;flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--border)}
+  .sb-logo,.sb-user,.sb-section-title{display:none}
+  .nav-item{padding:12px 16px;white-space:nowrap;border-left:none;border-bottom:3px solid transparent}
+  .nav-item.active{border-left-color:transparent;border-bottom-color:var(--accent)}
+  .main{padding:20px 16px}
+  .billing-table{font-size:12px}
+  .billing-table th,.billing-table td{padding:8px}
+}
+</style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/subscription-manage.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/subscription-manage.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/subscription-manage.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/subscription-manage.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+<div class="glow-tl"></div>
+<div class="glow-br"></div>
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="logo-name">KOL</div>
+    <div class="logo-sub">STUDIO</div>
+  </div>
+  <div class="sb-user">
+    <div class="sb-avatar">AK</div>
+    <div>
+      <div class="sb-user-name">Anna K.</div>
+      <div class="sb-user-handle">@annakoval</div>
+    </div>
+  </div>
+  <div class="sb-section-title">Аккаунт</div>
+  <a href="../user-cabinet.html" class="nav-item"><span class="icon">👤</span> Мой профиль</a>
+  <a href="../subscription-manage.html" class="nav-item active"><span class="icon">💎</span> Подписки</a>
+  <a href="../wallet.html" class="nav-item"><span class="icon">💳</span> Способы оплаты</a>
+  <a href="../tip-history.html" class="nav-item"><span class="icon">🧾</span> История покупок</a>
+  <a href="../notifications.html" class="nav-item"><span class="icon">🔔</span> Уведомления</a>
+  <a href="../account-security.html" class="nav-item"><span class="icon">🔒</span> Безопасность</a>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="../index.html">🏠 Главная</a><span class="sep">›</span><a href="../user-cabinet.html">Кабинет</a><span class="sep">›</span><span class="current">Мои подписки</span></nav>
+  <div class="page-header">
+    <div>
+      <h1>Мои подписки <span class="count-badge">4</span></h1>
+      <p style="font-size:13px;color:var(--text2);margin-top:4px">Управляйте подписками на ваших любимых создателей</p>
+    </div>
+  </div>
+
+  <!-- FILTER TABS -->
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="filterSubs('all',this)">Все (4)</button>
+    <button class="filter-tab" onclick="filterSubs('active',this)">Активные (3)</button>
+    <button class="filter-tab" onclick="filterSubs('expiring',this)">Истекает скоро (1)</button>
+    <button class="filter-tab" onclick="filterSubs('cancelled',this)">Приостановленные (1)</button>
+  </div>
+
+  <!-- SUBSCRIPTION CARDS -->
+  <div class="subs-grid" id="subs-grid">
+
+    <!-- Card 1: Luna Vasiliev — VIP -->
+    <div class="sub-card" data-status="active" data-id="luna">
+      <div class="sub-card-top">
+        <div class="creator-avatar" style="background:linear-gradient(135deg,#6B1FE8,#D42B6A)">LV</div>
+        <div class="creator-info">
+          <div class="creator-name">Luna Vasiliev <span class="verified">✓</span></div>
+          <div class="tier-badge tier-vip">VIP</div>
+        </div>
+      </div>
+      <div class="sub-price">$24.99 <span>/ мес</span></div>
+      <div class="sub-billing billing-ok">📅 Следующее списание: 11 мая 2026 (через 15 дней)</div>
+      <hr class="sub-card-divider">
+      <div class="sub-actions-row">
+        <div class="autorenew-wrap">
+          <label class="toggle-sm">
+            <input type="checkbox" checked>
+            <div class="toggle-sm-track"></div>
+            <div class="toggle-sm-thumb"></div>
+          </label>
+          Авт. продление
+        </div>
+        <div class="sub-btns">
+          <a href="../messages.html" class="btn btn-xs btn-msg">✉ Сообщение</a>
+          <a href="../profile.html" class="btn btn-xs btn-outline">👁 Профиль</a>
+          <div class="dropdown-wrap">
+            <button class="btn btn-xs btn-outline" onclick="toggleDropdown('dd-luna')">Управление ▾</button>
+            <div class="dropdown-menu" id="dd-luna">
+              <button class="dropdown-item" onclick="pauseSub('luna','Luna Vasiliev')">⏸ Пауза на 1 месяц</button>
+              <button class="dropdown-item" onclick="changePlan('luna')">⬆ Сменить тариф</button>
+              <button class="dropdown-item danger" onclick="cancelSub('luna','Luna Vasiliev')">✕ Отменить подписку</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Anna K. — Fan, expiring -->
+    <div class="sub-card expiring" data-status="expiring" data-id="anna">
+      <div style="position:absolute;top:12px;right:12px;background:rgba(255,179,0,0.15);color:var(--gold);border:1px solid rgba(255,179,0,0.3);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700">⚠ Скоро истекает</div>
+      <div class="sub-card-top">
+        <div class="creator-avatar" style="background:linear-gradient(135deg,#D42B6A,#FF6B9D)">AK</div>
+        <div class="creator-info">
+          <div class="creator-name">Anna K. <span class="verified">✓</span></div>
+          <div class="tier-badge tier-fan">Fan</div>
+        </div>
+      </div>
+      <div class="sub-price">$9.99 <span>/ мес</span></div>
+      <div class="sub-billing billing-warn">⚠️ Истекает через 3 дня — 29 апр 2026</div>
+      <hr class="sub-card-divider">
+      <div class="sub-actions-row">
+        <div class="autorenew-wrap">
+          <label class="toggle-sm">
+            <input type="checkbox">
+            <div class="toggle-sm-track"></div>
+            <div class="toggle-sm-thumb"></div>
+          </label>
+          Авт. продление <span style="color:var(--gold);font-size:11px">Выкл</span>
+        </div>
+        <div class="sub-btns">
+          <a href="../messages.html" class="btn btn-xs btn-msg">✉ Сообщение</a>
+          <a href="../profile.html" class="btn btn-xs btn-outline">👁 Профиль</a>
+          <div class="dropdown-wrap">
+            <button class="btn btn-xs btn-outline" onclick="toggleDropdown('dd-anna')">Управление ▾</button>
+            <div class="dropdown-menu" id="dd-anna">
+              <button class="dropdown-item" onclick="pauseSub('anna','Anna K.')">⏸ Пауза на 1 месяц</button>
+              <button class="dropdown-item" onclick="changePlan('anna')">⬆ Сменить тариф</button>
+              <button class="dropdown-item danger" onclick="cancelSub('anna','Anna K.')">✕ Отменить подписку</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Mia Star — Fan -->
+    <div class="sub-card" data-status="active" data-id="mia">
+      <div class="sub-card-top">
+        <div class="creator-avatar" style="background:linear-gradient(135deg,#FF6B35,#F7C59F)">MS</div>
+        <div class="creator-info">
+          <div class="creator-name">Mia Star <span class="verified">✓</span></div>
+          <div class="tier-badge tier-fan">Fan</div>
+        </div>
+      </div>
+      <div class="sub-price">$14.99 <span>/ мес</span></div>
+      <div class="sub-billing billing-ok">📅 Следующее списание: 24 мая 2026 (через 28 дней)</div>
+      <hr class="sub-card-divider">
+      <div class="sub-actions-row">
+        <div class="autorenew-wrap">
+          <label class="toggle-sm">
+            <input type="checkbox" checked>
+            <div class="toggle-sm-track"></div>
+            <div class="toggle-sm-thumb"></div>
+          </label>
+          Авт. продление
+        </div>
+        <div class="sub-btns">
+          <a href="../messages.html" class="btn btn-xs btn-msg">✉ Сообщение</a>
+          <a href="../profile.html" class="btn btn-xs btn-outline">👁 Профиль</a>
+          <div class="dropdown-wrap">
+            <button class="btn btn-xs btn-outline" onclick="toggleDropdown('dd-mia')">Управление ▾</button>
+            <div class="dropdown-menu" id="dd-mia">
+              <button class="dropdown-item" onclick="pauseSub('mia','Mia Star')">⏸ Пауза на 1 месяц</button>
+              <button class="dropdown-item" onclick="changePlan('mia')">⬆ Сменить тариф</button>
+              <button class="dropdown-item danger" onclick="cancelSub('mia','Mia Star')">✕ Отменить подписку</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: Sofia R. — Paused -->
+    <div class="sub-card paused" data-status="cancelled" data-id="sofia">
+      <div style="position:absolute;top:12px;right:12px;background:rgba(160,160,192,0.12);color:var(--text3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700">⏸ Приостановлена</div>
+      <div class="sub-card-top">
+        <div class="creator-avatar" style="background:linear-gradient(135deg,#2C3E50,#3498DB)">SR</div>
+        <div class="creator-info">
+          <div class="creator-name">Sofia R.</div>
+          <div class="tier-badge tier-fan">Fan</div>
+        </div>
+      </div>
+      <div class="sub-price" style="color:var(--text2)">$19.99 <span>/ мес</span></div>
+      <div class="sub-billing billing-ok">⏸ Возобновится: 26 мая 2026</div>
+      <hr class="sub-card-divider">
+      <div class="paused-banner">Подписка приостановлена. Контент недоступен до возобновления.</div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <button class="btn btn-xs btn-green-s" onclick="resumeSub('sofia')">▶ Возобновить сейчас</button>
+        <a href="../profile.html" class="btn btn-xs btn-outline">👁 Профиль</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PAYMENT METHODS -->
+  <div class="card">
+    <div class="card-title">
+      <span>💳 Способы оплаты</span>
+      <button class="btn btn-outline btn-sm" onclick="addCard()">+ Добавить карту</button>
+    </div>
+    <div>
+      <div class="payment-card-row">
+        <div class="card-logo card-visa">VISA</div>
+        <div class="card-number">•••• •••• •••• 4821</div>
+        <div class="card-expiry">12/27</div>
+        <span class="card-default">По умолчанию</span>
+        <button class="btn btn-ghost btn-xs">✏</button>
+      </div>
+      <div class="payment-card-row">
+        <div class="card-logo card-mc" style="font-size:8px">MC</div>
+        <div class="card-number">•••• •••• •••• 7340</div>
+        <div class="card-expiry">09/26</div>
+        <span style="margin-right:10px"></span>
+        <button class="btn btn-ghost btn-xs">✏</button>
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <div class="billing-address">
+        <div class="billing-address-info">
+          <strong>Адрес выставления счёта</strong>
+          Россия, Москва, ул. Пушкина, д. 12, кв. 45<br>
+          Индекс: 123456
+        </div>
+        <button class="btn btn-ghost btn-xs">✏ Изменить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BILLING HISTORY -->
+  <div class="card">
+    <div class="card-title">
+      <span>🧾 История платежей</span>
+      <button class="btn btn-outline btn-sm" onclick="exportCSV()">⬇ Экспорт CSV</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="billing-table">
+        <thead>
+          <tr>
+            <th>Дата</th>
+            <th>Создатель</th>
+            <th>Описание</th>
+            <th>Сумма</th>
+            <th>Статус</th>
+            <th>Чек</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>26 апр 2026</td>
+            <td>Mia Star</td>
+            <td>Подписка Fan — апрель</td>
+            <td class="amount-col">-$14.99</td>
+            <td><span class="status-badge badge-ok">Выполнен</span></td>
+            <td><a class="receipt-link" href="#" onclick="showReceipt('RCP-2604-001','26 апр 2026','Подписка Fan — Mia Star','$14.99')">Чек</a></td>
+          </tr>
+          <tr>
+            <td>11 апр 2026</td>
+            <td>Luna Vasiliev</td>
+            <td>Подписка VIP — апрель</td>
+            <td class="amount-col">-$24.99</td>
+            <td><span class="status-badge badge-ok">Выполнен</span></td>
+            <td><a class="receipt-link" href="#" onclick="showReceipt('RCP-1104-002','11 апр 2026','Подписка VIP — Luna Vasiliev','$24.99')">Чек</a></td>
+          </tr>
+          <tr>
+            <td>28 мар 2026</td>
+            <td>Anna K.</td>
+            <td>Подписка Fan — март</td>
+            <td class="amount-col">-$9.99</td>
+            <td><span class="status-badge badge-ok">Выполнен</span></td>
+            <td><a class="receipt-link" href="#" onclick="showReceipt('RCP-2803-003','28 мар 2026','Подписка Fan — Anna K.','$9.99')">Чек</a></td>
+          </tr>
+          <tr>
+            <td>26 мар 2026</td>
+            <td>Mia Star</td>
+            <td>Подписка Fan — март</td>
+            <td class="amount-col">-$14.99</td>
+            <td><span class="status-badge badge-ok">Выполнен</span></td>
+            <td><a class="receipt-link" href="#" onclick="showReceipt('RCP-2603-004','26 мар 2026','Подписка Fan — Mia Star','$14.99')">Чек</a></td>
+          </tr>
+          <tr>
+            <td>11 мар 2026</td>
+            <td>Luna Vasiliev</td>
+            <td>Подписка VIP — март</td>
+            <td class="amount-col">-$24.99</td>
+            <td><span class="status-badge badge-ok">Выполнен</span></td>
+            <td><a class="receipt-link" href="#" onclick="showReceipt('RCP-1103-005','11 мар 2026','Подписка VIP — Luna Vasiliev','$24.99')">Чек</a></td>
+          </tr>
+          <tr>
+            <td>01 мар 2026</td>
+            <td>Sofia R.</td>
+            <td>Подписка Fan — март</td>
+            <td class="amount-col">-$19.99</td>
+            <td><span class="status-badge badge-pending">Возврат</span></td>
+            <td><a class="receipt-link" href="#" onclick="showReceipt('RCP-0103-006','01 мар 2026','Подписка Fan — Sofia R.','$19.99')">Чек</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- PAUSE MODAL -->
+<div class="modal-overlay" id="pause-modal">
+  <div class="modal">
+    <h3>⏸ Пауза подписки</h3>
+    <p id="pause-text">Подписка будет приостановлена на 1 месяц. Вы не будете платить в это время, но потеряете доступ к контенту. Подписка автоматически возобновится 26 мая 2026.</p>
+    <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--text2)">
+      ℹ️ Вы можете возобновить подписку досрочно в любой момент без дополнительной платы.
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-outline btn-sm" onclick="closePauseModal()">Отмена</button>
+      <button class="btn btn-primary btn-sm" onclick="confirmPause()">Подтвердить паузу</button>
+    </div>
+  </div>
+</div>
+
+<!-- CANCEL MODAL -->
+<div class="modal-overlay" id="cancel-modal">
+  <div class="modal">
+    <div class="modal-step active" id="cancel-step-1">
+      <h3>Почему вы отменяете?</h3>
+      <p>Расскажите нам — это поможет улучшить платформу</p>
+      <div class="reason-list">
+        <div class="reason-item"><input type="radio" name="reason" id="r1" value="expensive"><label for="r1">Слишком дорого</label></div>
+        <div class="reason-item"><input type="radio" name="reason" id="r2" value="content"><label for="r2">Недостаточно контента</label></div>
+        <div class="reason-item"><input type="radio" name="reason" id="r3" value="inactive"><label for="r3">Создатель стал неактивным</label></div>
+        <div class="reason-item"><input type="radio" name="reason" id="r4" value="temporary"><label for="r4">Временные финансовые трудности</label></div>
+        <div class="reason-item"><input type="radio" name="reason" id="r5" value="other"><label for="r5">Другое</label></div>
+      </div>
+      <textarea class="reason-other" id="reason-other" placeholder="Расскажите подробнее..." style="display:none"></textarea>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button class="btn btn-outline btn-sm" onclick="closeCancelModal()">Назад</button>
+        <button class="btn btn-primary btn-sm" onclick="cancelStep2()">Далее →</button>
+      </div>
+    </div>
+    <div class="modal-step" id="cancel-step-2">
+      <h3>Подождите! Специальное предложение</h3>
+      <p>Мы ценим вас как подписчика и предлагаем:</p>
+      <div class="offer-card">
+        <div class="offer-tag">ТОЛЬКО ДЛЯ ВАС</div>
+        <div class="offer-price"><s id="offer-old-price">$9.99</s><span id="offer-new-price">$4.99</span> / мес</div>
+        <div class="offer-desc">1 месяц за 50% от стоимости. Без обязательств — можно отменить в любое время.</div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" onclick="cancelStep3()">Всё равно отменить</button>
+        <button class="btn btn-green-s btn-sm" onclick="acceptOffer()">🎉 Принять предложение</button>
+      </div>
+    </div>
+    <div class="modal-step" id="cancel-step-3">
+      <div style="text-align:center;padding:12px 0">
+        <div style="font-size:48px;margin-bottom:12px">😔</div>
+        <h3>Подписка отменена</h3>
+        <p style="margin:8px 0 20px">Вы сохраните доступ до конца оплаченного периода. Мы будем рады видеть вас снова!</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-outline btn-sm" onclick="closeCancelModal()">Закрыть</button>
+          <button class="btn btn-primary btn-sm" onclick="resubscribe()">Возобновить подписку</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RECEIPT MODAL -->
+<div class="modal-overlay" id="receipt-modal">
+  <div class="modal">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <h3>🧾 Чек</h3>
+      <button class="btn btn-ghost btn-xs" onclick="closeReceiptModal()">✕</button>
+    </div>
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px">
+        <span style="color:var(--text3)">Номер чека</span>
+        <span id="r-number" style="font-family:monospace;font-weight:600"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px">
+        <span style="color:var(--text3)">Дата</span>
+        <span id="r-date"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px">
+        <span style="color:var(--text3)">Описание</span>
+        <span id="r-desc"></span>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:8px;display:flex;justify-content:space-between;font-size:15px;font-weight:700">
+        <span>Итого</span>
+        <span id="r-total"></span>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:16px">Платёж успешно обработан через KOL Studio Payments. Средства списаны с карты •••• 4821.</div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-outline btn-sm" onclick="closeReceiptModal()">Закрыть</button>
+      <button class="btn btn-primary btn-sm" onclick="downloadPDF()">⬇ Скачать PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid #22224A;padding:32px 24px;margin-top:40px;position:relative;z-index:1">
+  <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <a href="../terms.html" style="color:#6A6A8A;font-size:13px;text-decoration:none">Terms</a>
+      <a href="../privacy.html" style="color:#6A6A8A;font-size:13px;text-decoration:none">Privacy</a>
+      <a href="../cookie.html" style="color:#6A6A8A;font-size:13px;text-decoration:none">Cookie</a>
+      <a href="../dmca.html" style="color:#6A6A8A;font-size:13px;text-decoration:none">DMCA</a>
+      <a href="../help.html" style="color:#6A6A8A;font-size:13px;text-decoration:none">Help</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px">
+        <a href="../subscription-manage.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇷🇺 RU</a>
+        <span style="color:#22224A">|</span>
+        <a href="subscription-manage.html" style="color:#6A6A8A;font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;">🇬🇧 EN</a>
+      </div>
+      <span style="color:#6A6A8A;font-size:13px">© 2026 KOL Studio</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('a[href]').forEach(a=>{
+    const h=a.getAttribute('href');
+    if(!h||h.startsWith('#')||h.startsWith('http')||h.startsWith('mailto'))return;
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      document.body.style.animation='kol-fade-out 0.25s ease forwards';
+      setTimeout(()=>location.href=h,250);
+    });
+  });
+
+  document.addEventListener('click',e=>{
+    if(!e.target.closest('.dropdown-wrap')){
+      document.querySelectorAll('.dropdown-menu').forEach(d=>d.classList.remove('open'));
+    }
+  });
+
+  document.getElementById('r5').addEventListener('change',()=>{
+    document.getElementById('reason-other').style.display='block';
+  });
+  ['r1','r2','r3','r4'].forEach(id=>{
+    document.getElementById(id).addEventListener('change',()=>{
+      document.getElementById('reason-other').style.display='none';
+    });
+  });
+});
+
+let currentSubId='';
+
+function filterSubs(status,tab){
+  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  document.querySelectorAll('.sub-card').forEach(card=>{
+    if(status==='all'){card.style.display='block';return;}
+    card.style.display=card.dataset.status===status?'block':'none';
+  });
+}
+
+function toggleDropdown(id){
+  const dd=document.getElementById(id);
+  const wasOpen=dd.classList.contains('open');
+  document.querySelectorAll('.dropdown-menu').forEach(d=>d.classList.remove('open'));
+  if(!wasOpen)dd.classList.add('open');
+}
+
+function pauseSub(id,name){
+  document.querySelectorAll('.dropdown-menu').forEach(d=>d.classList.remove('open'));
+  currentSubId=id;
+  const resumeDate=new Date();resumeDate.setMonth(resumeDate.getMonth()+1);
+  const opts={day:'numeric',month:'long',year:'numeric'};
+  document.getElementById('pause-text').textContent=`Подписка на ${name} будет приостановлена на 1 месяц. Вы не будете платить, но потеряете доступ к контенту. Возобновится ${resumeDate.toLocaleDateString('ru-RU',opts)}.`;
+  document.getElementById('pause-modal').classList.add('open');
+}
+
+function closePauseModal(){document.getElementById('pause-modal').classList.remove('open');}
+
+function confirmPause(){
+  closePauseModal();
+  const card=document.querySelector(`.sub-card[data-id="${currentSubId}"]`);
+  if(card){
+    card.classList.add('paused');
+    card.dataset.status='cancelled';
+    const badge=card.querySelector('[style*="position:absolute"]');
+    if(badge){badge.style.background='rgba(160,160,192,0.12)';badge.style.color='var(--text3)';badge.textContent='⏸ Приостановлена';}
+  }
+}
+
+function cancelSub(id,name){
+  document.querySelectorAll('.dropdown-menu').forEach(d=>d.classList.remove('open'));
+  currentSubId=id;
+  const prices={luna:'24.99',anna:'9.99',mia:'14.99',sofia:'19.99'};
+  const p=prices[id]||'9.99';
+  document.getElementById('offer-old-price').textContent='$'+p;
+  document.getElementById('offer-new-price').textContent='$'+(parseFloat(p)/2).toFixed(2);
+  document.querySelectorAll('.modal-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('cancel-step-1').classList.add('active');
+  document.getElementById('cancel-modal').classList.add('open');
+}
+
+function closeCancelModal(){document.getElementById('cancel-modal').classList.remove('open');}
+
+function cancelStep2(){
+  document.querySelectorAll('.modal-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('cancel-step-2').classList.add('active');
+}
+
+function cancelStep3(){
+  document.querySelectorAll('.modal-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('cancel-step-3').classList.add('active');
+  const card=document.querySelector(`.sub-card[data-id="${currentSubId}"]`);
+  if(card){card.style.opacity='0.5';setTimeout(()=>card.style.display='none',2000);}
+}
+
+function acceptOffer(){
+  closeCancelModal();
+  alert('Предложение принято! Следующий месяц будет со скидкой 50%.');
+}
+
+function resubscribe(){
+  closeCancelModal();
+  location.reload();
+}
+
+function resumeSub(id){
+  const card=document.querySelector(`.sub-card[data-id="${id}"]`);
+  if(card){
+    card.classList.remove('paused');
+    card.dataset.status='active';
+    const banner=card.querySelector('.paused-banner');
+    if(banner)banner.remove();
+    alert('Подписка возобновлена! Спасибо, что остаётесь с нами.');
+  }
+}
+
+function changePlan(id){
+  document.querySelectorAll('.dropdown-menu').forEach(d=>d.classList.remove('open'));
+  alert('Смена тарифа: переход на страницу выбора плана...');
+}
+
+function showReceipt(num,date,desc,total){
+  document.getElementById('r-number').textContent=num;
+  document.getElementById('r-date').textContent=date;
+  document.getElementById('r-desc').textContent=desc;
+  document.getElementById('r-total').textContent=total;
+  document.getElementById('receipt-modal').classList.add('open');
+  return false;
+}
+
+function closeReceiptModal(){document.getElementById('receipt-modal').classList.remove('open');}
+
+function downloadPDF(){alert('Скачивание PDF-чека...');}
+function addCard(){alert('Добавление новой карты...');}
+function exportCSV(){alert('Экспорт истории платежей в CSV...');}
+
+[document.getElementById('pause-modal'),document.getElementById('cancel-modal'),document.getElementById('receipt-modal')].forEach(m=>{
+  m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+});
+</script>
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="../cookie.html">Подробнее</a> · <a href="../report.html">Report</a> · <a href="../api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

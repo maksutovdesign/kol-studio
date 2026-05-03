@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOL Studio — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07071A;
+  --card-l1:#111128;
+  --card-l2:#181835;
+  --border:#22224A;
+  --pink:#D42B6A;
+  --purple:#8B2BE2;
+  --green:#00E676;
+  --gold:#FFB300;
+  --text-primary:#E8E8F0;
+  --text-secondary:#A0A0C0;
+  --text-muted:#6A6A8A;
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:16px;
+  --radius-xl:20px;
+  --shadow-card:0 2px 16px rgba(0,0,0,0.4);
+  --shadow-pink:0 4px 20px rgba(212,43,106,0.35);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text-primary);
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  line-height:1.6;
+}
+
+/* ─── Layout ─────────────────────────────────────── */
+.ds-wrap{display:flex;min-height:100vh}
+.ds-nav{
+  width:240px;flex-shrink:0;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  background:var(--card-l1);
+  border-right:1px solid var(--border);
+  padding:24px 16px;
+}
+.ds-nav-logo{
+  font-size:18px;font-weight:800;
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:24px;display:block;
+}
+.ds-nav ul{list-style:none}
+.ds-nav li{margin-bottom:2px}
+.ds-nav a{
+  display:block;padding:8px 12px;border-radius:8px;
+  color:var(--text-secondary);text-decoration:none;font-size:13px;font-weight:500;
+  transition:all .2s;
+}
+.ds-nav a:hover{background:var(--card-l2);color:var(--text-primary)}
+.ds-nav .section-label{
+  font-size:10px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--text-muted);
+  padding:16px 12px 4px;
+}
+.ds-content{flex:1;padding:48px;max-width:960px}
+
+/* ─── Section ─────────────────────────────────────── */
+.ds-section{margin-bottom:80px}
+.ds-section-title{
+  font-size:28px;font-weight:800;margin-bottom:6px;
+  display:flex;align-items:center;gap:12px;
+}
+.ds-section-title span{
+  font-size:13px;font-weight:500;color:var(--text-muted);
+  background:var(--card-l2);border:1px solid var(--border);
+  padding:2px 10px;border-radius:20px;
+}
+.ds-section-desc{color:var(--text-secondary);margin-bottom:32px;max-width:640px}
+.ds-divider{height:1px;background:var(--border);margin:48px 0}
+
+/* ─── Token Grid ───────────────────────────────────── */
+.token-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+.token-card{background:var(--card-l1);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.token-swatch{height:80px}
+.token-info{padding:12px}
+.token-name{font-size:12px;font-weight:700;margin-bottom:2px}
+.token-value{font-size:11px;color:var(--text-muted);font-family:'Fira Code',monospace}
+.token-usage{font-size:11px;color:var(--text-secondary);margin-top:4px}
+
+/* ─── Type Scale ───────────────────────────────────── */
+.type-row{
+  display:flex;align-items:baseline;gap:24px;
+  padding:16px 0;border-bottom:1px solid var(--border);
+}
+.type-meta{width:160px;flex-shrink:0}
+.type-meta .label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)}
+.type-meta .spec{font-size:12px;color:var(--text-secondary);font-family:'Fira Code',monospace;margin-top:2px}
+.type-sample{flex:1;color:var(--text-primary)}
+
+/* ─── Spacing ───────────────────────────────────────── */
+.spacing-grid{display:flex;flex-direction:column;gap:12px}
+.spacing-row{display:flex;align-items:center;gap:16px}
+.spacing-bar{background:linear-gradient(135deg,#D42B6A,#8B2BE2);border-radius:4px;height:20px;flex-shrink:0}
+.spacing-label{font-size:12px;font-weight:600;width:40px;text-align:right;color:var(--text-secondary)}
+.spacing-token{font-size:12px;color:var(--text-muted);font-family:'Fira Code',monospace}
+
+/* ─── Radius ────────────────────────────────────────── */
+.radius-grid{display:flex;flex-wrap:wrap;gap:20px}
+.radius-item{display:flex;flex-direction:column;align-items:center;gap:8px}
+.radius-box{width:64px;height:64px;background:linear-gradient(135deg,#D42B6A22,#8B2BE222);border:1.5px solid #D42B6A}
+.radius-label{font-size:11px;color:var(--text-muted);font-family:'Fira Code',monospace;text-align:center}
+
+/* ─── Color Palette ─────────────────────────────────── */
+.palette-group{margin-bottom:32px}
+.palette-group-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:12px}
+.palette-row{display:flex;gap:8px;flex-wrap:wrap}
+.palette-chip{
+  display:flex;flex-direction:column;
+  border-radius:12px;overflow:hidden;
+  border:1px solid var(--border);
+  width:120px;
+}
+.palette-chip-color{height:56px}
+.palette-chip-info{padding:8px 10px;background:var(--card-l1)}
+.palette-chip-name{font-size:11px;font-weight:700}
+.palette-chip-hex{font-size:10px;font-family:'Fira Code',monospace;color:var(--text-muted)}
+
+/* ─── Gradient ──────────────────────────────────────── */
+.gradient-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.gradient-card{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border)}
+.gradient-preview{height:100px}
+.gradient-info{background:var(--card-l1);padding:12px}
+.gradient-name{font-size:13px;font-weight:700;margin-bottom:2px}
+.gradient-code{font-size:10px;font-family:'Fira Code',monospace;color:var(--text-muted);word-break:break-all}
+
+/* ─── Component showcase ────────────────────────────── */
+.comp-grid{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.comp-box{
+  background:var(--card-l1);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:24px;
+}
+.comp-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:10px;border:none;
+  font-size:14px;font-weight:700;cursor:pointer;
+  transition:opacity .2s,transform .1s;font-family:'Inter',sans-serif;
+}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff}
+.btn-primary:hover{opacity:.9}
+.btn-secondary{background:transparent;border:1.5px solid var(--border);color:var(--text-secondary)}
+.btn-secondary:hover{border-color:#D42B6A;color:var(--text-primary)}
+.btn-ghost{background:rgba(212,43,106,.1);border:1px solid rgba(212,43,106,.3);color:#D42B6A}
+.btn-ghost:hover{background:rgba(212,43,106,.2)}
+.btn-sm{padding:6px 14px;font-size:12px;border-radius:8px}
+.btn-lg{padding:14px 28px;font-size:16px;border-radius:12px}
+.btn-icon{width:40px;height:40px;padding:0;border-radius:50%;justify-content:center}
+.btn-disabled{opacity:.45;cursor:not-allowed;pointer-events:none}
+
+/* Inputs */
+.input-wrap{display:flex;flex-direction:column;gap:6px;width:280px}
+.input-label{font-size:12px;font-weight:600;color:var(--text-secondary)}
+.inp{
+  background:var(--card-l2);border:1.5px solid var(--border);
+  border-radius:10px;padding:12px 16px;
+  color:var(--text-primary);font-size:15px;font-family:'Inter',sans-serif;
+  outline:none;transition:border-color .2s,box-shadow .2s;width:100%;
+}
+.inp:focus{border-color:#D42B6A}
+.inp.inp-error{border-color:#D42B6A;box-shadow:0 0 0 3px rgba(212,43,106,.2)}
+.inp.inp-success{border-color:#00E676}
+.inp-hint{font-size:11px;color:var(--text-muted)}
+.inp-hint.error{color:#D42B6A}
+
+/* Badges */
+.badge-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 10px;border-radius:20px;
+  font-size:11px;font-weight:700;
+}
+.badge-pink{background:rgba(212,43,106,.15);border:1px solid rgba(212,43,106,.4);color:#D42B6A}
+.badge-purple{background:rgba(139,43,226,.15);border:1px solid rgba(139,43,226,.4);color:#8B2BE2}
+.badge-green{background:rgba(0,230,118,.15);border:1px solid rgba(0,230,118,.4);color:#00E676}
+.badge-gold{background:rgba(255,179,0,.15);border:1px solid rgba(255,179,0,.4);color:#FFB300}
+.badge-muted{background:var(--card-l2);border:1px solid var(--border);color:var(--text-secondary)}
+
+/* Cards */
+.kol-card{
+  background:var(--card-l1);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:20px;
+  transition:border-color .2s,transform .2s;
+  cursor:pointer;
+}
+.kol-card:hover{border-color:#D42B6A;transform:translateY(-2px)}
+.kol-card-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.kol-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:14px;color:#fff;flex-shrink:0;
+}
+.kol-card-title{font-weight:700;font-size:15px}
+.kol-card-sub{font-size:12px;color:var(--text-muted)}
+.kol-card-body{color:var(--text-secondary);font-size:14px;line-height:1.5}
+.kol-card-footer{
+  display:flex;gap:16px;margin-top:16px;padding-top:16px;
+  border-top:1px solid var(--border);
+}
+.kol-stat-item{display:flex;flex-direction:column;gap:2px}
+.kol-stat-val{font-size:18px;font-weight:800}
+.kol-stat-lbl{font-size:11px;color:var(--text-muted)}
+
+/* Toggle */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px;
+background:var(--card-l2);border-radius:10px;margin-bottom:8px;min-width:260px}
+.toggle-info .toggle-title{font-size:14px;font-weight:600}
+.toggle-info .toggle-desc{font-size:12px;color:var(--text-muted)}
+.kol-toggle{position:relative;width:48px;height:26px;flex-shrink:0}
+.kol-toggle input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-track{
+  position:absolute;inset:0;background:var(--border);border-radius:13px;
+  cursor:pointer;transition:background .3s;
+}
+.kol-toggle input:checked ~ .kol-toggle-track{background:#D42B6A}
+.kol-toggle-thumb{
+  position:absolute;top:3px;left:3px;
+  width:20px;height:20px;border-radius:50%;background:#fff;
+  transition:transform .3s;pointer-events:none;
+}
+.kol-toggle input:checked ~ .kol-toggle-thumb{transform:translateX(22px)}
+
+/* Skeleton */
+@keyframes kol-shimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+.skel{
+  background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);
+  background-size:200% 100%;
+  animation:kol-shimmer 1.5s infinite;
+  border-radius:8px;
+}
+.skel-demo{display:flex;gap:16px;align-items:flex-start;padding:16px;background:var(--card-l1);border-radius:var(--radius-lg);border:1px solid var(--border)}
+.skel-avatar-demo{width:48px;height:48px;border-radius:50%;flex-shrink:0}
+.skel-lines{flex:1;display:flex;flex-direction:column;gap:8px}
+
+/* Nav item demo */
+.nav-demo{display:flex;flex-direction:column;gap:4px;width:200px}
+.nav-item-demo{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:10px;
+  color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;
+  transition:all .2s;cursor:pointer;
+}
+.nav-item-demo:hover{background:var(--card-l2);color:var(--text-primary)}
+.nav-item-demo.active{
+  background:rgba(212,43,106,.12);color:#D42B6A;
+  border-left:3px solid #D42B6A;
+}
+.nav-icon{font-size:18px;width:20px;text-align:center}
+
+/* Toast */
+.toast-demo{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;border-radius:12px;
+  background:var(--card-l1);border:1px solid var(--border);
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  max-width:320px;
+}
+.toast-demo.success{border-left:3px solid #00E676}
+.toast-demo.error{border-left:3px solid #D42B6A}
+.toast-demo.info{border-left:3px solid #8B2BE2}
+.toast-icon{font-size:18px}
+.toast-text{flex:1;font-size:13px;font-weight:500}
+
+/* Modal demo */
+.modal-demo{
+  background:var(--card-l1);border:1.5px solid var(--border);
+  border-radius:var(--radius-xl);padding:28px;max-width:400px;
+  box-shadow:0 24px 80px rgba(0,0,0,.6);
+}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-title{font-size:18px;font-weight:800}
+.modal-close{
+  width:32px;height:32px;border-radius:50%;border:none;
+  background:var(--card-l2);color:var(--text-secondary);
+  font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.modal-body{color:var(--text-secondary);font-size:14px;line-height:1.6;margin-bottom:24px}
+.modal-footer{display:flex;gap:12px;justify-content:flex-end}
+
+/* Empty state */
+.empty-demo{
+  text-align:center;padding:40px 24px;display:flex;flex-direction:column;align-items:center;gap:10px;
+  background:var(--card-l1);border:1px solid var(--border);border-radius:var(--radius-lg);
+  min-width:240px;
+}
+.empty-icon{font-size:48px;opacity:.35}
+.empty-title{font-size:16px;font-weight:700}
+.empty-desc{font-size:13px;color:var(--text-secondary);max-width:200px}
+
+/* Progress / Stats */
+.stat-row-demo{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat-card-demo{
+  background:var(--card-l1);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;
+  text-align:center;
+}
+.stat-num{font-size:24px;font-weight:900;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+/* Progress bar */
+.prog-wrap{margin-bottom:12px}
+.prog-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;color:var(--text-secondary)}
+.prog-track{height:6px;background:var(--card-l2);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#D42B6A,#8B2BE2)}
+
+/* Tooltip demo */
+.tooltip-wrap{position:relative;display:inline-flex;cursor:pointer}
+.tooltip-wrap .tip{
+  position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:#1A1A35;border:1px solid var(--border);border-radius:8px;
+  padding:6px 12px;font-size:12px;color:var(--text-primary);white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.tooltip-wrap:hover .tip{opacity:1}
+
+/* Tabs demo */
+.tabs-demo{display:flex;gap:2px;background:var(--card-l2);border-radius:12px;padding:4px;margin-bottom:16px}
+.tab-item{
+  padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;
+  cursor:pointer;color:var(--text-secondary);transition:all .2s;
+}
+.tab-item.active{background:var(--card-l1);color:var(--text-primary)}
+.tab-item:hover:not(.active){color:var(--text-primary)}
+
+/* Breadcrumb demo */
+.breadcrumb-demo{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  font-size:13px;color:var(--text-muted);
+  padding:10px 14px;background:var(--card-l2);border-radius:8px;
+}
+.breadcrumb-demo a{color:var(--text-secondary);text-decoration:none}
+.breadcrumb-demo a:hover{color:#D42B6A}
+.breadcrumb-demo .sep{font-size:10px;color:var(--border)}
+.breadcrumb-demo .current{color:var(--text-primary);font-weight:600}
+
+/* FAB demo */
+.fab-demo-wrap{position:relative;width:200px;height:140px}
+.fab{
+  position:absolute;bottom:16px;right:16px;
+  width:52px;height:52px;border-radius:50%;border:none;
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+  color:#fff;font-size:22px;cursor:pointer;
+  box-shadow:0 4px 20px rgba(212,43,106,.4);
+  display:flex;align-items:center;justify-content:center;
+}
+.fab-menu-demo{
+  position:absolute;bottom:76px;right:16px;
+  display:flex;flex-direction:column;gap:8px;align-items:flex-end;
+}
+.fab-item{
+  display:flex;align-items:center;gap:8px;
+  background:var(--card-l1);border:1px solid var(--border);
+  border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600;
+  white-space:nowrap;
+}
+
+/* Achievement demo */
+.achievement-demo{
+  display:flex;align-items:center;gap:12px;
+  background:var(--card-l1);border:1px solid var(--border);border-radius:14px;
+  padding:14px 18px;max-width:280px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 0 1px rgba(212,43,106,.2);
+}
+.achievement-icon{font-size:28px}
+.achievement-info .ach-title{font-size:13px;font-weight:700}
+.achievement-info .ach-desc{font-size:11px;color:var(--text-secondary)}
+
+/* Tip animation demo */
+.tip-demo{
+  position:relative;width:100px;height:100px;display:inline-flex;
+  align-items:center;justify-content:center;
+  background:var(--card-l2);border-radius:50%;border:1px solid var(--border);
+  font-size:13px;font-weight:700;cursor:pointer;
+  transition:transform .2s;
+}
+.tip-demo:hover{transform:scale(1.05)}
+
+/* Z-Index scale */
+.zindex-scale{display:flex;flex-direction:column;gap:4px}
+.zi-row{
+  display:flex;align-items:center;gap:16px;padding:8px 12px;
+  border-radius:8px;background:var(--card-l1);border:1px solid var(--border);
+}
+.zi-val{font-family:'Fira Code',monospace;font-size:12px;font-weight:700;width:80px;flex-shrink:0;color:#D42B6A}
+.zi-name{font-size:13px;font-weight:600}
+.zi-bar{height:6px;border-radius:3px;background:linear-gradient(90deg,#D42B6A,#8B2BE2);flex-shrink:0}
+
+/* Icon system */
+.icon-grid{display:flex;flex-wrap:wrap;gap:12px}
+.icon-item{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:12px 16px;background:var(--card-l1);border:1px solid var(--border);border-radius:10px;
+  min-width:80px;text-align:center;cursor:pointer;transition:border-color .2s;
+}
+.icon-item:hover{border-color:#D42B6A}
+.icon-item .ico{font-size:22px}
+.icon-item .ico-label{font-size:10px;color:var(--text-muted)}
+
+/* Animation demos */
+@keyframes ds-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ds-pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes ds-spin{to{transform:rotate(360deg)}}
+@keyframes ds-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.anim-box{
+  width:60px;height:60px;border-radius:var(--radius-md);
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+  display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;
+}
+.anim-fade{animation:ds-fade-in 1s ease infinite alternate}
+.anim-pulse{animation:ds-pulse 1.5s ease infinite}
+.anim-spin{animation:ds-spin 2s linear infinite;border-radius:50%}
+.anim-bounce{animation:ds-bounce 1s ease infinite}
+.anim-shimmer{animation:kol-shimmer 1.5s infinite}
+.anim-row{display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+.anim-item{display:flex;flex-direction:column;align-items:center;gap:8px}
+.anim-item-label{font-size:11px;color:var(--text-muted);font-family:'Fira Code',monospace}
+
+/* Breakpoint visualization */
+.bp-row{margin-bottom:12px}
+.bp-label-row{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-bottom:4px}
+.bp-track{height:24px;border-radius:6px;display:flex;overflow:hidden}
+.bp-segment{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+
+/* Code block */
+pre{
+  background:var(--card-l2);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:16px;font-family:'Fira Code','Cascadia Code',monospace;font-size:12px;
+  color:#A0A0C0;overflow-x:auto;line-height:1.7;margin:12px 0;
+}
+code{font-family:'Fira Code','Cascadia Code',monospace;font-size:12px;
+  background:var(--card-l2);padding:2px 6px;border-radius:4px;color:#D42B6A}
+
+/* Page hero */
+.ds-hero{
+  background:linear-gradient(135deg,rgba(212,43,106,.08),rgba(139,43,226,.08));
+  border:1px solid rgba(212,43,106,.2);border-radius:24px;
+  padding:48px;margin-bottom:64px;
+  text-align:center;
+}
+.ds-hero-tag{
+  display:inline-block;padding:4px 14px;border-radius:20px;
+  background:rgba(212,43,106,.15);border:1px solid rgba(212,43,106,.4);color:#D42B6A;
+  font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;
+}
+.ds-hero-title{
+  font-size:clamp(32px,5vw,52px);font-weight:900;
+  background:linear-gradient(135deg,#E8E8F0,#A0A0C0);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:12px;
+}
+.ds-hero-sub{font-size:16px;color:var(--text-secondary);max-width:540px;margin:0 auto 24px}
+.ds-hero-stats{display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.ds-hero-stat{text-align:center}
+.ds-hero-stat .num{font-size:28px;font-weight:900;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ds-hero-stat .lbl{font-size:12px;color:var(--text-muted)}
+
+/* Mobile */
+@media(max-width:900px){
+  .ds-nav{display:none}
+  .ds-content{padding:24px}
+  .stat-row-demo{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .ds-hero{padding:32px 20px}
+  .token-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="ds-wrap">
+
+<!-- Sidebar Nav -->
+<nav class="ds-nav">
+  <span class="ds-nav-logo">KOL Studio DS</span>
+  <ul>
+    <li class="section-label">Foundations</li>
+    <li><a href="#colors">🎨 Colors</a></li>
+    <li><a href="#gradients">🌈 Gradients</a></li>
+    <li><a href="#typography">✍️ Typography</a></li>
+    <li><a href="#spacing">📐 Spacing</a></li>
+    <li><a href="#radius">⬜ Border Radius</a></li>
+    <li><a href="#icons">🔣 Icons</a></li>
+    <li class="section-label">Components</li>
+    <li><a href="#buttons">🔘 Buttons</a></li>
+    <li><a href="#inputs">📝 Inputs</a></li>
+    <li><a href="#badges">🏷️ Badges</a></li>
+    <li><a href="#cards">🃏 Cards</a></li>
+    <li><a href="#nav-items">🧭 Navigation</a></li>
+    <li><a href="#toggles">🔄 Toggles</a></li>
+    <li><a href="#tabs">📑 Tabs</a></li>
+    <li><a href="#modals">🪟 Modals</a></li>
+    <li><a href="#toasts">🍞 Toasts</a></li>
+    <li><a href="#skeleton">💀 Skeletons</a></li>
+    <li><a href="#empty">📭 Empty States</a></li>
+    <li class="section-label">Patterns</li>
+    <li><a href="#breadcrumb">🍞 Breadcrumbs</a></li>
+    <li><a href="#stats">📊 Stats</a></li>
+    <li><a href="#fab">➕ FAB</a></li>
+    <li><a href="#achievements">🏆 Achievements</a></li>
+    <li><a href="#animations">✨ Animations</a></li>
+    <li><a href="#zindex">📚 Z-Index</a></li>
+    <li><a href="#breakpoints">📱 Breakpoints</a></li>
+    <li><a href="#a11y">♿ Accessibility</a></li>
+  </ul>
+</nav>
+
+<!-- Main Content -->
+<main class="ds-content">
+
+  <!-- Hero -->
+  <div class="ds-hero">
+    <div class="ds-hero-tag">Living Style Guide</div>
+    <h1 class="ds-hero-title">KOL Studio<br>Design System</h1>
+    <p class="ds-hero-sub">Полная документация токенов, компонентов и паттернов для всех 124 страниц платформы.</p>
+    <div class="ds-hero-stats">
+      <div class="ds-hero-stat"><div class="num">124</div><div class="lbl">HTML страниц</div></div>
+      <div class="ds-hero-stat"><div class="num">40+</div><div class="lbl">компонентов</div></div>
+      <div class="ds-hero-stat"><div class="num">8.8MB</div><div class="lbl">размер проекта</div></div>
+      <div class="ds-hero-stat"><div class="num">2</div><div class="lbl">языка (RU/EN)</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ COLORS ═══════════════ -->
+  <section class="ds-section" id="colors">
+    <h2 class="ds-section-title">Colors <span>Foundations</span></h2>
+    <p class="ds-section-desc">Все цвета определены как CSS custom properties и используются через хардкод hex в body.kol-light оверрайдах. Платформа — тёмная по умолчанию.</p>
+
+    <div class="palette-group">
+      <div class="palette-group-title">Фоны — Dark Mode</div>
+      <div class="palette-row">
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#07071A"></div><div class="palette-chip-info"><div class="palette-chip-name">--bg</div><div class="palette-chip-hex">#07071A</div></div></div>
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#111128"></div><div class="palette-chip-info"><div class="palette-chip-name">--card-l1</div><div class="palette-chip-hex">#111128</div></div></div>
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#181835"></div><div class="palette-chip-info"><div class="palette-chip-name">--card-l2</div><div class="palette-chip-hex">#181835</div></div></div>
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#22224A"></div><div class="palette-chip-info"><div class="palette-chip-name">--border</div><div class="palette-chip-hex">#22224A</div></div></div>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <div class="palette-group-title">Акценты</div>
+      <div class="palette-row">
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#D42B6A"></div><div class="palette-chip-info"><div class="palette-chip-name">Pink / CTA</div><div class="palette-chip-hex">#D42B6A</div></div></div>
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#8B2BE2"></div><div class="palette-chip-info"><div class="palette-chip-name">Purple</div><div class="palette-chip-hex">#8B2BE2</div></div></div>
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#00E676"></div><div class="palette-chip-info"><div class="palette-chip-name">Green</div><div class="palette-chip-hex">#00E676</div></div></div>
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#FFB300"></div><div class="palette-chip-info"><div class="palette-chip-name">Gold</div><div class="palette-chip-hex">#FFB300</div></div></div>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <div class="palette-group-title">Текст</div>
+      <div class="palette-row">
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#E8E8F0"></div><div class="palette-chip-info"><div class="palette-chip-name">Primary</div><div class="palette-chip-hex">#E8E8F0</div></div></div>
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#A0A0C0"></div><div class="palette-chip-info"><div class="palette-chip-name">Secondary</div><div class="palette-chip-hex">#A0A0C0</div></div></div>
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#6A6A8A"></div><div class="palette-chip-info"><div class="palette-chip-name">Muted</div><div class="palette-chip-hex">#6A6A8A</div></div></div>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <div class="palette-group-title">Фоны — Light Mode (body.kol-light)</div>
+      <div class="palette-row">
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#F2F2F8;border:1px solid #ddd"></div><div class="palette-chip-info"><div class="palette-chip-name">bg-light</div><div class="palette-chip-hex">#F2F2F8</div></div></div>
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#FFFFFF;border:1px solid #ddd"></div><div class="palette-chip-info"><div class="palette-chip-name">card-light</div><div class="palette-chip-hex">#FFFFFF</div></div></div>
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#E0E0ED;border:1px solid #ddd"></div><div class="palette-chip-info"><div class="palette-chip-name">border-light</div><div class="palette-chip-hex">#E0E0ED</div></div></div>
+        <div class="palette-chip"><div class="palette-chip-color" style="background:#1A1A2E"></div><div class="palette-chip-info"><div class="palette-chip-name">text-light</div><div class="palette-chip-hex">#1A1A2E</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ GRADIENTS ═══════════════ -->
+  <section class="ds-section" id="gradients">
+    <h2 class="ds-section-title">Gradients <span>Foundations</span></h2>
+    <div class="gradient-grid">
+      <div class="gradient-card">
+        <div class="gradient-preview" style="background:linear-gradient(135deg,#D42B6A,#8B2BE2)"></div>
+        <div class="gradient-info"><div class="gradient-name">Primary CTA</div><div class="gradient-code">linear-gradient(135deg, #D42B6A, #8B2BE2)</div></div>
+      </div>
+      <div class="gradient-card">
+        <div class="gradient-preview" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)"></div>
+        <div class="gradient-info"><div class="gradient-name">CTA Reverse</div><div class="gradient-code">linear-gradient(135deg, #8B2BE2, #D42B6A)</div></div>
+      </div>
+      <div class="gradient-card">
+        <div class="gradient-preview" style="background:linear-gradient(to top,#D42B6A,#8B2BE2)"></div>
+        <div class="gradient-info"><div class="gradient-name">Revenue Bar</div><div class="gradient-code">linear-gradient(to top, #D42B6A, #8B2BE2)</div></div>
+      </div>
+      <div class="gradient-card">
+        <div class="gradient-preview" style="background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite"></div>
+        <div class="gradient-info"><div class="gradient-name">Skeleton Shimmer</div><div class="gradient-code">animated, 1.5s infinite</div></div>
+      </div>
+      <div class="gradient-card">
+        <div class="gradient-preview" style="background:radial-gradient(ellipse at center,rgba(212,43,106,.3),transparent 70%)"></div>
+        <div class="gradient-info"><div class="gradient-name">Glow Effect</div><div class="gradient-code">radial-gradient ellipse, pink 30%</div></div>
+      </div>
+      <div class="gradient-card">
+        <div class="gradient-preview" style="background:linear-gradient(180deg,transparent,rgba(7,7,26,0.9))"></div>
+        <div class="gradient-info"><div class="gradient-name">Image Fade</div><div class="gradient-code">transparent → #07071A 0.9</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ TYPOGRAPHY ═══════════════ -->
+  <section class="ds-section" id="typography">
+    <h2 class="ds-section-title">Typography <span>Inter · Google Fonts</span></h2>
+    <p class="ds-section-desc">Единственный шрифт — Inter. Code-блоки: Fira Code / Cascadia Code. Размеры используют clamp() для fluid scaling на мобильных.</p>
+
+    <div class="type-row">
+      <div class="type-meta"><div class="label">Display</div><div class="spec">900 · clamp(32px,6vw,64px)</div></div>
+      <div class="type-sample" style="font-size:clamp(28px,4vw,48px);font-weight:900;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">KOL Studio</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><div class="label">H1</div><div class="spec">800 · clamp(24px,5vw,40px)</div></div>
+      <div class="type-sample" style="font-size:32px;font-weight:800">Discover Creators</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><div class="label">H2</div><div class="spec">700 · 24–32px</div></div>
+      <div class="type-sample" style="font-size:26px;font-weight:700">Trending Now</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><div class="label">H3</div><div class="spec">600 · 18–22px</div></div>
+      <div class="type-sample" style="font-size:20px;font-weight:600">Top Creators This Week</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><div class="label">H4</div><div class="spec">600 · 16–18px</div></div>
+      <div class="type-sample" style="font-size:17px;font-weight:600">Subscription plan details</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><div class="label">Body L</div><div class="spec">400 · 16px · 1.6</div></div>
+      <div class="type-sample" style="font-size:16px;line-height:1.6;color:var(--text-secondary)">Platform for exclusive content creators and their fans.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><div class="label">Body</div><div class="spec">400 · 14–15px · 1.6</div></div>
+      <div class="type-sample" style="font-size:14px;line-height:1.6;color:var(--text-secondary)">Subscribe to unlock exclusive photos, videos, and live sessions from your favourite creator.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><div class="label">Small</div><div class="spec">400 · 12–13px</div></div>
+      <div class="type-sample" style="font-size:12px;color:var(--text-muted)">Posted 3 hours ago · 12.4K views · 840 likes</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><div class="label">Label</div><div class="spec">700 · 10–11px · 1.5px</div></div>
+      <div class="type-sample" style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted)">Category · Creator Tools</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta"><div class="label">Code</div><div class="spec">Fira Code · 12–14px</div></div>
+      <div class="type-sample" style="font-family:'Fira Code',monospace;font-size:13px;color:#D42B6A">GET /api/v1/creators/{id}/posts</div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ SPACING ═══════════════ -->
+  <section class="ds-section" id="spacing">
+    <h2 class="ds-section-title">Spacing <span>Base-4 scale</span></h2>
+    <p class="ds-section-desc">Все отступы кратны 4px. Используются напрямую через CSS без переменных — соблюдается вручную.</p>
+    <div class="spacing-grid">
+      <div class="spacing-row"><div class="spacing-label">4px</div><div class="spacing-bar" style="width:4px"></div><div class="spacing-token">micro — icon gap, badge padding</div></div>
+      <div class="spacing-row"><div class="spacing-label">8px</div><div class="spacing-bar" style="width:8px"></div><div class="spacing-token">xs — badge-row gap, icon margin</div></div>
+      <div class="spacing-row"><div class="spacing-label">12px</div><div class="spacing-bar" style="width:12px"></div><div class="spacing-token">sm — nav gap, btn-sm padding</div></div>
+      <div class="spacing-row"><div class="spacing-label">16px</div><div class="spacing-bar" style="width:16px"></div><div class="spacing-token">md ★ — card padding mobile, grid gap</div></div>
+      <div class="spacing-row"><div class="spacing-label">20px</div><div class="spacing-bar" style="width:20px"></div><div class="spacing-token">lg — card gap, btn padding</div></div>
+      <div class="spacing-row"><div class="spacing-label">24px</div><div class="spacing-bar" style="width:24px"></div><div class="spacing-token">xl — card padding desktop, section gap</div></div>
+      <div class="spacing-row"><div class="spacing-label">32px</div><div class="spacing-bar" style="width:32px"></div><div class="spacing-token">2xl — section padding, modal padding</div></div>
+      <div class="spacing-row"><div class="spacing-label">48px</div><div class="spacing-bar" style="width:48px"></div><div class="spacing-token">4xl — section separation</div></div>
+      <div class="spacing-row"><div class="spacing-label">64px</div><div class="spacing-bar" style="width:64px"></div><div class="spacing-token">5xl — empty state, hero padding</div></div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ RADIUS ═══════════════ -->
+  <section class="ds-section" id="radius">
+    <h2 class="ds-section-title">Border Radius <span>Foundations</span></h2>
+    <div class="radius-grid">
+      <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px<br>badges, tags</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:6px"></div><div class="radius-label">6px<br>kbd keys</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">8px<br>code, sm btn</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:10px"></div><div class="radius-label">10px<br>inputs, btns</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">12px<br>cards sm</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-label">16px<br>cards std</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:20px"></div><div class="radius-label">20px<br>modals, hero cards</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:24px"></div><div class="radius-label">24px<br>auth form, hero</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:50%;width:64px;height:64px"></div><div class="radius-label">50%<br>avatars, FAB</div></div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ ICONS ═══════════════ -->
+  <section class="ds-section" id="icons">
+    <h2 class="ds-section-title">Icons <span>Emoji system</span></h2>
+    <p class="ds-section-desc">Иконки — системные emoji. Не требуют загрузки шрифтов иконок. Единый стандарт — font-size 18–22px в nav, 24–32px в картах, 48–56px в empty state.</p>
+    <div class="icon-grid">
+      <div class="icon-item"><div class="ico">🏠</div><div class="ico-label">Home</div></div>
+      <div class="icon-item"><div class="ico">🔥</div><div class="ico-label">Feed</div></div>
+      <div class="icon-item"><div class="ico">🔍</div><div class="ico-label">Search</div></div>
+      <div class="icon-item"><div class="ico">💬</div><div class="ico-label">Messages</div></div>
+      <div class="icon-item"><div class="ico">🔔</div><div class="ico-label">Notify</div></div>
+      <div class="icon-item"><div class="ico">💎</div><div class="ico-label">Premium</div></div>
+      <div class="icon-item"><div class="ico">💰</div><div class="ico-label">Wallet</div></div>
+      <div class="icon-item"><div class="ico">📊</div><div class="ico-label">Analytics</div></div>
+      <div class="icon-item"><div class="ico">🎬</div><div class="ico-label">Video</div></div>
+      <div class="icon-item"><div class="ico">📸</div><div class="ico-label">Photo</div></div>
+      <div class="icon-item"><div class="ico">🎁</div><div class="ico-label">Gift</div></div>
+      <div class="icon-item"><div class="ico">🏆</div><div class="ico-label">Trophy</div></div>
+      <div class="icon-item"><div class="ico">⭐</div><div class="ico-label">Star</div></div>
+      <div class="icon-item"><div class="ico">👑</div><div class="ico-label">VIP</div></div>
+      <div class="icon-item"><div class="ico">🔴</div><div class="ico-label">Live</div></div>
+      <div class="icon-item"><div class="ico">📅</div><div class="ico-label">Schedule</div></div>
+      <div class="icon-item"><div class="ico">🛡️</div><div class="ico-label">Security</div></div>
+      <div class="icon-item"><div class="ico">📤</div><div class="ico-label">Upload</div></div>
+      <div class="icon-item"><div class="ico">🌐</div><div class="ico-label">Language</div></div>
+      <div class="icon-item"><div class="ico">☀️</div><div class="ico-label">Theme</div></div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ BUTTONS ═══════════════ -->
+  <section class="ds-section" id="buttons">
+    <h2 class="ds-section-title">Buttons <span>Components</span></h2>
+    <div class="comp-grid">
+      <div class="comp-box">
+        <div class="comp-label">Variants</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <button class="btn btn-primary">✨ Primary Button</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <button class="btn btn-ghost">👑 Ghost Pink</button>
+          <button class="btn btn-primary btn-disabled">Disabled</button>
+        </div>
+      </div>
+      <div class="comp-box">
+        <div class="comp-label">Sizes</div>
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+          <button class="btn btn-primary btn-lg">Large Button</button>
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-primary btn-sm">Small</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-primary btn-icon">➕</button>
+            <button class="btn btn-secondary btn-icon">🔍</button>
+            <button class="btn btn-ghost btn-icon">💬</button>
+          </div>
+        </div>
+      </div>
+      <div class="comp-box" style="max-width:300px">
+        <div class="comp-label">States code</div>
+        <pre style="margin:0;font-size:11px">.btn-primary {
+  background: linear-gradient(
+    135deg, #D42B6A, #8B2BE2);
+  /* hover */ opacity: 0.9;
+  /* active */ transform: scale(.98);
+  /* focus-visible */
+    outline: 2.5px solid #D42B6A;
+  /* loading */ opacity: .7;
+    cursor: not-allowed;
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ INPUTS ═══════════════ -->
+  <section class="ds-section" id="inputs">
+    <h2 class="ds-section-title">Inputs <span>Components</span></h2>
+    <div class="comp-grid">
+      <div class="comp-box">
+        <div class="comp-label">States</div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="input-wrap">
+            <label class="input-label">Default</label>
+            <input class="inp" type="text" placeholder="Enter username...">
+          </div>
+          <div class="input-wrap">
+            <label class="input-label">Error state</label>
+            <input class="inp inp-error" type="email" value="invalid-email">
+            <span class="inp-hint error">⚠️ Введите корректный email</span>
+          </div>
+          <div class="input-wrap">
+            <label class="input-label">Success</label>
+            <input class="inp inp-success" type="text" value="koluser_88">
+            <span class="inp-hint">✅ Имя пользователя доступно</span>
+          </div>
+          <div class="input-wrap">
+            <label class="input-label">Disabled</label>
+            <input class="inp" type="text" value="read-only@email.com" disabled style="opacity:.5;cursor:not-allowed">
+          </div>
+        </div>
+      </div>
+      <div class="comp-box">
+        <div class="comp-label">Types</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <input class="inp" type="search" placeholder="🔍  Search creators...">
+          <input class="inp" type="password" placeholder="••••••••">
+          <textarea class="inp" rows="3" placeholder="Write your message..." style="resize:vertical"></textarea>
+          <select class="inp" style="cursor:pointer">
+            <option>Select category...</option>
+            <option>Art &amp; Design</option>
+            <option>Music</option>
+            <option>Fitness</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ BADGES ═══════════════ -->
+  <section class="ds-section" id="badges">
+    <h2 class="ds-section-title">Badges <span>Components</span></h2>
+    <div class="comp-box" style="max-width:600px">
+      <div class="comp-label">All variants</div>
+      <div class="badge-row">
+        <span class="badge badge-pink">🔥 HOT</span>
+        <span class="badge badge-pink">NEW</span>
+        <span class="badge badge-purple">💎 VIP</span>
+        <span class="badge badge-purple">PRO</span>
+        <span class="badge badge-green">✅ ONLINE</span>
+        <span class="badge badge-green">VERIFIED</span>
+        <span class="badge badge-gold">👑 TOP</span>
+        <span class="badge badge-gold">⭐ FEATURED</span>
+        <span class="badge badge-muted">BETA</span>
+        <span class="badge badge-muted">18+</span>
+      </div>
+      <pre style="margin-top:16px;font-size:11px">.badge-pink {
+  background: rgba(212,43,106,.15);
+  border: 1px solid rgba(212,43,106,.4);
+  color: #D42B6A;
+  border-radius: 20px; padding: 3px 10px;
+  font-size: 11px; font-weight: 700;
+}</pre>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ CARDS ═══════════════ -->
+  <section class="ds-section" id="cards">
+    <h2 class="ds-section-title">Cards <span>Components</span></h2>
+    <div class="comp-grid">
+      <div class="kol-card" style="max-width:300px">
+        <div class="kol-card-header">
+          <div class="kol-avatar">AK</div>
+          <div>
+            <div class="kol-card-title">Anna K. <span class="badge badge-purple" style="font-size:9px">VIP</span></div>
+            <div class="kol-card-sub">@annakova · 142K followers</div>
+          </div>
+        </div>
+        <div class="kol-card-body">Эксклюзивный контент, фото и видео каждую неделю. Подпишись и получи доступ к приватному архиву.</div>
+        <div class="kol-card-footer">
+          <div class="kol-stat-item"><div class="kol-stat-val" style="background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">1.2K</div><div class="kol-stat-lbl">постов</div></div>
+          <div class="kol-stat-item"><div class="kol-stat-val" style="color:#00E676">$12</div><div class="kol-stat-lbl">/мес</div></div>
+          <div class="kol-stat-item"><div class="kol-stat-val" style="color:#FFB300">4.9★</div><div class="kol-stat-lbl">рейтинг</div></div>
+          <button class="btn btn-primary btn-sm" style="margin-left:auto">Subscribe</button>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:240px">
+        <!-- Stat card -->
+        <div style="background:var(--card-l1);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px">
+          <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Доход за месяц</div>
+          <div style="font-size:28px;font-weight:900;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">$4,280</div>
+          <div style="font-size:12px;color:#00E676;margin-top:4px">▲ 14.3% vs прошлый месяц</div>
+        </div>
+        <!-- Progress card -->
+        <div style="background:var(--card-l1);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px;font-weight:600">
+            <span>До топ-10</span><span style="color:#D42B6A">73%</span>
+          </div>
+          <div class="prog-track"><div class="prog-fill" style="width:73%"></div></div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:6px">Ещё 842 подписчика</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ NAVIGATION ═══════════════ -->
+  <section class="ds-section" id="nav-items">
+    <h2 class="ds-section-title">Navigation <span>Components</span></h2>
+    <div class="comp-grid">
+      <div class="comp-box">
+        <div class="comp-label">Sidebar items</div>
+        <div class="nav-demo">
+          <div class="nav-item-demo active"><span class="nav-icon">🔥</span>Лента</div>
+          <div class="nav-item-demo"><span class="nav-icon">🔍</span>Поиск</div>
+          <div class="nav-item-demo"><span class="nav-icon">💬</span>Сообщения<span class="badge badge-pink" style="margin-left:auto">3</span></div>
+          <div class="nav-item-demo"><span class="nav-icon">🔔</span>Уведомления</div>
+          <div class="nav-item-demo"><span class="nav-icon">💰</span>Кошелёк</div>
+          <div class="nav-item-demo"><span class="nav-icon">👤</span>Профиль</div>
+        </div>
+      </div>
+      <div class="comp-box" style="max-width:280px">
+        <div class="comp-label">Nav item CSS</div>
+        <pre style="margin:0;font-size:11px">.nav-item {
+  display: flex; align-items: center;
+  gap: 12px; padding: 10px 12px;
+  border-radius: 10px;
+  color: #A0A0C0;
+  transition: all .2s;
+}
+.nav-item:hover {
+  background: #181835;
+  color: #E8E8F0;
+}
+.nav-item.active {
+  background: rgba(212,43,106,.12);
+  color: #D42B6A;
+  border-left: 3px solid #D42B6A;
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ TOGGLES ═══════════════ -->
+  <section class="ds-section" id="toggles">
+    <h2 class="ds-section-title">Toggles <span>CSS-only</span></h2>
+    <div class="comp-box" style="max-width:360px">
+      <div class="comp-label">Notification preferences</div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-title">Новые подписчики</div><div class="toggle-desc">Push при каждом</div></div>
+        <label class="kol-toggle"><input type="checkbox" checked><div class="kol-toggle-track"></div><div class="kol-toggle-thumb"></div></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-title">Сообщения</div><div class="toggle-desc">Только от платных</div></div>
+        <label class="kol-toggle"><input type="checkbox" checked><div class="kol-toggle-track"></div><div class="kol-toggle-thumb"></div></label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info"><div class="toggle-title">Маркетинговые</div><div class="toggle-desc">Акции и предложения</div></div>
+        <label class="kol-toggle"><input type="checkbox"><div class="kol-toggle-track"></div><div class="kol-toggle-thumb"></div></label>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ TABS ═══════════════ -->
+  <section class="ds-section" id="tabs">
+    <h2 class="ds-section-title">Tabs <span>Components</span></h2>
+    <div class="comp-box" style="max-width:500px">
+      <div class="comp-label">Pill tabs (most common pattern)</div>
+      <div class="tabs-demo">
+        <div class="tab-item active">Все</div>
+        <div class="tab-item">Фото</div>
+        <div class="tab-item">Видео</div>
+        <div class="tab-item">Закрытые</div>
+      </div>
+      <div style="color:var(--text-secondary);font-size:13px">Контент вкладки отображается здесь...</div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ MODALS ═══════════════ -->
+  <section class="ds-section" id="modals">
+    <h2 class="ds-section-title">Modals <span>Components</span></h2>
+    <div class="comp-grid">
+      <div class="modal-demo">
+        <div class="modal-header">
+          <div class="modal-title">🔒 Подтвердите действие</div>
+          <button class="modal-close">×</button>
+        </div>
+        <div class="modal-body">Вы уверены, что хотите отменить подписку? Доступ к контенту будет закрыт по истечении оплаченного периода.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary">Отмена</button>
+          <button class="btn btn-primary">Подтвердить</button>
+        </div>
+      </div>
+      <div class="comp-box" style="max-width:280px">
+        <div class="comp-label">Modal animation CSS</div>
+        <pre style="margin:0;font-size:11px">/* Backdrop */
+background: rgba(7,7,26,.85);
+backdrop-filter: blur(4px);
+
+/* Box animation */
+@keyframes kol-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(.92)
+      translateY(20px);
+  }
+}
+
+/* Mobile → bottom sheet */
+@media(max-width:768px) {
+  .modal-box {
+    border-radius: 20px 20px 0 0;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    max-height: 90vh;
+  }
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ TOASTS ═══════════════ -->
+  <section class="ds-section" id="toasts">
+    <h2 class="ds-section-title">Toasts <span>Components</span></h2>
+    <div style="display:flex;flex-direction:column;gap:12px;max-width:380px">
+      <div class="toast-demo success"><div class="toast-icon">✅</div><div class="toast-text">Подписка оформлена успешно!</div></div>
+      <div class="toast-demo error"><div class="toast-icon">❌</div><div class="toast-text">Ошибка платежа. Проверьте карту.</div></div>
+      <div class="toast-demo info"><div class="toast-icon">💎</div><div class="toast-text">Вы вошли в топ-10% авторов!</div></div>
+      <div class="toast-demo"><div class="toast-icon">🔔</div><div class="toast-text">Новое сообщение от Anna K.</div></div>
+    </div>
+    <pre style="margin-top:16px;max-width:400px;font-size:11px">window.kolShowToast(message, type)
+// type: 'success' | 'error' | 'info' | default
+// Auto-dismiss: 3500ms
+// Position: bottom-center, z-index 10100</pre>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ SKELETON ═══════════════ -->
+  <section class="ds-section" id="skeleton">
+    <h2 class="ds-section-title">Skeleton Loaders <span>45/62 pages</span></h2>
+    <div class="comp-grid">
+      <div class="skel-demo" style="max-width:320px">
+        <div class="skel skel-avatar-demo"></div>
+        <div class="skel-lines">
+          <div class="skel" style="height:14px;width:60%"></div>
+          <div class="skel" style="height:12px;width:40%"></div>
+          <div class="skel" style="height:100px;width:100%;border-radius:12px;margin-top:4px"></div>
+          <div style="display:flex;gap:8px">
+            <div class="skel" style="height:12px;width:30%"></div>
+            <div class="skel" style="height:12px;width:25%"></div>
+            <div class="skel" style="height:12px;width:20%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="comp-box" style="max-width:280px">
+        <div class="comp-label">Skeleton CSS</div>
+        <pre style="margin:0;font-size:11px">@keyframes kol-shimmer {
+  0%   { background-position: 200% 0 }
+  100% { background-position: -200% 0 }
+}
+.skel {
+  background: linear-gradient(
+    90deg,
+    #181835 25%,
+    #22224A 50%,
+    #181835 75%
+  );
+  background-size: 200% 100%;
+  animation: kol-shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+/* Variants: .skel-text, .skel-avatar,
+   .skel-thumb, .skel-btn, .skel-card */</pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ EMPTY STATE ═══════════════ -->
+  <section class="ds-section" id="empty">
+    <h2 class="ds-section-title">Empty States <span>Components</span></h2>
+    <div class="comp-grid">
+      <div class="empty-demo">
+        <div class="empty-icon">📭</div>
+        <div class="empty-title">Нет постов</div>
+        <div class="empty-desc">Станьте первым — загрузите контент и начните зарабатывать</div>
+        <button class="btn btn-primary btn-sm" style="margin-top:8px">📤 Загрузить</button>
+      </div>
+      <div class="empty-demo">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-title">Ничего не найдено</div>
+        <div class="empty-desc">Попробуйте другой запрос или измените фильтры</div>
+      </div>
+      <div class="empty-demo">
+        <div class="empty-icon">💬</div>
+        <div class="empty-title">Нет сообщений</div>
+        <div class="empty-desc">Начните общаться с авторами которые вам нравятся</div>
+        <button class="btn btn-ghost btn-sm" style="margin-top:8px">Найти авторов</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ BREADCRUMB ═══════════════ -->
+  <section class="ds-section" id="breadcrumb">
+    <h2 class="ds-section-title">Breadcrumbs <span>35 pages</span></h2>
+    <nav class="breadcrumb-demo" aria-label="breadcrumb">
+      <a href="#">🏠 Главная</a>
+      <span class="sep">›</span>
+      <a href="#">Кабинет автора</a>
+      <span class="sep">›</span>
+      <span class="current">Аналитика</span>
+    </nav>
+    <pre style="margin-top:12px;max-width:520px;font-size:11px">&lt;nav class="kol-breadcrumb" aria-label="breadcrumb"&gt;
+  &lt;a href="index.html"&gt;🏠 Главная&lt;/a&gt;
+  &lt;span class="sep"&gt;›&lt;/span&gt;
+  &lt;a href="model-cabinet.html"&gt;Кабинет&lt;/a&gt;
+  &lt;span class="sep"&gt;›&lt;/span&gt;
+  &lt;span class="current"&gt;Аналитика&lt;/span&gt;
+&lt;/nav&gt;</pre>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ STATS ═══════════════ -->
+  <section class="ds-section" id="stats">
+    <h2 class="ds-section-title">Stats &amp; Progress <span>Patterns</span></h2>
+    <div class="stat-row-demo" style="max-width:480px;margin-bottom:20px">
+      <div class="stat-card-demo"><div class="stat-num">142K</div><div class="stat-lbl">Followers</div></div>
+      <div class="stat-card-demo"><div class="stat-num">$4.2K</div><div class="stat-lbl">Revenue</div></div>
+      <div class="stat-card-demo"><div class="stat-num">97%</div><div class="stat-lbl">Retention</div></div>
+    </div>
+    <div style="max-width:400px">
+      <div class="prog-wrap"><div class="prog-label"><span>Видео</span><span>68%</span></div><div class="prog-track"><div class="prog-fill" style="width:68%"></div></div></div>
+      <div class="prog-wrap"><div class="prog-label"><span>Фото</span><span>45%</span></div><div class="prog-track"><div class="prog-fill" style="width:45%;background:linear-gradient(90deg,#8B2BE2,#D42B6A)"></div></div></div>
+      <div class="prog-wrap"><div class="prog-label"><span>Stories</span><span>82%</span></div><div class="prog-track"><div class="prog-fill" style="width:82%;background:linear-gradient(90deg,#00E676,#8B2BE2)"></div></div></div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ FAB ═══════════════ -->
+  <section class="ds-section" id="fab">
+    <h2 class="ds-section-title">FAB <span>Floating Action Button</span></h2>
+    <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+      <div class="fab-demo-wrap">
+        <div class="fab-menu-demo">
+          <div class="fab-item">📤 Загрузить</div>
+          <div class="fab-item">💬 Написать</div>
+          <div class="fab-item">🔍 Поиск</div>
+        </div>
+        <button class="fab">✕</button>
+      </div>
+      <div class="comp-box" style="max-width:280px">
+        <div class="comp-label">Global JS API</div>
+        <pre style="margin:0;font-size:11px">window.kolToggleFab()
+// Открыть/закрыть меню
+
+// A/B flag:
+window.KOL_FLAGS.showFAB
+// = true (default on)
+
+// Shortcuts:
+// N → upload.html
+// M → messages.html
+// / → search.html
+
+/* FAB z-index: 9900 */
+/* Menu z-index: 9899 */</pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ ACHIEVEMENTS ═══════════════ -->
+  <section class="ds-section" id="achievements">
+    <h2 class="ds-section-title">Achievements &amp; Tips <span>Gamification</span></h2>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:24px">
+      <div class="achievement-demo"><div class="achievement-icon">👑</div><div class="achievement-info"><div class="ach-title">Топ-фан разблокирован!</div><div class="ach-desc">Ты в топ-10% подписчиков платформы</div></div></div>
+      <div class="achievement-demo"><div class="achievement-icon">🔥</div><div class="achievement-info"><div class="ach-title">Стрик 7 дней</div><div class="ach-desc">Заходишь на платформу 7 дней подряд</div></div></div>
+      <div class="achievement-demo"><div class="achievement-icon">💎</div><div class="achievement-info"><div class="ach-title">Большой типпер</div><div class="ach-desc">Отправил чаевые на сумму 1000+</div></div></div>
+    </div>
+    <pre style="max-width:520px;font-size:11px">// Achievement API
+window.kolUnlockAchievement('👑', 'Топ-фан', 'Описание')
+window.KOL_ACHIEVEMENTS = {
+  first_sub, top_fan, big_tipper,
+  early_bird, streak_7, streak_30,
+  vip_member, collector
+}
+
+// Turbo Tips
+window.kolFireTip(amount, x, y)
+// &lt;100:   💰 gold burst
+// 100-499: 💎 green burst
+// 500-999: 🔥 orange burst
+// 1000+:  👑 pink fullscreen popup + streak</pre>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ ANIMATIONS ═══════════════ -->
+  <section class="ds-section" id="animations">
+    <h2 class="ds-section-title">Animations <span>Motion</span></h2>
+    <div class="anim-row" style="margin-bottom:24px">
+      <div class="anim-item"><div class="anim-box anim-fade">🏠</div><div class="anim-item-label">kol-fade-in<br>0.3s ease</div></div>
+      <div class="anim-item"><div class="anim-box anim-pulse">💫</div><div class="anim-item-label">kol-pulse<br>1.5s ease</div></div>
+      <div class="anim-item"><div class="anim-box anim-spin" style="border-radius:50%">⚙️</div><div class="anim-item-label">kol-spin<br>2s linear</div></div>
+      <div class="anim-item"><div class="anim-box anim-bounce">🔔</div><div class="anim-item-label">kol-bounce<br>1s ease</div></div>
+      <div class="anim-item"><div class="skel" style="width:80px;height:60px;border-radius:12px"></div><div class="anim-item-label">kol-shimmer<br>1.5s infinite</div></div>
+    </div>
+    <pre style="max-width:520px;font-size:11px">/* Page transitions */
+body { animation: kol-fade-in .3s ease both }
+
+/* Navigation (before redirect) */
+document.body.style.animation = 'kol-fade-out .25s ease forwards'
+setTimeout(() => location.href = url, 250)
+
+/* Modal */
+@keyframes kol-modal-in {
+  from { opacity:0; transform: scale(.92) translateY(20px) }
+}
+
+/* Turbo tip burst */
+@keyframes kol-burst {
+  to { transform: scale(3); opacity: 0 }
+} /* duration: .6s */
+
+/* Tip fly */
+@keyframes kol-tip-fly {
+  to { transform: translateY(-160px) scale(.5); opacity:0 }
+} /* duration: 1.8s */
+
+/* Achievement toast */
+@keyframes kol-achievement-in {
+  from { transform: translateX(120%) }
+} /* cubic-bezier(0.34, 1.56, 0.64, 1) */</pre>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ Z-INDEX ═══════════════ -->
+  <section class="ds-section" id="zindex">
+    <h2 class="ds-section-title">Z-Index Scale <span>Stacking</span></h2>
+    <div class="zindex-scale" style="max-width:560px">
+      <div class="zi-row"><div class="zi-val">1–100</div><div class="zi-bar" style="width:10px"></div><div class="zi-name">Page content, cards</div></div>
+      <div class="zi-row"><div class="zi-val">100</div><div class="zi-bar" style="width:20px"></div><div class="zi-name">Sticky header</div></div>
+      <div class="zi-row"><div class="zi-val">200</div><div class="zi-bar" style="width:30px"></div><div class="zi-name">Sidebar (mobile overlay)</div></div>
+      <div class="zi-row"><div class="zi-val">500</div><div class="zi-bar" style="width:50px"></div><div class="zi-name">Skeleton overlay</div></div>
+      <div class="zi-row"><div class="zi-val">1000</div><div class="zi-bar" style="width:70px"></div><div class="zi-name">Bottom nav (mobile)</div></div>
+      <div class="zi-row"><div class="zi-val">9800</div><div class="zi-bar" style="width:120px"></div><div class="zi-name">Keyboard shortcut hint pill</div></div>
+      <div class="zi-row"><div class="zi-val">9899</div><div class="zi-bar" style="width:130px"></div><div class="zi-name">FAB menu</div></div>
+      <div class="zi-row"><div class="zi-val">9900</div><div class="zi-bar" style="width:135px"></div><div class="zi-name">FAB button</div></div>
+      <div class="zi-row"><div class="zi-val">9970</div><div class="zi-bar" style="width:140px"></div><div class="zi-name">PWA install prompt</div></div>
+      <div class="zi-row"><div class="zi-val">9980</div><div class="zi-bar" style="width:145px"></div><div class="zi-name">Theme toggle button</div></div>
+      <div class="zi-row"><div class="zi-val">9990</div><div class="zi-bar" style="width:150px"></div><div class="zi-name">GDPR cookie banner</div></div>
+      <div class="zi-row"><div class="zi-val">9995</div><div class="zi-bar" style="width:152px"></div><div class="zi-name">Cookie preferences modal</div></div>
+      <div class="zi-row"><div class="zi-val">10100</div><div class="zi-bar" style="width:156px"></div><div class="zi-name">Report modal</div></div>
+      <div class="zi-row"><div class="zi-val">10150</div><div class="zi-bar" style="width:160px"></div><div class="zi-name">Achievement toast</div></div>
+      <div class="zi-row"><div class="zi-val">10200</div><div class="zi-bar" style="width:164px"></div><div class="zi-name">Turbo tip animation</div></div>
+      <div class="zi-row"><div class="zi-val">10300</div><div class="zi-bar" style="width:168px"></div><div class="zi-name">Streak popup</div></div>
+      <div class="zi-row"><div class="zi-val">10500</div><div class="zi-bar" style="width:180px"></div><div class="zi-name">Keyboard shortcuts panel</div></div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ BREAKPOINTS ═══════════════ -->
+  <section class="ds-section" id="breakpoints">
+    <h2 class="ds-section-title">Breakpoints <span>Responsive</span></h2>
+    <div style="max-width:580px">
+      <div class="bp-row">
+        <div class="bp-label-row"><span>0</span><span>480px</span><span>768px</span><span>1024px</span><span>1280px+</span></div>
+        <div class="bp-track" style="height:32px">
+          <div class="bp-segment" style="flex:1;background:#D42B6A;font-size:10px">Small</div>
+          <div class="bp-segment" style="flex:1.2;background:#8B2BE2;font-size:10px">Mobile</div>
+          <div class="bp-segment" style="flex:1.5;background:#5B1BE2;font-size:10px">Tablet</div>
+          <div class="bp-segment" style="flex:2;background:#3B1BA2;font-size:10px">Desktop</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px">
+        <div style="background:var(--card-l1);border:1px solid var(--border);border-radius:10px;padding:14px">
+          <div style="font-size:11px;font-weight:700;color:#D42B6A;margin-bottom:8px">📱 &lt; 480px Small</div>
+          <div style="font-size:12px;color:var(--text-secondary);line-height:1.7">• 1 колонка везде<br>• Scroll tabs<br>• H1 clamp(22px,6vw)<br>• .hide-mobile скрыт</div>
+        </div>
+        <div style="background:var(--card-l1);border:1px solid var(--border);border-radius:10px;padding:14px">
+          <div style="font-size:11px;font-weight:700;color:#8B2BE2;margin-bottom:8px">📱 480–768px Mobile</div>
+          <div style="font-size:12px;color:var(--text-secondary);line-height:1.7">• 1 колонка<br>• .grid-3 → 1fr<br>• Модалки → bottom sheet<br>• stats-row → 1fr</div>
+        </div>
+        <div style="background:var(--card-l1);border:1px solid var(--border);border-radius:10px;padding:14px">
+          <div style="font-size:11px;font-weight:700;color:#5B1BE2;margin-bottom:8px">💻 768–1024px Tablet</div>
+          <div style="font-size:12px;color:var(--text-secondary);line-height:1.7">• Sidebar скрывается<br>• Контент полной ширины<br>• .grid-4 → 2fr<br>• Горизонт. скролл</div>
+        </div>
+        <div style="background:var(--card-l1);border:1px solid var(--border);border-radius:10px;padding:14px">
+          <div style="font-size:11px;font-weight:700;color:#3B1BA2;margin-bottom:8px">🖥️ &gt; 1024px Desktop</div>
+          <div style="font-size:12px;color:var(--text-secondary);line-height:1.7">• Sidebar 240px fixed<br>• Max-width 1280px<br>• .grid-3, .grid-4<br>• Все фичи активны</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ ACCESSIBILITY ═══════════════ -->
+  <section class="ds-section" id="a11y">
+    <h2 class="ds-section-title">Accessibility <span>WCAG 2.1 AA</span></h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:680px">
+      <div style="background:var(--card-l1);border:1px solid var(--border);border-radius:12px;padding:16px">
+        <div style="font-size:12px;font-weight:700;color:#00E676;margin-bottom:10px">✅ Реализовано</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:2">
+          • Skip-to-content link<br>
+          • :focus-visible outline 2.5px<br>
+          • aria-label на всех иконках<br>
+          • role=dialog на модалках<br>
+          • aria-live для тостов<br>
+          • Breadcrumb nav aria-label<br>
+          • loading="lazy" на img<br>
+          • lang="ru"/"en" на html<br>
+          • Print CSS скрывает UI<br>
+          • Keyboard shortcuts
+        </div>
+      </div>
+      <div style="background:var(--card-l1);border:1px solid var(--border);border-radius:12px;padding:16px">
+        <div style="font-size:12px;font-weight:700;color:#FFB300;margin-bottom:10px">⚠️ Будущие улучшения</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:2">
+          • aria-expanded на FAB/nav<br>
+          • aria-current="page" в nav<br>
+          • Trap focus в модалках<br>
+          • Escape key → close modal<br>
+          • Reduced motion support<br>
+          • Alt text на все изображения<br>
+          • ARIA роли для таблиц<br>
+          • Контраст 4.5:1 проверка<br>
+          • Screen reader testing<br>
+          • ARIA live regions
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;background:var(--card-l1);border:1px solid var(--border);border-radius:12px;padding:16px;max-width:480px">
+      <div style="font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:10px">ГЛОБАЛЬНЫЕ CSS ПРАВИЛА</div>
+      <pre style="margin:0;font-size:11px">/* Skip link */
+.kol-skip-link {
+  position: absolute; top: -60px; left: 16px;
+  background: #D42B6A; color: #fff;
+  padding: 8px 16px; border-radius: 8px;
+}
+.kol-skip-link:focus { top: 0 }
+
+/* Focus visible */
+:focus-visible {
+  outline: 2.5px solid #D42B6A !important;
+  outline-offset: 3px !important;
+}
+
+/* Target: &lt;main id="kol-main"&gt; */</pre>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- Global Systems Summary -->
+  <section class="ds-section">
+    <h2 class="ds-section-title">Global Systems Coverage</h2>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="border-bottom:1px solid var(--border)">
+            <th style="text-align:left;padding:10px 12px;color:var(--text-muted);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase">Система</th>
+            <th style="text-align:center;padding:10px 12px;color:var(--text-muted);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase">RU</th>
+            <th style="text-align:center;padding:10px 12px;color:var(--text-muted);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase">EN</th>
+            <th style="text-align:left;padding:10px 12px;color:var(--text-muted);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase">Хранилище</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px">GDPR cookie banner + modal</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">54/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">54/62</span></td><td style="padding:10px 12px;color:var(--text-muted);font-family:monospace;font-size:12px">kol_consent_v2</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px">Dark / Light theme toggle</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">62/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">62/62</span></td><td style="padding:10px 12px;color:var(--text-muted);font-family:monospace;font-size:12px">kol_theme</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px">PWA install prompt</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">54/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">54/62</span></td><td style="padding:10px 12px;color:var(--text-muted);font-family:monospace;font-size:12px">kol_pwa_dismissed</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px">Canonical + hreflang</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">62/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">62/62</span></td><td style="padding:10px 12px;color:var(--text-muted)">—</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px">OG / Social meta tags</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">62/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">62/62</span></td><td style="padding:10px 12px;color:var(--text-muted)">—</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px">Schema.org JSON-LD</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">54/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-muted">—</span></td><td style="padding:10px 12px;color:var(--text-muted)">—</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px">Skip-to-content + focus-visible</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">62/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">56/62</span></td><td style="padding:10px 12px;color:var(--text-muted)">—</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px">Breadcrumb navigation</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-gold">35/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-gold">35/62</span></td><td style="padding:10px 12px;color:var(--text-muted)">—</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px">Skeleton loaders</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">45/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">45/62</span></td><td style="padding:10px 12px;color:var(--text-muted)">—</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px">FAB + Keyboard shortcuts + Analytics</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">50/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-green">50/62</span></td><td style="padding:10px 12px;color:var(--text-muted);font-family:monospace;font-size:12px">kol_analytics_queue</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 12px">Report modal</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-gold">12/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-muted">—</span></td><td style="padding:10px 12px;color:var(--text-muted)">RPT-YYYY-XXXX</td></tr>
+          <tr><td style="padding:10px 12px">Turbo Tips + Achievements</td><td style="text-align:center;padding:10px 12px"><span class="badge badge-gold">6/62</span></td><td style="text-align:center;padding:10px 12px"><span class="badge badge-muted">—</span></td><td style="padding:10px 12px;color:var(--text-muted);font-family:monospace;font-size:12px">kol_achievements</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div style="text-align:center;padding:48px 0;color:var(--text-muted);font-size:13px">
+    <div style="font-size:24px;margin-bottom:8px">✦</div>
+    KOL Studio Design System · v1.0 · 2025<br>
+    Pure HTML/CSS/JS · Inter · 124 pages · 8.8MB
+  </div>
+
+</main>
+</div>
+</body>
+</html>

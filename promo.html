@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Промо-акции — KOL Studio</title>
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#D42B6A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KOL Studio">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Промо-акции — KOL Studio">
+<meta property="og:description" content="Управление промо-кодами и скидками для подписчиков">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07071A;--card:#111128;--card2:#181835;--border:#22224A;
+  --accent:#D42B6A;--accent2:#8B2BE2;--green:#00E676;--gold:#FFB300;
+  --text:#E8E8FF;--muted:#7878A8;--dim:#4A4A7A;--danger:#FF4444;--r:14px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(34,34,74,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(34,34,74,.3) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.glow{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(212,43,106,.08) 0%,transparent 70%);top:-200px;left:-200px;pointer-events:none;z-index:0}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(7,7,26,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+.nav-logo{font-size:18px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+.nav-back{display:flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:14px;background:none;border:none;cursor:pointer;transition:color .2s}
+.nav-back:hover{color:var(--text)}
+.btn-create{display:flex;align-items:center;gap:6px;padding:9px 18px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-create:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(212,43,106,.3)}
+
+/* LAYOUT */
+.wrap{max-width:860px;margin:0 auto;padding:24px 16px 80px;position:relative;z-index:1}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;text-align:center}
+.stat-val{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.stat-label{font-size:12px;color:var(--muted)}
+
+/* SECTION */
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.section-title{font-size:16px;font-weight:700}
+.section-sub{font-size:13px;color:var(--muted)}
+
+/* PROMO CARD */
+.promo-list{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
+.promo-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:border-color .2s}
+.promo-card:hover{border-color:rgba(212,43,106,.25)}
+.promo-card.warning{border-color:rgba(255,179,0,.3)}
+.promo-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.promo-code-badge{background:rgba(212,43,106,.12);border:1px solid rgba(212,43,106,.3);border-radius:8px;padding:8px 14px;font-family:monospace;font-size:16px;font-weight:700;color:var(--accent);letter-spacing:.05em;cursor:pointer;transition:all .2s;white-space:nowrap}
+.promo-code-badge:hover{background:rgba(212,43,106,.2);transform:scale(1.02)}
+.promo-info{flex:1}
+.promo-type{font-size:13px;font-weight:600;margin-bottom:4px}
+.promo-meta{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:10px}
+.promo-meta span{display:flex;align-items:center;gap:4px}
+.promo-actions{display:flex;gap:8px;margin-left:auto;flex-shrink:0}
+.btn-sm{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--muted);transition:all .2s}
+.btn-sm:hover{border-color:var(--accent);color:var(--accent)}
+.btn-sm.danger:hover{border-color:var(--danger);color:var(--danger)}
+.promo-progress{margin-top:12px}
+.prog-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px}
+.prog-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .5s}
+.promo-sparkline{display:flex;align-items:flex-end;gap:3px;height:32px;margin-top:12px}
+.spark-bar{background:rgba(212,43,106,.4);border-radius:2px;flex:1;transition:background .2s}
+.spark-bar:hover{background:var(--accent)}
+.warning-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(255,179,0,.12);border:1px solid rgba(255,179,0,.3);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:600;color:var(--gold);margin-left:8px}
+
+/* HISTORY TABLE */
+.table-wrap{overflow-x:auto;margin-bottom:32px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 14px;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border);background:var(--card2)}
+td{padding:12px 14px;border-bottom:1px solid rgba(34,34,74,.5);color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+.badge{display:inline-block;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.badge-green{background:rgba(0,230,118,.12);color:var(--green)}
+.badge-gray{background:rgba(120,120,168,.12);color:var(--muted)}
+
+/* TIPS */
+.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
+.tip-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.tip-icon{font-size:22px;margin-bottom:8px}
+.tip-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.tip-text{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,10,.7);backdrop-filter:blur(8px);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-width:600px;padding:28px;max-height:90vh;overflow-y:auto;transform:translateY(20px);transition:transform .3s}
+.overlay.open .modal{transform:translateY(0)}
+@media(min-width:600px){.overlay{align-items:center}.modal{border-radius:20px;max-height:85vh}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.modal-title{font-size:18px;font-weight:800}
+.modal-close{background:var(--card2);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--muted)}
+
+/* FORM */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;background:var(--card2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;padding:11px 14px;outline:none;transition:border-color .2s}
+.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(212,43,106,.1)}
+.field input::placeholder{color:var(--dim)}
+.field select option{background:var(--card2)}
+.field-hint{font-size:11px;color:var(--dim);margin-top:4px}
+.type-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
+.type-card{border:2px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .2s;background:var(--card2)}
+.type-card:hover{border-color:var(--accent2)}
+.type-card.selected{border-color:var(--accent);background:rgba(212,43,106,.08)}
+.type-card-icon{font-size:20px;margin-bottom:4px}
+.type-card-label{font-size:12px;font-weight:600}
+.type-card-desc{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* PLAN RADIOS */
+.plan-radios{display:flex;flex-wrap:wrap;gap:8px}
+.plan-radio{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.plan-radio.selected{border-color:var(--accent);background:rgba(212,43,106,.12);color:var(--accent)}
+
+/* PREVIEW */
+.promo-preview{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0}
+.preview-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.preview-price{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.price-old{font-size:16px;color:var(--muted);text-decoration:line-through}
+.price-new{font-size:22px;font-weight:800;color:var(--green)}
+.price-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px}
+
+/* FOOTER BUTTONS */
+.modal-footer{display:flex;gap:10px;margin-top:20px}
+.btn-primary{flex:1;padding:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(212,43,106,.3)}
+.btn-outline{padding:13px 20px;background:transparent;border:1.5px solid var(--border);border-radius:10px;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-outline:hover{border-color:var(--text);color:var(--text)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-size:14px;font-weight:600;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* COLLAPSED SECTION */
+.collapsed-header{display:flex;align-items:center;justify-content:space-between;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;margin-bottom:14px}
+.collapsed-header:hover{border-color:rgba(212,43,106,.2)}
+.collapsed-content{display:none}
+.collapsed-content.open{display:block}
+.chevron{transition:transform .3s;font-size:12px}
+.collapsed-header.open .chevron{transform:rotate(180deg)}
+
+/* TRANSITIONS */
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in .28s ease forwards}
+body.kol-leaving{animation:kol-fade-out .22s ease forwards;pointer-events:none}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .tips-grid{grid-template-columns:1fr}
+  .type-cards{grid-template-columns:1fr}
+  .promo-top{flex-wrap:wrap}
+  .promo-actions{margin-left:0}
+}
+</style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"Промо-акции — KOL Studio","description":"Специальные предложения и скидки для подписчиков","url":"https://kolstudio.com/promo.html","publisher":{"@type":"Organization","name":"KOL Studio","logo":{"@type":"ImageObject","url":"https://kolstudio.com/icons/icon-192.png"}}}
+  </script>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/promo.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/promo.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/promo.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/promo.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+
+<nav aria-label="navigation">
+  <button class="nav-back" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    Назад
+  </button>
+  <a href="index.html" class="nav-logo">KOL Studio</a>
+  <button class="btn-create" onclick="openModal()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Создать промо
+  </button>
+</nav>
+
+<div class="wrap">
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-val">3</div>
+      <div class="stat-label">🎫 Активных промо</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">147</div>
+      <div class="stat-label">👥 Использований</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">$1,840</div>
+      <div class="stat-label">💰 Привлечено дохода</div>
+    </div>
+  </div>
+
+  <!-- ACTIVE PROMOS -->
+  <div class="section-head">
+    <div>
+      <div class="section-title">Активные промо-коды</div>
+      <div class="section-sub">Нажмите на код чтобы скопировать</div>
+    </div>
+  </div>
+
+  <div class="promo-list">
+
+    <!-- ANNA30 -->
+    <div class="promo-card">
+      <div class="promo-top">
+        <div class="promo-code-badge" onclick="copyCode('ANNA30')" title="Нажмите чтобы скопировать">ANNA30</div>
+        <div class="promo-info">
+          <div class="promo-type">🏷️ Скидка 30% на первый месяц</div>
+          <div class="promo-meta">
+            <span>📱 Instagram</span>
+            <span>⏱ До 31 мая 2026</span>
+            <span>🎯 Базовый + Премиум</span>
+          </div>
+        </div>
+        <div class="promo-actions">
+          <button class="btn-sm" onclick="editPromo('ANNA30')">✏️ Изменить</button>
+          <button class="btn-sm" onclick="pausePromo(this)">⏸ Пауза</button>
+          <button class="btn-sm danger" onclick="deletePromo(this)">🗑</button>
+        </div>
+      </div>
+      <div class="promo-progress">
+        <div class="prog-labels"><span>Использований: 89 / 200</span><span>44%</span></div>
+        <div class="prog-track"><div class="prog-fill" style="width:44%"></div></div>
+      </div>
+      <div class="promo-sparkline" title="Использования по дням">
+        <div class="spark-bar" style="height:30%" title="Пн: 6"></div>
+        <div class="spark-bar" style="height:55%" title="Вт: 11"></div>
+        <div class="spark-bar" style="height:40%" title="Ср: 8"></div>
+        <div class="spark-bar" style="height:80%" title="Чт: 16"></div>
+        <div class="spark-bar" style="height:100%" title="Пт: 20"></div>
+        <div class="spark-bar" style="height:90%" title="Сб: 18"></div>
+        <div class="spark-bar" style="height:50%" title="Вс: 10"></div>
+      </div>
+    </div>
+
+    <!-- FREETRIAL7 -->
+    <div class="promo-card">
+      <div class="promo-top">
+        <div class="promo-code-badge" onclick="copyCode('FREETRIAL7')" title="Нажмите чтобы скопировать">FREETRIAL7</div>
+        <div class="promo-info">
+          <div class="promo-type">🎁 7 дней бесплатного доступа</div>
+          <div class="promo-meta">
+            <span>✈️ Telegram</span>
+            <span>⏱ До 15 мая 2026</span>
+            <span>🎯 Все планы</span>
+          </div>
+        </div>
+        <div class="promo-actions">
+          <button class="btn-sm" onclick="editPromo('FREETRIAL7')">✏️ Изменить</button>
+          <button class="btn-sm" onclick="pausePromo(this)">⏸ Пауза</button>
+          <button class="btn-sm danger" onclick="deletePromo(this)">🗑</button>
+        </div>
+      </div>
+      <div class="promo-progress">
+        <div class="prog-labels"><span>Использований: 34 / 100</span><span>34%</span></div>
+        <div class="prog-track"><div class="prog-fill" style="width:34%"></div></div>
+      </div>
+      <div class="promo-sparkline">
+        <div class="spark-bar" style="height:25%"></div>
+        <div class="spark-bar" style="height:40%"></div>
+        <div class="spark-bar" style="height:35%"></div>
+        <div class="spark-bar" style="height:60%"></div>
+        <div class="spark-bar" style="height:75%"></div>
+        <div class="spark-bar" style="height:50%"></div>
+        <div class="spark-bar" style="height:30%"></div>
+      </div>
+    </div>
+
+    <!-- VIP50 - warning -->
+    <div class="promo-card warning">
+      <div class="promo-top">
+        <div class="promo-code-badge" onclick="copyCode('VIP50')" style="color:var(--gold);border-color:rgba(255,179,0,.4);background:rgba(255,179,0,.1)">VIP50</div>
+        <div class="promo-info">
+          <div class="promo-type">💎 Скидка 50% на VIP-план <span class="warning-badge">⚠️ Истекает 10 мая</span></div>
+          <div class="promo-meta">
+            <span>🐦 Twitter</span>
+            <span>⏱ До 10 мая 2026</span>
+            <span>🎯 VIP</span>
+          </div>
+        </div>
+        <div class="promo-actions">
+          <button class="btn-sm" onclick="editPromo('VIP50')">✏️ Продлить</button>
+          <button class="btn-sm danger" onclick="deletePromo(this)">🗑</button>
+        </div>
+      </div>
+      <div class="promo-progress">
+        <div class="prog-labels"><span>Использований: 24 / 50</span><span>48%</span></div>
+        <div class="prog-track"><div class="prog-fill" style="width:48%;background:linear-gradient(90deg,var(--gold),#FF8C00)"></div></div>
+      </div>
+      <div class="promo-sparkline">
+        <div class="spark-bar" style="height:60%;background:rgba(255,179,0,.4)"></div>
+        <div class="spark-bar" style="height:80%;background:rgba(255,179,0,.4)"></div>
+        <div class="spark-bar" style="height:70%;background:rgba(255,179,0,.4)"></div>
+        <div class="spark-bar" style="height:100%;background:rgba(255,179,0,.6)"></div>
+        <div class="spark-bar" style="height:90%;background:rgba(255,179,0,.6)"></div>
+        <div class="spark-bar" style="height:75%;background:rgba(255,179,0,.4)"></div>
+        <div class="spark-bar" style="height:45%;background:rgba(255,179,0,.4)"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STRATEGY TIPS -->
+  <div class="section-head"><div class="section-title">💡 Советы по промо-стратегии</div></div>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">📱</div>
+      <div class="tip-title">Instagram Bio</div>
+      <div class="tip-text">Скидка 20–30% на первый месяц конвертирует лучше всего. Меняйте код раз в 2 недели и отслеживайте источник.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔄</div>
+      <div class="tip-title">Возвраты подписчиков</div>
+      <div class="tip-text">7 дней бесплатного доступа возвращают 40% ушедших. Отправьте код тем кто отменил подписку.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⏱️</div>
+      <div class="tip-title">Срочность продаёт</div>
+      <div class="tip-text">Промо до 48–72 часов увеличивают конверсию на 60%. Укажите таймер в посте: «Осталось 2 дня!»</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🎯</div>
+      <div class="tip-title">Разные коды — разные каналы</div>
+      <div class="tip-text">Создайте уникальный код для каждой соцсети. Так вы поймёте, откуда приходят самые ценные подписчики.</div>
+    </div>
+  </div>
+
+  <!-- EXPIRED HISTORY -->
+  <div class="collapsed-header" id="histToggle" onclick="toggleHistory()">
+    <span style="font-weight:700;font-size:15px">Завершённые промо <span style="color:var(--muted);font-weight:400">(8)</span></span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="collapsed-content" id="histContent">
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="index.html">🏠 Главная</a><span class="sep">›</span><a href="model-cabinet.html">Кабинет модели</a><span class="sep">›</span><span class="current">Промо-акции</span></nav>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Код</th><th>Тип скидки</th><th>Использований</th><th>Период</th><th>Доход</th><th>Статус</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>NEWYEAR25</code></td><td>25%</td><td>312</td><td>Янв 2026</td><td style="color:var(--green)">$2,340</td><td><span class="badge badge-gray">Завершён</span></td></tr>
+          <tr><td><code>COMEBACK</code></td><td>7 дней free</td><td>89</td><td>Мар 2026</td><td style="color:var(--green)">$890</td><td><span class="badge badge-gray">Завершён</span></td></tr>
+          <tr><td><code>MARCH20</code></td><td>20%</td><td>204</td><td>Мар 2026</td><td style="color:var(--green)">$1,620</td><td><span class="badge badge-gray">Завершён</span></td></tr>
+          <tr><td><code>LOVE14</code></td><td>14%</td><td>176</td><td>Фев 2026</td><td style="color:var(--green)">$1,410</td><td><span class="badge badge-gray">Завершён</span></td></tr>
+          <tr><td><code>WINTER30</code></td><td>30%</td><td>421</td><td>Дек 2025</td><td style="color:var(--green)">$2,950</td><td><span class="badge badge-gray">Завершён</span></td></tr>
+          <tr><td><code>BFRIDAY50</code></td><td>50%</td><td>867</td><td>Ноя 2025</td><td style="color:var(--green)">$4,340</td><td><span class="badge badge-gray">Завершён</span></td></tr>
+          <tr><td><code>FALL15</code></td><td>15%</td><td>143</td><td>Окт 2025</td><td style="color:var(--green)">$1,070</td><td><span class="badge badge-gray">Завершён</span></td></tr>
+          <tr><td><code>LAUNCH</code></td><td>3 дня free</td><td>512</td><td>Сен 2025</td><td style="color:var(--green)">$3,840</td><td><span class="badge badge-gray">Завершён</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- CREATE MODAL -->
+<div class="overlay" id="modalOverlay" onclick="closeOnBackdrop(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title">Новый промо-код</div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Закрыть">✕</button>
+    </div>
+
+    <!-- TYPE SELECT -->
+    <div class="field">
+      <label>Тип промо</label>
+      <div class="type-cards">
+        <div class="type-card selected" onclick="selectType(this,'percent')">
+          <div class="type-card-icon">🏷️</div>
+          <div class="type-card-label">Скидка %</div>
+          <div class="type-card-desc">Процент от цены подписки</div>
+        </div>
+        <div class="type-card" onclick="selectType(this,'trial')">
+          <div class="type-card-icon">🎁</div>
+          <div class="type-card-label">Пробный период</div>
+          <div class="type-card-desc">Бесплатные дни доступа</div>
+        </div>
+        <div class="type-card" onclick="selectType(this,'fixed')">
+          <div class="type-card-icon">💰</div>
+          <div class="type-card-label">Фиксированная</div>
+          <div class="type-card-desc">Скидка в долларах</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CODE -->
+    <div class="field">
+      <label>Промо-код</label>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="codeInput" placeholder="MYPROMO" maxlength="20" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'');updatePreview()">
+        <button onclick="generateCode()" style="padding:0 14px;background:var(--card2);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;font-size:16px;color:var(--muted);transition:all .2s" title="Сгенерировать">🎲</button>
+      </div>
+      <div class="field-hint">Только латиница и цифры, до 20 символов</div>
+    </div>
+
+    <!-- VALUE -->
+    <div class="field" id="valueField">
+      <label id="valueLabel">Размер скидки (%)</label>
+      <input type="range" id="discountSlider" min="5" max="90" value="30" oninput="document.getElementById('sliderVal').textContent=this.value+'%';updatePreview()" style="width:100%;accent-color:var(--accent);margin-bottom:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:12px;color:var(--muted)">5%</span>
+        <span id="sliderVal" style="font-size:18px;font-weight:800;color:var(--accent)">30%</span>
+        <span style="font-size:12px;color:var(--muted)">90%</span>
+      </div>
+    </div>
+
+    <!-- PLAN -->
+    <div class="field">
+      <label>Применяется к</label>
+      <div class="plan-radios">
+        <div class="plan-radio selected" onclick="selectPlan(this,'all')">Все планы</div>
+        <div class="plan-radio" onclick="selectPlan(this,'basic')">Базовый ($9.99)</div>
+        <div class="plan-radio" onclick="selectPlan(this,'premium')">Премиум ($14.99)</div>
+        <div class="plan-radio" onclick="selectPlan(this,'vip')">VIP ($29.99)</div>
+      </div>
+    </div>
+
+    <!-- LIMITS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="field" style="margin-bottom:0">
+        <label>Лимит использований</label>
+        <input type="number" id="limitInput" placeholder="0 = безлимит" min="0" value="200" oninput="updatePreview()">
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>Срок действия до</label>
+        <input type="date" id="expiryInput" value="2026-06-01" oninput="updatePreview()">
+      </div>
+    </div>
+
+    <!-- CHANNEL -->
+    <div class="field" style="margin-top:16px">
+      <label>Канал продвижения (для статистики)</label>
+      <select id="channelSelect">
+        <option value="instagram">📱 Instagram</option>
+        <option value="telegram">✈️ Telegram</option>
+        <option value="twitter">🐦 Twitter / X</option>
+        <option value="tiktok">🎵 TikTok</option>
+        <option value="other">🌐 Другое</option>
+      </select>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="promo-preview">
+      <div class="preview-label">Превью для подписчика</div>
+      <div class="preview-price">
+        <span class="price-old" id="previewOld">$9.99</span>
+        <span class="price-new" id="previewNew">$6.99</span>
+        <span class="price-badge" id="previewBadge">–30%</span>
+        <span style="font-size:12px;color:var(--muted)">/ первый месяц</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px">Промо-код: <strong id="previewCode" style="color:var(--accent)">MYPROMO</strong> · До <span id="previewExpiry">1 июня 2026</span></div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-outline" onclick="closeModal()">Отмена</button>
+      <button class="btn-primary" onclick="createPromo()">Создать промо-код ✨</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── STATE ──
+let promoType = 'percent';
+let selectedPlan = 'all';
+
+// ── TYPE SELECT ──
+function selectType(el, type) {
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  promoType = type;
+  const label = document.getElementById('valueLabel');
+  const slider = document.getElementById('discountSlider');
+  if (type === 'percent') {
+    label.textContent = 'Размер скидки (%)';
+    slider.max = 90; slider.min = 5; slider.value = 30;
+    document.getElementById('sliderVal').textContent = '30%';
+  } else if (type === 'trial') {
+    label.textContent = 'Бесплатных дней';
+    slider.max = 30; slider.min = 1; slider.value = 7;
+    document.getElementById('sliderVal').textContent = '7 дней';
+    slider.oninput = function() { document.getElementById('sliderVal').textContent = this.value + ' дн.'; updatePreview(); };
+  } else {
+    label.textContent = 'Скидка ($)';
+    slider.max = 50; slider.min = 1; slider.value = 5;
+    document.getElementById('sliderVal').textContent = '$5';
+    slider.oninput = function() { document.getElementById('sliderVal').textContent = '$' + this.value; updatePreview(); };
+  }
+  updatePreview();
+}
+
+function selectPlan(el, plan) {
+  document.querySelectorAll('.plan-radio').forEach(r => r.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPlan = plan;
+  updatePreview();
+}
+
+// ── PREVIEW ──
+const planPrices = { all: 9.99, basic: 9.99, premium: 14.99, vip: 29.99 };
+function updatePreview() {
+  const code = document.getElementById('codeInput').value || 'MYPROMO';
+  const val = parseInt(document.getElementById('discountSlider').value);
+  const basePrice = planPrices[selectedPlan] || 9.99;
+  let newPrice = basePrice;
+  let badge = '';
+  if (promoType === 'percent') {
+    newPrice = basePrice * (1 - val / 100);
+    badge = '–' + val + '%';
+  } else if (promoType === 'fixed') {
+    newPrice = Math.max(0, basePrice - val);
+    badge = '–$' + val;
+  } else {
+    newPrice = 0;
+    badge = val + ' дн. free';
+  }
+  document.getElementById('previewOld').textContent = '$' + basePrice.toFixed(2);
+  document.getElementById('previewNew').textContent = promoType === 'trial' ? 'Бесплатно' : '$' + newPrice.toFixed(2);
+  document.getElementById('previewBadge').textContent = badge;
+  document.getElementById('previewCode').textContent = code;
+  const expiry = document.getElementById('expiryInput').value;
+  if (expiry) {
+    const d = new Date(expiry);
+    document.getElementById('previewExpiry').textContent = d.toLocaleDateString('ru-RU', {day:'numeric',month:'long',year:'numeric'});
+  }
+}
+
+// ── GENERATE CODE ──
+function generateCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 8; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  document.getElementById('codeInput').value = code;
+  updatePreview();
+}
+
+// ── MODAL ──
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  generateCode();
+  updatePreview();
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeOnBackdrop(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// ── COPY CODE ──
+function copyCode(code) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(code).then(() => showToast('Код «' + code + '» скопирован! 📋'));
+  } else {
+    showToast('Код: ' + code);
+  }
+}
+
+// ── ACTIONS ──
+function editPromo(code) { showToast('Редактирование ' + code + '...'); openModal(); }
+function pausePromo(btn) {
+  const isPaused = btn.textContent.includes('▶');
+  btn.textContent = isPaused ? '⏸ Пауза' : '▶ Возобновить';
+  showToast(isPaused ? 'Промо возобновлён' : 'Промо приостановлен');
+}
+function deletePromo(btn) {
+  if (confirm('Удалить этот промо-код?')) {
+    btn.closest('.promo-card').style.opacity = '0';
+    btn.closest('.promo-card').style.transform = 'translateX(20px)';
+    btn.closest('.promo-card').style.transition = 'all .3s';
+    setTimeout(() => btn.closest('.promo-card').remove(), 300);
+    showToast('Промо-код удалён');
+  }
+}
+
+// ── CREATE ──
+function createPromo() {
+  const code = document.getElementById('codeInput').value.trim();
+  if (!code) { showToast('Введите код!'); return; }
+  showToast('Промо «' + code + '» создан! 🎉');
+  closeModal();
+}
+
+// ── HISTORY TOGGLE ──
+function toggleHistory() {
+  const header = document.getElementById('histToggle');
+  const content = document.getElementById('histContent');
+  header.classList.toggle('open');
+  content.classList.toggle('open');
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── PAGE TRANSITIONS ──
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click', function(e) {
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel')) return;
+    if (a.target === '_blank') return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(() => { window.location.href = href; }, 220);
+  });
+})();
+if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); }); }
+</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="promo.html" class="active" style="color:#fff;font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="en/promo.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     KOL Studio Global Components
+     1. GDPR Cookie Consent Banner
+     2. Dark / Light Theme Toggle
+     3. PWA Install Prompt
+═══════════════════════════════════════════════════════════ -->
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="cookie.html">Подробнее</a> · <a href="report.html">Пожаловаться</a> · <a href="api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href = 'search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href = 'upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

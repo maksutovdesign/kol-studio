@@ -1,0 +1,301 @@
+<svg width="1440" height="900" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <linearGradient id="pageBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09091A"/>
+      <stop offset="100%" stop-color="#150A28"/>
+    </linearGradient>
+    <linearGradient id="photoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5C1A7A"/>
+      <stop offset="100%" stop-color="#D42B6A"/>
+    </linearGradient>
+    <linearGradient id="photoOverlay" x1="0%" y1="60%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#09091A" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#09091A" stop-opacity="1"/>
+    </linearGradient>
+    <linearGradient id="accentBtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D42B6A"/>
+      <stop offset="100%" stop-color="#8B2BE2"/>
+    </linearGradient>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1A1A30"/>
+      <stop offset="100%" stop-color="#13132A"/>
+    </linearGradient>
+    <linearGradient id="sideCard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E1E38"/>
+      <stop offset="100%" stop-color="#16162C"/>
+    </linearGradient>
+    <filter id="cardShadow">
+      <feDropShadow dx="0" dy="8" stdDeviation="20" flood-color="#D42B6A" flood-opacity="0.15"/>
+    </filter>
+    <filter id="glowPink">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#D42B6A" flood-opacity="0.6"/>
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#FFFFFF" stroke-width="0.15" opacity="0.3"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1440" height="900" fill="url(#pageBg)"/>
+  <rect width="1440" height="900" fill="url(#grid)" opacity="0.3"/>
+
+  <!-- ===== HEADER ===== -->
+  <rect width="1440" height="68" fill="#0D0D22" opacity="0.97"/>
+  <rect y="68" width="1440" height="1" fill="#2A2A50"/>
+
+  <text x="36" y="44" font-weight="900" font-size="28" fill="#D42B6A" letter-spacing="4">KOL</text>
+  <text x="36" y="59" font-size="9" fill="#8B2BE2" letter-spacing="6">STUDIO</text>
+
+  <!-- Back breadcrumb -->
+  <text x="140" y="40" font-size="14" fill="#888899">&#8592; Все модели</text>
+  <text x="248" y="40" font-size="14" fill="#555577">/</text>
+  <text x="262" y="40" font-size="14" fill="#EEEEFF">Анна Морозова</text>
+
+  <!-- Share + Save -->
+  <rect x="1180" y="18" width="90" height="32" rx="16" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1200" y="38" font-size="13" fill="#888899">&#128279; Поделиться</text>
+
+  <rect x="1284" y="18" width="72" height="32" rx="16" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1301" y="38" font-size="13" fill="#888899">&#9825; Сохранить</text>
+
+  <rect x="1370" y="18" width="52" height="32" rx="16" fill="#D42B6A" opacity="0.15" stroke="#D42B6A" stroke-width="1"/>
+  <text x="1382" y="38" font-size="13" fill="#D42B6A">Войти</text>
+
+  <!-- ===== LEFT PHOTO COLUMN ===== -->
+
+  <!-- Main photo -->
+  <rect x="36" y="92" width="440" height="530" rx="16" fill="url(#photoGrad)" filter="url(#cardShadow)"/>
+
+  <!-- Photo overlay gradient -->
+  <rect x="36" y="92" width="440" height="530" rx="16" fill="url(#photoOverlay)"/>
+
+  <!-- Silhouette -->
+  <ellipse cx="256" cy="330" rx="60" ry="60" fill="rgba(255,255,255,0.07)"/>
+  <rect x="196" y="390" width="120" height="140" rx="60" fill="rgba(255,255,255,0.05)"/>
+
+  <!-- Online badge -->
+  <rect x="56" y="112" width="100" height="28" rx="14" fill="#00E676" opacity="0.92"/>
+  <circle cx="74" cy="126" r="5" fill="white"/>
+  <text x="84" y="131" font-size="12" fill="#003820" font-weight="700">ОНЛАЙН</text>
+
+  <!-- Viewer count -->
+  <rect x="370" y="112" width="86" height="28" rx="14" fill="#0D0D22" opacity="0.8"/>
+  <text x="386" y="130" font-size="12" fill="#CCCCDD">&#128065; 142 смотрит</text>
+
+  <!-- Photo name overlay -->
+  <text x="56" y="578" font-size="26" fill="#EEEEFF" font-weight="900">Анна Морозова</text>
+  <text x="58" y="604" font-size="14" fill="#D42B6A">&#9733; 4.9</text>
+  <text x="82" y="604" font-size="14" fill="#555577">(287 отзывов)</text>
+
+  <!-- Thumbnail strip -->
+  <rect x="36" y="638" width="96" height="72" rx="8" fill="url(#photoGrad)" opacity="0.9"/>
+  <rect x="36" y="638" width="96" height="72" rx="8" stroke="#D42B6A" stroke-width="2"/>
+
+  <rect x="142" y="638" width="96" height="72" rx="8" fill="#1565C0" opacity="0.7"/>
+  <rect x="248" y="638" width="96" height="72" rx="8" fill="#880E4F" opacity="0.7"/>
+  <rect x="354" y="638" width="96" height="72" rx="8" fill="#37474F" opacity="0.7"/>
+
+  <rect x="354" y="638" width="96" height="72" rx="8" fill="#0D0D22" opacity="0.6"/>
+  <text x="393" y="679" font-size="13" fill="#CCCCDD">+12</text>
+
+  <!-- ===== CENTER CONTENT ===== -->
+
+  <!-- About section -->
+  <rect x="500" y="92" width="540" height="200" rx="16" fill="url(#cardBg)" stroke="#2A2A50" stroke-width="1"/>
+
+  <text x="528" y="128" font-size="11" fill="#555577" letter-spacing="2">О МОДЕЛИ</text>
+
+  <!-- Tags -->
+  <rect x="528" y="138" width="60" height="24" rx="12" fill="#2A1545"/>
+  <text x="540" y="155" font-size="11" fill="#C580FF">Fashion</text>
+
+  <rect x="596" y="138" width="62" height="24" rx="12" fill="#2A1545"/>
+  <text x="607" y="155" font-size="11" fill="#C580FF">Portrait</text>
+
+  <rect x="666" y="138" width="42" height="24" rx="12" fill="#2A1545"/>
+  <text x="675" y="155" font-size="11" fill="#C580FF">Live</text>
+
+  <rect x="716" y="138" width="54" height="24" rx="12" fill="#1A2545"/>
+  <text x="726" y="155" font-size="11" fill="#80B0FF">Studio</text>
+
+  <rect x="778" y="138" width="78" height="24" rx="12" fill="#1A2545"/>
+  <text x="787" y="155" font-size="11" fill="#80B0FF">Commercial</text>
+
+  <!-- Bio text -->
+  <text x="528" y="192" font-size="13" fill="#CCCCDD">Привет! Я профессиональный фотограф и стример с опытом 5+ лет.</text>
+  <text x="528" y="212" font-size="13" fill="#888899">Специализируюсь на fashion-съёмках, портрете и лайфстайл.</text>
+  <text x="528" y="232" font-size="13" fill="#888899">Открыта к нестандартным проектам и особым пожеланиям клиентов.</text>
+  <text x="528" y="252" font-size="13" fill="#888899">Работаю с брендами, агентствами и частными лицами.</text>
+
+  <!-- Stats row -->
+  <rect x="528" y="268" width="1" height="0" fill="none"/>
+
+  <text x="528" y="274" font-size="11" fill="#555577">Опыт:</text>
+  <text x="572" y="274" font-size="11" fill="#CCCCDD" font-weight="600">5+ лет</text>
+
+  <text x="640" y="274" font-size="11" fill="#555577">Сессий:</text>
+  <text x="694" y="274" font-size="11" fill="#CCCCDD" font-weight="600">1,240</text>
+
+  <text x="760" y="274" font-size="11" fill="#555577">Ответ:</text>
+  <text x="806" y="274" font-size="11" fill="#00E676" font-weight="600">~10 мин</text>
+
+  <!-- Services section -->
+  <text x="528" y="322" font-size="11" fill="#555577" letter-spacing="2">УСЛУГИ И ЦЕНЫ</text>
+
+  <!-- Service cards row -->
+  <!-- Photo session card -->
+  <rect x="500" y="330" width="124" height="100" rx="12" fill="url(#sideCard)" stroke="#2A2A50" stroke-width="1"/>
+  <text x="524" y="360" font-size="22">&#128247;</text>
+  <text x="524" y="385" font-size="12" fill="#CCCCDD" font-weight="600">Фото-сессия</text>
+  <text x="524" y="402" font-size="11" fill="#888899">от</text>
+  <text x="540" y="402" font-size="14" fill="#D42B6A" font-weight="700">$25</text>
+  <rect x="500" y="420" width="124" height="8" rx="4" fill="#D42B6A" opacity="0.2"/>
+
+  <!-- Video card -->
+  <rect x="634" y="330" width="124" height="100" rx="12" fill="url(#sideCard)" stroke="#2A2A50" stroke-width="1"/>
+  <text x="658" y="360" font-size="22">&#127909;</text>
+  <text x="658" y="385" font-size="12" fill="#CCCCDD" font-weight="600">Видео</text>
+  <text x="658" y="402" font-size="11" fill="#888899">от</text>
+  <text x="674" y="402" font-size="14" fill="#D42B6A" font-weight="700">$50</text>
+
+  <!-- Live stream card -->
+  <rect x="768" y="330" width="124" height="100" rx="12" fill="url(#sideCard)" stroke="#FF1744" stroke-width="1.5"/>
+  <text x="792" y="360" font-size="22">&#128250;</text>
+  <text x="792" y="385" font-size="12" fill="#CCCCDD" font-weight="600">Live-стрим</text>
+  <text x="792" y="402" font-size="11" fill="#888899">от</text>
+  <text x="808" y="402" font-size="14" fill="#FF1744" font-weight="700">$35</text>
+  <rect x="768" y="420" width="124" height="8" rx="4" fill="#FF1744" opacity="0.2"/>
+
+  <!-- Chat card -->
+  <rect x="902" y="330" width="124" height="100" rx="12" fill="url(#sideCard)" stroke="#2A2A50" stroke-width="1"/>
+  <text x="926" y="360" font-size="22">&#128172;</text>
+  <text x="926" y="385" font-size="12" fill="#CCCCDD" font-weight="600">Чат</text>
+  <text x="926" y="402" font-size="11" fill="#888899">от</text>
+  <text x="942" y="402" font-size="14" fill="#D42B6A" font-weight="700">$10</text>
+
+  <!-- ===== SPECIAL REQUEST BLOCK ===== -->
+  <rect x="500" y="448" width="540" height="80" rx="12" fill="#1A1228" stroke="#8B2BE2" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <text x="528" y="478" font-size="22">&#10024;</text>
+  <text x="560" y="474" font-size="14" fill="#C580FF" font-weight="700">Особые пожелания</text>
+  <text x="560" y="494" font-size="12" fill="#888899">Анна открыта к индивидуальным запросам. Напишите ей — </text>
+  <text x="560" y="510" font-size="12" fill="#888899">и обсудите детали в личном чате.</text>
+  <rect x="916" y="462" width="106" height="30" rx="15" fill="#8B2BE2" opacity="0.3" stroke="#8B2BE2" stroke-width="1"/>
+  <text x="930" y="482" font-size="12" fill="#C580FF" font-weight="600">Написать запрос</text>
+
+  <!-- Reviews section -->
+  <text x="528" y="558" font-size="11" fill="#555577" letter-spacing="2">ОТЗЫВЫ</text>
+
+  <!-- Review 1 -->
+  <rect x="500" y="568" width="260" height="100" rx="12" fill="url(#sideCard)" stroke="#2A2A50" stroke-width="1"/>
+  <circle cx="522" cy="590" r="12" fill="#5C1A7A"/>
+  <text x="518" y="595" font-size="11" fill="white">ИВ</text>
+  <text x="540" y="588" font-size="13" fill="#CCCCDD" font-weight="600">Игорь В.</text>
+  <text x="540" y="604" font-size="11" fill="#FFB300">&#9733;&#9733;&#9733;&#9733;&#9733;</text>
+  <text x="620" y="588" font-size="10" fill="#555577">3 дня назад</text>
+  <text x="516" y="624" font-size="12" fill="#888899">Отличная работа! Всё чётко,</text>
+  <text x="516" y="640" font-size="12" fill="#888899">быстро и профессионально.</text>
+  <text x="516" y="657" font-size="12" fill="#888899">Рекомендую!</text>
+
+  <!-- Review 2 -->
+  <rect x="778" y="568" width="262" height="100" rx="12" fill="url(#sideCard)" stroke="#2A2A50" stroke-width="1"/>
+  <circle cx="800" cy="590" r="12" fill="#0D47A1"/>
+  <text x="795" y="595" font-size="11" fill="white">МС</text>
+  <text x="818" y="588" font-size="13" fill="#CCCCDD" font-weight="600">Маша С.</text>
+  <text x="818" y="604" font-size="11" fill="#FFB300">&#9733;&#9733;&#9733;&#9733;&#9733;</text>
+  <text x="896" y="588" font-size="10" fill="#555577">1 нед. назад</text>
+  <text x="794" y="624" font-size="12" fill="#888899">Очень довольна! Анна нашла</text>
+  <text x="794" y="640" font-size="12" fill="#888899">именно тот стиль, который я</text>
+  <text x="794" y="657" font-size="12" fill="#888899">хотела. 10/10!</text>
+
+  <!-- All reviews link -->
+  <text x="720" y="690" font-size="12" fill="#D42B6A" text-anchor="middle">Все 287 отзывов &#8594;</text>
+
+
+  <!-- ===== RIGHT SIDEBAR — BOOKING PANEL ===== -->
+  <rect x="1064" y="92" width="352" height="716" rx="16" fill="url(#cardBg)" stroke="#2A2A50" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <!-- Panel header -->
+  <rect x="1064" y="92" width="352" height="56" rx="16" fill="#161628"/>
+  <rect x="1064" y="128" width="352" height="20" fill="#161628"/>
+
+  <text x="1090" y="126" font-size="16" fill="#EEEEFF" font-weight="700">Забронировать сессию</text>
+
+  <!-- Choose service -->
+  <text x="1090" y="168" font-size="11" fill="#555577" letter-spacing="2">ВЫБРАТЬ УСЛУГУ</text>
+
+  <!-- Service select buttons -->
+  <rect x="1090" y="178" width="148" height="44" rx="10" fill="#D42B6A" opacity="0.15" stroke="#D42B6A" stroke-width="1.5"/>
+  <text x="1138" y="205" font-size="13" fill="#D42B6A" font-weight="700" text-anchor="middle">Фото-сессия</text>
+
+  <rect x="1248" y="178" width="148" height="44" rx="10" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1322" y="205" font-size="13" fill="#888899" text-anchor="middle">Видео</text>
+
+  <rect x="1090" y="232" width="148" height="44" rx="10" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1164" y="259" font-size="13" fill="#888899" text-anchor="middle">Live-стрим</text>
+
+  <rect x="1248" y="232" width="148" height="44" rx="10" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1322" y="259" font-size="13" fill="#888899" text-anchor="middle">Чат</text>
+
+  <!-- Duration -->
+  <text x="1090" y="300" font-size="11" fill="#555577" letter-spacing="2">ДЛИТЕЛЬНОСТЬ</text>
+
+  <rect x="1090" y="310" width="94" height="36" rx="8" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1137" y="333" font-size="12" fill="#888899" text-anchor="middle">30 мин</text>
+
+  <rect x="1192" y="310" width="94" height="36" rx="8" fill="#D42B6A" opacity="0.15" stroke="#D42B6A" stroke-width="1.5"/>
+  <text x="1239" y="333" font-size="12" fill="#D42B6A" text-anchor="middle" font-weight="600">1 час</text>
+
+  <rect x="1294" y="310" width="102" height="36" rx="8" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1345" y="333" font-size="12" fill="#888899" text-anchor="middle">2+ часа</text>
+
+  <!-- Date selection -->
+  <text x="1090" y="374" font-size="11" fill="#555577" letter-spacing="2">ДАТА И ВРЕМЯ</text>
+
+  <rect x="1090" y="384" width="304" height="40" rx="10" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1110" y="409" font-size="13" fill="#888899">&#128197;  Выбрать дату и время...</text>
+
+  <!-- Special notes -->
+  <text x="1090" y="450" font-size="11" fill="#555577" letter-spacing="2">ОСОБЫЕ ПОЖЕЛАНИЯ</text>
+
+  <rect x="1090" y="460" width="304" height="80" rx="10" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1110" y="484" font-size="13" fill="#555577">Опишите ваши пожелания...</text>
+  <text x="1110" y="504" font-size="12" fill="#333355">(стиль, реквизит, локация,</text>
+  <text x="1110" y="520" font-size="12" fill="#333355"> тематика и т.д.)</text>
+
+  <!-- Price summary -->
+  <rect x="1090" y="560" width="304" height="90" rx="10" fill="#111128" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1110" y="590" font-size="13" fill="#888899">Фото-сессия · 1 час</text>
+  <text x="1370" y="590" font-size="13" fill="#CCCCDD" text-anchor="end">$25</text>
+  <text x="1110" y="612" font-size="13" fill="#888899">Комиссия сервиса</text>
+  <text x="1370" y="612" font-size="13" fill="#CCCCDD" text-anchor="end">$2.50</text>
+  <rect x="1110" y="622" width="260" height="1" fill="#2A2A50"/>
+  <text x="1110" y="642" font-size="14" fill="#EEEEFF" font-weight="700">Итого</text>
+  <text x="1370" y="642" font-size="16" fill="#D42B6A" font-weight="900" text-anchor="end">$27.50</text>
+
+  <!-- Payment section label -->
+  <text x="1090" y="674" font-size="11" fill="#555577" letter-spacing="2">ОПЛАТА</text>
+
+  <!-- Payment options -->
+  <rect x="1090" y="684" width="92" height="34" rx="8" fill="#1E1E38" stroke="#D42B6A" stroke-width="1.5"/>
+  <text x="1136" y="706" font-size="11" fill="#D42B6A" text-anchor="middle" font-weight="600">Карта</text>
+
+  <rect x="1190" y="684" width="92" height="34" rx="8" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1236" y="706" font-size="11" fill="#888899" text-anchor="middle">Крипто</text>
+
+  <rect x="1290" y="684" width="104" height="34" rx="8" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1342" y="706" font-size="11" fill="#888899" text-anchor="middle">Баланс KOL</text>
+
+  <!-- Book button -->
+  <rect x="1090" y="730" width="304" height="48" rx="24" fill="url(#accentBtn)" filter="url(#glowPink)"/>
+  <rect x="1090" y="730" width="304" height="48" rx="24" fill="white" opacity="0.06"/>
+  <text x="1242" y="760" font-size="16" fill="white" font-weight="900" text-anchor="middle">Забронировать сессию</text>
+
+  <!-- Contact / Info links -->
+  <text x="1158" y="798" font-size="12" fill="#888899" text-anchor="middle">&#128222; Узнать контакты</text>
+  <text x="1326" y="798" font-size="12" fill="#888899" text-anchor="middle">&#8505; О модели</text>
+
+  <!-- Security note -->
+  <text x="1242" y="820" font-size="11" fill="#555577" text-anchor="middle">&#128274; Оплата защищена · Деньги до начала сессии</text>
+
+</svg>

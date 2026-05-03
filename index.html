@@ -1,0 +1,2152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <meta name="description" content="2400+ моделей. Эксклюзивный контент. Подписки от $4.99">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta property="og:title" content="KOL Studio — Каталог моделей">
+  <meta property="og:description" content="2400+ моделей. Эксклюзивный контент. Подписки от $4.99">
+  <meta property="og:url" content="https://kolstudio.com/index.html">
+  <meta property="og:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KOL Studio — Каталог моделей">
+  <meta name="twitter:description" content="2400+ моделей. Эксклюзивный контент. Подписки от $4.99">
+  <title>KOL Studio — Платформа для взрослых</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07071A;
+      --card: #111128;
+      --card2: #181835;
+      --border: #22224A;
+      --border-hover: #3A3A70;
+      --accent: #D42B6A;
+      --accent2: #8B2BE2;
+      --text: #F0F0FF;
+      --text-sub: #9090BB;
+      --text-muted: #505075;
+      --green: #00E676;
+      --red: #FF1744;
+      --gold: #FFB300;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.18;
+    }
+    .glow-1 { width: 600px; height: 600px; background: var(--accent); top: -200px; left: -200px; }
+    .glow-2 { width: 500px; height: 500px; background: var(--accent2); bottom: -200px; right: -200px; }
+    .glow-3 { width: 300px; height: 300px; background: #1A3AFF; top: 40%; left: 40%; }
+
+    /* NOTIFICATION BAR */
+    #notif-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: linear-gradient(90deg, #1A0030, #2A0050, #1A0030);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--text-sub);
+      transition: all 0.3s;
+    }
+    #notif-bar span { color: var(--text); font-weight: 500; }
+    #notif-bar button {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      position: absolute;
+      right: 16px;
+      padding: 0 4px;
+    }
+    #notif-bar button:hover { color: var(--text); }
+    #notif-bar.hidden { display: none; }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 38px;
+      left: 0; right: 0;
+      z-index: 100;
+      background: rgba(7,7,26,0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      height: 62px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 20px;
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .logo-text {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .badge-18 {
+      background: var(--accent);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .header-search {
+      flex: 1;
+      max-width: 480px;
+      position: relative;
+    }
+    .header-search input {
+      width: 100%;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 16px 9px 40px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .header-search input::placeholder { color: var(--text-muted); }
+    .header-search input:focus { border-color: var(--border-hover); }
+    .header-search svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .btn-login {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      padding: 8px 18px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-family: inherit;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-login:hover { border-color: var(--border-hover); color: var(--text); }
+    .btn-register {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-register:hover { opacity: 0.85; }
+
+    /* FILTER TAG BAR */
+    #filter-bar {
+      position: fixed;
+      top: 100px;
+      left: 0; right: 0;
+      z-index: 90;
+      background: rgba(7,7,26,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 24px 10px 264px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .pill {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .pill:hover { border-color: var(--border-hover); color: var(--text); }
+    .pill.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: transparent;
+      color: #fff;
+      font-weight: 600;
+    }
+    .sort-select {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      padding: 5px 12px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .sort-select:focus { border-color: var(--border-hover); }
+
+    /* STATS BAR */
+    #stats-bar {
+      position: fixed;
+      top: 142px;
+      left: 0; right: 0;
+      z-index: 89;
+      background: rgba(7,7,26,0.88);
+      border-bottom: 1px solid var(--border);
+      padding: 6px 24px 6px 264px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    #stats-bar span { color: var(--text-sub); font-weight: 500; }
+
+    /* LAYOUT */
+    .layout {
+      display: flex;
+      position: relative;
+      z-index: 1;
+      padding-top: 172px;
+    }
+
+    /* SIDEBAR */
+    aside {
+      width: 240px;
+      flex-shrink: 0;
+      position: fixed;
+      top: 172px;
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      background: rgba(7,7,26,0.95);
+      border-right: 1px solid var(--border);
+      padding: 20px 16px;
+      z-index: 80;
+    }
+    aside::-webkit-scrollbar { width: 4px; }
+    aside::-webkit-scrollbar-track { background: transparent; }
+    aside::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .sidebar-section {
+      margin-bottom: 24px;
+    }
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-sub);
+      transition: color 0.2s;
+    }
+    .checkbox-item:hover { color: var(--text); }
+    .checkbox-item input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .price-range {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .price-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .toggle-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toggle-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+    .toggle {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      left: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .toggle input:checked + .toggle-slider { background: var(--accent); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(16px); }
+
+    .stars-filter {
+      display: flex;
+      gap: 4px;
+    }
+    .star-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--border);
+      transition: color 0.15s;
+      line-height: 1;
+      padding: 2px;
+    }
+    .star-btn.active { color: var(--gold); }
+
+    .sidebar-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 4px 0 20px;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      flex: 1;
+      margin-left: 240px;
+      padding: 24px;
+      min-height: calc(100vh - 172px);
+    }
+
+    /* FEATURED STRIP */
+    #featured-section {
+      margin-bottom: 28px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .featured-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .featured-scroll::-webkit-scrollbar { height: 4px; }
+    .featured-scroll::-webkit-scrollbar-track { background: transparent; }
+    .featured-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .featured-card {
+      flex-shrink: 0;
+      width: 150px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .featured-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+    .featured-photo {
+      height: 110px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .featured-photo svg { opacity: 0.45; }
+    .featured-body {
+      padding: 8px 10px 10px;
+    }
+    .featured-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 3px;
+    }
+    .featured-subs {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .featured-sub-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      color: #fff;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .featured-sub-btn:hover { opacity: 0.85; }
+
+    /* MODEL GRID */
+    #model-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    /* MODEL CARD */
+    .model-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .model-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(212,43,106,0.15);
+    }
+
+    /* CARD PHOTO */
+    .card-photo {
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-photo svg { opacity: 0.4; z-index: 1; position: relative; }
+
+    /* STATUS BADGE */
+    .status-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 3;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .status-badge.online { background: rgba(0,230,118,0.2); color: var(--green); border: 1px solid rgba(0,230,118,0.35); }
+    .status-badge.live { background: rgba(255,23,68,0.25); color: var(--red); border: 1px solid rgba(255,23,68,0.45); }
+    .status-badge.offline { background: rgba(80,80,117,0.3); color: var(--text-muted); border: 1px solid rgba(80,80,117,0.4); }
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-dot.online { background: var(--green); }
+    .status-dot.live { background: var(--red); animation: pulse-dot 1s infinite; }
+    .status-dot.offline { background: var(--text-muted); }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* VIEWER COUNT */
+    .viewer-count {
+      position: absolute;
+      top: 36px;
+      left: 10px;
+      z-index: 3;
+      background: rgba(0,0,0,0.55);
+      color: var(--text-sub);
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* TOP-RIGHT BADGES */
+    .corner-badges {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-end;
+    }
+    .badge-new {
+      background: var(--accent2);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 5px;
+      letter-spacing: 0.5px;
+    }
+    .badge-vip {
+      background: var(--gold);
+      color: #000;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 5px;
+      letter-spacing: 0.5px;
+    }
+
+    /* CONTENT COUNT CHIP */
+    .content-chip {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      z-index: 3;
+      background: rgba(0,0,0,0.65);
+      color: var(--text-sub);
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* CARD BODY */
+    .card-body {
+      padding: 14px 16px 16px;
+      background: var(--card);
+    }
+
+    .card-top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    .card-name-block { flex: 1; min-width: 0; }
+    .card-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .verified-check {
+      color: var(--accent);
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .star-rating {
+      font-size: 11px;
+      color: var(--gold);
+      margin-top: 3px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .tag {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 5px;
+    }
+
+    .card-bio {
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-bottom: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-stats {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .card-stats span { color: var(--text-sub); }
+
+    .card-price {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .card-price.paid { color: var(--text); }
+    .card-price.free { color: var(--green); }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-subscribe {
+      flex: 1;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      color: #fff;
+      padding: 9px 12px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-subscribe:hover { opacity: 0.85; }
+    .btn-chat {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      padding: 9px 13px;
+      border-radius: 9px;
+      font-size: 15px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .btn-chat:hover { border-color: var(--border-hover); color: var(--text); }
+
+    /* EMPTY STATE */
+    #empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      color: var(--text-muted);
+      text-align: center;
+      grid-column: 1 / -1;
+    }
+    #empty-state svg { margin-bottom: 16px; opacity: 0.4; }
+    #empty-state p { font-size: 15px; }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ===================== MOBILE RESPONSIVE ===================== */
+
+    /* Tablet: 1024px */
+    @media (max-width: 1024px) {
+      aside { width: 200px; }
+      main { margin-left: 200px; }
+      #filter-bar { padding-left: 216px; }
+      #stats-bar { padding-left: 216px; }
+      #model-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Mobile: 768px */
+    @media (max-width: 768px) {
+      /* Hide sidebar */
+      aside { display: none; }
+
+      /* Header */
+      header { padding: 0 16px; gap: 10px; }
+      .header-search { max-width: 100%; }
+      .btn-login { display: none; }
+      .btn-register { padding: 8px 14px; font-size: 13px; }
+
+      /* Notification bar */
+      #notif-bar { font-size: 11px; gap: 6px; padding: 6px 40px 6px 12px; text-align: center; flex-wrap: wrap; }
+
+      /* Filter bar */
+      #filter-bar {
+        padding: 10px 16px;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        scrollbar-width: none;
+      }
+      #filter-bar::-webkit-scrollbar { display: none; }
+      .filter-pills { flex-wrap: nowrap; }
+
+      /* Stats bar */
+      #stats-bar { padding: 6px 16px; }
+
+      /* Layout */
+      .layout { padding-top: 0; }
+      main { margin-left: 0; padding: 16px; padding-bottom: 80px; }
+
+      /* Grid */
+      #model-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+      /* Featured */
+      .featured-card { width: 130px; }
+      .featured-photo { height: 90px; }
+
+      /* Bottom nav bar */
+      .mobile-nav {
+        display: flex !important;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        background: rgba(7,7,26,0.97);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid var(--border);
+        z-index: 500;
+        padding: 8px 0 env(safe-area-inset-bottom, 8px);
+      }
+    }
+
+    /* Small mobile: 480px */
+    @media (max-width: 480px) {
+      #model-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .model-card { border-radius: 12px; }
+      .photo-area { height: 160px; }
+      .card-body { padding: 10px; }
+      .model-name { font-size: 13px; }
+      .model-sub-price { font-size: 12px; }
+      .btn-sub { font-size: 12px; padding: 8px 10px; }
+    }
+
+    /* Bottom nav (hidden on desktop) */
+    .mobile-nav { display: none; }
+    .mobile-nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 4px 0;
+      transition: color 0.2s;
+    }
+    .mobile-nav-item.active { color: var(--accent); }
+    .mobile-nav-item svg { width: 22px; height: 22px; }
+    .mobile-nav-item span { font-size: 10px; }
+  </style>
+
+<style id="page-transitions">
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+</style>
+
+<style id="skeleton-loading">
+.skeleton{background:linear-gradient(90deg,#111128 25%,#181835 50%,#111128 75%);background-size:200% 100%;animation:shimmer 1.4s ease-in-out infinite;border-radius:8px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skeleton-card{background:#111128;border:1px solid #22224A;border-radius:16px;overflow:hidden;animation:fadeIn 0.3s ease}
+.skeleton-photo{height:200px;background:linear-gradient(90deg,#111128 25%,#181835 50%,#111128 75%);background-size:200% 100%;animation:shimmer 1.4s ease-in-out infinite}
+.skeleton-body{padding:16px;display:flex;flex-direction:column;gap:10px}
+.skeleton-line{height:12px;border-radius:6px;background:linear-gradient(90deg,#111128 25%,#181835 50%,#111128 75%);background-size:200% 100%;animation:shimmer 1.4s ease-in-out infinite}
+.skeleton-line.w60{width:60%}
+.skeleton-line.w80{width:80%}
+.skeleton-line.w40{width:40%}
+.skeleton-btn{height:36px;border-radius:20px;background:linear-gradient(90deg,#111128 25%,#181835 50%,#111128 75%);background-size:200% 100%;animation:shimmer 1.4s ease-in-out infinite;margin-top:4px}
+</style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"KOL Studio — Главная","description":"Твоя лента эксклюзивного контента от лучших создателей.","url":"https://kolstudio.com/index.html"}
+  </script>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/index.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/index.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/index.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/index.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+
+<!-- AMBIENT GLOWS -->
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+<div class="glow glow-3"></div>
+
+<!-- NOTIFICATION BAR -->
+<div id="notif-bar">
+  🔥 Сейчас онлайн: <span>1,247 моделей</span> · <span>89 прямых эфиров</span> · <span>3,420 новых публикаций сегодня</span>
+  <button onclick="document.getElementById('notif-bar').classList.add('hidden'); adjustOffsets();" title="Закрыть" aria-label="Закрыть">×</button>
+</div>
+
+<!-- HEADER -->
+<header id="main-header">
+  <a class="header-logo" href="#">
+    <span class="logo-text">KOL STUDIO</span>
+    <span class="badge-18">18+</span>
+  </a>
+  <div class="header-search">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input type="text" id="search-input" placeholder="Найти модель по имени или тегу...">
+  </div>
+  <div class="header-actions">
+    <a href="leaderboard.html" style="color:#9090BB;font-size:13px;text-decoration:none;font-weight:500;padding:8px 12px;border-radius:9px;transition:color 0.2s" onmouseover="this.style.color='#F0F0FF'" onmouseout="this.style.color='#9090BB'">🏆 Топ</a>
+    <a href="creator-apply.html" style="color:#9090BB;font-size:13px;text-decoration:none;font-weight:500;padding:8px 12px;border-radius:9px;transition:color 0.2s" onmouseover="this.style.color='#F0F0FF'" onmouseout="this.style.color='#9090BB'">+ Стать моделью</a>
+    <button class="btn-login" aria-label="Войти в аккаунт" onclick="location.href='auth.html'">Войти</button>
+    <button class="btn-register" aria-label="Создать аккаунт" onclick="location.href='auth.html'">Бесплатно</button>
+  </div>
+</header>
+
+<!-- FILTER TAG BAR -->
+<div id="filter-bar">
+  <div class="filter-pills" id="filter-pills">
+    <span class="pill active" data-filter="all">Все</span>
+    <span class="pill" data-filter="online">🟢 Онлайн</span>
+    <span class="pill" data-filter="live">🔴 Live</span>
+    <span class="pill" data-filter="new">Новинки</span>
+    <span class="pill" data-filter="vip">VIP</span>
+    <span class="pill" data-filter="photo">📸 Фото</span>
+    <span class="pill" data-filter="video">🎬 Видео</span>
+    <span class="pill" data-filter="show">📺 Шоу</span>
+    <span class="pill" data-filter="chat">💬 Чат</span>
+    <span class="pill" data-filter="requests">✨ Запросы</span>
+  </div>
+  <select class="sort-select" id="sort-select">
+    <option value="popular">Популярные</option>
+    <option value="new">Новые</option>
+    <option value="rating">По рейтингу</option>
+    <option value="price-asc">Дешевле</option>
+    <option value="price-desc">Дороже</option>
+  </select>
+</div>
+
+<!-- STATS BAR -->
+<div id="stats-bar">
+  Найдено: <span id="stat-total">12</span> моделей · <span id="stat-online">0</span> онлайн · <span id="stat-live">0</span> в эфире
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside>
+    <!-- Category -->
+    <div class="sidebar-section">
+      <div class="sidebar-title">Категория</div>
+      <div class="checkbox-list" id="category-list">
+        <label class="checkbox-item"><input type="checkbox" data-cat="all" checked> Все</label>
+        <label class="checkbox-item"><input type="checkbox" data-cat="Lifestyle"> Lifestyle</label>
+        <label class="checkbox-item"><input type="checkbox" data-cat="Lingerie"> Lingerie</label>
+        <label class="checkbox-item"><input type="checkbox" data-cat="Fitness"> Fitness</label>
+        <label class="checkbox-item"><input type="checkbox" data-cat="Boudoir"> Boudoir</label>
+        <label class="checkbox-item"><input type="checkbox" data-cat="Art"> Art</label>
+        <label class="checkbox-item"><input type="checkbox" data-cat="Cosplay"> Cosplay</label>
+        <label class="checkbox-item"><input type="checkbox" data-cat="ASMR"> ASMR</label>
+        <label class="checkbox-item"><input type="checkbox" data-cat="Пары"> Пары</label>
+        <label class="checkbox-item"><input type="checkbox" data-cat="Latina"> Latina</label>
+        <label class="checkbox-item"><input type="checkbox" data-cat="Asian"> Asian</label>
+        <label class="checkbox-item"><input type="checkbox" data-cat="Milf"> Milf</label>
+      </div>
+    </div>
+    <div class="sidebar-divider"></div>
+
+    <!-- Price -->
+    <div class="sidebar-section">
+      <div class="sidebar-title">Цена подписки</div>
+      <div class="price-range">
+        <div class="price-labels">
+          <span>$0</span>
+          <span id="price-label">до $<span id="price-val">50</span>/мес</span>
+        </div>
+        <input type="range" id="price-slider" min="0" max="50" value="50" step="1">
+      </div>
+    </div>
+    <div class="sidebar-divider"></div>
+
+    <!-- Availability -->
+    <div class="sidebar-section">
+      <div class="sidebar-title">Доступность</div>
+      <div class="toggle-list">
+        <div class="toggle-item">
+          <span>Онлайн сейчас</span>
+          <label class="toggle"><input type="checkbox" id="tog-online"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-item">
+          <span>Идёт Live</span>
+          <label class="toggle"><input type="checkbox" id="tog-live"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-item">
+          <span>Принимает запросы</span>
+          <label class="toggle"><input type="checkbox" id="tog-requests"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="toggle-item">
+          <span>Есть бесплатный контент</span>
+          <label class="toggle"><input type="checkbox" id="tog-free"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-divider"></div>
+
+    <!-- Rating -->
+    <div class="sidebar-section">
+      <div class="sidebar-title">Рейтинг (от)</div>
+      <div class="stars-filter" id="stars-filter">
+        <button class="star-btn" data-star="1">★</button>
+        <button class="star-btn" data-star="2">★</button>
+        <button class="star-btn" data-star="3">★</button>
+        <button class="star-btn" data-star="4">★</button>
+        <button class="star-btn" data-star="5">★</button>
+      </div>
+    </div>
+    <div class="sidebar-divider"></div>
+
+    <!-- Content type -->
+    <div class="sidebar-section">
+      <div class="sidebar-title">Тип контента</div>
+      <div class="checkbox-list">
+        <label class="checkbox-item"><input type="checkbox" data-content="photo"> Фото</label>
+        <label class="checkbox-item"><input type="checkbox" data-content="video"> Видео</label>
+        <label class="checkbox-item"><input type="checkbox" data-content="live"> Live</label>
+        <label class="checkbox-item"><input type="checkbox" data-content="chat"> Чат</label>
+        <label class="checkbox-item"><input type="checkbox" data-content="special"> Особый контент</label>
+      </div>
+    </div>
+    <div class="sidebar-divider"></div>
+
+    <!-- Verified -->
+    <div class="sidebar-section">
+      <div class="toggle-list">
+        <div class="toggle-item">
+          <span style="color: var(--text-sub); font-weight:500; font-size:13px;">Только верифицированные</span>
+          <label class="toggle"><input type="checkbox" id="tog-verified"><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main id="kol-main">
+
+    <!-- FEATURED SECTION -->
+    <div id="featured-section">
+      <div class="section-header">
+        <span style="font-size:18px;">🔥</span>
+        <span class="section-title">Топ модели недели</span>
+      </div>
+      <div class="featured-scroll" id="featured-scroll"></div>
+    </div>
+
+    <!-- MODEL GRID -->
+    <div id="model-grid">
+      <div id="empty-state">
+        <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 0z"/>
+        </svg>
+        <p>Модели не найдены.<br>Попробуйте изменить фильтры.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// AGE GATE
+if (localStorage.getItem('age_verified') !== 'true') {
+  window.location.href = 'age-gate.html';
+}
+
+// DATA
+const models = [
+  {
+    id: 1, name: 'Анна Морозова', verified: true, status: 'online', viewers: 142,
+    followers: '18.4K', likes: '142K', posts: 312, videos: 28,
+    newModel: false, vip: true,
+    tags: ['Fashion','Lingerie','Boudoir'],
+    bio: 'Эксклюзивный контент каждый день. Fashion, lingerie и многое другое. Принимаю особые запросы 💋',
+    subPrice: 14.99, hasFree: true, g1: '#5C1A7A', g2: '#D42B6A', category: 'Lingerie',
+    rating: 5, hasRequests: true
+  },
+  {
+    id: 2, name: 'Мария Козлова', verified: true, status: 'live', viewers: 318,
+    followers: '9.2K', likes: '67K', posts: 189, videos: 41,
+    newModel: false, vip: false,
+    tags: ['Art','Lifestyle','Creative'],
+    bio: 'Арт и лайфстайл. Нестандартный взгляд на эротику. Творческий контент для ценителей 🎨',
+    subPrice: 9.99, hasFree: true, g1: '#0D47A1', g2: '#7B1FA2', category: 'Art',
+    rating: 4, hasRequests: false
+  },
+  {
+    id: 3, name: 'Дарья Петрова', verified: true, status: 'offline', viewers: 0,
+    followers: '31.2K', likes: '289K', posts: 547, videos: 63,
+    newModel: false, vip: true,
+    tags: ['Boudoir','Studio','Glamour'],
+    bio: 'Топ-модель платформы. Безупречное качество. Новый контент 3 раза в неделю ✨',
+    subPrice: 19.99, hasFree: false, g1: '#AD1457', g2: '#E65100', category: 'Boudoir',
+    rating: 5, hasRequests: false
+  },
+  {
+    id: 4, name: 'Елена Соколова', verified: false, status: 'online', viewers: 87,
+    followers: '5.8K', likes: '34K', posts: 98, videos: 15,
+    newModel: false, vip: false,
+    tags: ['Lifestyle','Fitness','Bikini'],
+    bio: 'Фитнес и lifestyle. Горячие фото с тренировок и не только 🏋️ Открыта к запросам!',
+    subPrice: 7.99, hasFree: true, g1: '#00695C', g2: '#1565C0', category: 'Fitness',
+    rating: 4, hasRequests: true
+  },
+  {
+    id: 5, name: 'Кристина Нова', verified: false, status: 'live', viewers: 204,
+    followers: '7.1K', likes: '51K', posts: 143, videos: 22,
+    newModel: false, vip: false,
+    tags: ['Roleplay','Cosplay','Fetish'],
+    bio: 'Косплей и ролевые игры — моя специальность. Каждую неделю новый персонаж 🎭',
+    subPrice: 12.99, hasFree: true, g1: '#4E342E', g2: '#880E4F', category: 'Cosplay',
+    rating: 4, hasRequests: true
+  },
+  {
+    id: 6, name: 'Виктория Лейн', verified: true, status: 'offline', viewers: 0,
+    followers: '22.7K', likes: '198K', posts: 421, videos: 87,
+    newModel: false, vip: true,
+    tags: ['Boudoir','Latex','Dominant'],
+    bio: 'Доминантная модель. Латекс, кожа и откровенный контент для подписчиков. Без цензуры 🖤',
+    subPrice: 24.99, hasFree: false, g1: '#37474F', g2: '#1A0A2E', category: 'Boudoir',
+    rating: 5, hasRequests: false
+  },
+  {
+    id: 7, name: 'Алина Серова', verified: true, status: 'online', viewers: 196,
+    followers: '41.3K', likes: '412K', posts: 689, videos: 124,
+    newModel: false, vip: true,
+    tags: ['Fashion','Softcore','ASMR'],
+    bio: 'Самая популярная модель платформы. Ежедневный контент. Live каждую пятницу 🔥',
+    subPrice: 16.99, hasFree: true, g1: '#880E4F', g2: '#C2185B', category: 'Lifestyle',
+    rating: 5, hasRequests: true
+  },
+  {
+    id: 8, name: 'Юлия Вих', verified: false, status: 'online', viewers: 63,
+    followers: '3.2K', likes: '18K', posts: 67, videos: 8,
+    newModel: true, vip: false,
+    tags: ['Fitness','Bikini','Sport'],
+    bio: 'Новая горячая новинка! Фитнес-модель с идеальными формами. Подпишись первым! 💪',
+    subPrice: 6.99, hasFree: true, g1: '#1B5E20', g2: '#2E7D32', category: 'Fitness',
+    rating: 3, hasRequests: true
+  },
+  {
+    id: 9, name: 'Наташа Рей', verified: true, status: 'live', viewers: 421,
+    followers: '14.8K', likes: '127K', posts: 278, videos: 51,
+    newModel: false, vip: false,
+    tags: ['Boudoir','Tease','Requests'],
+    bio: 'Чувственные boudoir и тизинг. Всегда принимаю особые запросы. Никогда не откажу 💋',
+    subPrice: 12.99, hasFree: true, g1: '#4A148C', g2: '#6A1B9A', category: 'Boudoir',
+    rating: 5, hasRequests: true
+  },
+  {
+    id: 10, name: 'Вика Морган', verified: false, status: 'online', viewers: 34,
+    followers: '2.1K', likes: '9K', posts: 34, videos: 4,
+    newModel: true, vip: false,
+    tags: ['Teen18+','Lifestyle','Cute'],
+    bio: 'Молодая свежая новинка на платформе! Милый и откровенный контент ежедневно 🌸',
+    subPrice: 5.99, hasFree: true, g1: '#1A237E', g2: '#283593', category: 'Lifestyle',
+    rating: 3, hasRequests: false
+  },
+  {
+    id: 11, name: 'Лина Сой', verified: true, status: 'online', viewers: 289,
+    followers: '28.9K', likes: '267K', posts: 456, videos: 78,
+    newModel: false, vip: true,
+    tags: ['Asian','Korean','Fashion'],
+    bio: 'K-Beauty и Asian fashion. Нежный и чувственный контент. Мировая аудитория 🌸',
+    subPrice: 13.99, hasFree: true, g1: '#880E4F', g2: '#F06292', category: 'Asian',
+    rating: 5, hasRequests: true
+  },
+  {
+    id: 12, name: 'Карина Лейс', verified: true, status: 'offline', viewers: 0,
+    followers: '11.3K', likes: '89K', posts: 198, videos: 34,
+    newModel: false, vip: false,
+    tags: ['Latina','Dance','Hot'],
+    bio: 'Латиноамериканская красотка. Танцы, флирт и горячий контент. ¡Caliente! 🔥',
+    subPrice: 10.99, hasFree: false, g1: '#00695C', g2: '#00838F', category: 'Latina',
+    rating: 4, hasRequests: false
+  }
+];
+
+// SILHOUETTE SVG
+function silhouetteSVG(w, h) {
+  return `<svg width="${w}" height="${h}" viewBox="0 0 60 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="18" rx="12" ry="14" fill="white"/>
+    <path d="M10 90 Q10 55 30 50 Q50 55 50 90Z" fill="white"/>
+  </svg>`;
+}
+
+// STATE
+let activeQuickFilter = 'all';
+let minRating = 0;
+let maxPrice = 50;
+
+// DYNAMIC OFFSETS
+function adjustOffsets() {
+  const notifBar = document.getElementById('notif-bar');
+  const notifH = notifBar.classList.contains('hidden') ? 0 : notifBar.offsetHeight;
+  const headerH = 62;
+  const filterH = document.getElementById('filter-bar').offsetHeight;
+  const statsH = document.getElementById('stats-bar').offsetHeight;
+
+  document.getElementById('main-header').style.top = notifH + 'px';
+  document.getElementById('filter-bar').style.top = (notifH + headerH) + 'px';
+  document.getElementById('stats-bar').style.top = (notifH + headerH + filterH) + 'px';
+
+  const totalTop = notifH + headerH + filterH + statsH;
+  document.querySelector('aside').style.top = totalTop + 'px';
+  document.querySelector('.layout').style.paddingTop = totalTop + 'px';
+}
+
+// FEATURED STRIP
+function renderFeatured() {
+  const topModels = [...models].filter(m => m.vip || m.status !== 'offline').slice(0,5);
+  const container = document.getElementById('featured-scroll');
+  container.innerHTML = topModels.map(m => `
+    <div class="featured-card" onclick="window.location.href='profile.html?id=${m.id}'">
+      <div class="featured-photo" style="background: linear-gradient(160deg, ${m.g1}, ${m.g2});">
+        ${silhouetteSVG(40,60)}
+      </div>
+      <div class="featured-body">
+        <div class="featured-name">${m.name}</div>
+        <div class="featured-subs">👥 ${m.followers} подп.</div>
+        <button class="featured-sub-btn" onclick="event.stopPropagation(); window.location.href='session.html?id=${m.id}&mode=chat'">Подписаться</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// STATUS LABEL
+function statusLabel(m) {
+  if (m.status === 'live') return 'LIVE';
+  if (m.status === 'online') return 'ОНЛАЙН';
+  return 'ОФЛАЙН';
+}
+
+// STARS
+function starsHTML(rating) {
+  let s = '';
+  for (let i = 1; i <= 5; i++) s += i <= rating ? '★' : '☆';
+  return s;
+}
+
+// RENDER CARD
+function renderCard(m) {
+  const statusCls = m.status;
+  const viewersHTML = (m.status !== 'offline' && m.viewers > 0)
+    ? `<div class="viewer-count">👁 ${m.viewers}</div>` : '';
+  const cornerBadges = [
+    m.newModel ? '<span class="badge-new">НОВИНКА</span>' : '',
+    m.vip ? '<span class="badge-vip">VIP</span>' : ''
+  ].filter(Boolean).join('');
+
+  const priceHTML = m.hasFree
+    ? `<div class="card-price free">🆓 Есть бесплатный контент</div>`
+    : `<div class="card-price paid">Подписка от $${m.subPrice}/мес</div>`;
+
+  return `
+    <div class="model-card" onclick="window.location.href='profile.html?id=${m.id}'">
+      <div class="card-photo" style="background: linear-gradient(160deg, ${m.g1}, ${m.g2});">
+        ${silhouetteSVG(60,90)}
+        <div class="status-badge ${statusCls}">
+          <span class="status-dot ${statusCls}"></span>${statusLabel(m)}
+        </div>
+        ${viewersHTML}
+        ${cornerBadges ? `<div class="corner-badges">${cornerBadges}</div>` : ''}
+        <div class="content-chip">📸 ${m.posts} · 🎬 ${m.videos}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-top-row">
+          <div class="card-name-block">
+            <div class="card-name">
+              ${m.name}
+              ${m.verified ? '<span class="verified-check" title="Верифицирована">✓</span>' : ''}
+            </div>
+            <div class="star-rating">${starsHTML(m.rating)}</div>
+          </div>
+        </div>
+        <div class="card-tags">${m.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <div class="card-bio">${m.bio}</div>
+        <div class="card-stats">
+          <span>👥 ${m.followers} подп.</span>
+          <span>❤️ ${m.likes} лайков</span>
+        </div>
+        ${priceHTML}
+        <div class="card-actions">
+          <button class="btn-subscribe" onclick="event.stopPropagation(); window.location.href='session.html?id=${m.id}&mode=chat'">Подписаться</button>
+          <button class="btn-chat" title="Написать" onclick="event.stopPropagation(); window.location.href='session.html?id=${m.id}&mode=chat'">💬</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// FILTER & SORT
+function getFiltered() {
+  const search = document.getElementById('search-input').value.toLowerCase().trim();
+  const priceMax = parseFloat(document.getElementById('price-slider').value);
+  const togOnline = document.getElementById('tog-online').checked;
+  const togLive = document.getElementById('tog-live').checked;
+  const togRequests = document.getElementById('tog-requests').checked;
+  const togFree = document.getElementById('tog-free').checked;
+  const togVerified = document.getElementById('tog-verified').checked;
+
+  // Categories
+  const catChecks = [...document.querySelectorAll('#category-list input[data-cat]')];
+  const allCatChecked = catChecks.find(c => c.dataset.cat === 'all')?.checked;
+  const activeCats = allCatChecked ? null : catChecks.filter(c => c.dataset.cat !== 'all' && c.checked).map(c => c.dataset.cat);
+
+  let result = models.filter(m => {
+    // Search
+    if (search) {
+      const hay = [m.name, ...m.tags, m.bio, m.category].join(' ').toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+
+    // Quick filter pills
+    if (activeQuickFilter === 'online' && m.status !== 'online') return false;
+    if (activeQuickFilter === 'live' && m.status !== 'live') return false;
+    if (activeQuickFilter === 'new' && !m.newModel) return false;
+    if (activeQuickFilter === 'vip' && !m.vip) return false;
+    if (activeQuickFilter === 'photo') { /* all have photos */ }
+    if (activeQuickFilter === 'video' && m.videos < 1) return false;
+    if (activeQuickFilter === 'show' && m.status !== 'live') return false;
+    if (activeQuickFilter === 'chat' && !m.hasRequests) return false;
+    if (activeQuickFilter === 'requests' && !m.hasRequests) return false;
+
+    // Sidebar toggles
+    if (togOnline && m.status !== 'online') return false;
+    if (togLive && m.status !== 'live') return false;
+    if (togRequests && !m.hasRequests) return false;
+    if (togFree && !m.hasFree) return false;
+    if (togVerified && !m.verified) return false;
+
+    // Price
+    if (m.subPrice > priceMax && !m.hasFree) return false;
+
+    // Category
+    if (activeCats && activeCats.length > 0 && !activeCats.includes(m.category)) return false;
+
+    // Min rating
+    if (minRating > 0 && m.rating < minRating) return false;
+
+    return true;
+  });
+
+  // Sort
+  const sort = document.getElementById('sort-select').value;
+  if (sort === 'popular') {
+    result.sort((a,b) => parseInt(b.followers) - parseInt(a.followers) || b.viewers - a.viewers);
+  } else if (sort === 'new') {
+    result.sort((a,b) => (b.newModel ? 1 : 0) - (a.newModel ? 1 : 0));
+  } else if (sort === 'rating') {
+    result.sort((a,b) => b.rating - a.rating);
+  } else if (sort === 'price-asc') {
+    result.sort((a,b) => a.subPrice - b.subPrice);
+  } else if (sort === 'price-desc') {
+    result.sort((a,b) => b.subPrice - a.subPrice);
+  }
+
+  return result;
+}
+
+function renderGrid() {
+  const filtered = getFiltered();
+  const grid = document.getElementById('model-grid');
+  const empty = document.getElementById('empty-state');
+  const featSec = document.getElementById('featured-section');
+
+  // Hide featured if any filter is active
+  const search = document.getElementById('search-input').value.trim();
+  const anyFilter = search || activeQuickFilter !== 'all' ||
+    document.getElementById('tog-online').checked ||
+    document.getElementById('tog-live').checked ||
+    document.getElementById('tog-requests').checked ||
+    document.getElementById('tog-free').checked ||
+    document.getElementById('tog-verified').checked ||
+    parseFloat(document.getElementById('price-slider').value) < 50 ||
+    minRating > 0;
+
+  featSec.style.display = anyFilter ? 'none' : '';
+
+  // Cards
+  const existingCards = grid.querySelectorAll('.model-card');
+  existingCards.forEach(c => c.remove());
+
+  if (filtered.length === 0) {
+    empty.style.display = 'flex';
+  } else {
+    empty.style.display = 'none';
+    filtered.forEach(m => {
+      grid.insertAdjacentHTML('beforeend', renderCard(m));
+    });
+  }
+
+  // Stats
+  const onlineCount = filtered.filter(m => m.status === 'online').length;
+  const liveCount = filtered.filter(m => m.status === 'live').length;
+  document.getElementById('stat-total').textContent = filtered.length;
+  document.getElementById('stat-online').textContent = onlineCount;
+  document.getElementById('stat-live').textContent = liveCount;
+}
+
+// EVENTS
+document.getElementById('search-input').addEventListener('input', renderGrid);
+document.getElementById('sort-select').addEventListener('change', renderGrid);
+document.getElementById('price-slider').addEventListener('input', function() {
+  document.getElementById('price-val').textContent = this.value;
+  renderGrid();
+});
+
+// Quick filter pills
+document.getElementById('filter-pills').addEventListener('click', function(e) {
+  const pill = e.target.closest('.pill');
+  if (!pill) return;
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  activeQuickFilter = pill.dataset.filter;
+  renderGrid();
+});
+
+// Sidebar toggles
+['tog-online','tog-live','tog-requests','tog-free','tog-verified'].forEach(id => {
+  document.getElementById(id).addEventListener('change', renderGrid);
+});
+
+// Category checkboxes
+document.getElementById('category-list').addEventListener('change', function(e) {
+  const allBox = document.querySelector('#category-list input[data-cat="all"]');
+  if (e.target.dataset.cat === 'all') {
+    // Uncheck all others when 'all' is checked
+    if (e.target.checked) {
+      document.querySelectorAll('#category-list input[data-cat]').forEach(c => {
+        if (c.dataset.cat !== 'all') c.checked = false;
+      });
+    }
+  } else {
+    // Uncheck 'all' when any specific category is checked
+    allBox.checked = false;
+  }
+  renderGrid();
+});
+
+// Star rating filter
+document.querySelectorAll('.star-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const val = parseInt(this.dataset.star);
+    if (minRating === val) {
+      minRating = 0;
+      document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+    } else {
+      minRating = val;
+      document.querySelectorAll('.star-btn').forEach(b => {
+        b.classList.toggle('active', parseInt(b.dataset.star) <= val);
+      });
+    }
+    renderGrid();
+  });
+});
+
+// INIT
+adjustOffsets();
+renderFeatured();
+renderGrid();
+window.addEventListener('resize', adjustOffsets);
+</script>
+
+<!-- MOBILE BOTTOM NAV -->
+
+<!-- GLOBAL FOOTER -->
+<footer style="border-top:1px solid #22224A;padding:32px 20px;text-align:center;font-size:12px;color:#505075;position:relative;z-index:1;margin-top:auto">
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:16px;">
+    <a href="landing.html" style="color:#9090BB;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#F0F0FF'" onmouseout="this.style.color='#9090BB'">О платформе</a>
+    <a href="creator-apply.html" style="color:#9090BB;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#F0F0FF'" onmouseout="this.style.color='#9090BB'">Стать моделью</a>
+    <a href="leaderboard.html" style="color:#9090BB;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#F0F0FF'" onmouseout="this.style.color='#9090BB'">Топ моделей</a>
+    <a href="referral.html" style="color:#9090BB;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#F0F0FF'" onmouseout="this.style.color='#9090BB'">Партнёрская программа</a>
+    <a href="help.html" style="color:#9090BB;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#F0F0FF'" onmouseout="this.style.color='#9090BB'">Поддержка</a>
+    <a href="privacy.html" style="color:#D42B6A;text-decoration:none">Конфиденциальность</a>
+    <a href="terms.html" style="color:#D42B6A;text-decoration:none">Условия</a>
+  </div>
+  <div>© 2026 KOL Studio &nbsp;·&nbsp; <span style="color:#3A3A70">18+ Only</span> &nbsp;·&nbsp; <span style="color:#3A3A70">18 U.S.C. § 2257</span></div>
+
+  <div style="text-align:center;padding:8px"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="index.html" class="active" style="color:#fff;font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="en/index.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇬🇧 EN</a></div></div>
+</footer>
+<nav aria-label="navigation" class="mobile-nav">
+  <a href="feed.html" class="mobile-nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Лента</span>
+  </a>
+  <a href="search.html" class="mobile-nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <span>Поиск</span>
+  </a>
+  <a href="index.html" class="mobile-nav-item active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    <span>Каталог</span>
+  </a>
+  <a href="user-cabinet.html" class="mobile-nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>Кабинет</span>
+  </a>
+</nav>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>console.log("[PWA] SW ok",r.scope)).catch(e=>console.warn("[PWA] SW fail",e));});}</script>
+
+<script id="page-nav-transitions">
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     KOL Studio Global Components
+     1. GDPR Cookie Consent Banner
+     2. Dark / Light Theme Toggle
+     3. PWA Install Prompt
+═══════════════════════════════════════════════════════════ -->
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="cookie.html">Подробнее</a> · <a href="report.html">Пожаловаться</a> · <a href="api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href = 'search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href = 'upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

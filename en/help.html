@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="apple-touch-icon" href="../icons/icon.svg">
+  <meta name="description" content="KOL Studio Help Center. Answers to all your questions">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta property="og:title" content="Help — KOL Studio">
+  <meta property="og:description" content="KOL Studio Help Center. Answers to all your questions">
+  <meta property="og:url" content="https://kolstudio.com/en/help.html">
+  <meta property="og:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Help — KOL Studio">
+  <meta name="twitter:description" content="KOL Studio Help Center. Answers to all your questions">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help Center — KOL Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07071A;
+    --card: #111128;
+    --card2: #181835;
+    --border: #22224A;
+    --accent: #D42B6A;
+    --accent2: #8B2BE2;
+    --green: #00E676;
+    --gold: #FFB300;
+    --text: #E8E8FF;
+    --text-muted: #7878A8;
+    --text-dim: #4A4A7A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34,34,74,0.4) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,34,74,0.4) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Ambient glows */
+  .glow-1 {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,43,106,0.12) 0%, transparent 70%);
+    top: -200px;
+    left: -200px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-2 {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,43,226,0.1) 0%, transparent 70%);
+    bottom: -150px;
+    right: -150px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(7,7,26,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+  }
+
+  .badge-18 {
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .nav-link:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+
+  .nav-link-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border-color: transparent;
+  }
+  .nav-link-primary:hover { opacity: 0.9; color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent2)); }
+
+  /* MAIN CONTENT */
+  main {
+    position: relative;
+    z-index: 1;
+    padding-top: 64px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 60px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(212,43,106,0.1);
+    border: 1px solid rgba(212,43,106,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff 30%, var(--accent) 70%, var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
+
+  .search-wrap {
+    max-width: 600px;
+    margin: 0 auto 28px;
+    position: relative;
+  }
+
+  .search-wrap svg {
+    position: absolute;
+    left: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 18px 24px 18px 56px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: all 0.2s;
+  }
+  .search-input::placeholder { color: var(--text-dim); }
+  .search-input:focus {
+    border-color: var(--accent);
+    background: var(--card2);
+    box-shadow: 0 0 0 3px rgba(212,43,106,0.15);
+  }
+
+  .search-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    border-radius: 100px;
+    padding: 10px 24px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .search-btn:hover { opacity: 0.85; }
+
+  .popular-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .popular-label {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .tag-pill {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .tag-pill:hover {
+    background: rgba(212,43,106,0.1);
+    border-color: rgba(212,43,106,0.4);
+    color: var(--accent);
+  }
+
+  /* SECTION */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 32px;
+  }
+
+  .section-header {
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .section-sub {
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+
+  /* CATEGORY GRID */
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .category-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+  }
+  .category-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(212,43,106,0.05), rgba(139,43,226,0.05));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .category-card:hover {
+    border-color: rgba(212,43,106,0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(212,43,106,0.1);
+  }
+  .category-card:hover::before { opacity: 1; }
+
+  .cat-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .cat-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .cat-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .cat-arrow {
+    color: var(--text-dim);
+    transition: all 0.2s;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+  .category-card:hover .cat-arrow {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .cat-count {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    background: rgba(212,43,106,0.1);
+    padding: 2px 8px;
+    border-radius: 100px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .cat-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ARTICLES LIST */
+  .articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--card);
+  }
+
+  .article-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+  .article-item:last-child { border-bottom: none; }
+  .article-item:hover { background: var(--card2); }
+
+  .article-badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .badge-payment { background: rgba(255,179,0,0.15); color: var(--gold); }
+  .badge-account { background: rgba(0,230,118,0.1); color: var(--green); }
+  .badge-content { background: rgba(139,43,226,0.15); color: #B060FF; }
+  .badge-tech { background: rgba(100,149,237,0.15); color: #6495ED; }
+  .badge-model { background: rgba(212,43,106,0.15); color: var(--accent); }
+  .badge-privacy { background: rgba(255,255,255,0.08); color: var(--text-muted); }
+
+  .article-title {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .article-time {
+    font-size: 13px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .article-arrow {
+    color: var(--text-dim);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .article-item:hover .article-arrow { color: var(--accent); transform: translateX(4px); }
+
+  /* FAQ ACCORDION */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .faq-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .faq-item.open { border-color: rgba(212,43,106,0.4); }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: left;
+    gap: 16px;
+    transition: color 0.2s;
+  }
+  .faq-item.open .faq-question { color: var(--accent); }
+
+  .faq-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s;
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1;
+  }
+  .faq-item.open .faq-icon {
+    background: rgba(212,43,106,0.15);
+    border-color: rgba(212,43,106,0.4);
+    color: var(--accent);
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.2s;
+  }
+  .faq-item.open .faq-answer { max-height: 400px; }
+
+  .faq-answer-inner {
+    padding: 0 24px 20px;
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  /* CONTACT CARDS */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .contact-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: all 0.25s;
+  }
+  .contact-card:hover {
+    border-color: rgba(212,43,106,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+
+  .contact-icon {
+    font-size: 40px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .contact-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .contact-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+
+  .contact-note {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+
+  .contact-btn {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    border: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+  }
+  .btn-primary:hover { opacity: 0.85; transform: scale(1.02); }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* STATUS BANNER */
+  .status-banner {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    font-size: 14px;
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse-dot 2s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .status-label { color: var(--green); font-weight: 600; }
+
+  .uptime-badge {
+    background: rgba(0,230,118,0.1);
+    border: 1px solid rgba(0,230,118,0.2);
+    border-radius: 100px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green);
+  }
+
+  /* SEARCH RESULTS */
+  .search-results {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    z-index: 50;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  }
+  .search-results.show { display: block; }
+
+  .search-result-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .search-result-item:last-child { border-bottom: none; }
+  .search-result-item:hover { background: rgba(212,43,106,0.08); }
+
+  .search-result-title { font-size: 14px; font-weight: 500; color: var(--text); }
+  .search-result-cat { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+  /* CHAT MODAL */
+  .chat-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    backdrop-filter: blur(4px);
+  }
+  .chat-overlay.show { display: block; }
+
+  .chat-panel {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 420px;
+    height: 100vh;
+    background: var(--card);
+    border-left: 1px solid var(--border);
+    z-index: 201;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .chat-panel.show { right: 0; }
+
+  .chat-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card2);
+  }
+
+  .chat-agent {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .chat-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    position: relative;
+  }
+
+  .chat-online {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--card2);
+    box-shadow: 0 0 6px var(--green);
+  }
+
+  .chat-agent-name { font-size: 15px; font-weight: 700; }
+  .chat-status { font-size: 12px; color: var(--green); }
+
+  .chat-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s;
+    line-height: 1;
+  }
+  .chat-close:hover { background: rgba(212,43,106,0.1); color: var(--accent); border-color: var(--accent); }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .chat-bubble {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .bubble-bot {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 16px 16px 16px 4px;
+    color: var(--text);
+    align-self: flex-start;
+  }
+
+  .bubble-user {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border-radius: 16px 16px 4px 16px;
+    align-self: flex-end;
+  }
+
+  .bubble-time {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  .bubble-wrap { display: flex; flex-direction: column; }
+  .bubble-wrap.user { align-items: flex-end; }
+  .bubble-wrap.bot { align-items: flex-start; }
+
+  .chat-typing {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 16px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 16px 16px 16px 4px;
+    width: fit-content;
+  }
+  .chat-typing.show { display: flex; }
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    animation: typing 1.2s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typing { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+
+  .chat-input-wrap {
+    padding: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+  }
+
+  .chat-input {
+    flex: 1;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .chat-input::placeholder { color: var(--text-dim); }
+  .chat-input:focus { border-color: var(--accent); }
+
+  .chat-send {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+  .chat-send:hover { opacity: 0.85; }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* Search highlight */
+  .highlight { color: var(--accent); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .category-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 16px; }
+    .hero { padding: 60px 16px 40px; }
+    .section { padding: 40px 16px; }
+    .category-grid { grid-template-columns: 1fr; }
+    .chat-panel { width: 100%; right: -100%; }
+    .status-banner { flex-direction: column; gap: 12px; }
+    .article-item { flex-wrap: wrap; }
+    .nav-link:not(.nav-link-primary) { display: none; }
+  }
+</style>
+<style id="page-transitions">
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+</style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/help.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/help.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/help.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/help.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+
+<div class="glow-1"></div>
+<div class="glow-2"></div>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <span class="logo-text">KOL STUDIO</span>
+    <span class="badge-18">18+</span>
+  </a>
+  <div class="nav-links">
+    <a href="../index.html" class="nav-link">← Back</a>
+    <a href="../login.html" class="nav-link nav-link-primary">Log In</a>
+  </div>
+</nav>
+
+<main>
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="../index.html">🏠 Главная</a><span class="sep">›</span><span class="current">Помощь</span></nav>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+      Help Center
+    </div>
+    <h1>How can we help you?</h1>
+    <p class="hero-sub">Find an answer or get in touch with us</p>
+
+    <div class="search-wrap">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search knowledge base..." autocomplete="off">
+      <button class="search-btn" onclick="doSearch()">Search</button>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <div class="popular-tags">
+      <span class="popular-label">Popular searches:</span>
+      <a class="tag-pill" onclick="setSearch('Cancel subscription')">Cancel subscription</a>
+      <a class="tag-pill" onclick="setSearch('Refund')">Refund</a>
+      <a class="tag-pill" onclick="setSearch('Verification')">Verification</a>
+      <a class="tag-pill" onclick="setSearch('Top up wallet')">Top up wallet</a>
+      <a class="tag-pill" onclick="setSearch('Private show')">Private show</a>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Categories</h2>
+      <p class="section-sub">Choose a topic you are interested in</p>
+    </div>
+
+    <div class="category-grid">
+      <a href="#payments" class="category-card">
+        <span class="cat-icon">💳</span>
+        <div class="cat-header">
+          <span class="cat-title">Payments &amp; Subscriptions</span>
+          <svg class="cat-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="cat-count">12 articles</div>
+        <p class="cat-desc">Billing, refunds, subscription management</p>
+      </a>
+
+      <a href="#account" class="category-card">
+        <span class="cat-icon">👤</span>
+        <div class="cat-header">
+          <span class="cat-title">Account &amp; Security</span>
+          <svg class="cat-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="cat-count">8 articles</div>
+        <p class="cat-desc">Login, password, two-factor auth, account suspension</p>
+      </a>
+
+      <a href="#content" class="category-card">
+        <span class="cat-icon">🎬</span>
+        <div class="cat-header">
+          <span class="cat-title">Content &amp; Creators</span>
+          <svg class="cat-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="cat-count">15 articles</div>
+        <p class="cat-desc">How the platform works, PPV, live shows</p>
+      </a>
+
+      <a href="#tech" class="category-card">
+        <span class="cat-icon">💻</span>
+        <div class="cat-header">
+          <span class="cat-title">Technical Support</span>
+          <svg class="cat-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="cat-count">10 articles</div>
+        <p class="cat-desc">Errors, video playback issues</p>
+      </a>
+
+      <a href="#privacy" class="category-card">
+        <span class="cat-icon">🔒</span>
+        <div class="cat-header">
+          <span class="cat-title">Privacy</span>
+          <svg class="cat-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="cat-count">6 articles</div>
+        <p class="cat-desc">Data, account deletion, GDPR</p>
+      </a>
+
+      <a href="#models" class="category-card">
+        <span class="cat-icon">💰</span>
+        <div class="cat-header">
+          <span class="cat-title">For Creators</span>
+          <svg class="cat-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="cat-count">20 articles</div>
+        <p class="cat-desc">Registration, payouts, content, verification</p>
+      </a>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- POPULAR ARTICLES -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Popular Articles</h2>
+      <p class="section-sub">Most frequently read content</p>
+    </div>
+
+    <div class="articles-list" id="payments">
+      <a href="#faq" class="article-item" onclick="openFaq(0)">
+        <span class="article-badge badge-payment">💳 Payments</span>
+        <span class="article-title">How to cancel your subscription</span>
+        <span class="article-time">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          2 min
+        </span>
+        <svg class="article-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="#faq" class="article-item" onclick="openFaq(1)">
+        <span class="article-badge badge-payment">💳 Payments</span>
+        <span class="article-title">Why was I charged twice</span>
+        <span class="article-time">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          3 min
+        </span>
+        <svg class="article-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="#faq" class="article-item" id="account" onclick="openFaq(2)">
+        <span class="article-badge badge-account">👤 Account</span>
+        <span class="article-title">How to change your email and password</span>
+        <span class="article-time">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          2 min
+        </span>
+        <svg class="article-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="#faq" class="article-item" id="content" onclick="openFaq(3)">
+        <span class="article-badge badge-content">🎬 Content</span>
+        <span class="article-title">What is PPV content</span>
+        <span class="article-time">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          1 min
+        </span>
+        <svg class="article-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="#faq" class="article-item" id="models" onclick="openFaq(4)">
+        <span class="article-badge badge-model">💰 Creators</span>
+        <span class="article-title">How to become a creator on KOL Studio</span>
+        <span class="article-time">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          5 min
+        </span>
+        <svg class="article-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="#faq" class="article-item" id="tech" onclick="openFaq(5)">
+        <span class="article-badge badge-tech">💻 Tech Support</span>
+        <span class="article-title">Video won't play — what to do</span>
+        <span class="article-time">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          4 min
+        </span>
+        <svg class="article-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="#faq" class="article-item" id="privacy" onclick="openFaq(6)">
+        <span class="article-badge badge-privacy">🔒 Privacy</span>
+        <span class="article-title">How to delete your account and data</span>
+        <span class="article-time">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          3 min
+        </span>
+        <svg class="article-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="#faq" class="article-item" onclick="openFaq(7)">
+        <span class="article-badge badge-content">🎬 Content</span>
+        <span class="article-title">How private shows work</span>
+        <span class="article-time">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          2 min
+        </span>
+        <svg class="article-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FAQ ACCORDION -->
+  <section class="section" id="faq">
+    <div class="section-header">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-sub">Quick answers to the most common questions</p>
+    </div>
+
+    <div class="faq-list" id="faqList">
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How do I cancel my subscription?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            To cancel your subscription, go to <strong>Settings → Subscriptions</strong> in your account dashboard. Find your active subscription and click the "Cancel" button. The cancellation takes effect immediately, but you retain access until the end of the current billing period. No further charges will be made after cancellation. If you cannot find the cancel button, contact our support chat and we will assist you within 5 minutes.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          When will my refund arrive?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Once your refund request is approved, funds are returned to your card within <strong>5–10 business days</strong>, depending on your issuing bank. For digital wallets, the processing time is 1–3 business days. If more than 10 days have passed and you have not received your funds, please contact support with your transaction number. Refunds are only considered for transactions made within the last 30 days.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is it safe to make payments on the platform?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Yes, absolutely. All payments are protected by <strong>SSL/TLS 256-bit</strong> encryption and comply with <strong>PCI DSS Level 1</strong> — the highest security standard for payment systems. We do not store your card details on our servers; all processing is handled through a certified payment provider. Your bank statement will show a neutral company name to protect your privacy.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How do I verify my creator account?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Creator verification involves three steps: uploading a government-issued ID (passport, driver's license, or national ID card), taking a selfie while holding the document, and completing your profile. Documents are verified through <strong>Onfido</strong> and permanently deleted from our servers after successful verification. The process takes <strong>24–48 hours</strong>. You will receive an email notification with the result.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What should I do if content is blocked?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Content may be unavailable for several reasons: an expired subscription, geographic restrictions, or a temporary block due to scheduled maintenance. First, check your subscription status in your account dashboard. If your subscription is active, try using a VPN or changing your region in settings. If the problem persists, contact support with the content ID and a description of the error you are seeing.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Can I watch on multiple devices?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Yes, one account supports simultaneous streaming on <strong>2 devices</strong> under the basic subscription. When a third device connects, the oldest session is automatically ended. Premium subscribers can use up to 4 devices at the same time. All active sessions are listed under "Security" in your account settings, where you can remotely end any session at any time.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How do tips work?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Tips are a direct way to support a creator. During a live stream or on a creator's profile, click the "Tip" button and select an amount (from $1 to $500). The amount is deducted from your wallet balance or card instantly. The creator receives <strong>80% of the tip amount</strong> credited to their account. Tips are non-refundable once sent, so please confirm the amount carefully before submitting.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How do I report content?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            If you find content that violates our platform rules, click the "Report" button (flag icon) located below any piece of content. Select a reason from the list: illegal content, minors, copyright infringement, fraud, or other. Reports are reviewed by our moderation team within <strong>24 hours</strong>. If a serious violation is confirmed, the content is removed immediately and the offending account is permanently banned.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CONTACT SECTION -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Contact Us</h2>
+      <p class="section-sub">Couldn't find an answer? We're here to help</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <span class="contact-icon">💬</span>
+        <div class="contact-title">Live Chat</div>
+        <div class="contact-desc">Speak with a live support agent</div>
+        <div class="contact-note">Response within 5 minutes</div>
+        <button class="contact-btn btn-primary" onclick="openChat()">Start Chat</button>
+      </div>
+
+      <div class="contact-card">
+        <span class="contact-icon">📧</span>
+        <div class="contact-title">Email</div>
+        <div class="contact-desc">support@kolstudio.com</div>
+        <div class="contact-note">Response within 24 hours</div>
+        <a href="mailto:support@kolstudio.com" class="contact-btn btn-outline">Send Email</a>
+      </div>
+
+      <div class="contact-card">
+        <span class="contact-icon">🤖</span>
+        <div class="contact-title">Bot Assistant</div>
+        <div class="contact-desc">@kolstudio_bot on Telegram</div>
+        <div class="contact-note">Instant answers 24/7</div>
+        <a href="https://t.me/kolstudio_bot" target="_blank" class="contact-btn btn-outline">Open Telegram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUS BANNER -->
+  <div class="status-banner">
+    <div class="status-item">
+      <div class="status-dot"></div>
+      <span class="status-label">All systems operational</span>
+    </div>
+    <div class="status-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Uptime: <span class="uptime-badge">99.97%</span>
+    </div>
+    <div class="status-item">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Last updated: just now
+    </div>
+  </div>
+</main>
+
+<!-- CHAT OVERLAY -->
+<div class="chat-overlay" id="chatOverlay" onclick="closeChat()"></div>
+
+<!-- CHAT PANEL -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-agent">
+      <div class="chat-avatar">
+        🤖
+        <div class="chat-online"></div>
+      </div>
+      <div>
+        <div class="chat-agent-name">KOL Studio Support</div>
+        <div class="chat-status">● Online</div>
+      </div>
+    </div>
+    <div class="chat-close" onclick="closeChat()">×</div>
+  </div>
+
+  <div class="chat-messages" id="chatMessages">
+    <div class="bubble-wrap bot">
+      <div class="chat-bubble bubble-bot">Hi there! How can I help you? 👋</div>
+      <div class="bubble-time">just now</div>
+    </div>
+    <div class="bubble-wrap bot">
+      <div class="chat-bubble bubble-bot">Type your question and I'll do my best to help. Or pick a topic: <strong>subscription</strong>, <strong>payment</strong>, <strong>verification</strong>, <strong>video</strong>.</div>
+      <div class="bubble-time">just now</div>
+    </div>
+  </div>
+
+  <div class="chat-typing" id="chatTyping">
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+  </div>
+
+  <div class="chat-input-wrap">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendMessage()">
+    <button class="chat-send" onclick="sendMessage()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+// Search data
+const articles = [
+  { title: 'How to cancel your subscription', cat: 'Payments', faq: 0 },
+  { title: 'Why was I charged twice', cat: 'Payments', faq: 1 },
+  { title: 'How to change your email and password', cat: 'Account', faq: 2 },
+  { title: 'What is PPV content', cat: 'Content', faq: 3 },
+  { title: 'How to become a creator on KOL Studio', cat: 'Creators', faq: 4 },
+  { title: 'Video won\'t play — what to do', cat: 'Tech Support', faq: 5 },
+  { title: 'How to delete your account and data', cat: 'Privacy', faq: 6 },
+  { title: 'How private shows work', cat: 'Content', faq: 7 },
+  { title: 'Refund', cat: 'Payments', faq: 1 },
+  { title: 'Payment security', cat: 'Payments', faq: 2 },
+  { title: 'Account verification', cat: 'Creators', faq: 3 },
+  { title: 'Top up wallet', cat: 'Payments', faq: 0 },
+  { title: 'Creator tips', cat: 'Payments', faq: 6 },
+  { title: 'Report content', cat: 'Moderation', faq: 7 },
+];
+
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  if (q.length < 2) { searchResults.classList.remove('show'); return; }
+  const matches = articles.filter(a => a.title.toLowerCase().includes(q) || a.cat.toLowerCase().includes(q));
+  if (matches.length === 0) { searchResults.classList.remove('show'); return; }
+  searchResults.innerHTML = matches.slice(0, 6).map(a => `
+    <div class="search-result-item" onclick="openFaq(${a.faq}); searchResults.classList.remove('show'); searchInput.value=''">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-dim)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <div>
+        <div class="search-result-title">${a.title}</div>
+        <div class="search-result-cat">${a.cat}</div>
+      </div>
+    </div>
+  `).join('');
+  searchResults.classList.add('show');
+});
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.search-wrap')) searchResults.classList.remove('show');
+});
+
+function setSearch(val) {
+  searchInput.value = val;
+  searchInput.dispatchEvent(new Event('input'));
+  searchInput.focus();
+}
+
+function doSearch() {
+  const q = searchInput.value.trim().toLowerCase();
+  if (!q) return;
+  const match = articles.find(a => a.title.toLowerCase().includes(q));
+  if (match) openFaq(match.faq);
+}
+
+// FAQ Accordion
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+function openFaq(index) {
+  const items = document.querySelectorAll('.faq-item');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (items[index]) {
+    items[index].classList.add('open');
+    setTimeout(() => items[index].scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
+  }
+}
+
+// Chat
+function openChat() {
+  document.getElementById('chatOverlay').classList.add('show');
+  document.getElementById('chatPanel').classList.add('show');
+  document.getElementById('chatInput').focus();
+}
+
+function closeChat() {
+  document.getElementById('chatOverlay').classList.remove('show');
+  document.getElementById('chatPanel').classList.remove('show');
+}
+
+const botReplies = {
+  'subscription': 'To cancel your subscription, go to Settings → Subscriptions in your account dashboard. Click "Cancel" next to your active subscription. You will retain access until the end of the billing period. Need help?',
+  'cancel': 'You can cancel your subscription under Settings → Subscriptions. No further charges will occur after cancellation. Having trouble? I can help!',
+  'payment': 'All payments are secured with SSL and comply with PCI DSS Level 1. Your card details are never stored on our servers. Your security is guaranteed 🔒',
+  'refund': 'To request a refund, go to Settings → Payments → Request Refund. Processing takes 5–10 business days. We process refunds for transactions made within the last 30 days.',
+  'verif': 'Creator verification takes 24–48 hours. You will need a government-issued ID (passport or national ID) plus a selfie holding it. Documents are deleted after verification via Onfido 🔒',
+  'video': 'If video won\'t play: 1) Refresh the page 2) Clear your browser cache 3) Check your internet speed 4) Try a different browser. If none of that helps, let me know your device model.',
+  'password': 'To change your password: Settings → Security → Change Password. If you\'ve forgotten it, use "Forgot Password" on the login page and a reset link will be sent to your email.',
+  'hi': 'Hi there! 👋 Great to have you here. How can I help? Ask about subscriptions, payments, verification, or technical issues.',
+  'hello': 'Hello! 👋 How can I help you today? Ask about subscriptions, payments, verification, or technical issues.',
+  'help': 'I\'m here! 😊 I can assist with: cancelling subscriptions, refunds, verification, and technical problems. What\'s going on?',
+  'thank': 'You\'re welcome! 😊 Feel free to reach out anytime. Have a great day!',
+};
+
+function getBotReply(msg) {
+  const lower = msg.toLowerCase();
+  for (const [key, reply] of Object.entries(botReplies)) {
+    if (lower.includes(key)) return reply;
+  }
+  return 'Got your message! Let me check the details with a senior specialist. This usually takes 1–2 minutes. Or feel free to describe your issue in more detail and I\'ll do my best to help right away 🙏';
+}
+
+function addMessage(text, type) {
+  const messages = document.getElementById('chatMessages');
+  const now = new Date().toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit' });
+  const wrap = document.createElement('div');
+  wrap.className = `bubble-wrap ${type}`;
+  wrap.innerHTML = `
+    <div class="chat-bubble bubble-${type}">${text}</div>
+    <div class="bubble-time">${now}</div>
+  `;
+  messages.appendChild(wrap);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  addMessage(msg, 'user');
+
+  const typing = document.getElementById('chatTyping');
+  const messages = document.getElementById('chatMessages');
+  messages.appendChild(typing);
+  typing.classList.add('show');
+  messages.scrollTop = messages.scrollHeight;
+
+  setTimeout(() => {
+    typing.classList.remove('show');
+    addMessage(getBotReply(msg), 'bot');
+  }, 1200 + Math.random() * 800);
+}
+</script>
+<script id="page-nav-transitions">
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+</script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register('../sw.js')});}</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../help.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="help.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
+<style>
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline}
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A}
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+</style>
+<div id="kol-cookie-banner">
+  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
+  </div>
+</div>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div style="flex:1;min-width:0"><strong style="font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:#E8E8F0">Install KOL Studio</strong><span style="font-size:12px;color:#A0A0C0">Works offline • Faster than browser</span></div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="document.getElementById('kol-pwa-prompt').classList.remove('show')">×</button>
+</div>
+<script>
+(function(){
+  var CONSENT_KEY='kol_consent_v2',THEME_KEY='kol_theme';
+  window.kolAcceptCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:true,marketing:true,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  window.kolRejectCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:false,marketing:false,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  var btn=document.getElementById('kol-theme-btn');
+  window.kolToggleTheme=function(){var c=localStorage.getItem(THEME_KEY)||'dark';var n=c==='dark'?'light':'dark';localStorage.setItem(THEME_KEY,n);if(n==='light'){document.body.classList.add('kol-light');btn.textContent='☀️'}else{document.body.classList.remove('kol-light');btn.textContent='🌙'}};
+  var st=localStorage.getItem(THEME_KEY);if(st==='light'){document.body.classList.add('kol-light');if(btn)btn.textContent='☀️'}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!sessionStorage.getItem('kol_pwa_dismissed')&&!localStorage.getItem('kol_pwa_installed'))setTimeout(function(){document.getElementById('kol-pwa-prompt').classList.add('show')},4000)});
+  var ib=document.getElementById('kol-pwa-install-btn');if(ib)ib.addEventListener('click',function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')localStorage.setItem('kol_pwa_installed','1');document.getElementById('kol-pwa-prompt').classList.remove('show');deferredPrompt=null})});
+  document.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem(CONSENT_KEY))setTimeout(function(){document.getElementById('kol-cookie-banner').classList.add('show')},1500)});
+})();
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

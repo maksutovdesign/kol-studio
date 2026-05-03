@@ -1,0 +1,2443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="apple-touch-icon" href="../icons/icon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Топ Моделей — KOL STUDIO</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07071A;
+  --card: #111128;
+  --card2: #181835;
+  --border: #22224A;
+  --accent: #D42B6A;
+  --accent2: #8B2BE2;
+  --green: #00E676;
+  --gold: #FFB300;
+  --silver: #9E9E9E;
+  --bronze: #CD7F32;
+  --text: #FFFFFF;
+  --text2: #8888AA;
+  --text3: #5555777;
+  --radius: 16px;
+  --radius-sm: 8px;
+  --radius-xs: 4px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ---- GRID BG PATTERN ---- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34,34,74,0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,34,74,0.4) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- AMBIENT GLOWS ---- */
+.ambient-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(212,43,106,0.12) 0%, transparent 70%);
+  top: -200px; left: -200px;
+}
+.glow-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(139,43,226,0.10) 0%, transparent 70%);
+  top: 50%; right: -150px;
+}
+.glow-3 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,179,0,0.06) 0%, transparent 70%);
+  bottom: 100px; left: 30%;
+}
+
+/* ---- HEADER ---- */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 60px;
+  background: rgba(7,7,26,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 32px;
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+.badge-18 {
+  background: var(--accent);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+nav a {
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+  position: relative;
+}
+
+nav a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+
+nav a.active {
+  color: var(--text);
+}
+
+nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 14px;
+  right: 14px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 16px;
+}
+.icon-btn:hover { background: var(--card2); color: var(--text); }
+
+.avatar-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  border: 2px solid rgba(212,43,106,0.4);
+}
+
+/* ---- MAIN WRAPPER ---- */
+main {
+  position: relative;
+  z-index: 1;
+  padding-top: 60px;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---- HERO ---- */
+.hero {
+  padding: 48px 0 32px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 17px;
+  color: var(--text2);
+  margin-bottom: 28px;
+}
+
+.live-stats {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 12px 28px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.live-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.live-dot::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse-green 2s ease-in-out infinite;
+}
+
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+.live-stats span {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.live-stats .sep { color: var(--border); font-size: 18px; }
+
+.countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text2);
+  margin-top: 8px;
+}
+
+.countdown-time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--gold);
+  background: rgba(255,179,0,0.1);
+  padding: 2px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,179,0,0.2);
+}
+
+/* ---- FILTER CONTROLS ---- */
+.filter-section {
+  padding: 0 0 24px;
+}
+
+.period-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 4px;
+  width: fit-content;
+  margin: 0 auto 20px;
+}
+
+.period-tab {
+  padding: 8px 20px;
+  border-radius: 50px;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+}
+
+.period-tab.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(212,43,106,0.3);
+}
+
+.period-tab:hover:not(.active) {
+  background: var(--card2);
+  color: var(--text);
+}
+
+.category-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cat-pill {
+  padding: 7px 16px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.cat-pill.active {
+  background: rgba(212,43,106,0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cat-pill:hover:not(.active) {
+  background: var(--card2);
+  color: var(--text);
+  border-color: rgba(255,255,255,0.1);
+}
+
+/* ---- PODIUM ---- */
+.podium-section {
+  padding: 24px 0 40px;
+}
+
+.podium-section h2 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.podium-wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 16px;
+}
+
+.podium-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.podium-card:hover { transform: translateY(-4px); }
+
+.podium-card.rank-1 {
+  width: 280px;
+  border-color: rgba(255,179,0,0.3);
+  background: linear-gradient(160deg, rgba(255,179,0,0.06) 0%, var(--card) 50%);
+  animation: gold-glow 3s ease-in-out infinite;
+}
+
+@keyframes gold-glow {
+  0%, 100% { box-shadow: 0 0 24px rgba(255,179,0,0.08); }
+  50% { box-shadow: 0 0 40px rgba(255,179,0,0.2), 0 0 80px rgba(255,179,0,0.08); }
+}
+
+.podium-card.rank-2 {
+  width: 240px;
+  border-color: rgba(158,158,158,0.25);
+}
+
+.podium-card.rank-3 {
+  width: 240px;
+  border-color: rgba(205,127,50,0.25);
+}
+
+.podium-platform {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.rank-medal {
+  font-size: 28px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.rank-number-big {
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.rank-1 .rank-number-big {
+  background: linear-gradient(135deg, var(--gold), #FFF176);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.rank-2 .rank-number-big {
+  background: linear-gradient(135deg, #9E9E9E, #E0E0E0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.rank-3 .rank-number-big {
+  background: linear-gradient(135deg, var(--bronze), #FFCC80);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.podium-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 auto 12px;
+  position: relative;
+}
+
+.rank-1 .podium-avatar {
+  width: 96px; height: 96px;
+  font-size: 26px;
+  background: linear-gradient(135deg, #D42B6A, #FF6B9D);
+  box-shadow: 0 0 0 4px rgba(255,179,0,0.3), 0 8px 32px rgba(212,43,106,0.4);
+}
+
+.rank-2 .podium-avatar {
+  background: linear-gradient(135deg, #8B2BE2, #C55EF0);
+  box-shadow: 0 0 0 3px rgba(158,158,158,0.3), 0 8px 24px rgba(139,43,226,0.3);
+}
+
+.rank-3 .podium-avatar {
+  background: linear-gradient(135deg, #E65100, #FF8A65);
+  box-shadow: 0 0 0 3px rgba(205,127,50,0.3), 0 8px 24px rgba(230,81,0,0.3);
+}
+
+.online-dot {
+  position: absolute;
+  bottom: 4px; right: 4px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 2px solid var(--card);
+  box-shadow: 0 0 8px var(--green);
+}
+
+.podium-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.podium-handle {
+  font-size: 12px;
+  color: var(--text2);
+  margin-bottom: 4px;
+}
+
+.verified-badge {
+  display: inline-block;
+  width: 14px; height: 14px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 50%;
+  font-size: 8px;
+  line-height: 14px;
+  text-align: center;
+  color: #fff;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.podium-score {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 12px 0 4px;
+}
+
+.rank-1 .podium-score { color: var(--gold); }
+
+.score-label {
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.change-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.change-up { background: rgba(0,230,118,0.12); color: var(--green); }
+.change-down { background: rgba(255,82,82,0.12); color: #FF5252; }
+.change-new { background: rgba(255,179,0,0.15); color: var(--gold); }
+
+.podium-mini-stats {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 16px;
+}
+
+.podium-mini-stats span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.subscribe-btn {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.subscribe-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(212,43,106,0.4);
+}
+
+.subscribe-btn.subscribed {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  color: var(--text2);
+}
+
+/* ---- LEADERBOARD TABLE ---- */
+.leaderboard-section {
+  padding: 0 0 48px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.section-subtitle {
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.table-container {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead tr {
+  background: var(--card2);
+  border-bottom: 1px solid var(--border);
+}
+
+thead th {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+
+thead th:hover { color: var(--text); }
+
+thead th.sort-active { color: var(--accent); }
+
+thead th .sort-arrow {
+  display: inline-block;
+  margin-left: 4px;
+  opacity: 0.5;
+  font-size: 10px;
+}
+
+thead th.sort-active .sort-arrow { opacity: 1; }
+
+tbody tr {
+  border-bottom: 1px solid rgba(34,34,74,0.5);
+  transition: background 0.15s;
+}
+
+tbody tr:last-child { border-bottom: none; }
+
+tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+tbody td {
+  padding: 12px 16px;
+  font-size: 13px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.rank-cell {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 60px;
+}
+
+.rank-dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.rank-dot-4 { background: rgba(255,179,0,0.2); color: var(--gold); }
+.rank-dot-5 { background: rgba(212,43,106,0.2); color: var(--accent); }
+.rank-dot-6 { background: rgba(139,43,226,0.2); color: var(--accent2); }
+.rank-dot-7 { background: rgba(0,230,118,0.15); color: var(--green); }
+.rank-dot-other { background: var(--card2); color: var(--text2); }
+
+.model-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 180px;
+}
+
+.small-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 1px; right: 1px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--card);
+}
+.status-online { background: var(--green); }
+.status-offline { background: var(--text3); background: #555577; }
+
+.model-info .model-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.model-info .model-handle {
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.followers-cell {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.growth-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.growth-up { background: rgba(0,230,118,0.12); color: var(--green); }
+.growth-down { background: rgba(255,82,82,0.12); color: #FF5252; }
+
+.rating-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.price-cell {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.small-sub-btn {
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(212,43,106,0.4);
+  background: rgba(212,43,106,0.08);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+}
+
+.small-sub-btn:hover {
+  background: rgba(212,43,106,0.2);
+  border-color: var(--accent);
+}
+
+.small-sub-btn.subscribed {
+  background: var(--card2);
+  border-color: var(--border);
+  color: var(--text2);
+}
+
+.change-cell {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ch-up { color: var(--green); }
+.ch-down { color: #FF5252; }
+.ch-neutral { color: var(--text2); }
+
+/* ---- CATEGORY LEADERBOARDS ---- */
+.category-section {
+  padding: 0 0 48px;
+}
+
+.cat-blocks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .cat-blocks { grid-template-columns: 1fr; }
+}
+
+.cat-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  overflow: hidden;
+}
+
+.cat-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.cat-block-title {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.see-all {
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.cat-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.cat-scroll::-webkit-scrollbar { height: 3px; }
+.cat-scroll::-webkit-scrollbar-track { background: var(--border); border-radius: 2px; }
+.cat-scroll::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 2px; }
+
+.cat-mini-card {
+  flex-shrink: 0;
+  width: 130px;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 12px;
+  text-align: center;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.cat-mini-card:hover {
+  border-color: rgba(212,43,106,0.3);
+  transform: translateY(-2px);
+}
+
+.cat-rank-num {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.cat-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 auto 8px;
+}
+
+.cat-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cat-subs {
+  font-size: 10px;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.cat-sub-btn {
+  width: 100%;
+  padding: 5px 0;
+  border-radius: 4px;
+  border: 1px solid rgba(212,43,106,0.35);
+  background: rgba(212,43,106,0.08);
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+.cat-sub-btn:hover { background: rgba(212,43,106,0.18); }
+
+/* ---- RISING STARS ---- */
+.rising-section {
+  padding: 0 0 48px;
+}
+
+.rising-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .rising-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .rising-grid { grid-template-columns: 1fr; }
+}
+
+.rising-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.rising-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(139,43,226,0.3);
+  box-shadow: 0 8px 32px rgba(139,43,226,0.1);
+}
+
+.rising-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.badge-new { background: rgba(255,179,0,0.15); color: var(--gold); border: 1px solid rgba(255,179,0,0.3); }
+.badge-growth { background: rgba(0,230,118,0.12); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
+
+.rising-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.rising-avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.rising-name { font-size: 14px; font-weight: 700; }
+.rising-handle { font-size: 12px; color: var(--text2); }
+
+.sparkline-wrap {
+  margin: 12px 0;
+}
+
+.sparkline {
+  width: 100%;
+  height: 40px;
+  display: block;
+}
+
+.rising-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rising-subs {
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.rising-subs strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.rising-sub-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(212,43,106,0.4);
+  background: rgba(212,43,106,0.08);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+.rising-sub-btn:hover { background: rgba(212,43,106,0.2); }
+
+/* ---- SIDEBAR LAYOUT ---- */
+.content-with-sidebar {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .content-with-sidebar { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+}
+
+.sidebar {
+  position: sticky;
+  top: 80px;
+}
+
+.achievements-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.achievements-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(34,34,74,0.6);
+}
+
+.achievement-item:last-child { border-bottom: none; }
+
+.ach-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+}
+
+.ach-label {
+  font-size: 10px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ach-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ---- MOBILE TABLE CARDS ---- */
+.mobile-model-cards {
+  display: none;
+}
+
+/* ---- BOTTOM NAV (mobile) ---- */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(17,17,40,0.97);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  padding: 8px 0 env(safe-area-inset-bottom, 8px);
+  z-index: 1000;
+}
+
+.bottom-nav-inner {
+  display: flex;
+  justify-content: space-around;
+}
+
+.bnav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 16px;
+  cursor: pointer;
+  color: var(--text2);
+  font-size: 10px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.bnav-item.active { color: var(--accent); }
+
+.bnav-icon { font-size: 20px; }
+
+/* ---- SECTION LABEL ---- */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.section-label::before {
+  content: '';
+  width: 3px;
+  height: 14px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ---- RANK CHANGE PULSE ANIMATION ---- */
+@keyframes rank-pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.rank-pulsing { animation: rank-pulse 0.6s ease-in-out 3; }
+
+/* ---- SCROLL ANIMATIONS ---- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeInUp 0.5s ease forwards; }
+
+/* ---- MOBILE RESPONSIVE ---- */
+@media (max-width: 768px) {
+  header { padding: 0 16px; gap: 16px; }
+  nav { gap: 0; }
+  nav a { padding: 6px 10px; font-size: 13px; }
+
+  .container { padding: 0 16px; }
+  .hero { padding: 32px 0 24px; }
+  .hero h1 { font-size: 28px; }
+  .hero-subtitle { font-size: 14px; }
+
+  .live-stats {
+    gap: 10px;
+    padding: 10px 16px;
+    font-size: 12px;
+    border-radius: var(--radius);
+  }
+  .live-stats .sep { display: none; }
+
+  .podium-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .podium-card { width: 100% !important; max-width: 320px; }
+
+  .table-container { display: none; }
+  .mobile-model-cards { display: block; }
+
+  .bottom-nav { display: block; }
+  main { padding-bottom: 80px; }
+
+  .content-with-sidebar { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+}
+
+/* MISC */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0;
+}
+
+.mobile-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-card-rank {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text2);
+  width: 28px;
+  flex-shrink: 0;
+}
+
+.mobile-card-info { flex: 1; min-width: 0; }
+.mobile-card-name { font-size: 13px; font-weight: 600; }
+.mobile-card-meta { font-size: 11px; color: var(--text2); }
+
+.mobile-card-right { text-align: right; flex-shrink: 0; }
+.mobile-card-subs { font-size: 13px; font-weight: 600; }
+.mobile-card-growth { font-size: 11px; }
+</style>
+<meta name="description" content="Rating лучших моделей KOL Studio — топ по subscriberам, заработку и активности">
+  <meta property="og:title" content="🏆 Top Models — KOL Studio">
+  <meta property="og:description" content="Rating лучших моделей KOL Studio">
+  <meta property="og:type" content="website">
+<style id="page-transitions">@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes kol-fade-out{from{opacity:1}to{opacity:0;transform:translateY(-8px)}}body.kol-entering{animation:kol-fade-in 0.28s ease forwards}body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}</style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/leaderboard.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/leaderboard.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/leaderboard.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/leaderboard.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+
+<style id="kol-skeleton-css">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skel-title{height:22px;width:60%;margin-bottom:12px;border-radius:6px}
+.skel-avatar{width:44px;height:44px;border-radius:50%}
+.skel-thumb{width:100%;height:180px;border-radius:12px}
+.skel-btn{height:38px;width:120px;border-radius:10px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px}
+.skel-row{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #22224A}
+.skel-body{display:flex;flex-direction:column;gap:8px;flex:1}
+</style>
+</head>
+<body>
+
+<div class="ambient-glow glow-1"></div>
+<div class="ambient-glow glow-2"></div>
+<div class="ambient-glow glow-3"></div>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="logo">
+    <span class="logo-text">KOL STUDIO</span>
+    <span class="badge-18">18+</span>
+  </a>
+  <nav>
+    <a href="#">Feed</a>
+    <a href="#">Catalog</a>
+    <a href="leaderboard.html" class="active">🏆 Топ</a>
+  </nav>
+  <div class="header-right">
+    <button class="icon-btn" title="Search">🔍</button>
+    <button class="icon-btn" title="Notifications" style="position:relative">
+      🔔
+      <span style="position:absolute;top:4px;right:4px;width:7px;height:7px;background:var(--accent);border-radius:50%;border:1.5px solid var(--bg)"></span>
+    </button>
+    <div class="avatar-btn">ИВ</div>
+  </div>
+</header>
+
+<main>
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="../index.html">🏠 Главная</a><span class="sep">›</span><a href="../search.html">Поиск</a><span class="sep">›</span><span class="current">Топ создателей</span></nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>🏆 Rating моделей</h1>
+      <p class="hero-subtitle">Лучшие создатели контента по версии subscribers</p>
+
+      <div class="live-stats">
+        <span class="live-dot"></span>
+        <span>2,400 моделей</span>
+        <span class="sep">·</span>
+        <span>180K subscribers</span>
+        <span class="sep">·</span>
+        <span>$2M+ выплачено за всё время</span>
+        <span class="sep">·</span>
+        <span style="color:var(--text2)">Обновляется каждые 15 мин</span>
+      </div>
+
+      <div class="countdown">
+        <span>Следующее обновление:</span>
+        <span class="countdown-time" id="countdown">12:43</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="filter-section">
+    <div class="container">
+      <div class="period-tabs" id="periodTabs">
+        <button class="period-tab" data-period="today">Today</button>
+        <button class="period-tab active" data-period="week">Эта неделя</button>
+        <button class="period-tab" data-period="month">Этот месяц</button>
+        <button class="period-tab" data-period="all">Всё время</button>
+      </div>
+
+      <div class="category-pills" id="catPills">
+        <button class="cat-pill active" data-cat="all">Все</button>
+        <button class="cat-pill" data-cat="lifestyle">Lifestyle</button>
+        <button class="cat-pill" data-cat="cosplay">Cosplay</button>
+        <button class="cat-pill" data-cat="boudoir">Boudoir</button>
+        <button class="cat-pill" data-cat="fitness">Фитнес</button>
+        <button class="cat-pill" data-cat="anime">Аниме</button>
+        <button class="cat-pill" data-cat="live">Live</button>
+        <button class="cat-pill" data-cat="vip">VIP</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PODIUM + SIDEBAR -->
+  <section class="podium-section">
+    <div class="container">
+      <div class="content-with-sidebar">
+        <div>
+          <div class="section-label">Топ рейтинга</div>
+          <h2 style="font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:32px;display:none"></h2>
+
+          <div class="podium-wrapper" id="podiumWrapper">
+
+            <!-- RANK 2 -->
+            <div class="podium-card rank-2" onclick="toggleSubscribe(this)">
+              <span class="rank-medal">🥈</span>
+              <div class="rank-number-big">2</div>
+              <div class="podium-avatar">
+                <div style="width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#8B2BE2,#C55EF0);font-size:20px;font-weight:800;">ВЛ</div>
+                <div class="online-dot"></div>
+              </div>
+              <div class="podium-name">Виктория Л. <span class="verified-badge">✓</span></div>
+              <div class="podium-handle">@victoria_lux</div>
+              <div class="podium-score" id="p2score">87.4K</div>
+              <div class="score-label" id="p2label">subscribers</div>
+              <div class="change-indicator change-up">↑5</div>
+              <div class="podium-mini-stats">
+                <span>📸 342 поста</span>
+                <span>⭐ 4.8</span>
+              </div>
+              <button class="subscribe-btn" onclick="event.stopPropagation();toggleSubscribe(this.parentElement)">Подписаться $14.99/мес</button>
+            </div>
+
+            <!-- RANK 1 -->
+            <div class="podium-card rank-1" onclick="toggleSubscribe(this)">
+              <span class="rank-medal">👑</span>
+              <div class="rank-number-big">1</div>
+              <div class="podium-avatar">
+                <div style="width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#D42B6A,#FF6B9D);font-size:26px;font-weight:800;">АМ</div>
+                <div class="online-dot"></div>
+              </div>
+              <div class="podium-name">Анна Морозова <span class="verified-badge">✓</span></div>
+              <div class="podium-handle">@anna_m</div>
+              <div class="podium-score" id="p1score">142.8K</div>
+              <div class="score-label" id="p1label">subscribers</div>
+              <div class="change-indicator change-up">↑3</div>
+              <div class="podium-mini-stats">
+                <span>📸 589 постов</span>
+                <span>⭐ 4.97</span>
+              </div>
+              <button class="subscribe-btn" onclick="event.stopPropagation();toggleSubscribe(this.parentElement)">Подписаться $19.99/мес</button>
+            </div>
+
+            <!-- RANK 3 -->
+            <div class="podium-card rank-3" onclick="toggleSubscribe(this)">
+              <span class="rank-medal">🥉</span>
+              <div class="rank-number-big">3</div>
+              <div class="podium-avatar">
+                <div style="width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#E65100,#FF8A65);font-size:20px;font-weight:800;">ДВ</div>
+                <div class="online-dot" style="background:#555577;box-shadow:none;"></div>
+              </div>
+              <div class="podium-name">Диана В. <span class="verified-badge">✓</span></div>
+              <div class="podium-handle">@diana_vibe</div>
+              <div class="podium-score" id="p3score">74.1K</div>
+              <div class="score-label" id="p3label">subscribers</div>
+              <div class="change-indicator change-new">NEW ↑12</div>
+              <div class="podium-mini-stats">
+                <span>📸 218 постов</span>
+                <span>⭐ 4.9</span>
+              </div>
+              <button class="subscribe-btn" onclick="event.stopPropagation();toggleSubscribe(this.parentElement)">Подписаться $9.99/мес</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+          <div class="achievements-card">
+            <div class="achievements-title">🏅 Достижения этой недели</div>
+
+            <div class="achievement-item">
+              <div class="ach-icon">👑</div>
+              <div>
+                <div class="ach-label">Самый популярный</div>
+                <div class="ach-name">Анна М.</div>
+              </div>
+            </div>
+
+            <div class="achievement-item">
+              <div class="ach-icon">🔥</div>
+              <div>
+                <div class="ach-label">Самый горячий контент</div>
+                <div class="ach-name">Виктория Л.</div>
+              </div>
+            </div>
+
+            <div class="achievement-item">
+              <div class="ach-icon">⭐</div>
+              <div>
+                <div class="ach-label">Лучший рейтинг</div>
+                <div class="ach-name">Диана В.</div>
+              </div>
+            </div>
+
+            <div class="achievement-item">
+              <div class="ach-icon">💸</div>
+              <div>
+                <div class="ach-label">Топ заработок</div>
+                <div class="ach-name">Катя Б.</div>
+              </div>
+            </div>
+
+            <div class="achievement-item">
+              <div class="ach-icon">🆕</div>
+              <div>
+                <div class="ach-label">Лучший новичок</div>
+                <div class="ach-name">Злата Н.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERBOARD TABLE -->
+  <section class="leaderboard-section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-label">Полный рейтинг</div>
+          <h2 class="section-title">Модели #4 – #28</h2>
+        </div>
+        <span class="section-subtitle">Сортировка по subscriberам</span>
+      </div>
+
+      <!-- DESKTOP TABLE -->
+      <div class="table-container">
+        <div class="table-scroll">
+          <table id="leaderboardTable">
+            <thead>
+              <tr>
+                <th data-col="rank">Ранг <span class="sort-arrow">↕</span></th>
+                <th data-col="change"></th>
+                <th data-col="model">Модель <span class="sort-arrow">↕</span></th>
+                <th data-col="followers" class="sort-active">Subscribers <span class="sort-arrow">↓</span></th>
+                <th data-col="growth">Рост <span class="sort-arrow">↕</span></th>
+                <th data-col="posts">Content <span class="sort-arrow">↕</span></th>
+                <th data-col="rating">Rating <span class="sort-arrow">↕</span></th>
+                <th data-col="price">Price <span class="sort-arrow">↕</span></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MOBILE CARDS -->
+      <div class="mobile-model-cards" id="mobileCards"></div>
+    </div>
+  </section>
+
+  <!-- CATEGORY LEADERBOARDS -->
+  <section class="category-section">
+    <div class="container">
+      <div class="section-label">По категориям</div>
+      <h2 class="section-title" style="margin-bottom:24px">Топ по категориям</h2>
+
+      <div class="cat-blocks" id="catBlocks"></div>
+    </div>
+  </section>
+
+  <!-- RISING STARS -->
+  <section class="rising-section">
+    <div class="container">
+      <div class="section-label">Быстрый рост</div>
+      <h2 class="section-title" style="margin-bottom:24px">⬆️ Быстрый рост на этой неделе</h2>
+
+      <div class="rising-grid" id="risingGrid"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <a href="#" class="bnav-item">
+      <span class="bnav-icon">📰</span>
+      <span>Feed</span>
+    </a>
+    <a href="#" class="bnav-item">
+      <span class="bnav-icon">🔍</span>
+      <span>Search</span>
+    </a>
+    <a href="leaderboard.html" class="bnav-item active">
+      <span class="bnav-icon">🏆</span>
+      <span>Топ</span>
+    </a>
+    <a href="#" class="bnav-item">
+      <span class="bnav-icon">👤</span>
+      <span>Cabinet</span>
+    </a>
+  </div>
+</nav>
+
+<script>
+// ---- AGE GATE ----
+if (localStorage.getItem('age_verified') !== 'true') {
+  // location.href = 'age-gate.html';
+  // Uncomment above for production. Commented for dev preview.
+}
+
+// ---- DATA ----
+const models = [
+  { rank: 4,  name: 'Екатерина Быстрова', handle: '@katya_b',     initials: 'КБ', gradient: ['#D42B6A','#FF8C00'], followers: 68400, growth: 8.4,  posts: 412, rating: 4.93, price: 17.99, change: 2,  online: true,  cat: 'lifestyle' },
+  { rank: 5,  name: 'Марина Черных',      handle: '@marina_dark',  initials: 'МЧ', gradient: ['#7B1FA2','#E040FB'], followers: 61200, growth: 5.1,  posts: 287, rating: 4.87, price: 12.99, change: -1, online: true,  cat: 'boudoir'   },
+  { rank: 6,  name: 'Злата Новикова',     handle: '@zlata_nova',   initials: 'ЗН', gradient: ['#00897B','#A5D6A7'], followers: 57800, growth: 22.3, posts: 134, rating: 4.91, price: 9.99,  change: 8,  online: true,  cat: 'lifestyle' },
+  { rank: 7,  name: 'Полина Северная',    handle: '@polina_s',     initials: 'ПС', gradient: ['#1565C0','#42A5F5'], followers: 52100, growth: 3.7,  posts: 356, rating: 4.82, price: 14.99, change: 0,  online: false, cat: 'cosplay'   },
+  { rank: 8,  name: 'Ярослава Крот',      handle: '@yara_k',       initials: 'ЯК', gradient: ['#AD1457','#F06292'], followers: 48700, growth: 11.2, posts: 201, rating: 4.88, price: 11.99, change: 3,  online: true,  cat: 'fitness'   },
+  { rank: 9,  name: 'Алиса Звонова',      handle: '@alisa_zv',     initials: 'АЗ', gradient: ['#4527A0','#9575CD'], followers: 45300, growth: 6.8,  posts: 445, rating: 4.79, price: 16.99, change: -2, online: false, cat: 'anime'     },
+  { rank: 10, name: 'Кристина Волк',      handle: '@kristy_wolf',  initials: 'КВ', gradient: ['#BF360C','#FF7043'], followers: 42800, growth: 9.5,  posts: 318, rating: 4.85, price: 13.99, change: 1,  online: true,  cat: 'vip'       },
+  { rank: 11, name: 'Надежда Лесная',     handle: '@nadi_les',     initials: 'НЛ', gradient: ['#1B5E20','#66BB6A'], followers: 39900, growth: 4.2,  posts: 267, rating: 4.77, price: 10.99, change: -1, online: true,  cat: 'fitness'   },
+  { rank: 12, name: 'Валерия Дымова',     handle: '@valeria_d',    initials: 'ВД', gradient: ['#E65100','#FFB74D'], followers: 37200, growth: 14.7, posts: 192, rating: 4.94, price: 18.99, change: 5,  online: false, cat: 'boudoir'   },
+  { rank: 13, name: 'Ольга Ромашка',      handle: '@olga_rom',     initials: 'ОР', gradient: ['#880E4F','#F48FB1'], followers: 34800, growth: 2.1,  posts: 501, rating: 4.71, price: 8.99,  change: 0,  online: true,  cat: 'lifestyle' },
+  { rank: 14, name: 'Ирина Светлова',     handle: '@irina_sv',     initials: 'ИС', gradient: ['#006064','#4DB6AC'], followers: 33100, growth: 7.9,  posts: 388, rating: 4.83, price: 15.99, change: 2,  online: true,  cat: 'live'      },
+  { rank: 15, name: 'Татьяна Грай',       handle: '@tanya_gr',     initials: 'ТГ', gradient: ['#4A148C','#AB47BC'], followers: 31500, growth: 18.4, posts: 156, rating: 4.89, price: 11.99, change: 7,  online: false, cat: 'cosplay'   },
+  { rank: 16, name: 'Светлана Ночь',      handle: '@sveta_night',  initials: 'СН', gradient: ['#0D47A1','#64B5F6'], followers: 29700, growth: 3.3,  posts: 423, rating: 4.76, price: 9.99,  change: -3, online: true,  cat: 'anime'     },
+  { rank: 17, name: 'Дарья Котова',       handle: '@dasha_kot',    initials: 'ДК', gradient: ['#B71C1C','#EF9A9A'], followers: 27400, growth: 5.6,  posts: 314, rating: 4.81, price: 12.99, change: 1,  online: true,  cat: 'lifestyle' },
+  { rank: 18, name: 'Александра Миф',     handle: '@alex_myth',    initials: 'АМ', gradient: ['#1A237E','#7986CB'], followers: 26100, growth: 12.8, posts: 241, rating: 4.86, price: 14.99, change: 4,  online: false, cat: 'cosplay'   },
+  { rank: 19, name: 'Юлия Морская',       handle: '@julia_sea',    initials: 'ЮМ', gradient: ['#004D40','#80CBC4'], followers: 24800, growth: 6.1,  posts: 189, rating: 4.78, price: 10.99, change: 0,  online: true,  cat: 'boudoir'   },
+  { rank: 20, name: 'Кира Звёздная',      handle: '@kira_star',    initials: 'КЗ', gradient: ['#F57F17','#FFF176'], followers: 23500, growth: 31.2, posts: 98,  rating: 4.95, price: 7.99,  change: 11, online: true,  cat: 'anime'     },
+  { rank: 21, name: 'Лариса Блик',        handle: '@larisa_blik',  initials: 'ЛБ', gradient: ['#37474F','#90A4AE'], followers: 22100, growth: 2.7,  posts: 567, rating: 4.69, price: 8.99,  change: -2, online: false, cat: 'vip'       },
+  { rank: 22, name: 'Вера Огонь',         handle: '@vera_fire',    initials: 'ВО', gradient: ['#BF360C','#FFCCBC'], followers: 20800, growth: 9.3,  posts: 278, rating: 4.84, price: 13.99, change: 3,  online: true,  cat: 'fitness'   },
+  { rank: 23, name: 'Мила Туман',         handle: '@mila_fog',     initials: 'МТ', gradient: ['#6A1B9A','#CE93D8'], followers: 19600, growth: 4.8,  posts: 334, rating: 4.75, price: 11.99, change: 0,  online: true,  cat: 'live'      },
+  { rank: 24, name: 'Ника Лесная',        handle: '@nika_les',     initials: 'НЛ', gradient: ['#1A237E','#82B1FF'], followers: 18400, growth: 7.2,  posts: 212, rating: 4.82, price: 9.99,  change: 2,  online: false, cat: 'lifestyle' },
+  { rank: 25, name: 'Белла Тёмная',       handle: '@bella_dark',   initials: 'БТ', gradient: ['#212121','#757575'], followers: 17200, growth: 15.6, posts: 145, rating: 4.88, price: 16.99, change: 6,  online: true,  cat: 'boudoir'   },
+  { rank: 26, name: 'Регина Высь',        handle: '@regina_sky',   initials: 'РВ', gradient: ['#0277BD','#80DEEA'], followers: 16100, growth: 3.1,  posts: 298, rating: 4.73, price: 10.99, change: -1, online: true,  cat: 'fitness'   },
+  { rank: 27, name: 'Таисия Ветер',       handle: '@taisia_wind',  initials: 'ТВ', gradient: ['#558B2F','#C5E1A5'], followers: 15000, growth: 20.4, posts: 167, rating: 4.90, price: 12.99, change: 8,  online: false, cat: 'cosplay'   },
+  { rank: 28, name: 'Елена Прима',        handle: '@elena_prima',  initials: 'ЕП', gradient: ['#AD1457','#FCE4EC'], followers: 13800, growth: 1.9,  posts: 441, rating: 4.68, price: 7.99,  change: -2, online: true,  cat: 'anime'     },
+];
+
+const categoryData = {
+  cosplay: {
+    label: '🎭 Cosplay',
+    models: [
+      { initials: 'ПС', name: 'Полина С.',  gradient: ['#1565C0','#42A5F5'], subs: '52.1K' },
+      { initials: 'ТГ', name: 'Татьяна Г.', gradient: ['#4A148C','#AB47BC'], subs: '31.5K' },
+      { initials: 'АМ', name: 'Александра', gradient: ['#1A237E','#7986CB'], subs: '26.1K' },
+      { initials: 'ТВ', name: 'Таисия В.',  gradient: ['#558B2F','#C5E1A5'], subs: '15.0K' },
+      { initials: 'ВЛ', name: 'Вера Л.',    gradient: ['#880E4F','#F48FB1'], subs: '12.3K' },
+    ]
+  },
+  fitness: {
+    label: '💪 Фитнес',
+    models: [
+      { initials: 'ЯК', name: 'Ярослава К.', gradient: ['#AD1457','#F06292'], subs: '48.7K' },
+      { initials: 'НЛ', name: 'Надежда Л.',  gradient: ['#1B5E20','#66BB6A'], subs: '39.9K' },
+      { initials: 'ВО', name: 'Вера О.',     gradient: ['#BF360C','#FFCCBC'], subs: '20.8K' },
+      { initials: 'РВ', name: 'Регина В.',   gradient: ['#0277BD','#80DEEA'], subs: '16.1K' },
+      { initials: 'МО', name: 'Маша О.',     gradient: ['#37474F','#90A4AE'], subs: '11.4K' },
+    ]
+  },
+  boudoir: {
+    label: '🌸 Boudoir',
+    models: [
+      { initials: 'МЧ', name: 'Марина Ч.',  gradient: ['#7B1FA2','#E040FB'], subs: '61.2K' },
+      { initials: 'ВД', name: 'Валерия Д.', gradient: ['#E65100','#FFB74D'], subs: '37.2K' },
+      { initials: 'ЮМ', name: 'Юлия М.',   gradient: ['#004D40','#80CBC4'], subs: '24.8K' },
+      { initials: 'БТ', name: 'Белла Т.',   gradient: ['#212121','#757575'], subs: '17.2K' },
+      { initials: 'СР', name: 'Соня Р.',    gradient: ['#B71C1C','#EF9A9A'], subs: '9.8K'  },
+    ]
+  },
+  anime: {
+    label: '🎌 Аниме',
+    models: [
+      { initials: 'АЗ', name: 'Алиса З.',   gradient: ['#4527A0','#9575CD'], subs: '45.3K' },
+      { initials: 'СН', name: 'Светлана Н.', gradient: ['#0D47A1','#64B5F6'], subs: '29.7K' },
+      { initials: 'КЗ', name: 'Кира З.',    gradient: ['#F57F17','#FFF176'], subs: '23.5K' },
+      { initials: 'ЕП', name: 'Елена П.',   gradient: ['#AD1457','#FCE4EC'], subs: '13.8K' },
+      { initials: 'АА', name: 'Аня А.',     gradient: ['#006064','#4DB6AC'], subs: '8.6K'  },
+    ]
+  }
+};
+
+const risingStars = [
+  { initials: 'ЗН', name: 'Злата Новикова',  handle: '@zlata_nova',  gradient: ['#00897B','#A5D6A7'], badge: '+22.3%', badgeType: 'growth', subs: '57.8K', sparkData: [20,28,35,40,50,62,75,85,95,100] },
+  { initials: 'КЗ', name: 'Кира Звёздная',   handle: '@kira_star',   gradient: ['#F57F17','#FFF176'], badge: '+31.2%', badgeType: 'growth', subs: '23.5K', sparkData: [10,15,22,30,45,55,70,85,95,100] },
+  { initials: 'БТ', name: 'Белла Тёмная',    handle: '@bella_dark',  gradient: ['#212121','#757575'], badge: '+15.6%', badgeType: 'growth', subs: '17.2K', sparkData: [30,38,42,50,58,67,75,82,90,100] },
+  { initials: 'ТВ', name: 'Таисия Ветер',    handle: '@taisia_wind', gradient: ['#558B2F','#C5E1A5'], badge: '+20.4%', badgeType: 'growth', subs: '15.0K', sparkData: [15,22,30,40,52,60,72,82,91,100] },
+  { initials: 'ТГ', name: 'Татьяна Грай',    handle: '@tanya_gr',    gradient: ['#4A148C','#AB47BC'], badge: '+18.4%', badgeType: 'growth', subs: '31.5K', sparkData: [20,25,35,45,58,68,78,88,95,100] },
+  { initials: 'МН', name: 'Мия Нова',        handle: '@mia_new',     gradient: ['#C62828','#FF8A80'], badge: 'NEW',    badgeType: 'new',    subs: '8.4K',  sparkData: [5,12,24,35,50,62,75,85,93,100] },
+];
+
+// ---- PERIOD SCORE MAPS ----
+const periodScores = {
+  today: { p1: '4,821', p2: '3,204', p3: '2,876', label: 'лайков', unit: 'лайков' },
+  week:  { p1: '142.8K', p2: '87.4K', p3: '74.1K', label: 'subscribers', unit: 'subscribers' },
+  month: { p1: '$48.2K', p2: '$31.4K', p3: '$26.8K', label: 'заработано', unit: 'заработано' },
+  all:   { p1: '2.1M', p2: '1.4M', p3: '980K', label: 'просмотров', unit: 'просмотров' },
+};
+
+// ---- RENDER TABLE ----
+let currentSort = { col: 'followers', dir: -1 };
+let tableData = [...models];
+
+function formatNumber(n) {
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+  return n.toString();
+}
+
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  const sorted = [...tableData].sort((a, b) => {
+    const av = a[currentSort.col], bv = b[currentSort.col];
+    return currentSort.dir * (typeof av === 'string' ? av.localeCompare(bv) : (bv - av));
+  });
+
+  sorted.forEach((m, i) => {
+    const row = document.createElement('tr');
+    row.className = 'fade-in';
+    row.style.animationDelay = (i * 0.03) + 's';
+
+    const rankClass = m.rank <= 7 ? `rank-dot-${m.rank}` : 'rank-dot-other';
+    const changeHtml = m.change > 0
+      ? `<span class="ch-up">↑${m.change}</span>`
+      : m.change < 0
+      ? `<span class="ch-down">↓${Math.abs(m.change)}</span>`
+      : `<span class="ch-neutral">—</span>`;
+
+    const growthClass = m.growth >= 0 ? 'growth-up' : 'growth-down';
+    const growthSign = m.growth >= 0 ? '+' : '';
+
+    row.innerHTML = `
+      <td>
+        <div class="rank-cell">
+          <div class="rank-dot ${rankClass}">${m.rank}</div>
+        </div>
+      </td>
+      <td class="change-cell">${changeHtml}</td>
+      <td>
+        <div class="model-cell">
+          <div class="small-avatar" style="background:linear-gradient(135deg,${m.gradient[0]},${m.gradient[1]})">
+            ${m.initials}
+            <div class="status-dot ${m.online ? 'status-online' : 'status-offline'}"></div>
+          </div>
+          <div class="model-info">
+            <div class="model-name">${m.name} <span class="verified-badge">✓</span></div>
+            <div class="model-handle">${m.handle}</div>
+          </div>
+        </div>
+      </td>
+      <td class="followers-cell">${formatNumber(m.followers)}</td>
+      <td><span class="growth-pill ${growthClass}">${growthSign}${m.growth}%</span></td>
+      <td>${m.posts}</td>
+      <td>
+        <div class="rating-cell">⭐ ${m.rating}</div>
+      </td>
+      <td class="price-cell">$${m.price}/мес</td>
+      <td>
+        <button class="small-sub-btn" onclick="this.classList.toggle('subscribed');this.textContent=this.classList.contains('subscribed')?'Подписан':'Подписаться'">Subscribe</button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+// ---- RENDER MOBILE CARDS ----
+function renderMobileCards() {
+  const container = document.getElementById('mobileCards');
+  if (!container) return;
+  container.innerHTML = '';
+
+  models.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'mobile-card';
+    const growthClass = m.growth >= 0 ? 'growth-up' : 'growth-down';
+    const growthSign = m.growth >= 0 ? '+' : '';
+    card.innerHTML = `
+      <div class="mobile-card-rank">#${m.rank}</div>
+      <div class="small-avatar" style="background:linear-gradient(135deg,${m.gradient[0]},${m.gradient[1]});flex-shrink:0;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;">
+        ${m.initials}
+        <div class="status-dot ${m.online ? 'status-online' : 'status-offline'}"></div>
+      </div>
+      <div class="mobile-card-info">
+        <div class="mobile-card-name">${m.name} <span class="verified-badge">✓</span></div>
+        <div class="mobile-card-meta">${m.handle} · ⭐ ${m.rating}</div>
+      </div>
+      <div class="mobile-card-right">
+        <div class="mobile-card-subs">${formatNumber(m.followers)}</div>
+        <div class="mobile-card-growth"><span class="growth-pill ${growthClass}" style="font-size:10px;padding:2px 6px;">${growthSign}${m.growth}%</span></div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ---- RENDER CATEGORY BLOCKS ----
+function renderCategoryBlocks() {
+  const container = document.getElementById('catBlocks');
+  if (!container) return;
+
+  Object.entries(categoryData).forEach(([key, cat]) => {
+    const block = document.createElement('div');
+    block.className = 'cat-block';
+    block.innerHTML = `
+      <div class="cat-block-header">
+        <div class="cat-block-title">${cat.label}</div>
+        <a href="#" class="see-all">Смотреть все →</a>
+      </div>
+      <div class="cat-scroll">
+        ${cat.models.map((m, i) => `
+          <div class="cat-mini-card">
+            <div class="cat-rank-num">#${i + 1}</div>
+            <div class="cat-avatar" style="background:linear-gradient(135deg,${m.gradient[0]},${m.gradient[1]})">${m.initials}</div>
+            <div class="cat-name">${m.name}</div>
+            <div class="cat-subs">${m.subs}</div>
+            <button class="cat-sub-btn" onclick="this.textContent=this.textContent==='Подписаться'?'Подписан':'Подписаться'">Subscribe</button>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(block);
+  });
+}
+
+// ---- RENDER RISING STARS ----
+function renderRisingStars() {
+  const container = document.getElementById('risingGrid');
+  if (!container) return;
+
+  risingStars.forEach(star => {
+    const card = document.createElement('div');
+    card.className = 'rising-card';
+
+    const badgeClass = star.badgeType === 'new' ? 'badge-new' : 'badge-growth';
+    const maxVal = Math.max(...star.sparkData);
+    const minVal = Math.min(...star.sparkData);
+    const w = 200, h = 40;
+    const points = star.sparkData.map((v, i) => {
+      const x = (i / (star.sparkData.length - 1)) * w;
+      const y = h - ((v - minVal) / (maxVal - minVal || 1)) * (h - 6) - 3;
+      return `${x},${y}`;
+    }).join(' ');
+
+    card.innerHTML = `
+      <div class="rising-badge ${badgeClass}">${star.badge}</div>
+      <div class="rising-top">
+        <div class="rising-avatar" style="background:linear-gradient(135deg,${star.gradient[0]},${star.gradient[1]})">${star.initials}</div>
+        <div>
+          <div class="rising-name">${star.name} <span class="verified-badge">✓</span></div>
+          <div class="rising-handle">${star.handle}</div>
+        </div>
+      </div>
+      <div class="sparkline-wrap">
+        <svg class="sparkline" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="sg-${star.initials}" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="${star.gradient[0]}" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="${star.gradient[0]}" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <polyline points="${points}" fill="none" stroke="${star.gradient[0]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polygon points="0,${h} ${points} ${w},${h}" fill="url(#sg-${star.initials})"/>
+        </svg>
+      </div>
+      <div class="rising-footer">
+        <div class="rising-subs">Подписчиков: <strong>${star.subs}</strong></div>
+        <button class="rising-sub-btn" onclick="this.textContent=this.textContent==='Подписаться'?'Подписан':'Подписаться'">Subscribe</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ---- SUBSCRIBE TOGGLE (podium) ----
+function toggleSubscribe(card) {
+  // no-op click on card
+}
+
+// ---- PERIOD TABS ----
+document.getElementById('periodTabs').addEventListener('click', e => {
+  const tab = e.target.closest('.period-tab');
+  if (!tab) return;
+
+  document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+
+  const period = tab.dataset.period;
+  const scores = periodScores[period] || periodScores.week;
+
+  // Animate score update
+  animateValue('p1score', scores.p1);
+  animateValue('p2score', scores.p2);
+  animateValue('p3score', scores.p3);
+  document.getElementById('p1label').textContent = scores.label;
+  document.getElementById('p2label').textContent = scores.label;
+  document.getElementById('p3label').textContent = scores.label;
+});
+
+function animateValue(id, newVal) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(8px)';
+  setTimeout(() => {
+    el.textContent = newVal;
+    el.style.transition = 'opacity 0.3s, transform 0.3s';
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+    setTimeout(() => { el.style.transition = ''; }, 400);
+  }, 200);
+}
+
+// ---- CATEGORY PILLS ----
+document.getElementById('catPills').addEventListener('click', e => {
+  const pill = e.target.closest('.cat-pill');
+  if (!pill) return;
+
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+
+  const cat = pill.dataset.cat;
+
+  if (cat === 'all') {
+    tableData = [...models];
+  } else {
+    tableData = models.filter(m => m.cat === cat);
+  }
+  renderTable();
+  renderMobileCards();
+});
+
+// ---- TABLE SORT ----
+document.querySelectorAll('thead th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (currentSort.col === col) {
+      currentSort.dir *= -1;
+    } else {
+      currentSort.col = col;
+      currentSort.dir = col === 'name' || col === 'model' ? 1 : -1;
+    }
+
+    document.querySelectorAll('thead th').forEach(h => {
+      h.classList.remove('sort-active');
+      const arr = h.querySelector('.sort-arrow');
+      if (arr) arr.textContent = '↕';
+    });
+
+    th.classList.add('sort-active');
+    const arrow = th.querySelector('.sort-arrow');
+    if (arrow) arrow.textContent = currentSort.dir === -1 ? '↓' : '↑';
+
+    renderTable();
+  });
+});
+
+// ---- COUNTDOWN TIMER ----
+let countdownSeconds = 12 * 60 + 43;
+
+function updateCountdown() {
+  if (countdownSeconds <= 0) countdownSeconds = 15 * 60;
+  countdownSeconds--;
+
+  const m = Math.floor(countdownSeconds / 60);
+  const s = countdownSeconds % 60;
+  const el = document.getElementById('countdown');
+  if (el) el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+setInterval(updateCountdown, 1000);
+
+// ---- RANDOM RANK CHANGE ANIMATIONS ----
+function triggerRankPulse() {
+  const rows = document.querySelectorAll('#tableBody tr');
+  if (!rows.length) return;
+
+  const randomRows = [...rows].sort(() => Math.random() - 0.5).slice(0, 3);
+  randomRows.forEach(row => {
+    const changeCells = row.querySelectorAll('.change-cell');
+    changeCells.forEach(cell => {
+      cell.classList.add('rank-pulsing');
+      setTimeout(() => cell.classList.remove('rank-pulsing'), 2000);
+    });
+  });
+}
+
+setInterval(triggerRankPulse, 30000);
+
+// ---- INIT ----
+renderTable();
+renderMobileCards();
+renderCategoryBlocks();
+renderRisingStars();
+</script>
+<script id="page-nav-transitions">(function(){document.body.classList.add("kol-entering");document.addEventListener("click",function(e){const a=e.target.closest("a[href]");if(!a)return;const href=a.getAttribute("href");if(!href||href.startsWith("#")||href.startsWith("http")||href.startsWith("mailto"))return;if(a.target==="_blank")return;e.preventDefault();document.body.classList.remove("kol-entering");document.body.classList.add("kol-leaving");setTimeout(()=>{window.location.href=href;},220);});})();</script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js")});}</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../leaderboard.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="leaderboard.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
+<style>
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline}
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A}
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+</style>
+<div id="kol-cookie-banner">
+  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
+  </div>
+</div>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div style="flex:1;min-width:0"><strong style="font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:#E8E8F0">Install KOL Studio</strong><span style="font-size:12px;color:#A0A0C0">Works offline • Faster than browser</span></div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="document.getElementById('kol-pwa-prompt').classList.remove('show')">×</button>
+</div>
+<script>
+(function(){
+  var CONSENT_KEY='kol_consent_v2',THEME_KEY='kol_theme';
+  window.kolAcceptCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:true,marketing:true,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  window.kolRejectCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:false,marketing:false,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  var btn=document.getElementById('kol-theme-btn');
+  window.kolToggleTheme=function(){var c=localStorage.getItem(THEME_KEY)||'dark';var n=c==='dark'?'light':'dark';localStorage.setItem(THEME_KEY,n);if(n==='light'){document.body.classList.add('kol-light');btn.textContent='☀️'}else{document.body.classList.remove('kol-light');btn.textContent='🌙'}};
+  var st=localStorage.getItem(THEME_KEY);if(st==='light'){document.body.classList.add('kol-light');if(btn)btn.textContent='☀️'}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!sessionStorage.getItem('kol_pwa_dismissed')&&!localStorage.getItem('kol_pwa_installed'))setTimeout(function(){document.getElementById('kol-pwa-prompt').classList.add('show')},4000)});
+  var ib=document.getElementById('kol-pwa-install-btn');if(ib)ib.addEventListener('click',function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')localStorage.setItem('kol_pwa_installed','1');document.getElementById('kol-pwa-prompt').classList.remove('show');deferredPrompt=null})});
+  document.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem(CONSENT_KEY))setTimeout(function(){document.getElementById('kol-cookie-banner').classList.add('show')},1500)});
+})();
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

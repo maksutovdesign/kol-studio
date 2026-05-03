@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Карта сайта — KOL Studio</title>
+  <link rel="manifest" href="../manifest.json"><link rel="icon" href="../icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#07071A;--card:#111128;--card2:#181835;--border:#22224A;--accent:#D42B6A;--accent2:#8B2BE2;--green:#00E676;--gold:#FFB300;--text:#E8E8F0;--text2:#A0A0C0;--text3:#6A6A8A}
+    @keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes kol-fade-out{from{opacity:1}to{opacity:0}}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;animation:kol-fade-in 0.3s ease both}
+    a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+    header{background:rgba(7,7,26,0.95);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;padding:0 24px}
+    .hi{max-width:1100px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-size:18px;font-weight:800;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:48px 24px}
+    @media(max-width:600px){.wrap{padding:28px 16px}}
+    .hero{text-align:center;margin-bottom:48px}
+    .hero h1{font-size:32px;font-weight:800;margin-bottom:10px}
+    .hero p{color:var(--text2);font-size:15px;max-width:500px;margin:0 auto}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:560px){.grid{grid-template-columns:1fr}}
+    .section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+    .sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+    .sec-icon{font-size:22px}
+    .sec-title{font-size:15px;font-weight:700}
+    .link-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+    .link-list li a{display:flex;align-items:center;gap:6px;color:var(--text2);font-size:13px;text-decoration:none;padding:4px 0;transition:color 0.2s}
+    .link-list li a:hover{color:var(--accent)}
+    .link-list li a::before{content:'→';font-size:11px;color:var(--border);transition:color 0.2s}
+    .link-list li a:hover::before{color:var(--accent)}
+    .badge{font-size:10px;padding:1px 6px;border-radius:8px;font-weight:600;margin-left:4px}
+    .badge-new{background:rgba(0,230,118,0.1);color:var(--green)}
+    .badge-en{background:rgba(139,43,226,0.1);color:var(--accent2)}
+    footer{border-top:1px solid var(--border);padding:32px 24px;margin-top:40px}
+    .fi{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+    .fl{display:flex;gap:16px;flex-wrap:wrap}
+    .fl a{color:var(--text3);font-size:13px;text-decoration:none}.fl a:hover{color:var(--text2)}
+    .ls{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:20px;padding:4px 12px}
+    .ls a{color:var(--text3);font-size:13px;text-decoration:none;padding:2px 8px;border-radius:12px;transition:all 0.2s}
+    .ls a.active{background:var(--accent);color:#fff}
+    .ls span{color:var(--border)}
+  </style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/sitemap.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/sitemap.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/sitemap.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/sitemap.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+
+<style id="kol-skeleton-css">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skel-title{height:22px;width:60%;margin-bottom:12px;border-radius:6px}
+.skel-avatar{width:44px;height:44px;border-radius:50%}
+.skel-thumb{width:100%;height:180px;border-radius:12px}
+.skel-btn{height:38px;width:120px;border-radius:10px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px}
+.skel-row{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #22224A}
+.skel-body{display:flex;flex-direction:column;gap:8px;flex:1}
+</style>
+</head>
+<body>
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="../index.html">🏠 Главная</a><span class="sep">›</span><span class="current">Карта сайта</span></nav>
+  <header>
+    <div class="hi">
+      <a href="../index.html" class="logo">KOL Studio</a>
+      <nav style="display:flex;gap:20px">
+        <a href="../feed.html" style="color:var(--text2);font-size:14px;text-decoration:none">Лента</a>
+        <a href="../help.html" style="color:var(--text2);font-size:14px;text-decoration:none">Помощь</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="hero">
+      <h1>🗺 Карта сайта</h1>
+      <p>Все страницы платформы KOL Studio, организованные по разделам. Всего <strong style="color:var(--accent)">54 страницы</strong> + полная английская версия.</p>
+    </div>
+
+    <div class="grid">
+      <div class="section">
+        <div class="sec-hdr"><span class="sec-icon">🏠</span><span class="sec-title">Главные страницы</span></div>
+        <ul class="link-list">
+          <li><a href="../landing.html">Лендинг (главная)</a></li>
+          <li><a href="../index.html">Хаб навигации</a></li>
+          <li><a href="../feed.html">Лента контента</a></li>
+          <li><a href="../search.html">Поиск и категории</a></li>
+          <li><a href="../leaderboard.html">Топ моделей</a></li>
+          <li><a href="live.html">Live-трансляции</a></li>
+          <li><a href="../pricing.html">Тарифные планы <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="../blog.html">Блог <span class="badge badge-new">NEW</span></a></li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="sec-hdr"><span class="sec-icon">👤</span><span class="sec-title">Аккаунт и авторизация</span></div>
+        <ul class="link-list">
+          <li><a href="splash.html">Заставка</a></li>
+          <li><a href="age-gate.html">Проверка возраста</a></li>
+          <li><a href="onboarding.html">Онбординг</a></li>
+          <li><a href="../auth.html">Вход / Регистрация</a></li>
+          <li><a href="forgot-password.html">Сброс пароля <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="verify-email.html">Верификация email <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="../2fa.html">Двухфакторная аутентификация <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="../account-security.html">Безопасность аккаунта <span class="badge badge-new">NEW</span></a></li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="sec-hdr"><span class="sec-icon">📱</span><span class="sec-title">Просмотр контента</span></div>
+        <ul class="link-list">
+          <li><a href="../post.html">Просмотр поста</a></li>
+          <li><a href="../video.html">Видеоплеер <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="stories.html">Истории</a></li>
+          <li><a href="../collection.html">Коллекции</a></li>
+          <li><a href="../bookmarks.html">Сохранённое <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="session.html">Сессия</a></li>
+          <li><a href="../ppv-unlock.html">PPV разблокировка <span class="badge badge-new">NEW</span></a></li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="sec-hdr"><span class="sec-icon">💰</span><span class="sec-title">Финансы (для фанатов)</span></div>
+        <ul class="link-list">
+          <li><a href="../checkout.html">Оформление подписки</a></li>
+          <li><a href="../wallet.html">Кошелёк и монеты</a></li>
+          <li><a href="../gift.html">Подарочные подписки <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="../subscription-manage.html">Управление подписками <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="../tip-history.html">История транзакций <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="../custom-request.html">Кастомный запрос <span class="badge badge-new">NEW</span></a></li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="sec-hdr"><span class="sec-icon">👸</span><span class="sec-title">Инструменты моделей</span></div>
+        <ul class="link-list">
+          <li><a href="../model-cabinet.html">Кабинет модели</a></li>
+          <li><a href="../upload.html">Загрузка контента</a></li>
+          <li><a href="../schedule.html">Расписание постов</a></li>
+          <li><a href="../analytics.html">Аналитика</a></li>
+          <li><a href="../promo.html">Промокоды</a></li>
+          <li><a href="../referral.html">Реферальная программа</a></li>
+          <li><a href="../payouts.html">Выплаты <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="creator-apply.html">Заявка на регистрацию</a></li>
+          <li><a href="../creator-landing.html">Стать моделью <span class="badge badge-new">NEW</span></a></li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="sec-hdr"><span class="sec-icon">💬</span><span class="sec-title">Общение</span></div>
+        <ul class="link-list">
+          <li><a href="../messages.html">Сообщения</a></li>
+          <li><a href="../notifications.html">Уведомления</a></li>
+          <li><a href="../profile.html">Профиль пользователя</a></li>
+          <li><a href="../user-cabinet.html">Кабинет фаната</a></li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="sec-hdr"><span class="sec-icon">📋</span><span class="sec-title">Правовые документы</span></div>
+        <ul class="link-list">
+          <li><a href="../terms.html">Условия использования</a></li>
+          <li><a href="../privacy.html">Политика конфиденциальности</a></li>
+          <li><a href="../cookie.html">Политика Cookie <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="../dmca.html">DMCA политика <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="../2257.html">18 U.S.C. § 2257 <span class="badge badge-new">NEW</span></a></li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="sec-hdr"><span class="sec-icon">⚙️</span><span class="sec-title">Система и поддержка</span></div>
+        <ul class="link-list">
+          <li><a href="../help.html">Центр помощи</a></li>
+          <li><a href="../status.html">Статус сервисов <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="../404.html">Страница 404</a></li>
+          <li><a href="../500.html">Страница 500 <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="../maintenance.html">Техобслуживание <span class="badge badge-new">NEW</span></a></li>
+          <li><a href="../sitemap.html">Карта сайта</a></li>
+          <li><a href="sitemap.xml">sitemap.xml</a></li>
+          <li><a href="robots.txt">robots.txt</a></li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <div class="sec-hdr"><span class="sec-icon">🌍</span><span class="sec-title">Английская версия /en/</span></div>
+        <ul class="link-list">
+          <li><a href="en/landing.html">Landing Page</a></li>
+          <li><a href="en/feed.html">Content Feed</a></li>
+          <li><a href="en/search.html">Search & Categories</a></li>
+          <li><a href="en/pricing.html">Pricing</a></li>
+          <li><a href="en/creator-landing.html">Become a Creator</a></li>
+          <li><a href="en/help.html">Help Center</a></li>
+          <li><a href="en/terms.html">Terms of Service</a></li>
+          <li><a href="en/privacy.html">Privacy Policy</a></li>
+          <li style="color:var(--text3);font-size:12px;padding:4px 0">+ все остальные страницы →</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="fi">
+      <div class="fl">
+        <a href="../terms.html">Условия</a><a href="../privacy.html">Конфиденциальность</a>
+        <a href="../cookie.html">Cookie</a><a href="../dmca.html">DMCA</a>
+        <a href="../2257.html">2257</a><a href="../help.html">Помощь</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="ls"><a href="../sitemap.html" class="active">🇷🇺 RU</a><span>|</span><a href="sitemap.html">🇬🇧 EN</a></div>
+        <span style="color:var(--text3);font-size:13px">© 2026 KOL Studio</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      document.querySelectorAll('a[href]').forEach(a=>{
+        const h=a.getAttribute('href');
+        if(!h||h.startsWith('#')||h.startsWith('http')||h.startsWith('mailto'))return;
+        a.addEventListener('click',e=>{e.preventDefault();document.body.style.animation='kol-fade-out 0.25s ease forwards';setTimeout(()=>location.href=h,250);});
+      });
+    });
+  </script>
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="../cookie.html">Подробнее</a> · <a href="../report.html">Report</a> · <a href="../api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+<!-- KOL System: FAB + Shortcuts + Analytics -->
+<style id="kol-system-css">
+:focus-visible{outline:2.5px solid #D42B6A!important;outline-offset:3px!important}
+#kol-fab{position:fixed;bottom:28px;right:28px;z-index:9900;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+#kol-fab-btn{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:22px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,.4);display:flex;align-items:center;justify-content:center;transition:transform .2s}
+#kol-fab-btn:hover{transform:scale(1.1)}
+#kol-fab-menu{display:none;flex-direction:column;gap:8px;align-items:flex-end}
+#kol-fab-menu.open{display:flex}
+.kol-fab-item{display:flex;align-items:center;gap:8px;background:#111128;border:1px solid #22224A;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:600;color:#E8E8F0;cursor:pointer;white-space:nowrap;font-family:Inter,sans-serif;transition:border-color .2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+#kol-shortcuts-hint{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:9800;background:#111128;border:1px solid #22224A;border-radius:20px;padding:6px 16px;font-size:12px;color:#6A6A8A;display:none}
+#kol-shortcuts-panel{position:fixed;inset:0;z-index:10500;background:rgba(7,7,26,.9);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center}
+#kol-shortcuts-panel.open{display:flex}
+.kol-sp-box{background:#111128;border:1px solid #22224A;border-radius:20px;padding:32px;max-width:480px;width:90%}
+.kol-sp-title{font-size:18px;font-weight:800;margin-bottom:20px;font-family:Inter,sans-serif}
+.kol-sp-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #22224A;font-size:13px;font-family:Inter,sans-serif}
+.kol-sp-key{background:#181835;border:1px solid #22224A;border-radius:6px;padding:2px 8px;font-family:monospace;font-size:12px;color:#D42B6A}
+</style>
+<div id="kol-fab" aria-label="Быстрые действия">
+  <div id="kol-fab-menu" role="menu">
+    <button class="kol-fab-item" onclick="location.href='upload.html'" role="menuitem">📤 Загрузить</button>
+    <button class="kol-fab-item" onclick="location.href='messages.html'" role="menuitem">💬 Сообщение</button>
+    <button class="kol-fab-item" onclick="location.href='search.html'" role="menuitem">🔍 Поиск</button>
+  </div>
+  <button id="kol-fab-btn" onclick="window.kolToggleFab()" aria-label="Меню действий" aria-expanded="false">＋</button>
+</div>
+<div id="kol-shortcuts-panel" role="dialog" aria-label="Горячие клавиши">
+  <div class="kol-sp-box">
+    <div class="kol-sp-title">⌨️ Горячие клавиши</div>
+    <div class="kol-sp-row"><span>Показать это меню</span><span class="kol-sp-key">?</span></div>
+    <div class="kol-sp-row"><span>Поиск</span><span class="kol-sp-key">/</span></div>
+    <div class="kol-sp-row"><span>Загрузить контент</span><span class="kol-sp-key">N</span></div>
+    <div class="kol-sp-row"><span>Переключить тему</span><span class="kol-sp-key">T</span></div>
+    <div class="kol-sp-row"><span>Пожаловаться</span><span class="kol-sp-key">Shift+R</span></div>
+    <div class="kol-sp-row"><span>Перейти: Лента</span><span class="kol-sp-key">G F</span></div>
+    <div class="kol-sp-row"><span>Перейти: Сообщения</span><span class="kol-sp-key">G M</span></div>
+    <div class="kol-sp-row"><span>Перейти: Уведомления</span><span class="kol-sp-key">G N</span></div>
+    <div class="kol-sp-row"><span>Перейти: Профиль</span><span class="kol-sp-key">G P</span></div>
+    <div class="kol-sp-row"><span>Перейти: Дашборд</span><span class="kol-sp-key">G D</span></div>
+    <div style="margin-top:20px;text-align:right"><button onclick="document.getElementById('kol-shortcuts-panel').classList.remove('open')" style="background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;border-radius:8px;padding:8px 20px;color:#fff;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">Закрыть</button></div>
+  </div>
+</div>
+<script>
+window.KOL_FLAGS={newCheckout:false,showFAB:true,showShortcutHint:true,newFeedAlgo:false,creatorDashboardV2:true,pricingAnnualToggle:true};
+window.kolTrack=function(e,p){try{var q=JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');q.push({event:e,props:p||{},ts:Date.now()});if(q.length>100)q=q.slice(-100);localStorage.setItem('kol_analytics_queue',JSON.stringify(q))}catch(ex){}};
+window.kolToggleFab=function(){var m=document.getElementById('kol-fab-menu');var b=document.getElementById('kol-fab-btn');if(!m)return;var open=m.classList.toggle('open');b.textContent=open?'✕':'＋';b.setAttribute('aria-expanded',open);kolTrack('fab_toggle',{open:open})};
+(function(){
+  var gBuf='',gTimer=null;
+  document.addEventListener('keydown',function(e){
+    if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;
+    var k=e.key;
+    if(k==='?'){document.getElementById('kol-shortcuts-panel')?.classList.add('open');return}
+    if(k==='Escape'){document.getElementById('kol-shortcuts-panel')?.classList.remove('open');document.getElementById('kol-fab-menu')?.classList.remove('open');return}
+    if(k==='/'){e.preventDefault();location.href='search.html';return}
+    if(k==='n'||k==='N'){location.href='upload.html';return}
+    if(k==='t'||k==='T'){if(window.kolToggleTheme)kolToggleTheme();return}
+    if(k==='R'&&e.shiftKey){if(window.kolOpenReport)kolOpenReport();return}
+    if(k==='g'||k==='G'){gBuf='g';clearTimeout(gTimer);gTimer=setTimeout(function(){gBuf=''},1000);return}
+    if(gBuf==='g'){
+      var map={f:'feed.html',F:'feed.html',m:'messages.html',M:'messages.html',n:'notifications.html',N:'notifications.html',p:'profile.html',P:'profile.html',d:'creator-dashboard.html',D:'creator-dashboard.html'};
+      if(map[k]){location.href=map[k];}
+      gBuf='';
+    }
+  });
+  setTimeout(function(){
+    if(window.KOL_FLAGS?.showShortcutHint){
+      var h=document.getElementById('kol-shortcuts-hint');
+      if(h){h.style.display='block';setTimeout(function(){h.style.display='none'},4000)}
+    }
+  },2000);
+})();
+</script>
+</body>
+</html>

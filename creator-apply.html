@@ -1,0 +1,2415 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Стать моделью — KOL Studio</title>
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#D42B6A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KOL Studio">
+<meta name="description" content="Подайте заявку на статус модели KOL Studio. Зарабатывайте 80% от всех доходов.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Стать моделью — KOL Studio">
+<meta property="og:description" content="Зарабатывайте 80% от дохода. Еженедельные выплаты. Быстрая верификация.">
+<meta property="og:image" content="icons/icon.svg">
+<meta property="og:url" content="https://kolstudio.com/creator-apply.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Стать моделью — KOL Studio">
+<meta name="twitter:description" content="Зарабатывайте 80% от дохода. Еженедельные выплаты.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07071A;
+    --card: #111128;
+    --card2: #181835;
+    --border: #22224A;
+    --accent: #D42B6A;
+    --accent2: #8B2BE2;
+    --green: #00E676;
+    --gold: #FFB300;
+    --text: #E8E8FF;
+    --text-muted: #7878A8;
+    --text-dim: #4A4A7A;
+    --error: #FF4444;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34,34,74,0.35) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,34,74,0.35) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glow-1 {
+    position: fixed;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,43,106,0.1) 0%, transparent 70%);
+    top: -300px; left: -200px;
+    pointer-events: none; z-index: 0;
+  }
+  .glow-2 {
+    position: fixed;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,43,226,0.08) 0%, transparent 70%);
+    bottom: -200px; right: -200px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,7,26,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-text {
+    font-size: 20px; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    letter-spacing: -0.5px;
+  }
+  .badge-18 {
+    background: var(--accent); color: #fff;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px;
+  }
+  .nav-back {
+    color: var(--text-muted); text-decoration: none; font-size: 14px;
+    padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .nav-back:hover { color: var(--text); border-color: rgba(212,43,106,0.4); }
+
+  /* PAGE */
+  .page {
+    position: relative; z-index: 1;
+    padding: 80px 16px 60px;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 48px 0 40px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(212,43,106,0.1);
+    border: 1px solid rgba(212,43,106,0.25);
+    border-radius: 100px; padding: 6px 18px;
+    font-size: 13px; font-weight: 600; color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 800; letter-spacing: -1.5px;
+    color: var(--text); margin-bottom: 12px; line-height: 1.1;
+  }
+
+  .hero-gradient-sub {
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 40px;
+    letter-spacing: -0.5px;
+  }
+
+  /* STATS */
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+
+  .stat-item {
+    flex: 1;
+    min-width: 140px;
+    padding: 20px 16px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .stat-item:last-child { border-right: none; }
+
+  .stat-value {
+    font-size: 22px; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 4px;
+  }
+  .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+
+  /* BENEFIT CARDS */
+  .benefits-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .benefit-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .benefit-card:hover { border-color: rgba(212,43,106,0.3); transform: translateY(-2px); }
+
+  .benefit-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+  .benefit-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .benefit-desc { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+
+  /* STEP INDICATOR */
+  .steps-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 40px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 20px;
+    overflow-x: auto;
+  }
+
+  .step-dot-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    white-space: nowrap;
+  }
+
+  .step-dot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .step-dot-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--border);
+    color: var(--text-dim);
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+
+  .step-dot.active .step-dot-num {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    box-shadow: 0 0 12px rgba(212,43,106,0.4);
+  }
+
+  .step-dot.done .step-dot-num {
+    background: var(--green);
+    color: var(--bg);
+  }
+
+  .step-dot-label {
+    font-size: 13px; font-weight: 500;
+    color: var(--text-dim);
+    transition: color 0.3s;
+  }
+  .step-dot.active .step-dot-label { color: var(--text); }
+  .step-dot.done .step-dot-label { color: var(--green); }
+
+  .step-line {
+    width: 32px; height: 2px;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+  .step-line.done { background: var(--green); }
+
+  /* FORM CARD */
+  .form-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .form-card-header {
+    padding: 28px 32px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--card2);
+  }
+
+  .form-step-num {
+    font-size: 12px; font-weight: 700;
+    color: var(--accent); letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+
+  .form-card-title {
+    font-size: 22px; font-weight: 700;
+    color: var(--text); letter-spacing: -0.5px;
+  }
+
+  .form-card-desc {
+    font-size: 14px; color: var(--text-muted);
+    margin-top: 6px; line-height: 1.5;
+  }
+
+  .form-body { padding: 32px; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .form-row.single { grid-template-columns: 1fr; }
+
+  .form-field { margin-bottom: 16px; }
+
+  .field-label {
+    display: block;
+    font-size: 13px; font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+  }
+  .field-required { color: var(--accent); }
+
+  .field-input, .field-select, .field-textarea {
+    width: 100%;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: all 0.2s;
+    appearance: none;
+  }
+  .field-input::placeholder, .field-textarea::placeholder { color: var(--text-dim); }
+  .field-input:focus, .field-select:focus, .field-textarea:focus {
+    border-color: var(--accent);
+    background: rgba(24,24,53,0.8);
+    box-shadow: 0 0 0 3px rgba(212,43,106,0.12);
+  }
+  .field-input.valid { border-color: var(--green); }
+  .field-input.invalid { border-color: var(--error); }
+
+  .field-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234A4A7A' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 44px;
+    cursor: pointer;
+  }
+  .field-select option { background: #181835; }
+
+  .field-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+  .field-hint {
+    font-size: 12px; color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  .field-error {
+    font-size: 12px; color: var(--error);
+    margin-top: 6px;
+    display: none;
+  }
+  .field-error.show { display: block; }
+
+  /* USERNAME FIELD */
+  .username-wrap { position: relative; }
+  .username-prefix {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    font-size: 15px; color: var(--text-dim); pointer-events: none;
+    font-weight: 600;
+  }
+  .username-input { padding-left: 32px; }
+
+  .username-status {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    font-size: 18px;
+  }
+
+  /* CHECKBOX */
+  .checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    transition: all 0.2s;
+    margin-bottom: 10px;
+  }
+  .checkbox-label:hover { border-color: rgba(212,43,106,0.3); }
+  .checkbox-label input { display: none; }
+
+  .checkbox-box {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    background: transparent;
+  }
+  .checkbox-label input:checked + .checkbox-box {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-color: transparent;
+  }
+  .checkbox-label input:checked + .checkbox-box::after {
+    content: '✓';
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .checkbox-text {
+    font-size: 14px; color: var(--text-muted); line-height: 1.5;
+  }
+  .checkbox-text a { color: var(--accent); text-decoration: none; }
+  .checkbox-text a:hover { text-decoration: underline; }
+
+  /* UPLOAD AREA */
+  .upload-area {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    background: var(--card2);
+    margin-bottom: 16px;
+  }
+  .upload-area:hover, .upload-area.dragover {
+    border-color: var(--accent);
+    background: rgba(212,43,106,0.05);
+  }
+
+  .upload-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+  .upload-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .upload-desc { font-size: 13px; color: var(--text-muted); }
+  .upload-accept { font-size: 12px; color: var(--text-dim); margin-top: 8px; }
+  .upload-input { display: none; }
+
+  .upload-preview {
+    display: none;
+    position: relative;
+  }
+  .upload-preview img {
+    width: 100%; max-height: 200px; object-fit: cover;
+    border-radius: 8px;
+  }
+  .upload-remove {
+    position: absolute; top: 8px; right: 8px;
+    width: 28px; height: 28px;
+    background: rgba(0,0,0,0.7);
+    border: none; border-radius: 50%;
+    color: #fff; cursor: pointer;
+    font-size: 16px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* CATEGORIES CHECKBOXES */
+  .tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .tag-check {
+    position: relative;
+    cursor: pointer;
+  }
+  .tag-check input { display: none; }
+  .tag-check-label {
+    display: block;
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    font-size: 14px; font-weight: 500;
+    color: var(--text-muted);
+    background: var(--card2);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .tag-check input:checked + .tag-check-label {
+    background: rgba(212,43,106,0.15);
+    border-color: rgba(212,43,106,0.5);
+    color: var(--accent);
+  }
+  .tag-check-label:hover { border-color: rgba(212,43,106,0.3); color: var(--text); }
+
+  /* LANGUAGE PILLS */
+  .lang-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .lang-pill {
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    font-size: 14px; font-weight: 600;
+    color: var(--text-muted);
+    background: var(--card2);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .lang-pill.active {
+    background: rgba(139,43,226,0.2);
+    border-color: rgba(139,43,226,0.5);
+    color: #B060FF;
+  }
+
+  /* SLIDER */
+  .slider-wrap { position: relative; }
+  .price-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(to right, var(--accent) 0%, var(--accent) 50%, var(--border) 50%);
+    outline: none;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+  .price-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(212,43,106,0.4);
+    border: 3px solid var(--card);
+  }
+  .price-slider::-moz-range-thumb {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    cursor: pointer;
+    border: 3px solid var(--card);
+  }
+
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .price-display {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+  .price-amount {
+    font-size: 28px; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .price-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .price-estimate {
+    font-size: 14px; color: var(--green); margin-top: 10px; font-weight: 600;
+  }
+
+  /* BUTTONS */
+  .btn-wrap {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    padding-top: 8px;
+  }
+
+  .btn {
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-size: 15px; font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(212,43,106,0.3);
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(212,43,106,0.4); }
+
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .btn-secondary:hover { border-color: rgba(212,43,106,0.3); color: var(--text); }
+
+  /* SECURITY NOTE */
+  .security-note {
+    background: rgba(0,230,118,0.05);
+    border: 1px solid rgba(0,230,118,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+  .security-note svg { flex-shrink: 0; color: var(--green); margin-top: 1px; }
+
+  /* INFO BOX */
+  .info-box {
+    background: rgba(139,43,226,0.08);
+    border: 1px solid rgba(139,43,226,0.25);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .info-box svg { flex-shrink: 0; color: #B060FF; margin-top: 1px; }
+
+  /* CHAR COUNTER */
+  .char-counter {
+    text-align: right;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+  .char-counter.warn { color: var(--gold); }
+  .char-counter.max { color: var(--error); }
+
+  /* STEP SECTIONS */
+  .form-step { display: none; }
+  .form-step.active { display: block; }
+
+  /* SUCCESS PAGE */
+  .success-page {
+    text-align: center;
+    padding: 40px 32px;
+  }
+
+  .success-check-wrap {
+    width: 100px; height: 100px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+
+  .success-svg {
+    width: 100px; height: 100px;
+  }
+
+  .check-circle {
+    stroke: var(--green);
+    stroke-width: 3;
+    fill: rgba(0,230,118,0.08);
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    animation: circle-in 0.6s ease forwards;
+    transform-origin: center;
+  }
+
+  .check-mark {
+    stroke: var(--green);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    stroke-dasharray: 80;
+    stroke-dashoffset: 80;
+    animation: check-in 0.4s ease 0.5s forwards;
+  }
+
+  @keyframes circle-in {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes check-in {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .success-title {
+    font-size: 32px; font-weight: 800;
+    color: var(--text); letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+
+  .success-subtitle {
+    font-size: 16px; color: var(--text-muted);
+    margin-bottom: 4px; line-height: 1.6;
+  }
+
+  .success-email-note {
+    font-size: 14px; color: var(--text-dim); margin-bottom: 40px;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    text-align: left;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .timeline-item:last-child { border-bottom: none; }
+
+  .timeline-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .tl-pending { background: rgba(255,179,0,0.1); border: 1px solid rgba(255,179,0,0.3); }
+  .tl-active { background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.3); animation: pulse-item 2s infinite; }
+  @keyframes pulse-item { 0%,100%{box-shadow:0 0 0 0 rgba(0,230,118,0.3)} 50%{box-shadow:0 0 0 8px rgba(0,230,118,0)} }
+
+  .timeline-info { flex: 1; }
+  .timeline-title { font-size: 15px; font-weight: 600; color: var(--text); }
+  .timeline-desc { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+  .timeline-badge {
+    font-size: 12px; padding: 3px 10px;
+    border-radius: 100px; font-weight: 600;
+  }
+  .badge-active-now { background: rgba(0,230,118,0.1); color: var(--green); }
+  .badge-pending { background: rgba(255,179,0,0.1); color: var(--gold); }
+
+  /* TIPS */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+    text-align: left;
+  }
+
+  .tip-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .tip-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+  .tip-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .tip-text { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrap {
+    background: var(--border);
+    border-radius: 100px;
+    height: 4px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(to right, var(--accent), var(--accent2));
+    transition: width 0.4s ease;
+  }
+
+  /* DOC TYPE TABS */
+  .doc-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 6px;
+  }
+  .doc-tab {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 14px; font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .doc-tab.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+  }
+
+  /* LINKS ROW */
+  .links-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .link-field-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .link-icon {
+    font-size: 20px;
+    width: 40px;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    nav { padding: 0 16px; }
+    .form-row { grid-template-columns: 1fr; }
+    .benefits-row { grid-template-columns: 1fr; }
+    .stats-row { flex-wrap: wrap; }
+    .stat-item { min-width: 50%; border-right: none; border-bottom: 1px solid var(--border); }
+    .stat-item:last-child { border-bottom: none; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .form-body { padding: 20px 16px; }
+    .form-card-header { padding: 20px 16px 16px; }
+    .btn-wrap { flex-direction: column; }
+    .btn { justify-content: center; }
+    .steps-indicator { padding: 8px 12px; }
+    .step-dot-label { display: none; }
+    .step-line { width: 16px; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<style>
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+</style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"Стать создателем — KOL Studio","description":"Подай заявку на создание аккаунта создателя","url":"https://kolstudio.com/creator-apply.html","publisher":{"@type":"Organization","name":"KOL Studio","logo":{"@type":"ImageObject","url":"https://kolstudio.com/icons/icon-192.png"}}}
+  </script>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/creator-apply.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/creator-apply.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/creator-apply.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/creator-apply.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+
+<div class="glow-1"></div>
+<div class="glow-2"></div>
+
+<nav aria-label="navigation">
+  <a href="index.html" class="logo-link">
+    <span class="logo-text">KOL STUDIO</span>
+    <span class="badge-18">18+</span>
+  </a>
+  <a href="index.html" class="nav-back">← Назад</a>
+</nav>
+
+<div class="page">
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="index.html">🏠 Главная</a><span class="sep">›</span><a href="creator-landing.html">Для создателей</a><span class="sep">›</span><span class="current">Подать заявку</span></nav>
+
+  <div class="container">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-eyebrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Стань создателем контента
+      </div>
+      <h1>Стань моделью KOL Studio</h1>
+      <div class="hero-gradient-sub">Зарабатывай на своём контенте</div>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-value">80%</div>
+          <div class="stat-label">Доход от подписок</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">$2M+</div>
+          <div class="stat-label">Выплачено моделям</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">2,400+</div>
+          <div class="stat-label">Активных моделей</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">Каждую неделю</div>
+          <div class="stat-label">Выплаты</div>
+        </div>
+      </div>
+
+      <div class="benefits-row">
+        <div class="benefit-card">
+          <span class="benefit-icon">💰</span>
+          <div class="benefit-title">Высокий доход</div>
+          <div class="benefit-desc">80% от всех доходов — самая высокая ставка на рынке</div>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">🔒</span>
+          <div class="benefit-title">Полная приватность</div>
+          <div class="benefit-desc">Контроль над аудиторией, геоблокировка, анонимность</div>
+        </div>
+        <div class="benefit-card">
+          <span class="benefit-icon">📱</span>
+          <div class="benefit-title">Работай где угодно</div>
+          <div class="benefit-desc">Мобильное приложение, встроенная студия, календарь шоу</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP INDICATOR -->
+    <div class="steps-indicator">
+      <div class="step-dot-wrap">
+        <div class="step-dot active" id="stepDot1">
+          <div class="step-dot-num">1</div>
+          <div class="step-dot-label">Личные данные</div>
+        </div>
+        <div class="step-line" id="stepLine1"></div>
+        <div class="step-dot" id="stepDot2">
+          <div class="step-dot-num">2</div>
+          <div class="step-dot-label">Верификация</div>
+        </div>
+        <div class="step-line" id="stepLine2"></div>
+        <div class="step-dot" id="stepDot3">
+          <div class="step-dot-num">3</div>
+          <div class="step-dot-label">Профиль</div>
+        </div>
+        <div class="step-line" id="stepLine3"></div>
+        <div class="step-dot" id="stepDot4">
+          <div class="step-dot-num">4</div>
+          <div class="step-dot-label">Готово</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBar" style="width: 10%"></div>
+    </div>
+
+    <!-- STEP 1: PERSONAL INFO -->
+    <div class="form-step active" id="step1">
+      <div class="form-card">
+        <div class="form-card-header">
+          <div class="form-step-num">ШАГ 1 из 4</div>
+          <div class="form-card-title">Личные данные</div>
+          <div class="form-card-desc">Заполни основную информацию о себе. Все данные защищены.</div>
+        </div>
+        <div class="form-body">
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="field-label">Имя <span class="field-required">*</span></label>
+              <input type="text" class="field-input" id="firstName" placeholder="Алина" autocomplete="given-name">
+              <div class="field-error" id="firstNameErr">Введите имя</div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Фамилия <span class="field-required">*</span></label>
+              <input type="text" class="field-input" id="lastName" placeholder="Иванова" autocomplete="family-name">
+              <div class="field-error" id="lastNameErr">Введите фамилию</div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Имя пользователя <span class="field-required">*</span></label>
+            <div class="username-wrap">
+              <span class="username-prefix">@</span>
+              <input type="text" class="field-input username-input" id="username" placeholder="alina_model" oninput="checkUsername(this)" autocomplete="username">
+              <span class="username-status" id="usernameStatus"></span>
+            </div>
+            <div class="field-hint">Только латинские буквы, цифры и _</div>
+            <div class="field-error" id="usernameErr">Введите корректное имя пользователя</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="field-label">Email <span class="field-required">*</span></label>
+              <input type="email" class="field-input" id="email" placeholder="alina@example.com" autocomplete="email">
+              <div class="field-error" id="emailErr">Введите корректный email</div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Подтвердить Email <span class="field-required">*</span></label>
+              <input type="email" class="field-input" id="email2" placeholder="alina@example.com">
+              <div class="field-error" id="email2Err">Email не совпадает</div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Дата рождения <span class="field-required">*</span> <span style="color:var(--text-dim);font-weight:400;">(должно быть 18+)</span></label>
+            <input type="date" class="field-input" id="dob" max="" onchange="checkAge(this)">
+            <div class="field-error" id="dobErr">Вам должно быть не менее 18 лет</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="field-label">Страна <span class="field-required">*</span></label>
+              <select class="field-select" id="country">
+                <option value="">Выбери страну</option>
+                <option value="RU">🇷🇺 Россия</option>
+                <option value="UA">🇺🇦 Украина</option>
+                <option value="BY">🇧🇾 Беларусь</option>
+                <option value="KZ">🇰🇿 Казахстан</option>
+                <option value="US">🇺🇸 США</option>
+                <option value="GB">🇬🇧 Великобритания</option>
+                <option value="DE">🇩🇪 Германия</option>
+                <option value="FR">🇫🇷 Франция</option>
+                <option value="ES">🇪🇸 Испания</option>
+                <option value="IT">🇮🇹 Италия</option>
+                <option value="PL">🇵🇱 Польша</option>
+                <option value="CZ">🇨🇿 Чехия</option>
+                <option value="RO">🇷🇴 Румыния</option>
+                <option value="HU">🇭🇺 Венгрия</option>
+                <option value="TR">🇹🇷 Турция</option>
+                <option value="GE">🇬🇪 Грузия</option>
+                <option value="AM">🇦🇲 Армения</option>
+                <option value="AZ">🇦🇿 Азербайджан</option>
+                <option value="UZ">🇺🇿 Узбекистан</option>
+                <option value="TH">🇹🇭 Таиланд</option>
+                <option value="PH">🇵🇭 Филиппины</option>
+                <option value="BR">🇧🇷 Бразилия</option>
+                <option value="MX">🇲🇽 Мексика</option>
+                <option value="AR">🇦🇷 Аргентина</option>
+                <option value="CO">🇨🇴 Колумбия</option>
+                <option value="CA">🇨🇦 Канада</option>
+                <option value="AU">🇦🇺 Австралия</option>
+                <option value="NL">🇳🇱 Нидерланды</option>
+                <option value="SE">🇸🇪 Швеция</option>
+                <option value="NO">🇳🇴 Норвегия</option>
+                <option value="PT">🇵🇹 Португалия</option>
+              </select>
+              <div class="field-error" id="countryErr">Выберите страну</div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Телефон</label>
+              <input type="tel" class="field-input" id="phone" placeholder="+7 (000) 000-00-00" autocomplete="tel">
+            </div>
+          </div>
+
+          <div style="margin-top: 8px;">
+            <label class="checkbox-label">
+              <input type="checkbox" id="ageConfirm">
+              <span class="checkbox-box"></span>
+              <span class="checkbox-text">Я подтверждаю, что мне исполнилось <strong>18 лет</strong> и я имею право использовать данную платформу <span class="field-required">*</span></span>
+            </label>
+            <div class="field-error" id="ageConfirmErr">Необходимо подтвердить возраст</div>
+
+            <label class="checkbox-label">
+              <input type="checkbox" id="termsConfirm">
+              <span class="checkbox-box"></span>
+              <span class="checkbox-text">Я принимаю <a href="#">условия для создателей контента</a> и <a href="#">политику конфиденциальности</a> <span class="field-required">*</span></span>
+            </label>
+            <div class="field-error" id="termsConfirmErr">Необходимо принять условия</div>
+          </div>
+
+          <div class="btn-wrap" style="margin-top: 24px;">
+            <button class="btn btn-primary" onclick="goToStep(2)">
+              Далее
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: VERIFICATION -->
+    <div class="form-step" id="step2">
+      <div class="form-card">
+        <div class="form-card-header">
+          <div class="form-step-num">ШАГ 2 из 4</div>
+          <div class="form-card-title">Верификация личности</div>
+          <div class="form-card-desc">Это обязательный шаг для защиты платформы и соблюдения законодательства.</div>
+        </div>
+        <div class="form-body">
+
+          <div class="info-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <div>Верификация необходима для подтверждения возраста и личности. Мы работаем только со совершеннолетними создателями. Все документы обрабатываются через <strong>Onfido</strong> и удаляются после проверки.</div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Тип документа <span class="field-required">*</span></label>
+            <div class="doc-tabs">
+              <button class="doc-tab active" onclick="selectDocType(this,'Паспорт')">🪪 Паспорт</button>
+              <button class="doc-tab" onclick="selectDocType(this,'Водительское удостоверение')">🚗 Водительское удостоверение</button>
+              <button class="doc-tab" onclick="selectDocType(this,'ID-карта')">🪪 ID-карта</button>
+            </div>
+            <input type="hidden" id="docType" value="Паспорт">
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Лицевая сторона документа <span class="field-required">*</span></label>
+            <div class="upload-area" id="uploadFrontArea" onclick="document.getElementById('uploadFront').click()"
+              ondragover="dragOver(event,this)" ondragleave="dragLeave(event,this)" ondrop="dropFile(event,'uploadFront','uploadFrontPreview','uploadFrontArea')">
+              <span class="upload-icon">📄</span>
+              <div class="upload-title">Перетащи или нажми для загрузки</div>
+              <div class="upload-desc">Лицевая сторона документа</div>
+              <div class="upload-accept">JPG, PNG, PDF · до 10 МБ</div>
+              <input type="file" class="upload-input" id="uploadFront" accept="image/*,.pdf" onchange="previewFile(this,'uploadFrontPreview','uploadFrontArea')">
+            </div>
+            <div class="upload-preview" id="uploadFrontPreview">
+              <img loading="lazy" decoding="async" id="uploadFrontImg" src="" alt="">
+              <button class="upload-remove" onclick="removeFile('uploadFront','uploadFrontPreview','uploadFrontArea')" aria-label="Закрыть">×</button>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Обратная сторона документа</label>
+            <div class="upload-area" id="uploadBackArea" onclick="document.getElementById('uploadBack').click()"
+              ondragover="dragOver(event,this)" ondragleave="dragLeave(event,this)" ondrop="dropFile(event,'uploadBack','uploadBackPreview','uploadBackArea')">
+              <span class="upload-icon">📋</span>
+              <div class="upload-title">Перетащи или нажми для загрузки</div>
+              <div class="upload-desc">Обратная сторона (если есть)</div>
+              <div class="upload-accept">JPG, PNG, PDF · до 10 МБ</div>
+              <input type="file" class="upload-input" id="uploadBack" accept="image/*,.pdf" onchange="previewFile(this,'uploadBackPreview','uploadBackArea')">
+            </div>
+            <div class="upload-preview" id="uploadBackPreview">
+              <img loading="lazy" decoding="async" id="uploadBackImg" src="" alt="">
+              <button class="upload-remove" onclick="removeFile('uploadBack','uploadBackPreview','uploadBackArea')" aria-label="Закрыть">×</button>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Селфи с документом <span class="field-required">*</span></label>
+            <div class="upload-area" id="uploadSelfieArea" onclick="document.getElementById('uploadSelfie').click()"
+              ondragover="dragOver(event,this)" ondragleave="dragLeave(event,this)" ondrop="dropFile(event,'uploadSelfie','uploadSelfiePreview','uploadSelfieArea')">
+              <span class="upload-icon">🤳</span>
+              <div class="upload-title">Фото с документом в руке</div>
+              <div class="upload-desc">Держи документ так, чтобы данные были видны. Без фильтров.</div>
+              <div class="upload-accept">JPG, PNG · до 10 МБ</div>
+              <input type="file" class="upload-input" id="uploadSelfie" accept="image/*" onchange="previewFile(this,'uploadSelfiePreview','uploadSelfieArea')">
+            </div>
+            <div class="upload-preview" id="uploadSelfiePreview">
+              <img loading="lazy" decoding="async" id="uploadSelfieImg" src="" alt="">
+              <button class="upload-remove" onclick="removeFile('uploadSelfie','uploadSelfiePreview','uploadSelfieArea')" aria-label="Закрыть">×</button>
+            </div>
+          </div>
+
+          <div class="security-note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div>Документы проверяются через <strong>Onfido</strong> и полностью удаляются с наших серверов после верификации. Мы не передаём данные третьим лицам. Верификация занимает <strong>24–48 часов</strong>.</div>
+          </div>
+
+          <div class="btn-wrap" style="margin-top: 24px;">
+            <button class="btn btn-secondary" onclick="goToStep(1)">← Назад</button>
+            <button class="btn btn-primary" onclick="goToStep(3)">
+              Далее
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: PROFILE -->
+    <div class="form-step" id="step3">
+      <div class="form-card">
+        <div class="form-card-header">
+          <div class="form-step-num">ШАГ 3 из 4</div>
+          <div class="form-card-title">Настройка профиля</div>
+          <div class="form-card-desc">Заполни профиль — он будет виден подписчикам.</div>
+        </div>
+        <div class="form-body">
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="field-label">Отображаемое имя <span class="field-required">*</span></label>
+              <input type="text" class="field-input" id="displayName" placeholder="Алина ✨">
+              <div class="field-hint">Это имя увидят подписчики</div>
+            </div>
+            <div class="form-field" style="display:flex;flex-direction:column;">
+              <label class="field-label">Цена подписки <span class="field-required">*</span></label>
+              <div class="price-display" style="flex:1;">
+                <div class="price-amount" id="priceDisplay">$14.99</div>
+                <div class="price-label">в месяц</div>
+                <div class="price-estimate" id="priceEstimate">≈ $960 / мес при 100 подписчиках</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <div class="slider-labels">
+              <span>$4.99</span>
+              <span>Рекомендовано: $9.99 – $24.99</span>
+              <span>$49.99</span>
+            </div>
+            <input type="range" class="price-slider" id="priceSlider" min="499" max="4999" step="100" value="1499" oninput="updatePrice(this)">
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">О себе <span class="field-required">*</span></label>
+            <textarea class="field-textarea" id="bio" placeholder="Расскажи о себе и своём контенте..." maxlength="500" oninput="updateCharCount(this,'bioCounter',500)"></textarea>
+            <div class="char-counter" id="bioCounter">0 / 500</div>
+            <div class="field-error" id="bioErr">Напишите о себе</div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Категории контента <span class="field-required">*</span></label>
+            <div class="tags-grid">
+              <label class="tag-check"><input type="checkbox" name="category" value="Lifestyle"><span class="tag-check-label">🌟 Lifestyle</span></label>
+              <label class="tag-check"><input type="checkbox" name="category" value="Cosplay"><span class="tag-check-label">🎭 Cosplay</span></label>
+              <label class="tag-check"><input type="checkbox" name="category" value="Boudoir"><span class="tag-check-label">🌸 Boudoir</span></label>
+              <label class="tag-check"><input type="checkbox" name="category" value="Fitness"><span class="tag-check-label">💪 Фитнес</span></label>
+              <label class="tag-check"><input type="checkbox" name="category" value="Art"><span class="tag-check-label">🎨 Арт</span></label>
+              <label class="tag-check"><input type="checkbox" name="category" value="Gaming"><span class="tag-check-label">🎮 Игры</span></label>
+              <label class="tag-check"><input type="checkbox" name="category" value="Dance"><span class="tag-check-label">💃 Танцы</span></label>
+              <label class="tag-check"><input type="checkbox" name="category" value="Fetish"><span class="tag-check-label">🔥 Fetish</span></label>
+              <label class="tag-check"><input type="checkbox" name="category" value="ASMR"><span class="tag-check-label">🎙️ ASMR</span></label>
+              <label class="tag-check"><input type="checkbox" name="category" value="Travel"><span class="tag-check-label">✈️ Путешествия</span></label>
+              <label class="tag-check"><input type="checkbox" name="category" value="Music"><span class="tag-check-label">🎵 Музыка</span></label>
+              <label class="tag-check"><input type="checkbox" name="category" value="Yoga"><span class="tag-check-label">🧘 Йога</span></label>
+            </div>
+            <div class="field-error" id="catErr">Выберите хотя бы одну категорию</div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Тип контента <span class="field-required">*</span></label>
+            <div class="tags-grid">
+              <label class="tag-check"><input type="checkbox" name="contentType" value="Photo"><span class="tag-check-label">📸 Фото</span></label>
+              <label class="tag-check"><input type="checkbox" name="contentType" value="Video"><span class="tag-check-label">🎬 Видео</span></label>
+              <label class="tag-check"><input type="checkbox" name="contentType" value="Live"><span class="tag-check-label">🔴 Live</span></label>
+              <label class="tag-check"><input type="checkbox" name="contentType" value="Chat"><span class="tag-check-label">💬 Приват-чат</span></label>
+              <label class="tag-check"><input type="checkbox" name="contentType" value="PPV"><span class="tag-check-label">🔒 PPV</span></label>
+            </div>
+            <div class="field-error" id="ctErr">Выберите хотя бы один тип контента</div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Языки общения</label>
+            <div class="lang-grid">
+              <div class="lang-pill" onclick="toggleLang(this)">🇷🇺 RU</div>
+              <div class="lang-pill" onclick="toggleLang(this)">🇬🇧 EN</div>
+              <div class="lang-pill" onclick="toggleLang(this)">🇩🇪 DE</div>
+              <div class="lang-pill" onclick="toggleLang(this)">🇫🇷 FR</div>
+              <div class="lang-pill" onclick="toggleLang(this)">🇪🇸 ES</div>
+              <div class="lang-pill" onclick="toggleLang(this)">🇮🇹 IT</div>
+              <div class="lang-pill" onclick="toggleLang(this)">🇵🇹 PT</div>
+              <div class="lang-pill" onclick="toggleLang(this)">🇵🇱 PL</div>
+              <div class="lang-pill" onclick="toggleLang(this)">🇰🇷 KO</div>
+              <div class="lang-pill" onclick="toggleLang(this)">🇯🇵 JP</div>
+              <div class="lang-pill" onclick="toggleLang(this)">🇨🇳 ZH</div>
+              <div class="lang-pill" onclick="toggleLang(this)">🇸🇦 AR</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label class="field-label">Аватар</label>
+              <div class="upload-area" id="avatarArea" onclick="document.getElementById('uploadAvatar').click()" style="padding:20px;">
+                <span class="upload-icon">🖼️</span>
+                <div class="upload-title">Фото профиля</div>
+                <div class="upload-accept">JPG, PNG · до 5 МБ</div>
+                <input type="file" class="upload-input" id="uploadAvatar" accept="image/*" onchange="previewFile(this,'avatarPreview','avatarArea')">
+              </div>
+              <div class="upload-preview" id="avatarPreview">
+                <img loading="lazy" decoding="async" id="uploadAvatarImg" src="" alt="">
+                <button class="upload-remove" onclick="removeFile('uploadAvatar','avatarPreview','avatarArea')" aria-label="Закрыть">×</button>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label">Обложка профиля</label>
+              <div class="upload-area" id="bannerArea" onclick="document.getElementById('uploadBanner').click()" style="padding:20px;">
+                <span class="upload-icon">🌄</span>
+                <div class="upload-title">Баннер (шапка профиля)</div>
+                <div class="upload-accept">JPG, PNG · до 10 МБ</div>
+                <input type="file" class="upload-input" id="uploadBanner" accept="image/*" onchange="previewFile(this,'bannerPreview','bannerArea')">
+              </div>
+              <div class="upload-preview" id="bannerPreview">
+                <img loading="lazy" decoding="async" id="uploadBannerImg" src="" alt="">
+                <button class="upload-remove" onclick="removeFile('uploadBanner','bannerPreview','bannerArea')" aria-label="Закрыть">×</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">Соцсети <span style="color:var(--text-dim);font-weight:400;">(по желанию)</span></label>
+            <div class="links-grid">
+              <div class="link-field-wrap">
+                <span class="link-icon">𝕏</span>
+                <input type="text" class="field-input" placeholder="@username">
+              </div>
+              <div class="link-field-wrap">
+                <span class="link-icon">📸</span>
+                <input type="text" class="field-input" placeholder="@instagram">
+              </div>
+              <div class="link-field-wrap">
+                <span class="link-icon">🎵</span>
+                <input type="text" class="field-input" placeholder="@tiktok">
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-wrap" style="margin-top: 24px;">
+            <button class="btn btn-secondary" onclick="goToStep(2)">← Назад</button>
+            <button class="btn btn-primary" onclick="goToStep(4)">
+              Отправить заявку
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: SUCCESS -->
+    <div class="form-step" id="step4">
+      <div class="form-card">
+        <div class="success-page">
+
+          <div class="success-check-wrap">
+            <svg class="success-svg" viewBox="0 0 100 100">
+              <circle class="check-circle" cx="50" cy="50" r="45"/>
+              <polyline class="check-mark" points="28,52 43,67 72,38"/>
+            </svg>
+          </div>
+
+          <div class="success-title">Заявка отправлена! 🎉</div>
+          <div class="success-subtitle">Мы проверим ваши данные в течение 24–48 часов.</div>
+          <div class="success-email-note">Уведомление о результате придёт на ваш email.</div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot tl-active">📋</div>
+              <div class="timeline-info">
+                <div class="timeline-title">Проверка документов</div>
+                <div class="timeline-desc">Команда верификации проверяет ваши данные</div>
+              </div>
+              <span class="timeline-badge badge-active-now">В процессе</span>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot tl-pending">⚡</div>
+              <div class="timeline-info">
+                <div class="timeline-title">Активация аккаунта</div>
+                <div class="timeline-desc">Аккаунт модели будет активирован</div>
+              </div>
+              <span class="timeline-badge badge-pending">Ожидание</span>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot tl-pending">💰</div>
+              <div class="timeline-info">
+                <div class="timeline-title">Первая выплата</div>
+                <div class="timeline-desc">Еженедельно на указанный счёт</div>
+              </div>
+              <span class="timeline-badge badge-pending">Скоро</span>
+            </div>
+          </div>
+
+          <div style="text-align:left; margin-bottom: 16px;">
+            <div class="section-title" style="font-size:18px; margin-bottom:16px;">Пока ждёшь — подготовь:</div>
+          </div>
+          <div class="tips-grid">
+            <div class="tip-card">
+              <span class="tip-icon">📸</span>
+              <div class="tip-title">Первые фото</div>
+              <div class="tip-text">Подготовь 5–10 постов для запуска. Первые сутки — самые важные для алгоритма.</div>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">💬</span>
+              <div class="tip-title">Приветственное сообщение</div>
+              <div class="tip-text">Напиши welcome-сообщение для новых подписчиков. Повышает конверсию на 40%.</div>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">📣</span>
+              <div class="tip-title">Анонс в соцсетях</div>
+              <div class="tip-text">Расскажи аудитории о своём новом аккаунте — первые подписчики придут оттуда.</div>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">📅</span>
+              <div class="tip-title">Расписание выходов</div>
+              <div class="tip-text">Регулярность важна. Постарайся публиковать контент хотя бы 3 раза в неделю.</div>
+            </div>
+          </div>
+
+          <a href="index.html" class="btn btn-primary" style="text-decoration:none; display:inline-flex;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+            Вернуться на главную
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Age gate
+if (localStorage.getItem('age_verified') !== 'true') {
+  // Redirect to age gate — remove comment to enable:
+  // location.href = 'age-gate.html';
+  // For demo, we set it automatically:
+  localStorage.setItem('age_verified', 'true');
+}
+
+let currentStep = 1;
+const totalSteps = 4;
+
+// Set max date for DOB (18 years ago)
+const dobInput = document.getElementById('dob');
+const maxDate = new Date();
+maxDate.setFullYear(maxDate.getFullYear() - 18);
+dobInput.max = maxDate.toISOString().split('T')[0];
+
+function updateStepUI(step) {
+  // Hide all steps
+  document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step' + step).classList.add('active');
+
+  // Update dots
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('stepDot' + i);
+    dot.classList.remove('active', 'done');
+    if (i < step) dot.classList.add('done');
+    if (i === step) dot.classList.add('active');
+    // Set checkmark for done steps
+    const num = dot.querySelector('.step-dot-num');
+    if (i < step) num.textContent = '✓';
+    else num.textContent = i;
+
+    if (i < 4) {
+      const line = document.getElementById('stepLine' + i);
+      if (line) line.classList.toggle('done', i < step);
+    }
+  }
+
+  // Progress bar
+  const progress = (step / totalSteps) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+
+  // Scroll top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  currentStep = step;
+}
+
+function validateStep1() {
+  let valid = true;
+
+  const firstName = document.getElementById('firstName').value.trim();
+  showErr('firstNameErr', !firstName);
+  if (!firstName) valid = false;
+
+  const lastName = document.getElementById('lastName').value.trim();
+  showErr('lastNameErr', !lastName);
+  if (!lastName) valid = false;
+
+  const username = document.getElementById('username').value.trim();
+  const usernameValid = /^[a-zA-Z0-9_]{3,20}$/.test(username);
+  showErr('usernameErr', !usernameValid);
+  if (!usernameValid) valid = false;
+
+  const email = document.getElementById('email').value.trim();
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  showErr('emailErr', !emailValid);
+  if (!emailValid) valid = false;
+
+  const email2 = document.getElementById('email2').value.trim();
+  showErr('email2Err', email !== email2);
+  if (email !== email2) valid = false;
+
+  const dob = document.getElementById('dob').value;
+  if (dob) {
+    const born = new Date(dob);
+    const now = new Date();
+    const age = now.getFullYear() - born.getFullYear() - (now < new Date(now.getFullYear(), born.getMonth(), born.getDate()) ? 1 : 0);
+    if (age < 18) { showErr('dobErr', true); valid = false; }
+    else showErr('dobErr', false);
+  } else { showErr('dobErr', true); valid = false; }
+
+  const country = document.getElementById('country').value;
+  showErr('countryErr', !country);
+  if (!country) valid = false;
+
+  const ageConfirm = document.getElementById('ageConfirm').checked;
+  showErr('ageConfirmErr', !ageConfirm);
+  if (!ageConfirm) valid = false;
+
+  const termsConfirm = document.getElementById('termsConfirm').checked;
+  showErr('termsConfirmErr', !termsConfirm);
+  if (!termsConfirm) valid = false;
+
+  return valid;
+}
+
+function validateStep3() {
+  let valid = true;
+
+  const bio = document.getElementById('bio').value.trim();
+  showErr('bioErr', !bio);
+  if (!bio) valid = false;
+
+  const cats = document.querySelectorAll('input[name="category"]:checked');
+  showErr('catErr', cats.length === 0);
+  if (cats.length === 0) valid = false;
+
+  const cts = document.querySelectorAll('input[name="contentType"]:checked');
+  showErr('ctErr', cts.length === 0);
+  if (cts.length === 0) valid = false;
+
+  return valid;
+}
+
+function showErr(id, show) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('show', show);
+}
+
+function goToStep(step) {
+  if (step > currentStep) {
+    if (currentStep === 1 && !validateStep1()) return;
+    if (currentStep === 3 && !validateStep3()) return;
+  }
+  updateStepUI(step);
+}
+
+// Username validation
+const usernameTimeouts = {};
+function checkUsername(input) {
+  const val = input.value;
+  const status = document.getElementById('usernameStatus');
+  clearTimeout(usernameTimeouts.check);
+  status.textContent = '⏳';
+  input.classList.remove('valid', 'invalid');
+
+  usernameTimeouts.check = setTimeout(() => {
+    if (!val) { status.textContent = ''; return; }
+    if (!/^[a-zA-Z0-9_]{3,20}$/.test(val)) {
+      status.textContent = '✗';
+      status.style.color = 'var(--error)';
+      input.classList.add('invalid');
+      return;
+    }
+    // Simulate availability check
+    const taken = ['admin', 'test', 'user', 'model', 'support'];
+    if (taken.includes(val.toLowerCase())) {
+      status.textContent = '✗';
+      status.style.color = 'var(--error)';
+      input.classList.add('invalid');
+    } else {
+      status.textContent = '✓';
+      status.style.color = 'var(--green)';
+      input.classList.add('valid');
+    }
+  }, 500);
+}
+
+// Age validation
+function checkAge(input) {
+  const born = new Date(input.value);
+  const now = new Date();
+  const age = now.getFullYear() - born.getFullYear() - (now < new Date(now.getFullYear(), born.getMonth(), born.getDate()) ? 1 : 0);
+  showErr('dobErr', age < 18);
+  input.classList.toggle('invalid', age < 18);
+  input.classList.toggle('valid', age >= 18);
+}
+
+// Doc type tabs
+function selectDocType(btn, type) {
+  document.querySelectorAll('.doc-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('docType').value = type;
+}
+
+// File upload preview
+function previewFile(input, previewId, areaId) {
+  const file = input.files[0];
+  if (!file) return;
+  const preview = document.getElementById(previewId);
+  const area = document.getElementById(areaId);
+
+  if (file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const imgId = input.id + 'Img';
+      const img = document.getElementById(imgId);
+      if (img) { img.src = e.target.result; img.style.display = 'block'; }
+      area.style.display = 'none';
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    area.style.display = 'none';
+    preview.style.display = 'block';
+    const imgId = input.id + 'Img';
+    const img = document.getElementById(imgId);
+    if (img) {
+      img.style.display = 'none';
+      img.parentElement.innerHTML = `<div style="padding:16px;text-align:center;color:var(--text-muted)">📄 ${file.name}<button class="upload-remove" onclick="removeFile('${input.id}','${previewId}','${areaId}')" aria-label="Закрыть">×</button></div>`;
+    }
+  }
+}
+
+function removeFile(inputId, previewId, areaId) {
+  document.getElementById(inputId).value = '';
+  document.getElementById(previewId).style.display = 'none';
+  document.getElementById(areaId).style.display = '';
+  const imgId = inputId + 'Img';
+  const img = document.getElementById(imgId);
+  if (img) { img.src = ''; img.style.display = ''; }
+}
+
+// Drag & drop
+function dragOver(e, area) {
+  e.preventDefault();
+  area.classList.add('dragover');
+}
+function dragLeave(e, area) {
+  area.classList.remove('dragover');
+}
+function dropFile(e, inputId, previewId, areaId) {
+  e.preventDefault();
+  document.getElementById(areaId).classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  const input = document.getElementById(inputId);
+  const dt = new DataTransfer();
+  dt.items.add(file);
+  input.files = dt.files;
+  previewFile(input, previewId, areaId);
+}
+
+// Language pills
+function toggleLang(pill) {
+  pill.classList.toggle('active');
+}
+
+// Char counter
+function updateCharCount(el, counterId, max) {
+  const len = el.value.length;
+  const counter = document.getElementById(counterId);
+  counter.textContent = `${len} / ${max}`;
+  counter.classList.remove('warn', 'max');
+  if (len > max * 0.9) counter.classList.add('warn');
+  if (len >= max) counter.classList.add('max');
+}
+
+// Price slider
+function updatePrice(slider) {
+  const cents = parseInt(slider.value);
+  const price = (cents / 100).toFixed(2);
+  document.getElementById('priceDisplay').textContent = '$' + price;
+
+  // Update slider gradient
+  const pct = ((cents - 499) / (4999 - 499)) * 100;
+  slider.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${pct}%, var(--border) ${pct}%)`;
+
+  // Estimate
+  const monthly100 = Math.round(cents / 100 * 100 * 0.8);
+  document.getElementById('priceEstimate').textContent = `≈ $${monthly100.toLocaleString()} / мес при 100 подписчиках`;
+}
+
+// Init price slider
+updatePrice(document.getElementById('priceSlider'));
+</script>
+<script>
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="creator-apply.html" class="active" style="color:#fff;font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="en/creator-apply.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     KOL Studio Global Components
+     1. GDPR Cookie Consent Banner
+     2. Dark / Light Theme Toggle
+     3. PWA Install Prompt
+═══════════════════════════════════════════════════════════ -->
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="cookie.html">Подробнее</a> · <a href="report.html">Пожаловаться</a> · <a href="api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href = 'search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href = 'upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

@@ -1,0 +1,2824 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Документация — KOL Studio</title>
+  <meta name="description" content="REST API для интеграции с платформой KOL Studio. Создатели, контент, подписки, платежи." />
+  <meta property="og:title" content="API Документация — KOL Studio" />
+  <meta property="og:description" content="REST API для интеграции с платформой KOL Studio. Создатели, контент, подписки, платежи." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kolstudio.com/api-docs" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "KOL Studio API Documentation",
+    "description": "REST API для интеграции с платформой KOL Studio",
+    "url": "https://kolstudio.com/api-docs",
+    "publisher": {
+      "@type": "Organization",
+      "name": "KOL Studio"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07071A;
+      --card: #111128;
+      --card2: #181835;
+      --border: #22224A;
+      --accent: #D42B6A;
+      --purple: #8B2BE2;
+      --green: #00E676;
+      --gold: #FFB300;
+      --text: #E8E8F0;
+      --text-muted: #8A8AAA;
+      --code-bg: #0A0A1F;
+      --sidebar-w: 240px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    code, pre, .mono {
+      font-family: 'Fira Code', 'Cascadia Code', monospace;
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .sidebar-logo {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .logo-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-nav {
+      padding: 12px 0;
+      flex: 1;
+    }
+
+    .nav-section {
+      padding: 6px 20px 2px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 20px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 400;
+      transition: all 0.15s ease;
+      border-left: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .nav-link.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: rgba(212, 43, 106, 0.08);
+      font-weight: 500;
+    }
+
+    .nav-link .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .nav-link.active .dot { background: var(--accent); }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      min-width: 0;
+      padding: 48px 56px 80px;
+      max-width: 900px;
+    }
+
+    /* ── MOBILE TOGGLE ── */
+    .mobile-nav-toggle {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-nav-toggle button {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .mobile-select {
+      flex: 1;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    /* ── SECTIONS ── */
+    .doc-section {
+      margin-bottom: 80px;
+      scroll-margin-top: 32px;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 28px;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 32px 0 12px;
+    }
+
+    h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 20px 0 8px;
+    }
+
+    p { color: var(--text-muted); margin-bottom: 16px; }
+    p strong { color: var(--text); }
+
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* ── BADGES ── */
+    .base-url {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-bottom: 24px;
+    }
+
+    .base-url-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .base-url-val {
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .method-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .method-get  { background: rgba(0,230,118,0.12); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
+    .method-post { background: rgba(139,43,226,0.12); color: #A855F7; border: 1px solid rgba(139,43,226,0.25); }
+    .method-del  { background: rgba(212,43,106,0.12); color: var(--accent); border: 1px solid rgba(212,43,106,0.25); }
+
+    /* ── ENDPOINT CARD ── */
+    .endpoint {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .endpoint-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--card2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .endpoint-path {
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .endpoint-desc {
+      margin-left: auto;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .endpoint-body {
+      padding: 20px;
+    }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 12px 0;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    th {
+      background: var(--card2);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(34,34,74,0.5);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    td code {
+      font-size: 12px;
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text);
+    }
+
+    td strong { color: var(--text); }
+
+    .status-200 { color: var(--green); font-weight: 600; }
+    .status-201 { color: var(--green); font-weight: 600; }
+    .status-400 { color: var(--gold); font-weight: 600; }
+    .status-401 { color: var(--accent); font-weight: 600; }
+    .status-403 { color: var(--accent); font-weight: 600; }
+    .status-404 { color: var(--gold); font-weight: 600; }
+    .status-422 { color: var(--gold); font-weight: 600; }
+    .status-429 { color: #FF6B35; font-weight: 600; }
+    .status-500 { color: var(--accent); font-weight: 600; }
+
+    /* ── CODE BLOCKS ── */
+    .code-block {
+      position: relative;
+      margin: 12px 0;
+    }
+
+    .code-block pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-size: 12.5px;
+      line-height: 1.7;
+    }
+
+    .code-block pre::-webkit-scrollbar { height: 4px; }
+    .code-block pre::-webkit-scrollbar-track { background: transparent; }
+    .code-block pre::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .code-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .code-label + pre {
+      border-radius: 0 0 10px 10px;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.15s;
+      z-index: 2;
+    }
+
+    .copy-btn:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+    .copy-btn.copied { color: var(--green); border-color: rgba(0,230,118,0.4); }
+
+    /* Syntax highlighting */
+    .tok-str { color: var(--green); }
+    .tok-kw  { color: var(--accent); }
+    .tok-cmt { color: #6A6A8A; font-style: italic; }
+    .tok-num { color: var(--gold); }
+    .tok-fn  { color: #7DD3FC; }
+    .tok-key { color: #A5B4FC; }
+    .tok-url { color: var(--gold); }
+    .tok-hdr { color: #C4B5FD; }
+
+    /* ── AUTH CARD ── */
+    .auth-card {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+
+    .api-key-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .api-key-display {
+      flex: 1;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      color: var(--text);
+      letter-spacing: 1px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      color: #fff;
+    }
+
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .btn-outline:hover { border-color: var(--accent); color: var(--text); }
+
+    /* ── OAUTH DIAGRAM ── */
+    .oauth-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 20px 0;
+    }
+
+    .oauth-step {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .oauth-actor {
+      width: 120px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px;
+    }
+
+    .oauth-box {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .oauth-line {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 12px;
+      position: relative;
+    }
+
+    .oauth-arrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .oauth-arrow-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      position: relative;
+    }
+
+    .oauth-arrow-line::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: -4px;
+      border-left: 6px solid var(--border);
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+    }
+
+    .oauth-arrow-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .oauth-flow {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: center;
+      margin: 6px 0;
+      gap: 0;
+    }
+
+    .flow-actor {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      width: 90px;
+      text-align: center;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 8px;
+      flex-shrink: 0;
+    }
+
+    .flow-arrow-right, .flow-arrow-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .flow-line {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      position: relative;
+      margin: 2px 0;
+    }
+
+    .flow-line.right::after {
+      content: '▶';
+      position: absolute;
+      right: -4px;
+      top: -7px;
+      font-size: 9px;
+      color: var(--border);
+    }
+
+    .flow-line.left::before {
+      content: '◀';
+      position: absolute;
+      left: -4px;
+      top: -7px;
+      font-size: 9px;
+      color: var(--border);
+    }
+
+    .flow-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+      white-space: nowrap;
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      margin: 16px 0;
+    }
+
+    .tab-list {
+      display: flex;
+      gap: 2px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+
+    .tab-btn {
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-bottom: -1px;
+    }
+
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── SDK CARDS ── */
+    .sdk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .sdk-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.15s;
+    }
+
+    .sdk-card:hover { border-color: rgba(139,43,226,0.4); }
+
+    .sdk-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .sdk-icon.py { background: rgba(255,179,0,0.1); }
+    .sdk-icon.js { background: rgba(255,179,0,0.1); }
+    .sdk-icon.php { background: rgba(139,43,226,0.1); }
+
+    .sdk-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .sdk-version { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; }
+
+    .install-cmd {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-family: 'Fira Code', monospace;
+      font-size: 11.5px;
+      color: var(--green);
+      margin-bottom: 12px;
+      overflow-x: auto;
+    }
+
+    /* ── RATE LIMIT CARDS ── */
+    .rate-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .rate-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .rate-tier {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .rate-val {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .rate-unit { font-size: 11px; color: var(--text-muted); }
+
+    .rate-card.free .rate-val { color: var(--text); }
+    .rate-card.partner .rate-val { color: var(--purple); }
+    .rate-card.enterprise .rate-val { color: var(--green); }
+
+    /* ── WEBHOOK EVENTS ── */
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .event-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .event-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .event-name {
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .event-desc { font-size: 12px; color: var(--text-muted); }
+
+    /* ── CHANGELOG ── */
+    .changelog-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(34,34,74,0.5);
+    }
+
+    .changelog-date {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+      white-space: nowrap;
+      padding-top: 2px;
+      min-width: 90px;
+    }
+
+    .changelog-tag {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-right: 6px;
+    }
+
+    .tag-new { background: rgba(0,230,118,0.12); color: var(--green); }
+    .tag-fix { background: rgba(255,179,0,0.12); color: var(--gold); }
+    .tag-break { background: rgba(212,43,106,0.12); color: var(--accent); }
+
+    .changelog-text { font-size: 13.5px; color: var(--text); }
+
+    /* ── FOOTER ── */
+    .doc-footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-text { font-size: 12px; color: var(--text-muted); }
+
+    .lang-switcher {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .lang-btn {
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+
+    .lang-btn.active {
+      background: rgba(212,43,106,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(212,43,106,0.3);
+    }
+
+    .lang-btn:not(.active) {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .lang-btn:not(.active):hover { border-color: var(--text-muted); color: var(--text); }
+
+    /* ── PAGE TRANSITION ── */
+    .page-transition {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .page-transition.active { opacity: 1; pointer-events: all; }
+
+    /* ── INFO CALLOUT ── */
+    .callout {
+      display: flex;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin: 16px 0;
+      font-size: 13.5px;
+    }
+
+    .callout.info {
+      background: rgba(139,43,226,0.08);
+      border: 1px solid rgba(139,43,226,0.2);
+      color: var(--text-muted);
+    }
+
+    .callout.warning {
+      background: rgba(255,179,0,0.08);
+      border: 1px solid rgba(255,179,0,0.2);
+      color: var(--text-muted);
+    }
+
+    .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .mobile-nav-toggle { display: flex; }
+      .main { padding: 80px 20px 60px; }
+      .rate-grid { grid-template-columns: 1fr; }
+      .sdk-grid { grid-template-columns: 1fr; }
+      .endpoint-header { flex-wrap: wrap; gap: 8px; }
+      .endpoint-desc { margin-left: 0; }
+      .api-key-row { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/api-docs.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/api-docs.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/api-docs.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/api-docs.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+
+<div class="page-transition" id="pageTransition"></div>
+
+<!-- Mobile nav -->
+<div class="mobile-nav-toggle">
+  <button onclick="toggleMobileNav()" aria-label="Menu">☰</button>
+  <select class="mobile-select" onchange="scrollToSection(this.value)">
+    <option value="intro">Введение</option>
+    <option value="auth">Аутентификация</option>
+    <option value="creators">Создатели</option>
+    <option value="content">Контент</option>
+    <option value="subscriptions">Подписки</option>
+    <option value="payments">Платежи</option>
+    <option value="webhooks">Вебхуки</option>
+    <option value="sdks">SDKs & Библиотеки</option>
+    <option value="limits">Лимиты и квоты</option>
+    <option value="statuses">Статус коды</option>
+    <option value="changelog">Changelog</option>
+  </select>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar" aria-label="API Navigation">
+    <div class="sidebar-logo">
+      <a href="#" class="logo-mark">
+        <div class="logo-icon">K</div>
+        <div>
+          <div class="logo-text">KOL Studio</div>
+          <div class="logo-sub">API v1</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="sidebar-nav">
+      <a class="nav-link active" href="#intro" data-section="intro">
+        <span class="dot"></span> Введение
+      </a>
+      <a class="nav-link" href="#auth" data-section="auth">
+        <span class="dot"></span> Аутентификация
+      </a>
+
+      <div class="nav-section">Эндпоинты</div>
+      <a class="nav-link" href="#creators" data-section="creators">
+        <span class="dot"></span> Создатели
+      </a>
+      <a class="nav-link" href="#content" data-section="content">
+        <span class="dot"></span> Контент
+      </a>
+      <a class="nav-link" href="#subscriptions" data-section="subscriptions">
+        <span class="dot"></span> Подписки
+      </a>
+      <a class="nav-link" href="#payments" data-section="payments">
+        <span class="dot"></span> Платежи
+      </a>
+      <a class="nav-link" href="#webhooks" data-section="webhooks">
+        <span class="dot"></span> Вебхуки
+      </a>
+
+      <div class="nav-section">Ресурсы</div>
+      <a class="nav-link" href="#sdks" data-section="sdks">
+        <span class="dot"></span> SDKs & Библиотеки
+      </a>
+      <a class="nav-link" href="#limits" data-section="limits">
+        <span class="dot"></span> Лимиты и квоты
+      </a>
+      <a class="nav-link" href="#statuses" data-section="statuses">
+        <span class="dot"></span> Статус коды
+      </a>
+      <a class="nav-link" href="#changelog" data-section="changelog">
+        <span class="dot"></span> Changelog
+      </a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main id="kol-main" class="main" id="mainContent">
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="index.html">🏠 Главная</a><span class="sep">›</span><span class="current">API Документация</span></nav>
+
+
+    <!-- ════════════════════════════════════
+         1. ВВЕДЕНИЕ
+    ════════════════════════════════════ -->
+    <section class="doc-section" id="intro">
+      <div class="base-url">
+        <span class="base-url-label">Base URL</span>
+        <span class="base-url-val">https://api.kolstudio.com/v1</span>
+      </div>
+      <h1 class="section-title">Введение</h1>
+      <p class="section-subtitle">REST API для интеграции с платформой KOL Studio</p>
+
+      <p>KOL Studio API предоставляет программный доступ к данным создателей, контенту, подпискам и платёжным операциям. API использует стандарт <strong>REST</strong>, принимает и возвращает данные в формате <strong>JSON</strong>, работает исключительно по протоколу <strong>HTTPS</strong>.</p>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ</span>
+        <span>Все запросы должны содержать заголовок <code>Content-Type: application/json</code>. Пустой body при POST-запросах допускается, но заголовок обязателен.</span>
+      </div>
+
+      <h3>Лимиты запросов</h3>
+      <div class="rate-grid">
+        <div class="rate-card free">
+          <div class="rate-tier">Free</div>
+          <div class="rate-val">100</div>
+          <div class="rate-unit">запросов / минута</div>
+        </div>
+        <div class="rate-card partner">
+          <div class="rate-tier">Partner</div>
+          <div class="rate-val">1 000</div>
+          <div class="rate-unit">запросов / минута</div>
+        </div>
+        <div class="rate-card enterprise">
+          <div class="rate-tier">Enterprise</div>
+          <div class="rate-val">∞</div>
+          <div class="rate-unit">без ограничений</div>
+        </div>
+      </div>
+
+      <h3>Быстрый старт</h3>
+      <p>Выполните первый запрос за 30 секунд — получите список создателей:</p>
+
+      <div class="code-block">
+        <div class="code-label">
+          <span>Shell — cURL</span>
+        </div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="tok-cmt"># Получить список создателей</span>
+<span class="tok-kw">curl</span> -X GET <span class="tok-str">"https://api.kolstudio.com/v1/creators"</span> \
+  -H <span class="tok-str">"Authorization: Bearer kol_live_your_api_key"</span> \
+  -H <span class="tok-str">"Content-Type: application/json"</span> \
+  -G \
+  --data-urlencode <span class="tok-str">"limit=10"</span> \
+  --data-urlencode <span class="tok-str">"platform=instagram"</span></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-label">
+          <span>Response — 200 OK</span>
+          <span style="color:var(--green)">●</span>
+        </div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>{
+  <span class="tok-key">"data"</span>: [
+    {
+      <span class="tok-key">"id"</span>: <span class="tok-str">"cr_01HXYZ"</span>,
+      <span class="tok-key">"name"</span>: <span class="tok-str">"Анна Смирнова"</span>,
+      <span class="tok-key">"platform"</span>: <span class="tok-str">"instagram"</span>,
+      <span class="tok-key">"followers"</span>: <span class="tok-num">248000</span>,
+      <span class="tok-key">"engagement_rate"</span>: <span class="tok-num">4.7</span>,
+      <span class="tok-key">"verified"</span>: <span class="tok-kw">true</span>
+    }
+  ],
+  <span class="tok-key">"meta"</span>: {
+    <span class="tok-key">"total"</span>: <span class="tok-num">1284</span>,
+    <span class="tok-key">"page"</span>: <span class="tok-num">1</span>,
+    <span class="tok-key">"limit"</span>: <span class="tok-num">10</span>
+  }
+}</pre>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ════════════════════════════════════
+         2. АУТЕНТИФИКАЦИЯ
+    ════════════════════════════════════ -->
+    <section class="doc-section" id="auth">
+      <h2 class="section-title">Аутентификация</h2>
+      <p class="section-subtitle">Bearer-токен и OAuth 2.0</p>
+
+      <p>KOL Studio API поддерживает два способа аутентификации: <strong>API ключ</strong> (Bearer-токен) для серверной интеграции и <strong>OAuth 2.0</strong> для работы от имени пользователей.</p>
+
+      <h3>Bearer-токен</h3>
+      <p>Передавайте API ключ в заголовке <code>Authorization</code> каждого запроса:</p>
+
+      <div class="code-block">
+        <div class="code-label"><span>HTTP Header</span></div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="tok-hdr">Authorization</span>: Bearer <span class="tok-str">kol_live_your_api_key_here</span>
+<span class="tok-hdr">Content-Type</span>: application/json
+<span class="tok-hdr">Accept</span>: application/json</pre>
+      </div>
+
+      <h3>Ваши API ключи</h3>
+
+      <div class="auth-card">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+          <strong>API ключи</strong>
+          <span style="font-size:12px; color:var(--text-muted)">Тариф: Partner</span>
+        </div>
+        <p style="font-size:13px; margin-bottom:16px;">Ключи предоставляют полный доступ к API. Храните их в безопасности и не публикуйте в репозиториях.</p>
+
+        <div style="background:var(--code-bg); border:1px solid var(--border); border-radius:10px; padding:16px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+            <span style="font-size:12px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Production Key</span>
+            <span style="font-size:11px; background:rgba(0,230,118,0.1); color:var(--green); padding:2px 8px; border-radius:4px; border:1px solid rgba(0,230,118,0.2);">Активен</span>
+          </div>
+          <div class="api-key-row">
+            <div class="api-key-display">kol_live_••••••••••••2a4f</div>
+            <button class="btn btn-outline" onclick="revealKey(this)">Показать</button>
+            <button class="btn btn-outline">Копировать</button>
+          </div>
+          <div style="font-size:11px; color:var(--text-muted); margin-top:10px;">Создан: 12 янв 2026 · Последнее использование: 2 часа назад</div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <button class="btn btn-primary" onclick="showCreateKeyModal()">+ Создать API ключ</button>
+        </div>
+      </div>
+
+      <h3>OAuth 2.0 Flow</h3>
+      <p>Используйте OAuth 2.0 Authorization Code Flow для получения доступа к аккаунтам пользователей.</p>
+
+      <div class="oauth-flow">
+        <div style="display:grid; grid-template-columns:90px 1fr 90px; gap:0; align-items:center; margin-bottom:8px;">
+          <div style="text-align:center; font-size:10px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Приложение</div>
+          <div></div>
+          <div style="text-align:center; font-size:10px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">KOL API</div>
+        </div>
+
+        <div class="flow-row">
+          <div class="flow-actor">Приложение</div>
+          <div class="flow-arrow-right">
+            <div class="flow-label">GET /oauth/authorize?client_id=…</div>
+            <div class="flow-line right"></div>
+          </div>
+          <div class="flow-actor">KOL API</div>
+        </div>
+
+        <div class="flow-row" style="margin-left:90px; margin-right:0; justify-content:flex-end;">
+          <div class="flow-arrow-left" style="flex:1;">
+            <div class="flow-label">redirect_uri?code=AUTH_CODE</div>
+            <div class="flow-line left"></div>
+          </div>
+          <div class="flow-actor">KOL API</div>
+        </div>
+
+        <div class="flow-row">
+          <div class="flow-actor">Приложение</div>
+          <div class="flow-arrow-right">
+            <div class="flow-label">POST /oauth/token {code, client_secret}</div>
+            <div class="flow-line right"></div>
+          </div>
+          <div class="flow-actor">KOL API</div>
+        </div>
+
+        <div class="flow-row" style="justify-content:flex-end;">
+          <div class="flow-arrow-left" style="flex:1;">
+            <div class="flow-label">{access_token, refresh_token}</div>
+            <div class="flow-line left"></div>
+          </div>
+          <div class="flow-actor">KOL API</div>
+        </div>
+
+        <div class="flow-row">
+          <div class="flow-actor">Приложение</div>
+          <div class="flow-arrow-right">
+            <div class="flow-label">GET /creators (Bearer access_token)</div>
+            <div class="flow-line right"></div>
+          </div>
+          <div class="flow-actor">KOL API</div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-label"><span>Exchange code for token</span></div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="tok-kw">curl</span> -X POST <span class="tok-str">"https://api.kolstudio.com/v1/oauth/token"</span> \
+  -H <span class="tok-str">"Content-Type: application/json"</span> \
+  -d '{
+    <span class="tok-key">"grant_type"</span>: <span class="tok-str">"authorization_code"</span>,
+    <span class="tok-key">"code"</span>: <span class="tok-str">"AUTH_CODE_HERE"</span>,
+    <span class="tok-key">"client_id"</span>: <span class="tok-str">"your_client_id"</span>,
+    <span class="tok-key">"client_secret"</span>: <span class="tok-str">"your_client_secret"</span>,
+    <span class="tok-key">"redirect_uri"</span>: <span class="tok-str">"https://yourapp.com/callback"</span>
+  }'</pre>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ════════════════════════════════════
+         3. ЭНДПОИНТЫ — СОЗДАТЕЛИ
+    ════════════════════════════════════ -->
+    <section class="doc-section" id="creators">
+      <h2 class="section-title">Создатели</h2>
+      <p class="section-subtitle">Поиск и получение профилей инфлюенсеров</p>
+
+      <!-- GET /creators -->
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method-badge method-get">GET</span>
+          <span class="endpoint-path">/creators</span>
+          <span class="endpoint-desc">Список создателей с фильтрацией</span>
+        </div>
+        <div class="endpoint-body">
+          <h4>Query параметры</h4>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Параметр</th><th>Тип</th><th>Описание</th><th>По умолчанию</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>platform</code></td><td>string</td><td>Платформа: instagram, tiktok, youtube, telegram</td><td>—</td></tr>
+                <tr><td><code>min_followers</code></td><td>integer</td><td>Минимальное количество подписчиков</td><td>0</td></tr>
+                <tr><td><code>max_followers</code></td><td>integer</td><td>Максимальное количество подписчиков</td><td>—</td></tr>
+                <tr><td><code>category</code></td><td>string</td><td>Категория: lifestyle, tech, beauty, sport</td><td>—</td></tr>
+                <tr><td><code>country</code></td><td>string</td><td>Код страны ISO 3166-1 (ru, us, de)</td><td>—</td></tr>
+                <tr><td><code>limit</code></td><td>integer</td><td>Записей на страницу (макс. 100)</td><td>20</td></tr>
+                <tr><td><code>page</code></td><td>integer</td><td>Номер страницы</td><td>1</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Пример ответа</h4>
+          <div class="code-block">
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>{
+  <span class="tok-key">"data"</span>: [
+    {
+      <span class="tok-key">"id"</span>: <span class="tok-str">"cr_01HXYZ"</span>,
+      <span class="tok-key">"name"</span>: <span class="tok-str">"Анна Смирнова"</span>,
+      <span class="tok-key">"username"</span>: <span class="tok-str">"@anna_lifestyle"</span>,
+      <span class="tok-key">"platform"</span>: <span class="tok-str">"instagram"</span>,
+      <span class="tok-key">"avatar_url"</span>: <span class="tok-str">"https://cdn.kolstudio.com/avatars/cr_01HXYZ.jpg"</span>,
+      <span class="tok-key">"followers"</span>: <span class="tok-num">248000</span>,
+      <span class="tok-key">"engagement_rate"</span>: <span class="tok-num">4.7</span>,
+      <span class="tok-key">"category"</span>: <span class="tok-str">"lifestyle"</span>,
+      <span class="tok-key">"country"</span>: <span class="tok-str">"ru"</span>,
+      <span class="tok-key">"verified"</span>: <span class="tok-kw">true</span>,
+      <span class="tok-key">"price_post"</span>: <span class="tok-num">45000</span>
+    }
+  ],
+  <span class="tok-key">"meta"</span>: { <span class="tok-key">"total"</span>: <span class="tok-num">1284</span>, <span class="tok-key">"page"</span>: <span class="tok-num">1</span>, <span class="tok-key">"limit"</span>: <span class="tok-num">20</span> }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- GET /creators/{id} -->
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method-badge method-get">GET</span>
+          <span class="endpoint-path">/creators/<span style="color:var(--gold)">{id}</span></span>
+          <span class="endpoint-desc">Детальный профиль создателя</span>
+        </div>
+        <div class="endpoint-body">
+          <h4>Path параметры</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Параметр</th><th>Тип</th><th>Описание</th></tr></thead>
+              <tbody>
+                <tr><td><code>id</code></td><td>string</td><td><strong>Обязательный.</strong> Уникальный идентификатор создателя</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Пример запроса</h4>
+          <div class="code-block">
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="tok-kw">curl</span> <span class="tok-str">"https://api.kolstudio.com/v1/creators/cr_01HXYZ"</span> \
+  -H <span class="tok-str">"Authorization: Bearer kol_live_your_api_key"</span></pre>
+          </div>
+
+          <h4>Пример ответа</h4>
+          <div class="code-block">
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>{
+  <span class="tok-key">"id"</span>: <span class="tok-str">"cr_01HXYZ"</span>,
+  <span class="tok-key">"name"</span>: <span class="tok-str">"Анна Смирнова"</span>,
+  <span class="tok-key">"bio"</span>: <span class="tok-str">"Лайфстайл, путешествия, мода 🌍"</span>,
+  <span class="tok-key">"platforms"</span>: [
+    { <span class="tok-key">"name"</span>: <span class="tok-str">"instagram"</span>, <span class="tok-key">"followers"</span>: <span class="tok-num">248000</span>, <span class="tok-key">"handle"</span>: <span class="tok-str">"@anna_lifestyle"</span> },
+    { <span class="tok-key">"name"</span>: <span class="tok-str">"youtube"</span>, <span class="tok-key">"followers"</span>: <span class="tok-num">84000</span>, <span class="tok-key">"handle"</span>: <span class="tok-str">"AnnaLifestyle"</span> }
+  ],
+  <span class="tok-key">"stats"</span>: {
+    <span class="tok-key">"avg_likes"</span>: <span class="tok-num">11600</span>,
+    <span class="tok-key">"avg_comments"</span>: <span class="tok-num">340</span>,
+    <span class="tok-key">"avg_reach"</span>: <span class="tok-num">182000</span>,
+    <span class="tok-key">"engagement_rate"</span>: <span class="tok-num">4.7</span>
+  },
+  <span class="tok-key">"pricing"</span>: {
+    <span class="tok-key">"post"</span>: <span class="tok-num">45000</span>,
+    <span class="tok-key">"story"</span>: <span class="tok-num">18000</span>,
+    <span class="tok-key">"reel"</span>: <span class="tok-num">62000</span>,
+    <span class="tok-key">"currency"</span>: <span class="tok-str">"RUB"</span>
+  }
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ════════════════════════════════════
+         4. КОНТЕНТ
+    ════════════════════════════════════ -->
+    <section class="doc-section" id="content">
+      <h2 class="section-title">Контент</h2>
+      <p class="section-subtitle">Лента публикаций и загрузка медиа</p>
+
+      <!-- GET /content -->
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method-badge method-get">GET</span>
+          <span class="endpoint-path">/content</span>
+          <span class="endpoint-desc">Лента контента</span>
+        </div>
+        <div class="endpoint-body">
+          <h4>Query параметры</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Параметр</th><th>Тип</th><th>Описание</th></tr></thead>
+              <tbody>
+                <tr><td><code>creator_id</code></td><td>string</td><td>Фильтр по создателю</td></tr>
+                <tr><td><code>type</code></td><td>string</td><td>post, story, reel, video</td></tr>
+                <tr><td><code>from</code></td><td>ISO 8601</td><td>Начало периода</td></tr>
+                <tr><td><code>to</code></td><td>ISO 8601</td><td>Конец периода</td></tr>
+                <tr><td><code>limit</code></td><td>integer</td><td>Записей на страницу (макс. 50)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- POST /content/upload -->
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/content/upload</span>
+          <span class="endpoint-desc">Загрузка контента</span>
+        </div>
+        <div class="endpoint-body">
+          <div class="callout warning">
+            <span class="callout-icon">⚠</span>
+            <span>Максимальный размер файла: 500MB. Поддерживаемые форматы: JPG, PNG, MP4, MOV. Multipart/form-data.</span>
+          </div>
+
+          <h4>Body (multipart/form-data)</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Поле</th><th>Тип</th><th>Описание</th></tr></thead>
+              <tbody>
+                <tr><td><code>file</code></td><td>File</td><td><strong>Обязательное.</strong> Медиафайл</td></tr>
+                <tr><td><code>caption</code></td><td>string</td><td>Подпись к публикации</td></tr>
+                <tr><td><code>scheduled_at</code></td><td>ISO 8601</td><td>Время отложенной публикации</td></tr>
+                <tr><td><code>platforms</code></td><td>array</td><td>Целевые платформы</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-block">
+            <div class="code-label"><span>cURL — Upload</span></div>
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="tok-kw">curl</span> -X POST <span class="tok-str">"https://api.kolstudio.com/v1/content/upload"</span> \
+  -H <span class="tok-str">"Authorization: Bearer kol_live_your_api_key"</span> \
+  -F <span class="tok-str">"file=@/path/to/photo.jpg"</span> \
+  -F <span class="tok-str">"caption=Новая публикация через API!"</span> \
+  -F <span class="tok-str">"platforms[]=instagram"</span> \
+  -F <span class="tok-str">"platforms[]=tiktok"</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- GET /content/{id} -->
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method-badge method-get">GET</span>
+          <span class="endpoint-path">/content/<span style="color:var(--gold)">{id}</span></span>
+          <span class="endpoint-desc">Один пост</span>
+        </div>
+        <div class="endpoint-body">
+          <p style="margin-bottom:12px;">Возвращает полные данные публикации включая статистику.</p>
+          <div class="code-block">
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>{
+  <span class="tok-key">"id"</span>: <span class="tok-str">"cnt_01ABC"</span>,
+  <span class="tok-key">"creator_id"</span>: <span class="tok-str">"cr_01HXYZ"</span>,
+  <span class="tok-key">"type"</span>: <span class="tok-str">"reel"</span>,
+  <span class="tok-key">"caption"</span>: <span class="tok-str">"Утро в Барселоне ☀️"</span>,
+  <span class="tok-key">"media_url"</span>: <span class="tok-str">"https://cdn.kolstudio.com/media/cnt_01ABC.mp4"</span>,
+  <span class="tok-key">"published_at"</span>: <span class="tok-str">"2026-04-10T08:30:00Z"</span>,
+  <span class="tok-key">"stats"</span>: {
+    <span class="tok-key">"views"</span>: <span class="tok-num">94200</span>,
+    <span class="tok-key">"likes"</span>: <span class="tok-num">8340</span>,
+    <span class="tok-key">"comments"</span>: <span class="tok-num">212</span>,
+    <span class="tok-key">"shares"</span>: <span class="tok-num">1104</span>
+  }
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ════════════════════════════════════
+         5. ПОДПИСКИ
+    ════════════════════════════════════ -->
+    <section class="doc-section" id="subscriptions">
+      <h2 class="section-title">Подписки</h2>
+      <p class="section-subtitle">Управление подписками на создателей</p>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method-badge method-get">GET</span>
+          <span class="endpoint-path">/subscriptions</span>
+          <span class="endpoint-desc">Активные подписки</span>
+        </div>
+        <div class="endpoint-body">
+          <p>Возвращает список активных подписок текущего аккаунта.</p>
+          <div class="code-block">
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>{
+  <span class="tok-key">"data"</span>: [
+    {
+      <span class="tok-key">"id"</span>: <span class="tok-str">"sub_01DEF"</span>,
+      <span class="tok-key">"creator_id"</span>: <span class="tok-str">"cr_01HXYZ"</span>,
+      <span class="tok-key">"plan"</span>: <span class="tok-str">"premium"</span>,
+      <span class="tok-key">"status"</span>: <span class="tok-str">"active"</span>,
+      <span class="tok-key">"price"</span>: <span class="tok-num">990</span>,
+      <span class="tok-key">"currency"</span>: <span class="tok-str">"RUB"</span>,
+      <span class="tok-key">"renewal_at"</span>: <span class="tok-str">"2026-05-27T00:00:00Z"</span>
+    }
+  ]
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/subscriptions</span>
+          <span class="endpoint-desc">Создать подписку</span>
+        </div>
+        <div class="endpoint-body">
+          <h4>Request Body</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Поле</th><th>Тип</th><th>Описание</th></tr></thead>
+              <tbody>
+                <tr><td><code>creator_id</code></td><td>string</td><td><strong>Обязательное.</strong> ID создателя</td></tr>
+                <tr><td><code>plan</code></td><td>string</td><td><strong>Обязательное.</strong> basic, premium, vip</td></tr>
+                <tr><td><code>payment_method_id</code></td><td>string</td><td><strong>Обязательное.</strong> ID способа оплаты</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="code-block">
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="tok-kw">curl</span> -X POST <span class="tok-str">"https://api.kolstudio.com/v1/subscriptions"</span> \
+  -H <span class="tok-str">"Authorization: Bearer kol_live_your_api_key"</span> \
+  -H <span class="tok-str">"Content-Type: application/json"</span> \
+  -d '{
+    <span class="tok-key">"creator_id"</span>: <span class="tok-str">"cr_01HXYZ"</span>,
+    <span class="tok-key">"plan"</span>: <span class="tok-str">"premium"</span>,
+    <span class="tok-key">"payment_method_id"</span>: <span class="tok-str">"pm_01GHI"</span>
+  }'</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method-badge method-del">DELETE</span>
+          <span class="endpoint-path">/subscriptions/<span style="color:var(--gold)">{id}</span></span>
+          <span class="endpoint-desc">Отменить подписку</span>
+        </div>
+        <div class="endpoint-body">
+          <p>Отменяет подписку. Доступ сохраняется до конца оплаченного периода.</p>
+          <div class="code-block">
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="tok-kw">curl</span> -X DELETE <span class="tok-str">"https://api.kolstudio.com/v1/subscriptions/sub_01DEF"</span> \
+  -H <span class="tok-str">"Authorization: Bearer kol_live_your_api_key"</span></pre>
+          </div>
+          <p style="margin-top:12px; font-size:13px;">Возвращает <code>204 No Content</code> при успехе.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ════════════════════════════════════
+         6. ПЛАТЕЖИ
+    ════════════════════════════════════ -->
+    <section class="doc-section" id="payments">
+      <h2 class="section-title">Платежи</h2>
+      <p class="section-subtitle">Списание, история транзакций и возвраты</p>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/payments/charge</span>
+          <span class="endpoint-desc">Списание средств</span>
+        </div>
+        <div class="endpoint-body">
+          <h4>Request Body</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Поле</th><th>Тип</th><th>Описание</th></tr></thead>
+              <tbody>
+                <tr><td><code>amount</code></td><td>integer</td><td><strong>Обязательное.</strong> Сумма в минимальных единицах (копейки)</td></tr>
+                <tr><td><code>currency</code></td><td>string</td><td>RUB, USD, EUR (по умолчанию RUB)</td></tr>
+                <tr><td><code>payment_method_id</code></td><td>string</td><td><strong>Обязательное.</strong> ID способа оплаты</td></tr>
+                <tr><td><code>description</code></td><td>string</td><td>Описание платежа</td></tr>
+                <tr><td><code>idempotency_key</code></td><td>string</td><td>Ключ идемпотентности (UUID)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="code-block">
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>{
+  <span class="tok-key">"id"</span>: <span class="tok-str">"pay_01JKL"</span>,
+  <span class="tok-key">"status"</span>: <span class="tok-str">"succeeded"</span>,
+  <span class="tok-key">"amount"</span>: <span class="tok-num">99000</span>,
+  <span class="tok-key">"currency"</span>: <span class="tok-str">"RUB"</span>,
+  <span class="tok-key">"created_at"</span>: <span class="tok-str">"2026-04-27T12:34:56Z"</span>
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method-badge method-get">GET</span>
+          <span class="endpoint-path">/payments/history</span>
+          <span class="endpoint-desc">История транзакций</span>
+        </div>
+        <div class="endpoint-body">
+          <p>Возвращает пагинированный список платежей. Поддерживает фильтры <code>from</code>, <code>to</code>, <code>status</code>.</p>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method-badge method-post">POST</span>
+          <span class="endpoint-path">/payments/refund</span>
+          <span class="endpoint-desc">Возврат средств</span>
+        </div>
+        <div class="endpoint-body">
+          <h4>Request Body</h4>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Поле</th><th>Тип</th><th>Описание</th></tr></thead>
+              <tbody>
+                <tr><td><code>payment_id</code></td><td>string</td><td><strong>Обязательное.</strong> ID исходного платежа</td></tr>
+                <tr><td><code>amount</code></td><td>integer</td><td>Сумма возврата (полный возврат если не указана)</td></tr>
+                <tr><td><code>reason</code></td><td>string</td><td>Причина: duplicate, fraudulent, requested_by_customer</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ════════════════════════════════════
+         7. ВЕБХУКИ
+    ════════════════════════════════════ -->
+    <section class="doc-section" id="webhooks">
+      <h2 class="section-title">Вебхуки</h2>
+      <p class="section-subtitle">Получайте события в реальном времени</p>
+
+      <p>Вебхуки позволяют получать HTTP-уведомления о событиях на платформе. Настройте URL в Dashboard → Settings → Webhooks.</p>
+
+      <h3>Типы событий</h3>
+      <div class="event-list">
+        <div class="event-item">
+          <div class="event-dot" style="background:var(--green)"></div>
+          <span class="event-name">subscription.created</span>
+          <span class="event-desc">Создана новая подписка</span>
+        </div>
+        <div class="event-item">
+          <div class="event-dot" style="background:var(--purple)"></div>
+          <span class="event-name">payment.completed</span>
+          <span class="event-desc">Платёж успешно завершён</span>
+        </div>
+        <div class="event-item">
+          <div class="event-dot" style="background:var(--gold)"></div>
+          <span class="event-name">content.published</span>
+          <span class="event-desc">Контент опубликован создателем</span>
+        </div>
+        <div class="event-item">
+          <div class="event-dot" style="background:var(--accent)"></div>
+          <span class="event-name">tip.received</span>
+          <span class="event-desc">Создатель получил чаевые</span>
+        </div>
+      </div>
+
+      <h3>Структура события</h3>
+      <div class="code-block">
+        <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>{
+  <span class="tok-key">"id"</span>: <span class="tok-str">"evt_01MNO"</span>,
+  <span class="tok-key">"type"</span>: <span class="tok-str">"payment.completed"</span>,
+  <span class="tok-key">"created_at"</span>: <span class="tok-str">"2026-04-27T14:22:10Z"</span>,
+  <span class="tok-key">"data"</span>: {
+    <span class="tok-key">"object"</span>: {
+      <span class="tok-key">"id"</span>: <span class="tok-str">"pay_01JKL"</span>,
+      <span class="tok-key">"amount"</span>: <span class="tok-num">99000</span>,
+      <span class="tok-key">"status"</span>: <span class="tok-str">"succeeded"</span>
+    }
+  }
+}</pre>
+      </div>
+
+      <h3>Верификация подписи</h3>
+      <p>Каждый вебхук содержит заголовок <code>X-KOL-Signature</code> — HMAC-SHA256 от тела запроса с вашим секретом.</p>
+
+      <div class="tabs" id="webhookTabs">
+        <div class="tab-list">
+          <button class="tab-btn active" onclick="switchTab('webhookTabs', 'tab-py', this)">Python</button>
+          <button class="tab-btn" onclick="switchTab('webhookTabs', 'tab-node', this)">Node.js</button>
+        </div>
+
+        <div class="tab-panel active" id="tab-py">
+          <div class="code-block">
+            <div class="code-label"><span>Python — Flask</span></div>
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="tok-kw">import</span> hmac, hashlib
+<span class="tok-kw">from</span> flask <span class="tok-kw">import</span> request, abort
+
+WEBHOOK_SECRET = <span class="tok-str">"whsec_your_webhook_secret"</span>
+
+<span class="tok-kw">def</span> <span class="tok-fn">verify_signature</span>(payload: bytes, signature: str) -> bool:
+    expected = hmac.new(
+        WEBHOOK_SECRET.encode(),
+        payload,
+        hashlib.sha256
+    ).hexdigest()
+    <span class="tok-kw">return</span> hmac.compare_digest(expected, signature)
+
+<span class="tok-cmt"># В обработчике вебхука:</span>
+@app.route(<span class="tok-str">"/webhook"</span>, methods=[<span class="tok-str">"POST"</span>])
+<span class="tok-kw">def</span> <span class="tok-fn">webhook</span>():
+    sig = request.headers.get(<span class="tok-str">"X-KOL-Signature"</span>)
+    <span class="tok-kw">if not</span> verify_signature(request.data, sig):
+        abort(<span class="tok-num">400</span>)
+    event = request.json
+    <span class="tok-cmt"># Обработка события...</span>
+    <span class="tok-kw">return</span> <span class="tok-str">""</span>, <span class="tok-num">200</span></pre>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-node">
+          <div class="code-block">
+            <div class="code-label"><span>Node.js — Express</span></div>
+            <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="tok-kw">const</span> crypto = require(<span class="tok-str">'crypto'</span>);
+
+<span class="tok-kw">const</span> WEBHOOK_SECRET = <span class="tok-str">'whsec_your_webhook_secret'</span>;
+
+<span class="tok-kw">function</span> <span class="tok-fn">verifySignature</span>(payload, signature) {
+  <span class="tok-kw">const</span> expected = crypto
+    .createHmac(<span class="tok-str">'sha256'</span>, WEBHOOK_SECRET)
+    .update(payload)
+    .digest(<span class="tok-str">'hex'</span>);
+  <span class="tok-kw">return</span> crypto.timingSafeEqual(
+    Buffer.from(expected), Buffer.from(signature)
+  );
+}
+
+<span class="tok-cmt">// Express обработчик:</span>
+app.post(<span class="tok-str">'/webhook'</span>, express.raw({ type: <span class="tok-str">'*/*'</span> }), (req, res) => {
+  <span class="tok-kw">const</span> sig = req.headers[<span class="tok-str">'x-kol-signature'</span>];
+  <span class="tok-kw">if</span> (!verifySignature(req.body, sig)) {
+    <span class="tok-kw">return</span> res.status(<span class="tok-num">400</span>).send(<span class="tok-str">'Invalid signature'</span>);
+  }
+  <span class="tok-kw">const</span> event = JSON.parse(req.body);
+  <span class="tok-cmt">// Обработка события...</span>
+  res.status(<span class="tok-num">200</span>).send(<span class="tok-str">'OK'</span>);
+});</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ════════════════════════════════════
+         8. SDKs
+    ════════════════════════════════════ -->
+    <section class="doc-section" id="sdks">
+      <h2 class="section-title">SDKs & Библиотеки</h2>
+      <p class="section-subtitle">Официальные клиенты для популярных языков</p>
+
+      <div class="sdk-grid">
+        <!-- Python SDK -->
+        <div class="sdk-card">
+          <div class="sdk-icon py">🐍</div>
+          <div class="sdk-name">Python SDK</div>
+          <div class="sdk-version">v2.4.1 · Python 3.8+</div>
+          <div class="install-cmd">pip install kolstudio</div>
+          <div class="code-block" style="margin:0;">
+            <pre style="font-size:11px; padding:12px;"><button class="copy-btn" onclick="copyCode(this)" style="top:6px; right:6px;">Copy</button><span class="tok-kw">from</span> kolstudio <span class="tok-kw">import</span> KOLClient
+
+client = KOLClient(
+  api_key=<span class="tok-str">"kol_live_..."</span>
+)
+creators = client.creators.list(
+  platform=<span class="tok-str">"instagram"</span>,
+  limit=<span class="tok-num">10</span>
+)
+<span class="tok-kw">print</span>(creators.data)</pre>
+          </div>
+        </div>
+
+        <!-- Node.js SDK -->
+        <div class="sdk-card">
+          <div class="sdk-icon js">⚡</div>
+          <div class="sdk-name">Node.js SDK</div>
+          <div class="sdk-version">v3.1.0 · Node 18+</div>
+          <div class="install-cmd">npm install kolstudio-node</div>
+          <div class="code-block" style="margin:0;">
+            <pre style="font-size:11px; padding:12px;"><button class="copy-btn" onclick="copyCode(this)" style="top:6px; right:6px;">Copy</button><span class="tok-kw">const</span> { KOLClient } = require(
+  <span class="tok-str">'kolstudio-node'</span>
+);
+<span class="tok-kw">const</span> kol = <span class="tok-kw">new</span> KOLClient({
+  apiKey: <span class="tok-str">'kol_live_...'</span>
+});
+<span class="tok-kw">const</span> { data } =
+  <span class="tok-kw">await</span> kol.creators.list();</pre>
+          </div>
+        </div>
+
+        <!-- PHP SDK -->
+        <div class="sdk-card">
+          <div class="sdk-icon php">🐘</div>
+          <div class="sdk-name">PHP SDK</div>
+          <div class="sdk-version">v1.8.0 · PHP 8.1+</div>
+          <div class="install-cmd">composer require kolstudio/php</div>
+          <div class="code-block" style="margin:0;">
+            <pre style="font-size:11px; padding:12px;"><button class="copy-btn" onclick="copyCode(this)" style="top:6px; right:6px;">Copy</button><span class="tok-kw">use</span> KOLStudio\Client;
+
+$kol = <span class="tok-kw">new</span> Client([
+  <span class="tok-str">'api_key'</span> => <span class="tok-str">'kol_live_...'</span>
+]);
+$creators = $kol->creators
+  ->list([<span class="tok-str">'limit'</span> => <span class="tok-num">10</span>]);
+var_dump($creators->data);</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ════════════════════════════════════
+         9. ЛИМИТЫ
+    ════════════════════════════════════ -->
+    <section class="doc-section" id="limits">
+      <h2 class="section-title">Лимиты и квоты</h2>
+      <p class="section-subtitle">Rate limiting и ограничения по тарифам</p>
+
+      <p>При превышении лимита API вернёт <code>429 Too Many Requests</code> с заголовками:</p>
+
+      <div class="code-block">
+        <div class="code-label"><span>Response Headers</span></div>
+        <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button><span class="tok-hdr">X-RateLimit-Limit</span>: 1000
+<span class="tok-hdr">X-RateLimit-Remaining</span>: 847
+<span class="tok-hdr">X-RateLimit-Reset</span>: 1745750400
+<span class="tok-hdr">Retry-After</span>: 12</pre>
+      </div>
+
+      <div class="table-wrap" style="margin-top:20px;">
+        <table>
+          <thead>
+            <tr><th>Ограничение</th><th>Free</th><th>Partner</th><th>Enterprise</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Запросов в минуту</td><td>100</td><td>1 000</td><td><span style="color:var(--green)">Без лимита</span></td></tr>
+            <tr><td>Запросов в день</td><td>5 000</td><td>100 000</td><td><span style="color:var(--green)">Без лимита</span></td></tr>
+            <tr><td>Вебхук endpoints</td><td>2</td><td>20</td><td>100</td></tr>
+            <tr><td>Размер файла (upload)</td><td>50 MB</td><td>200 MB</td><td>500 MB</td></tr>
+            <tr><td>Параллельных запросов</td><td>5</td><td>50</td><td>500</td></tr>
+            <tr><td>История запросов</td><td>7 дней</td><td>90 дней</td><td>365 дней</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info" style="margin-top:20px;">
+        <span class="callout-icon">ℹ</span>
+        <span>Enterprise тарифы настраиваются индивидуально. Свяжитесь с нами по адресу <strong>api@kolstudio.com</strong>.</span>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ════════════════════════════════════
+         10. СТАТУС КОДЫ
+    ════════════════════════════════════ -->
+    <section class="doc-section" id="statuses">
+      <h2 class="section-title">Статус коды</h2>
+      <p class="section-subtitle">Стандартные HTTP-ответы API</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Код</th><th>Статус</th><th>Описание</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="status-200">200</span></td>
+              <td><strong>OK</strong></td>
+              <td>Запрос успешно выполнен. Данные в теле ответа.</td>
+            </tr>
+            <tr>
+              <td><span class="status-201">201</span></td>
+              <td><strong>Created</strong></td>
+              <td>Ресурс успешно создан. Возвращается при POST-запросах.</td>
+            </tr>
+            <tr>
+              <td><span class="status-400">400</span></td>
+              <td><strong>Bad Request</strong></td>
+              <td>Некорректный запрос. Проверьте структуру и типы параметров.</td>
+            </tr>
+            <tr>
+              <td><span class="status-401">401</span></td>
+              <td><strong>Unauthorized</strong></td>
+              <td>Отсутствует или неверный API ключ.</td>
+            </tr>
+            <tr>
+              <td><span class="status-403">403</span></td>
+              <td><strong>Forbidden</strong></td>
+              <td>Недостаточно прав для выполнения операции.</td>
+            </tr>
+            <tr>
+              <td><span class="status-404">404</span></td>
+              <td><strong>Not Found</strong></td>
+              <td>Ресурс не найден. Проверьте правильность ID.</td>
+            </tr>
+            <tr>
+              <td><span class="status-422">422</span></td>
+              <td><strong>Unprocessable Entity</strong></td>
+              <td>Данные прошли синтаксическую проверку, но содержат ошибки валидации.</td>
+            </tr>
+            <tr>
+              <td><span class="status-429">429</span></td>
+              <td><strong>Too Many Requests</strong></td>
+              <td>Превышен лимит запросов. Используйте заголовок <code>Retry-After</code>.</td>
+            </tr>
+            <tr>
+              <td><span class="status-500">500</span></td>
+              <td><strong>Internal Server Error</strong></td>
+              <td>Ошибка на стороне сервера. Повторите запрос позже.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Формат ошибки</h3>
+      <div class="code-block">
+        <pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>{
+  <span class="tok-key">"error"</span>: {
+    <span class="tok-key">"code"</span>: <span class="tok-str">"validation_error"</span>,
+    <span class="tok-key">"message"</span>: <span class="tok-str">"The 'platform' field must be one of: instagram, tiktok, youtube, telegram"</span>,
+    <span class="tok-key">"field"</span>: <span class="tok-str">"platform"</span>,
+    <span class="tok-key">"request_id"</span>: <span class="tok-str">"req_01PQR"</span>
+  }
+}</pre>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- ════════════════════════════════════
+         11. CHANGELOG
+    ════════════════════════════════════ -->
+    <section class="doc-section" id="changelog">
+      <h2 class="section-title">Changelog</h2>
+      <p class="section-subtitle">История изменений API</p>
+
+      <div class="changelog-item">
+        <div class="changelog-date">2026-04-15</div>
+        <div>
+          <span class="changelog-tag tag-new">New</span>
+          <span class="changelog-text">Добавлен эндпоинт <code>POST /payments/refund</code> с поддержкой частичных возвратов</span>
+        </div>
+      </div>
+
+      <div class="changelog-item">
+        <div class="changelog-date">2026-04-01</div>
+        <div>
+          <span class="changelog-tag tag-new">New</span>
+          <span class="changelog-text">Вебхук-событие <code>tip.received</code> теперь включает данные о сообщении</span>
+        </div>
+      </div>
+
+      <div class="changelog-item">
+        <div class="changelog-date">2026-03-20</div>
+        <div>
+          <span class="changelog-tag tag-fix">Fix</span>
+          <span class="changelog-text">Исправлена пагинация в <code>GET /content</code> при фильтрации по датам</span>
+        </div>
+      </div>
+
+      <div class="changelog-item">
+        <div class="changelog-date">2026-03-10</div>
+        <div>
+          <span class="changelog-tag tag-new">New</span>
+          <span class="changelog-text">PHP SDK v1.8.0 с поддержкой PHP 8.3 и Fiber-based async</span>
+        </div>
+      </div>
+
+      <div class="changelog-item">
+        <div class="changelog-date">2026-02-28</div>
+        <div>
+          <span class="changelog-tag tag-break">Breaking</span>
+          <span class="changelog-text">Поле <code>followers_count</code> переименовано в <code>followers</code> во всех ответах</span>
+        </div>
+      </div>
+
+      <div class="changelog-item">
+        <div class="changelog-date">2026-02-14</div>
+        <div>
+          <span class="changelog-tag tag-new">New</span>
+          <span class="changelog-text">OAuth 2.0 Authorization Code Flow — доступен для всех тарифов</span>
+        </div>
+      </div>
+
+      <div class="changelog-item">
+        <div class="changelog-date">2026-01-30</div>
+        <div>
+          <span class="changelog-tag tag-fix">Fix</span>
+          <span class="changelog-text">Улучшена обработка <code>idempotency_key</code> в платёжных запросах</span>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="doc-footer" style="margin-top:48px;">
+        <div class="footer-text">
+          KOL Studio API v1 · &copy; 2026 KOL Studio Inc.
+        </div>
+        <div style="display:flex; align-items:center; gap:16px;">
+          <a href="mailto:api@kolstudio.com" style="font-size:12px; color:var(--text-muted); text-decoration:none;">api@kolstudio.com</a>
+          <div class="lang-switcher">
+            <span class="lang-btn active">🇷🇺 RU</span>
+            <a href="en/api-docs.html" class="lang-btn" onclick="handleTransition(event, 'en/api-docs.html')">🇬🇧 EN</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  
+<!-- Cross-page navigation for developers -->
+<div style="max-width:900px;margin:40px auto 0;padding:32px 24px;border-top:1px solid #22224A">
+  <p style="color:#6A6A8A;font-size:13px;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px;font-weight:600">Смотрите также</p>
+  <div style="display:flex;flex-wrap:wrap;gap:12px">
+    <a href="creator-landing.html" style="background:#181835;border:1px solid #22224A;border-radius:10px;padding:10px 16px;color:#E8E8F0;text-decoration:none;font-size:14px">🚀 Стать создателем</a>
+    <a href="status.html" style="background:#181835;border:1px solid #22224A;border-radius:10px;padding:10px 16px;color:#E8E8F0;text-decoration:none;font-size:14px">📡 Статус API</a>
+    <a href="help.html" style="background:#181835;border:1px solid #22224A;border-radius:10px;padding:10px 16px;color:#E8E8F0;text-decoration:none;font-size:14px">💬 Поддержка</a>
+    <a href="pricing.html" style="background:#181835;border:1px solid #22224A;border-radius:10px;padding:10px 16px;color:#E8E8F0;text-decoration:none;font-size:14px">💳 Тарифы</a>
+    <a href="report.html" style="background:#181835;border:1px solid #22224A;border-radius:10px;padding:10px 16px;color:#E8E8F0;text-decoration:none;font-size:14px">🚩 Сообщить о проблеме</a>
+  </div>
+</div>
+</main>
+</div>
+
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="cookie.html">Подробнее</a> · <a href="report.html">Пожаловаться</a> · <a href="api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href = 'search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href = 'upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+
+<script>
+  // ── INTERSECTION OBSERVER — sidebar active link ──
+  const sections = document.querySelectorAll('.doc-section');
+  const navLinks = document.querySelectorAll('.nav-link[data-section]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.dataset.section === id);
+        });
+      }
+    });
+  }, {
+    rootMargin: '-20% 0px -70% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(section => observer.observe(section));
+
+  // ── SMOOTH SCROLL on nav link click ──
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── COPY BUTTON ──
+  function copyCode(btn) {
+    const pre = btn.closest('pre') || btn.parentElement.nextElementSibling;
+    const text = (pre || btn.closest('.code-block').querySelector('pre'))
+      .innerText.replace('Copy', '').replace('Copied!', '').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(() => {
+      btn.textContent = 'Error';
+      setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+    });
+  }
+
+  // ── TABS ──
+  function switchTab(containerId, panelId, btn) {
+    const container = document.getElementById(containerId);
+    container.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(panelId).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ── MOBILE SCROLL ──
+  function scrollToSection(id) {
+    const target = document.getElementById(id);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── PAGE TRANSITION ──
+  function handleTransition(e, url) {
+    e.preventDefault();
+    const overlay = document.getElementById('pageTransition');
+    overlay.classList.add('active');
+    setTimeout(() => { window.location.href = url; }, 280);
+  }
+
+  // Internal nav transitions
+  document.querySelectorAll('a[href^="http"]').forEach(link => {
+    if (!link.classList.contains('logo-mark')) {
+      link.addEventListener('click', (e) => {
+        if (link.getAttribute('target') === '_blank') return;
+        handleTransition(e, link.href);
+      });
+    }
+  });
+
+  // Page load — fade in
+  window.addEventListener('load', () => {
+    const overlay = document.getElementById('pageTransition');
+    overlay.classList.remove('active');
+  });
+
+  // ── REVEAL KEY MOCK ──
+  function revealKey(btn) {
+    const display = btn.closest('.api-key-row').querySelector('.api-key-display');
+    if (display.textContent.includes('•')) {
+      display.textContent = 'kol_live_sk_a3f9d2e1b8c4f0e7d6a5b3c2a1d4e2a4f';
+      btn.textContent = 'Скрыть';
+    } else {
+      display.textContent = 'kol_live_••••••••••••2a4f';
+      btn.textContent = 'Показать';
+    }
+  }
+
+  // ── CREATE KEY MODAL MOCK ──
+  function showCreateKeyModal() {
+    const btn = event.currentTarget;
+    const orig = btn.textContent;
+    btn.textContent = 'Генерация...';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = '✓ Ключ создан';
+      btn.style.background = 'rgba(0,230,118,0.15)';
+      btn.style.color = 'var(--green)';
+      btn.style.border = '1px solid rgba(0,230,118,0.3)';
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.disabled = false;
+        btn.style.cssText = '';
+      }, 3000);
+    }, 1200);
+  }
+
+  // ── MOBILE NAV ──
+  function toggleMobileNav() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.style.display = sidebar.style.display === 'flex' ? 'none' : 'flex';
+  }
+</script>
+</html>

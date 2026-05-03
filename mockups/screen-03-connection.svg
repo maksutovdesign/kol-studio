@@ -1,0 +1,327 @@
+<svg width="1440" height="900" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <linearGradient id="pageBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07071A"/>
+      <stop offset="100%" stop-color="#110828"/>
+    </linearGradient>
+    <linearGradient id="videoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3D0E5C"/>
+      <stop offset="100%" stop-color="#A01850"/>
+    </linearGradient>
+    <linearGradient id="videoOverlay" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#07071A" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#07071A" stop-opacity="0.75"/>
+    </linearGradient>
+    <linearGradient id="accentBtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D42B6A"/>
+      <stop offset="100%" stop-color="#8B2BE2"/>
+    </linearGradient>
+    <linearGradient id="chatBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111128"/>
+      <stop offset="100%" stop-color="#0D0D22"/>
+    </linearGradient>
+    <linearGradient id="msgBubble" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D42B6A" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#8B2BE2" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="liveBadge" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF1744"/>
+      <stop offset="100%" stop-color="#FF6D00"/>
+    </linearGradient>
+    <filter id="glow">
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#D42B6A" flood-opacity="0.5"/>
+    </filter>
+    <filter id="liveGlow">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#FF1744" flood-opacity="0.6"/>
+    </filter>
+    <filter id="softShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1440" height="900" fill="url(#pageBg)"/>
+
+  <!-- ===== HEADER ===== -->
+  <rect width="1440" height="60" fill="#0A0A1E" opacity="0.98"/>
+  <rect y="60" width="1440" height="1" fill="#2A2A50"/>
+
+  <text x="28" y="38" font-weight="900" font-size="24" fill="#D42B6A" letter-spacing="4">KOL</text>
+  <text x="28" y="52" font-size="8" fill="#8B2BE2" letter-spacing="6">STUDIO</text>
+
+  <!-- Session info -->
+  <rect x="110" y="16" width="2" height="28" fill="#2A2A50"/>
+  <text x="126" y="32" font-size="13" fill="#CCCCDD" font-weight="600">Анна Морозова</text>
+  <circle cx="220" cy="30" r="5" fill="#00E676"/>
+  <text x="230" y="34" font-size="11" fill="#00E676">Онлайн</text>
+
+  <!-- Session type tabs -->
+  <rect x="400" y="12" width="100" height="36" rx="18" fill="url(#accentBtn)"/>
+  <text x="435" y="35" font-size="13" fill="white" font-weight="700">&#128172; Чат</text>
+
+  <rect x="510" y="12" width="110" height="36" rx="18" fill="#1A1A30" stroke="#2A2A50" stroke-width="1"/>
+  <text x="537" y="35" font-size="13" fill="#888899">&#127909; Видео</text>
+
+  <rect x="630" y="12" width="110" height="36" rx="18" fill="#1A1A30" stroke="#2A2A50" stroke-width="1"/>
+  <text x="657" y="35" font-size="13" fill="#888899">&#128250; Live</text>
+
+  <rect x="750" y="12" width="110" height="36" rx="18" fill="#1A1A30" stroke="#2A2A50" stroke-width="1"/>
+  <text x="778" y="35" font-size="13" fill="#888899">&#128247; Фото</text>
+
+  <!-- Right controls -->
+  <text x="1100" y="36" font-size="11" fill="#555577">Сессия: </text>
+  <text x="1148" y="36" font-size="13" fill="#D42B6A" font-weight="700">$25</text>
+  <text x="1173" y="36" font-size="11" fill="#555577">· оплачено</text>
+
+  <rect x="1250" y="14" width="80" height="32" rx="16" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1272" y="35" font-size="12" fill="#888899">Помощь</text>
+
+  <rect x="1342" y="14" width="80" height="32" rx="16" fill="#3A0A1A" stroke="#FF1744" stroke-width="1"/>
+  <text x="1361" y="35" font-size="12" fill="#FF4444">Завершить</text>
+
+  <!-- ===== LEFT: LIVE STREAM / VIDEO AREA ===== -->
+  <rect x="0" y="61" width="880" height="839" fill="#080818"/>
+
+  <!-- Video feed -->
+  <rect x="20" y="81" width="840" height="570" rx="16" fill="url(#videoGrad)"/>
+  <rect x="20" y="81" width="840" height="570" rx="16" fill="url(#videoOverlay)"/>
+
+  <!-- Model silhouette hint -->
+  <ellipse cx="440" cy="340" rx="80" ry="80" fill="rgba(255,255,255,0.05)"/>
+  <rect x="360" y="420" width="160" height="180" rx="80" fill="rgba(255,255,255,0.04)"/>
+
+  <!-- Camera scan lines effect -->
+  <rect x="20" y="81" width="840" height="2" fill="rgba(255,255,255,0.04)"/>
+  <rect x="20" y="175" width="840" height="2" fill="rgba(255,255,255,0.03)"/>
+  <rect x="20" y="269" width="840" height="2" fill="rgba(255,255,255,0.03)"/>
+  <rect x="20" y="363" width="840" height="2" fill="rgba(255,255,255,0.03)"/>
+  <rect x="20" y="457" width="840" height="2" fill="rgba(255,255,255,0.03)"/>
+  <rect x="20" y="551" width="840" height="2" fill="rgba(255,255,255,0.03)"/>
+
+  <!-- LIVE indicator -->
+  <rect x="40" y="101" width="70" height="28" rx="14" fill="url(#liveBadge)" filter="url(#liveGlow)"/>
+  <circle cx="56" cy="115" r="4" fill="white"/>
+  <text x="64" y="120" font-size="12" fill="white" font-weight="800">LIVE</text>
+
+  <!-- Viewer count -->
+  <rect x="122" y="101" width="100" height="28" rx="14" fill="#0A0A1E" opacity="0.85"/>
+  <text x="138" y="120" font-size="12" fill="#CCCCDD">&#128065; 142 зрителя</text>
+
+  <!-- Duration -->
+  <rect x="720" y="101" width="120" height="28" rx="14" fill="#0A0A1E" opacity="0.85"/>
+  <text x="740" y="120" font-size="12" fill="#CCCCDD">&#9201; 00:12:34</text>
+
+  <!-- Bottom overlay: model name + controls -->
+  <rect x="20" y="580" width="840" height="71" rx="0" fill="url(#videoOverlay)"/>
+  <rect x="20" y="607" width="840" height="44" rx="0" fill="#07071A" opacity="0.6"/>
+  <rect x="20" y="635" width="840" height="16" rx="0" fill="#07071A"/>
+
+  <!-- Model name on video -->
+  <text x="44" y="636" font-size="20" fill="white" font-weight="800">Анна Морозова</text>
+  <text x="44" y="656" font-size="12" fill="rgba(255,255,255,0.6)">Fashion · Portrait · Live</text>
+
+  <!-- Video controls bar -->
+  <rect x="20" y="651" width="840" height="0" fill="none"/>
+
+  <!-- Reaction buttons on video -->
+  <text x="700" y="636" font-size="24">&#128150;</text>
+  <text x="736" y="636" font-size="24">&#128293;</text>
+  <text x="772" y="636" font-size="24">&#11088;</text>
+  <text x="808" y="636" font-size="24">&#128064;</text>
+
+  <!-- VIDEO CONTROLS PANEL -->
+  <rect x="20" y="661" width="840" height="60" rx="0" fill="#07071A"/>
+
+  <!-- Control buttons -->
+  <rect x="40" y="675" width="50" height="32" rx="16" fill="#1E1E38"/>
+  <text x="57" y="696" font-size="14">&#128250;</text>
+
+  <rect x="100" y="675" width="50" height="32" rx="16" fill="#1E1E38"/>
+  <text x="117" y="696" font-size="14">&#128263;</text>
+
+  <rect x="160" y="675" width="50" height="32" rx="16" fill="#1E1E38"/>
+  <text x="177" y="696" font-size="14">&#128247;</text>
+
+  <rect x="220" y="675" width="86" height="32" rx="16" fill="#D42B6A" opacity="0.2" stroke="#D42B6A" stroke-width="1"/>
+  <text x="238" y="696" font-size="12" fill="#D42B6A" font-weight="600">&#9733; Чаевые</text>
+
+  <!-- Special request mini-button -->
+  <rect x="316" y="675" width="130" height="32" rx="16" fill="#2A0A3A" stroke="#8B2BE2" stroke-width="1"/>
+  <text x="334" y="696" font-size="12" fill="#C580FF" font-weight="600">&#10024; Особый запрос</text>
+
+  <!-- Full screen -->
+  <rect x="800" y="675" width="50" height="32" rx="16" fill="#1E1E38"/>
+  <text x="817" y="696" font-size="14">&#9974;</text>
+
+  <!-- ===== BOTTOM SECTION: Quick actions ===== -->
+  <rect x="20" y="728" width="840" height="152" rx="0" fill="#0A0A1E"/>
+
+  <text x="40" y="754" font-size="11" fill="#555577" letter-spacing="2">БЫСТРЫЕ ДЕЙСТВИЯ</text>
+
+  <!-- Action cards -->
+  <rect x="40" y="764" width="180" height="100" rx="12" fill="#111128" stroke="#2A2A50" stroke-width="1"/>
+  <text x="56" y="796" font-size="24">&#128247;</text>
+  <text x="56" y="820" font-size="13" fill="#CCCCDD" font-weight="600">Запросить фото</text>
+  <text x="56" y="838" font-size="11" fill="#888899">Получить фото прямо сейчас</text>
+  <rect x="40" y="855" width="180" height="4" rx="2" fill="#D42B6A" opacity="0.3"/>
+
+  <rect x="232" y="764" width="180" height="100" rx="12" fill="#111128" stroke="#2A2A50" stroke-width="1"/>
+  <text x="248" y="796" font-size="24">&#127909;</text>
+  <text x="248" y="820" font-size="13" fill="#CCCCDD" font-weight="600">Видео-клип</text>
+  <text x="248" y="838" font-size="11" fill="#888899">Персональное видео</text>
+
+  <rect x="424" y="764" width="200" height="100" rx="12" fill="#1A1228" stroke="#8B2BE2" stroke-width="1.5"/>
+  <text x="440" y="796" font-size="24">&#10024;</text>
+  <text x="440" y="820" font-size="13" fill="#C580FF" font-weight="600">Особое пожелание</text>
+  <text x="440" y="838" font-size="11" fill="#888899">Свой запрос — обсудить лично</text>
+  <rect x="424" y="855" width="200" height="4" rx="2" fill="#8B2BE2" opacity="0.4"/>
+
+  <rect x="636" y="764" width="180" height="100" rx="12" fill="#111128" stroke="#2A2A50" stroke-width="1"/>
+  <text x="652" y="796" font-size="24">&#128222;</text>
+  <text x="652" y="820" font-size="13" fill="#CCCCDD" font-weight="600">Контакты</text>
+  <text x="652" y="838" font-size="11" fill="#888899">Узнать контакты модели</text>
+
+
+  <!-- ===== RIGHT PANEL: CHAT ===== -->
+  <rect x="880" y="61" width="560" height="839" fill="url(#chatBg)"/>
+  <rect x="880" y="61" width="1" height="839" fill="#2A2A50"/>
+
+  <!-- Chat header -->
+  <rect x="880" y="61" width="560" height="60" fill="#0E0E26"/>
+  <rect x="880" y="121" width="560" height="1" fill="#2A2A50"/>
+
+  <!-- Model avatar in chat -->
+  <circle cx="912" cy="91" r="20" fill="url(#videoGrad)"/>
+  <text x="905" y="97" font-size="14" fill="rgba(255,255,255,0.8)">АМ</text>
+
+  <text x="940" y="86" font-size="14" fill="#EEEEFF" font-weight="700">Анна Морозова</text>
+  <circle cx="940" cy="100" r="4" fill="#00E676"/>
+  <text x="950" y="103" font-size="11" fill="#00E676">печатает...</text>
+
+  <!-- Info button -->
+  <rect x="1378" y="72" width="46" height="36" rx="18" fill="#1E1E38"/>
+  <text x="1394" y="95" font-size="14" fill="#888899">&#8505;</text>
+
+  <!-- ===== CHAT MESSAGES ===== -->
+  <!-- Date separator -->
+  <rect x="980" y="140" width="120" height="20" rx="10" fill="#111128"/>
+  <text x="1040" y="154" font-size="10" fill="#555577" text-anchor="middle">Сегодня, 14:22</text>
+
+  <!-- Model message 1 -->
+  <circle cx="906" cy="186" r="16" fill="url(#videoGrad)" opacity="0.8"/>
+  <text x="900" y="191" font-size="10" fill="white">АМ</text>
+  <rect x="930" y="168" width="280" height="50" rx="12" rx="2" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <rect x="930" y="168" width="280" height="50" rx="12" fill="#1A1A35"/>
+  <text x="950" y="188" font-size="13" fill="#CCCCDD">Привет! Рада тебя видеть 👋</text>
+  <text x="950" y="206" font-size="13" fill="#CCCCDD">Чем могу помочь?</text>
+  <text x="1182" y="226" font-size="10" fill="#555577">14:22</text>
+
+  <!-- User message 1 -->
+  <rect x="1060" y="236" width="330" height="36" rx="18" fill="url(#msgBubble)" stroke="#D42B6A" stroke-width="1" opacity="0.9"/>
+  <text x="1080" y="259" font-size="13" fill="#EEEEFF">Привет! Хочу заказать фото-сессию</text>
+  <text x="1352" y="280" font-size="10" fill="#555577">14:23</text>
+
+  <!-- Model message 2 -->
+  <circle cx="906" cy="304" r="16" fill="url(#videoGrad)" opacity="0.8"/>
+  <text x="900" y="309" font-size="10" fill="white">АМ</text>
+  <rect x="930" y="286" width="300" height="64" rx="12" fill="#1A1A35"/>
+  <text x="950" y="306" font-size="13" fill="#CCCCDD">Отлично! Я сейчас онлайн &#128247;</text>
+  <text x="950" y="326" font-size="13" fill="#CCCCDD">Какой стиль вас интересует?</text>
+  <text x="950" y="342" font-size="13" fill="#CCCCDD">Fashion, портрет или что-то особое?</text>
+  <text x="1192" y="358" font-size="10" fill="#555577">14:23</text>
+
+  <!-- User message 2 -->
+  <rect x="1030" y="370" width="360" height="36" rx="18" fill="url(#msgBubble)" stroke="#D42B6A" stroke-width="1" opacity="0.9"/>
+  <text x="1050" y="393" font-size="13" fill="#EEEEFF">Интересует что-то в стиле boudoir</text>
+  <text x="1352" y="414" font-size="10" fill="#555577">14:24</text>
+
+  <!-- Model message 3 -->
+  <circle cx="906" cy="438" r="16" fill="url(#videoGrad)" opacity="0.8"/>
+  <text x="900" y="443" font-size="10" fill="white">АМ</text>
+  <rect x="930" y="420" width="310" height="80" rx="12" fill="#1A1A35"/>
+  <text x="950" y="440" font-size="13" fill="#CCCCDD">Конечно, это мой любимый стиль &#128149;</text>
+  <text x="950" y="460" font-size="13" fill="#CCCCDD">Могу предложить 3 варианта пакета.</text>
+  <text x="950" y="480" font-size="13" fill="#D42B6A">Посмотреть предложения &#8594;</text>
+  <text x="1202" y="508" font-size="10" fill="#555577">14:24</text>
+
+  <!-- Photo message from model -->
+  <circle cx="906" cy="540" r="16" fill="url(#videoGrad)" opacity="0.8"/>
+  <text x="900" y="545" font-size="10" fill="white">АМ</text>
+
+  <!-- Photo preview sent in chat -->
+  <rect x="930" y="520" width="130" height="100" rx="10" fill="#3D0E5C" opacity="0.8"/>
+  <text x="975" y="578" font-size="10" fill="rgba(255,255,255,0.5)" text-anchor="middle">Превью</text>
+  <rect x="930" y="580" width="130" height="40" rx="0" fill="#1A1A35"/>
+  <rect x="930" y="580" width="130" height="40" rx="0" rx="10" fill="#1A1A35"/>
+  <rect x="930" y="604" width="130" height="16" rx="0" fill="#1A1A35"/>
+  <rect x="930" y="610" width="130" height="10" rx="5" fill="#1A1A35"/>
+
+  <rect x="1070" y="520" width="130" height="100" rx="10" fill="#880E4F" opacity="0.7"/>
+  <text x="1115" y="578" font-size="10" fill="rgba(255,255,255,0.5)" text-anchor="middle">Превью</text>
+
+  <!-- Lock overlay on photos -->
+  <rect x="930" y="520" width="130" height="100" rx="10" fill="#07071A" opacity="0.4"/>
+  <text x="978" y="578" font-size="18">&#128274;</text>
+  <rect x="1070" y="520" width="130" height="100" rx="10" fill="#07071A" opacity="0.55"/>
+  <text x="1118" y="578" font-size="18">&#128274;</text>
+
+  <text x="930" y="634" font-size="11" fill="#888899">2 фото · Разблокировать за $10</text>
+  <rect x="930" y="642" width="270" height="28" rx="14" fill="url(#accentBtn)" opacity="0.9"/>
+  <text x="1042" y="661" font-size="12" fill="white" font-weight="700" text-anchor="middle">Оплатить и открыть</text>
+
+  <!-- User is typing -->
+  <text x="1352" y="680" font-size="10" fill="#555577">14:25</text>
+
+  <!-- Typing indicator from model -->
+  <circle cx="906" cy="700" r="16" fill="url(#videoGrad)" opacity="0.8"/>
+  <text x="900" y="705" font-size="10" fill="white">АМ</text>
+  <rect x="930" y="685" width="80" height="36" rx="18" fill="#1A1A35"/>
+  <circle cx="952" cy="703" r="4" fill="#555577">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="968" cy="703" r="4" fill="#555577">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" begin="0.4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="984" cy="703" r="4" fill="#555577">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="1.2s" begin="0.8s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- ===== CHAT INPUT ===== -->
+  <rect x="880" y="800" width="560" height="100" fill="#0A0A1E"/>
+  <rect x="880" y="800" width="560" height="1" fill="#2A2A50"/>
+
+  <!-- Special request quick button -->
+  <rect x="900" y="812" width="130" height="26" rx="13" fill="#1A1228" stroke="#8B2BE2" stroke-width="1"/>
+  <text x="918" y="829" font-size="11" fill="#C580FF">&#10024; Особый запрос</text>
+
+  <rect x="1040" y="812" width="90" height="26" rx="13" fill="#1A1228" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1052" y="829" font-size="11" fill="#888899">&#128247; Фото</text>
+
+  <rect x="1140" y="812" width="80" height="26" rx="13" fill="#1A1228" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1153" y="829" font-size="11" fill="#888899">&#9733; Чаевые</text>
+
+  <!-- Message input field -->
+  <rect x="900" y="848" width="430" height="42" rx="21" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="924" y="874" font-size="13" fill="#555577">Написать сообщение...</text>
+
+  <!-- Emoji button -->
+  <rect x="1310" y="848" width="42" height="42" rx="21" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="1323" y="875" font-size="18">&#128512;</text>
+
+  <!-- Send button -->
+  <rect x="1360" y="848" width="68" height="42" rx="21" fill="url(#accentBtn)"/>
+  <text x="1389" y="875" font-size="18" fill="white" text-anchor="middle">&#10148;</text>
+
+  <!-- ===== MINI CAMERA (self-view) ===== -->
+  <rect x="694" y="489" width="146" height="106" rx="10" fill="#1A1540" stroke="#2A2A50" stroke-width="1.5" filter="url(#softShadow)"/>
+  <rect x="698" y="493" width="138" height="98" rx="8" fill="#111128"/>
+  <!-- Self camera silhouette -->
+  <ellipse cx="767" cy="530" rx="20" ry="20" fill="#1E1E38"/>
+  <rect x="747" y="550" width="40" height="40" rx="20" fill="#181830"/>
+  <text x="767" y="574" font-size="9" fill="#555577" text-anchor="middle">Ваша камера</text>
+
+  <!-- Camera label -->
+  <rect x="704" y="499" width="36" height="16" rx="8" fill="#00E676" opacity="0.9"/>
+  <text x="710" y="511" font-size="8" fill="#003820" font-weight="700">CAM</text>
+
+</svg>

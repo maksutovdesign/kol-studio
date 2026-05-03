@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk '{print $5, $9}')",
+      "Bash(awk '{print $5, $NF}')",
+      "Bash(python3)",
+      "Bash(awk '{print $5\"\\\\t\"$NF}')",
+      "Bash(sed 's|/Users/maksutovdesign/Desktop/kol/||')",
+      "Bash(python3 -c ' *)",
+      "Bash([ -f \"/Users/maksutovdesign/Desktop/kol/$f\" ])",
+      "Bash(awk '{printf \"%6.0f KB  %s\\\\n\", $5/1024, $9}')",
+      "Bash(xargs -I{} basename {})",
+      "Bash([ -f \"/Users/maksutovdesign/Desktop/kol/$p\" ])"
+    ]
+  }
+}

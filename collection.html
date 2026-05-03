@@ -1,0 +1,2777 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Коллекции — KOL Studio">
+  <meta property="og:description" content="Эксклюзивные коллекции контента от лучших создателей. Фото, видео, серии.">
+  <meta property="og:url" content="https://kolstudio.com/collection.html">
+  <meta property="og:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Коллекции — KOL Studio">
+  <meta name="twitter:description" content="Эксклюзивные коллекции контента от лучших создателей. Фото, видео, серии.">
+  <meta name="twitter:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <meta name="description" content="Эксклюзивные коллекции контента от лучших создателей. Фото, видео, серии.">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#D42B6A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KOL Studio">
+<meta name="description" content="Коллекции Анны Морозовой — KOL Studio">
+<title>KOL Studio — Коллекции Анны М.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07071A;
+  --card: #111128;
+  --card2: #181835;
+  --border: #22224A;
+  --accent: #D42B6A;
+  --accent2: #8B2BE2;
+  --green: #00E676;
+  --gold: #FFB300;
+  --text: #E8E8F0;
+  --text-muted: #7070A0;
+  --text-dim: #4A4A70;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+  --gradient-accent: linear-gradient(135deg, #D42B6A, #8B2BE2);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.5);
+  --transition: 0.2s ease;
+}
+
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+
+@keyframes slide-up { from{transform:translateY(30px);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes fade-in { from{opacity:0} to{opacity:1} }
+@keyframes unlock-spin { 0%{transform:rotate(0deg) scale(1)} 50%{transform:rotate(180deg) scale(1.2)} 100%{transform:rotate(360deg) scale(1)} }
+@keyframes unlock-burst { 0%{transform:scale(0.5);opacity:0} 60%{transform:scale(1.1);opacity:1} 100%{transform:scale(1);opacity:1} }
+@keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+@keyframes pulse-glow { 0%,100%{box-shadow:0 0 0 0 rgba(212,43,106,0.4)} 50%{box-shadow:0 0 0 12px rgba(212,43,106,0)} }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============ SCROLLBAR ============ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #33335A; }
+
+/* ============ NAV BAR ============ */
+#nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(7,7,26,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+}
+
+#nav-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px 8px 0;
+  border-radius: var(--radius-xs);
+  transition: color var(--transition);
+  flex-shrink: 0;
+}
+
+#nav-back:hover { color: var(--text); }
+
+#nav-back-arrow {
+  font-size: 18px;
+  line-height: 1;
+}
+
+#nav-model-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+#nav-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5C1A7A, #D42B6A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+#nav-title-block {
+  min-width: 0;
+}
+
+#nav-model-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#nav-section {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+#nav-subscribe-btn {
+  padding: 8px 18px;
+  background: var(--gradient-accent);
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  flex-shrink: 0;
+  transition: opacity var(--transition), transform 0.1s;
+  white-space: nowrap;
+}
+
+#nav-subscribe-btn:hover { opacity: 0.9; }
+#nav-subscribe-btn:active { transform: scale(0.97); }
+#nav-subscribe-btn.subscribed {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+/* ============ MAIN WRAPPER ============ */
+#main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px 80px;
+}
+
+/* ============ HERO ============ */
+#hero {
+  padding: 28px 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+}
+
+#hero-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5C1A7A, #D42B6A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  border: 3px solid var(--border);
+}
+
+#hero-info { flex: 1; min-width: 0; }
+
+#hero-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+#hero-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+#hero-stats {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ============ TABS ============ */
+#tabs {
+  display: flex;
+  gap: 2px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+#tabs::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  border-radius: 50px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+  transition: background var(--transition), color var(--transition);
+  position: relative;
+}
+
+.tab-btn:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+
+.tab-btn.active {
+  background: rgba(212,43,106,0.15);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.tab-badge {
+  display: inline-block;
+  background: var(--border);
+  color: var(--text-muted);
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 11px;
+  margin-left: 5px;
+  font-weight: 600;
+}
+
+/* ============ SECTION HEADER ============ */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0 14px;
+}
+
+.section-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.section-action {
+  font-size: 13px;
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity var(--transition);
+}
+
+.section-action:hover { opacity: 0.8; }
+
+/* ============ COLLECTIONS GRID ============ */
+#collections-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  animation: fade-in 0.3s ease;
+}
+
+@media (max-width: 768px) { #collections-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+@media (max-width: 480px) { #collections-grid { grid-template-columns: 1fr; } }
+
+/* ============ COLLECTION CARD ============ */
+.collection-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  position: relative;
+}
+
+.collection-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  border-color: rgba(212,43,106,0.35);
+}
+
+.collection-card:active { transform: translateY(-1px); }
+
+/* Cover image area */
+.card-cover {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 */
+  overflow: hidden;
+}
+
+.card-cover-bg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  transition: transform 0.35s ease;
+}
+
+.collection-card:hover .card-cover-bg { transform: scale(1.06); }
+
+/* Hover overlay */
+.card-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.collection-card:hover .card-hover-overlay { opacity: 1; }
+
+.card-hover-btn {
+  padding: 10px 22px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Lock indicator badge */
+.card-lock-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.card-lock-badge.subscriber { background: rgba(212,43,106,0.8); color: #fff; }
+.card-lock-badge.ppv { background: rgba(255,179,0,0.9); color: #000; }
+.card-lock-badge.free { background: rgba(0,230,118,0.8); color: #000; }
+
+/* Item count badge */
+.card-count-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 9px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  color: rgba(255,255,255,0.9);
+}
+
+/* Preview strip */
+.card-preview-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  height: 36px;
+}
+
+.preview-thumb {
+  flex: 1;
+  border-radius: 4px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.collection-card:hover .preview-thumb { opacity: 0.9; }
+
+/* Card body */
+.card-body {
+  padding: 12px 14px 14px;
+}
+
+.card-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.card-access {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.card-access.subscriber { color: var(--accent); }
+.card-access.ppv { color: var(--gold); }
+.card-access.free { color: var(--green); }
+
+/* ============ DETAIL VIEW ============ */
+#detail-view {
+  display: none;
+  animation: slide-up 0.3s ease;
+}
+
+#detail-view.visible { display: block; }
+
+#detail-header {
+  padding: 20px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+}
+
+#detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  cursor: pointer;
+  transition: color var(--transition);
+  background: none;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  padding: 0;
+}
+
+#detail-back:hover { color: var(--accent); }
+
+#detail-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+#detail-title {
+  font-size: clamp(20px, 4vw, 28px);
+  font-weight: 800;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+}
+
+#detail-share-btn {
+  padding: 9px 18px;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: border-color var(--transition), color var(--transition);
+  flex-shrink: 0;
+}
+
+#detail-share-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+#detail-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.detail-meta-pill {
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.detail-meta-pill.info { background: var(--card2); color: var(--text-muted); }
+.detail-meta-pill.subscriber { background: rgba(212,43,106,0.15); color: var(--accent); border: 1px solid rgba(212,43,106,0.3); }
+.detail-meta-pill.ppv { background: rgba(255,179,0,0.15); color: var(--gold); border: 1px solid rgba(255,179,0,0.3); }
+.detail-meta-pill.free { background: rgba(0,230,118,0.15); color: var(--green); border: 1px solid rgba(0,230,118,0.3); }
+
+/* ============ PPV GATE ============ */
+#ppv-gate {
+  display: none;
+  margin: 24px 0;
+  padding: 32px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  animation: fade-in 0.3s ease;
+}
+
+#ppv-gate.visible { display: block; }
+
+#ppv-cover {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 20px;
+  padding-top: 40%;
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+#ppv-cover-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+}
+
+#ppv-price-label {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+#ppv-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+#ppv-unlock-btn {
+  display: inline-block;
+  padding: 15px 40px;
+  background: var(--gradient-accent);
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  animation: pulse-glow 2s ease-in-out infinite;
+  transition: transform 0.1s, opacity 0.15s;
+}
+
+#ppv-unlock-btn:hover { opacity: 0.9; }
+#ppv-unlock-btn:active { transform: scale(0.97); }
+
+/* ============ SUBSCRIBE GATE ============ */
+#sub-gate {
+  display: none;
+  margin: 24px 0;
+  padding: 28px;
+  background: linear-gradient(135deg, rgba(212,43,106,0.1), rgba(139,43,226,0.1));
+  border: 1px solid rgba(212,43,106,0.25);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+#sub-gate.visible { display: block; }
+#sub-gate h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+#sub-gate p { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+
+#sub-gate-btn {
+  display: inline-block;
+  padding: 14px 36px;
+  background: var(--gradient-accent);
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+  transition: opacity var(--transition), transform 0.1s;
+}
+
+#sub-gate-btn:hover { opacity: 0.9; }
+#sub-gate-btn:active { transform: scale(0.97); }
+
+/* ============ CONTENT GRID (detail) ============ */
+#content-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) { #content-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 480px) { #content-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.content-thumb {
+  position: relative;
+  padding-top: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--card2);
+}
+
+.content-thumb-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  transition: transform 0.25s, filter 0.25s;
+}
+
+.content-thumb:hover .content-thumb-inner { transform: scale(1.08); }
+
+.content-thumb.blurred .content-thumb-inner {
+  filter: blur(12px);
+}
+
+.content-thumb-lock {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: rgba(0,0,0,0.4);
+  font-size: 20px;
+  display: none;
+}
+
+.content-thumb.blurred .content-thumb-lock { display: flex; }
+
+.content-thumb-lock span {
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+  text-align: center;
+  padding: 0 8px;
+}
+
+/* ============ LIGHTBOX ============ */
+#lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  animation: fade-in 0.2s ease;
+}
+
+#lightbox.visible { display: flex; }
+
+#lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: var(--radius);
+  overflow: hidden;
+  animation: unlock-burst 0.25s ease;
+}
+
+#lightbox-inner {
+  width: min(600px, 90vw);
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  border-radius: var(--radius);
+}
+
+#lightbox-controls {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  pointer-events: none;
+}
+
+.lb-nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.lb-nav-btn:hover { background: rgba(255,255,255,0.15); }
+.lb-nav-btn:active { transform: scale(0.9); }
+
+#lightbox-top {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.lb-top-btn {
+  padding: 8px 16px;
+  border-radius: 50px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.6);
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lb-top-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.lb-top-btn.disabled { opacity: 0.4; cursor: not-allowed; }
+
+#lightbox-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+#lightbox-close:hover { background: rgba(255,255,255,0.15); }
+
+#lightbox-counter {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+  padding: 4px 14px;
+  border-radius: 50px;
+  font-weight: 500;
+}
+
+#lightbox-watermark {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.25);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+/* ============ PAYMENT MODAL ============ */
+#payment-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(8px);
+  padding: 16px;
+}
+
+#payment-modal.visible { display: flex; }
+
+#payment-sheet {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 28px;
+  width: 100%;
+  max-width: 420px;
+  animation: unlock-burst 0.25s ease;
+}
+
+#payment-sheet h2 {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+#payment-sheet .payment-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+#payment-price-display {
+  text-align: center;
+  padding: 20px;
+  background: var(--card2);
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+}
+
+#payment-price-display .price-amount {
+  font-size: 36px;
+  font-weight: 900;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#payment-price-display .price-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.payment-method-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.payment-method-btn {
+  flex: 1;
+  padding: 10px;
+  background: var(--card2);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  transition: border-color var(--transition);
+}
+
+.payment-method-btn.selected { border-color: var(--accent); color: var(--accent); }
+.payment-method-btn:hover { border-color: rgba(212,43,106,0.5); }
+
+.payment-card-input {
+  width: 100%;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 12px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.payment-card-input:focus { border-color: var(--accent); }
+.payment-card-input::placeholder { color: var(--text-dim); }
+
+.payment-row-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+#payment-submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--gradient-accent);
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 12px;
+  transition: opacity var(--transition), transform 0.1s;
+}
+
+#payment-submit-btn:hover { opacity: 0.9; }
+#payment-submit-btn:active { transform: scale(0.98); }
+
+#payment-cancel-btn {
+  width: 100%;
+  padding: 12px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  color: var(--text-muted);
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+#payment-cancel-btn:hover { border-color: var(--accent); color: var(--text); }
+
+.payment-security-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+/* ============ UNLOCK ANIMATION ============ */
+#unlock-anim {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.85);
+  flex-direction: column;
+  gap: 16px;
+}
+
+#unlock-anim.visible { display: flex; }
+
+#unlock-icon {
+  font-size: 72px;
+  animation: unlock-spin 0.8s ease forwards;
+}
+
+#unlock-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  animation: fade-in 0.4s 0.4s ease both;
+}
+
+#unlock-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  animation: fade-in 0.4s 0.6s ease both;
+}
+
+/* ============ RECOMMENDATIONS ============ */
+#recommendations {
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+#rec-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+#rec-row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+}
+
+#rec-row::-webkit-scrollbar { display: none; }
+
+.rec-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 200px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.rec-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+
+.rec-cover {
+  padding-top: 60%;
+  position: relative;
+  overflow: hidden;
+}
+
+.rec-cover-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  transition: transform 0.3s;
+}
+
+.rec-card:hover .rec-cover-inner { transform: scale(1.08); }
+
+.rec-body {
+  padding: 10px 12px;
+}
+
+.rec-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rec-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ============ SUBSCRIBE BANNER (full page) ============ */
+#subscribe-promo {
+  margin: 20px 0;
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(212,43,106,0.08), rgba(139,43,226,0.08));
+  border: 1px solid rgba(212,43,106,0.2);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+#subscribe-promo-text h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+#subscribe-promo-text p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+#subscribe-promo-btn {
+  padding: 12px 28px;
+  background: var(--gradient-accent);
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  flex-shrink: 0;
+  transition: opacity var(--transition), transform 0.1s;
+}
+
+#subscribe-promo-btn:hover { opacity: 0.9; }
+#subscribe-promo-btn:active { transform: scale(0.97); }
+
+/* ============ TOAST ============ */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(7,7,26,0.95);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 11px 22px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 500;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  white-space: nowrap;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+}
+
+#toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============ SHIMMER LOADING ============ */
+.shimmer {
+  background: linear-gradient(90deg, var(--card2) 25%, #1e1e3f 50%, var(--card2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ============ FILTER BAR ============ */
+#filter-bar {
+  display: flex;
+  gap: 8px;
+  padding: 12px 0 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-wrap: wrap;
+}
+
+#filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--card2);
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+}
+
+.filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+.filter-chip.active { background: rgba(212,43,106,0.15); border-color: var(--accent); color: var(--accent); }
+
+/* ============ EMPTY STATE ============ */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.empty-state-icon { font-size: 48px; margin-bottom: 16px; }
+.empty-state h3 { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.empty-state p { font-size: 14px; line-height: 1.6; }
+</style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CollectionPage","name":"Коллекции — KOL Studio","description":"Эксклюзивные коллекции контента от лучших создателей. Фото, видео, серии.","url":"https://kolstudio.com/collection.html","publisher":{"@type":"Organization","name":"KOL Studio","logo":{"@type":"ImageObject","url":"https://kolstudio.com/icons/icon-192.png"}}}
+  </script>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/collection.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/collection.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/collection.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/collection.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV BAR ===================== -->
+<nav aria-label="navigation" id="nav">
+  <a href="profile.html" id="nav-back">
+    <span id="nav-back-arrow">←</span>
+    Профиль
+  </a>
+  <div id="nav-model-info">
+    <div id="nav-avatar">АМ</div>
+    <div id="nav-title-block">
+      <div id="nav-model-name">Анна Морозова</div>
+      <div id="nav-section">Коллекции</div>
+    </div>
+  </div>
+  <button id="nav-subscribe-btn" onclick="toggleSubscribe()">Подписаться</button>
+</nav>
+
+<!-- ===================== MAIN WRAPPER ===================== -->
+<div id="main">
+
+  <!-- ===== HERO ===== -->
+  <div id="hero">
+    <div id="hero-avatar">АМ</div>
+    <div id="hero-info">
+      <div id="hero-name-row">
+        <div id="hero-name">Анна Морозова</div>
+        <div class="verified-badge">✓</div>
+      </div>
+      <div id="hero-stats">847 подписчиков &nbsp;•&nbsp; 312 публикаций &nbsp;•&nbsp; 28 видео</div>
+    </div>
+  </div>
+
+  <!-- ===== TABS ===== -->
+  <div id="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'collections')">Коллекции <span class="tab-badge">8</span></button>
+    <button class="tab-btn" onclick="switchTab(this,'photos')">Все фото <span class="tab-badge">312</span></button>
+    <button class="tab-btn" onclick="switchTab(this,'videos')">Все видео <span class="tab-badge">28</span></button>
+    <button class="tab-btn" onclick="switchTab(this,'free')">Бесплатно <span class="tab-badge">2</span></button>
+  </div>
+
+  <!-- ===== COLLECTIONS VIEW ===== -->
+  <div id="collections-view">
+    <div class="section-header">
+      <div class="section-title">Коллекции</div>
+      <div id="filter-bar">
+        <button class="filter-chip active" onclick="filterCollections(this,'all')">Все</button>
+        <button class="filter-chip" onclick="filterCollections(this,'free')">🆓 Бесплатно</button>
+        <button class="filter-chip" onclick="filterCollections(this,'subscriber')">🔒 Подписка</button>
+        <button class="filter-chip" onclick="filterCollections(this,'ppv')">💎 PPV</button>
+      </div>
+    </div>
+    <div id="collections-grid"></div>
+
+    <!-- Subscribe banner -->
+    <div id="subscribe-promo">
+      <div id="subscribe-promo-text">
+        <h3>Откройте все коллекции</h3>
+        <p>Подпишитесь и получите доступ к 312 публикациям, включая эксклюзивный контент</p>
+      </div>
+      <button id="subscribe-promo-btn" onclick="handleSubscribe()">Подписаться за $9.99/мес</button>
+    </div>
+  </div>
+
+  <!-- ===== DETAIL VIEW ===== -->
+  <div id="detail-view">
+    <div id="detail-header">
+      <button id="detail-back" onclick="showCollectionsView()">← Коллекции</button>
+      <div id="detail-title-row">
+        <div id="detail-title"></div>
+        <button id="detail-share-btn" onclick="shareCollection()">↗ Поделиться</button>
+      </div>
+      <div id="detail-meta-row"></div>
+    </div>
+
+    <!-- PPV gate -->
+    <div id="ppv-gate">
+      <div id="ppv-cover"><div id="ppv-cover-inner"></div></div>
+      <div id="ppv-price-label"></div>
+      <div id="ppv-desc"></div>
+      <button id="ppv-unlock-btn" onclick="openPaymentModal()"></button>
+    </div>
+
+    <!-- Subscriber gate -->
+    <div id="sub-gate">
+      <h3>🔒 Откройте полный доступ</h3>
+      <p>Эта коллекция доступна только подписчикам. Подпишитесь, чтобы увидеть все материалы.</p>
+      <button id="sub-gate-btn" onclick="handleSubscribe()">Подписаться за $9.99/мес</button>
+    </div>
+
+    <!-- Content grid -->
+    <div id="content-grid"></div>
+
+    <!-- Recommendations -->
+    <div id="recommendations">
+      <div id="rec-title">Вам может понравиться</div>
+      <div id="rec-row"></div>
+    </div>
+  </div>
+
+</div><!-- end #main -->
+
+<!-- ===================== LIGHTBOX ===================== -->
+<div id="lightbox">
+  <div id="lightbox-top">
+    <button class="lb-top-btn disabled" onclick="handleDownload()">⬇ Скачать</button>
+    <button id="lightbox-close" onclick="closeLightbox()" aria-label="Закрыть">✕</button>
+  </div>
+  <div id="lightbox-content">
+    <div id="lightbox-inner"></div>
+    <div id="lightbox-controls">
+      <button class="lb-nav-btn" onclick="lightboxNav(-1)">‹</button>
+      <button class="lb-nav-btn" onclick="lightboxNav(1)">›</button>
+    </div>
+  </div>
+  <div id="lightbox-counter"></div>
+  <div id="lightbox-watermark">KOL Studio © 2026</div>
+</div>
+
+<!-- ===================== PAYMENT MODAL ===================== -->
+<div id="payment-modal">
+  <div id="payment-sheet">
+    <h2 id="payment-title">Разблокировать коллекцию</h2>
+    <p class="payment-desc" id="payment-desc">Одноразовая покупка. Доступ навсегда.</p>
+    <div id="payment-price-display">
+      <div class="price-amount" id="payment-price-amount">$15</div>
+      <div class="price-label">Единоразовый платёж</div>
+    </div>
+    <div class="payment-method-row">
+      <button class="payment-method-btn selected" onclick="selectPayMethod(this)">💳 Карта</button>
+      <button class="payment-method-btn" onclick="selectPayMethod(this)">📱 Apple Pay</button>
+      <button class="payment-method-btn" onclick="selectPayMethod(this)">₿ Крипто</button>
+    </div>
+    <input type="text" class="payment-card-input" placeholder="Номер карты" maxlength="19" id="card-number-input">
+    <div class="payment-row-inputs">
+      <input type="text" class="payment-card-input" placeholder="ММ / ГГ" maxlength="5">
+      <input type="text" class="payment-card-input" placeholder="CVV" maxlength="3">
+    </div>
+    <button id="payment-submit-btn" onclick="processPayment()">Оплатить</button>
+    <button id="payment-cancel-btn" onclick="closePaymentModal()">Отмена</button>
+    <div class="payment-security-note">🔒 Безопасная оплата &nbsp;•&nbsp; SSL шифрование</div>
+  </div>
+</div>
+
+<!-- ===================== UNLOCK ANIMATION ===================== -->
+<div id="unlock-anim">
+  <div id="unlock-icon">🔓</div>
+  <div id="unlock-text">Разблокировано!</div>
+  <div id="unlock-sub">Коллекция теперь доступна</div>
+</div>
+
+<!-- ===================== TOAST ===================== -->
+<div id="toast"></div>
+
+<script>
+// ============================================================
+//  KOL Studio — Collection Page State & Data
+// ============================================================
+
+const COLLECTIONS = [
+  {
+    id: 1,
+    name: 'Белое кружево',
+    gradient: 'linear-gradient(135deg, #F8F0FF, #D42B6A)',
+    emoji: '🤍',
+    count: '14 фото',
+    access: 'subscriber',
+    accessLabel: '🔒 Для подписчиков',
+    updated: '2 мая',
+    description: 'Нежная и романтичная фотосессия в белом кружевном белье.',
+    thumbGradients: [
+      'linear-gradient(135deg, #F8F0FF, #E8C0D0)',
+      'linear-gradient(135deg, #F0E0FF, #D42B6A)',
+      'linear-gradient(135deg, #FFE4F0, #C04080)'
+    ],
+    thumbEmojis: ['🤍','💕','🌸'],
+    totalItems: 14,
+    isVideo: false
+  },
+  {
+    id: 2,
+    name: 'Летняя фотосессия в Турции',
+    gradient: 'linear-gradient(135deg, #0077B6, #00B4D8)',
+    emoji: '🌊',
+    count: '23 фото, 3 видео',
+    access: 'subscriber',
+    accessLabel: '🔒 Для подписчиков',
+    updated: '28 апреля',
+    description: 'Солнце, море и пляжные приключения на турецком курорте.',
+    thumbGradients: [
+      'linear-gradient(135deg, #0077B6, #48CAE4)',
+      'linear-gradient(135deg, #023E8A, #00B4D8)',
+      'linear-gradient(135deg, #0096C7, #90E0EF)'
+    ],
+    thumbEmojis: ['🌊','☀️','🏖️'],
+    totalItems: 26,
+    isVideo: false
+  },
+  {
+    id: 3,
+    name: 'Студия. Весна 2026',
+    gradient: 'linear-gradient(135deg, #2D1B69, #8B2BE2)',
+    emoji: '📸',
+    count: '8 фото',
+    access: 'ppv',
+    price: '$15',
+    accessLabel: '💎 PPV $15',
+    updated: '15 апреля',
+    description: 'Профессиональная студийная съёмка. Смелые образы, яркий свет, максимальная эстетика.',
+    thumbGradients: [
+      'linear-gradient(135deg, #2D1B69, #7B1FA2)',
+      'linear-gradient(135deg, #4A148C, #8B2BE2)',
+      'linear-gradient(135deg, #3A0A6A, #CE93D8)'
+    ],
+    thumbEmojis: ['📸','🎬','✨'],
+    totalItems: 8,
+    isVideo: false
+  },
+  {
+    id: 4,
+    name: 'Everyday Stories',
+    gradient: 'linear-gradient(135deg, #1A3A2A, #00E676)',
+    emoji: '☀️',
+    count: '31 фото',
+    access: 'free',
+    accessLabel: '🆓 Бесплатно',
+    updated: '20 апреля',
+    description: 'Жизнь за кадром. Повседневные моменты и искренние эмоции.',
+    thumbGradients: [
+      'linear-gradient(135deg, #1A3A2A, #4CAF50)',
+      'linear-gradient(135deg, #2E7D32, #00E676)',
+      'linear-gradient(135deg, #1B5E20, #69F0AE)'
+    ],
+    thumbEmojis: ['☀️','🌿','😊'],
+    totalItems: 31,
+    isVideo: false
+  },
+  {
+    id: 5,
+    name: 'Behind the Scenes',
+    gradient: 'linear-gradient(135deg, #4A0E0E, #D42B6A)',
+    emoji: '🎬',
+    count: '12 видео',
+    access: 'ppv',
+    price: '$25',
+    accessLabel: '💎 PPV $25',
+    updated: '10 апреля',
+    description: 'Всё что остаётся за кадром. 12 эксклюзивных видеозаписей для самых преданных фанатов.',
+    thumbGradients: [
+      'linear-gradient(135deg, #4A0E0E, #B71C1C)',
+      'linear-gradient(135deg, #7A1A1A, #D42B6A)',
+      'linear-gradient(135deg, #3A0A0A, #E53935)'
+    ],
+    thumbEmojis: ['🎬','🎥','🎞️'],
+    totalItems: 12,
+    isVideo: true
+  },
+  {
+    id: 6,
+    name: 'Lingerie Collection Vol.2',
+    gradient: 'linear-gradient(135deg, #1A0A30, #5C1A7A)',
+    emoji: '💜',
+    count: '19 фото',
+    access: 'subscriber',
+    accessLabel: '🔒 Для подписчиков',
+    updated: '5 апреля',
+    description: 'Вторая часть культовой коллекции. Тёмный стиль, шёлк и кружево.',
+    thumbGradients: [
+      'linear-gradient(135deg, #1A0A30, #4A148C)',
+      'linear-gradient(135deg, #2D1B69, #5C1A7A)',
+      'linear-gradient(135deg, #12003A, #7B1FA2)'
+    ],
+    thumbEmojis: ['💜','🌙','✨'],
+    totalItems: 19,
+    isVideo: false
+  },
+  {
+    id: 7,
+    name: 'Live Stream Highlights',
+    gradient: 'linear-gradient(135deg, #0A1A3A, #1565C0)',
+    emoji: '📺',
+    count: '6 видео',
+    access: 'free',
+    accessLabel: '🆓 Бесплатно',
+    updated: '1 апреля',
+    description: 'Лучшие моменты из прямых эфиров. Смотри бесплатно!',
+    thumbGradients: [
+      'linear-gradient(135deg, #0A1A3A, #1976D2)',
+      'linear-gradient(135deg, #0D47A1, #42A5F5)',
+      'linear-gradient(135deg, #1A237E, #1565C0)'
+    ],
+    thumbEmojis: ['📺','🔴','🎙️'],
+    totalItems: 6,
+    isVideo: true
+  },
+  {
+    id: 8,
+    name: 'Exclusive VIP Set',
+    gradient: 'linear-gradient(135deg, #1A1A0A, #FFB300)',
+    emoji: '👑',
+    count: '7 фото, 2 видео',
+    access: 'ppv',
+    price: '$49',
+    accessLabel: '💎 PPV $49',
+    updated: '25 марта',
+    description: 'Самый эксклюзивный контент. Только для настоящих VIP-фанатов. Ограниченный выпуск.',
+    thumbGradients: [
+      'linear-gradient(135deg, #2A2000, #FFB300)',
+      'linear-gradient(135deg, #3A2800, #FF8F00)',
+      'linear-gradient(135deg, #1A1200, #FFC107)'
+    ],
+    thumbEmojis: ['👑','💎','⭐'],
+    totalItems: 9,
+    isVideo: false
+  }
+];
+
+// App state
+let isSubscribed = false;
+let currentFilter = 'all';
+let currentCollection = null;
+let currentLightboxIdx = 0;
+let lightboxItems = [];
+let unlockedPPV = new Set();
+let currentTab = 'collections';
+
+// ============================================================
+//  Helpers
+// ============================================================
+function showToast(msg, duration = 2200) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('visible');
+  setTimeout(() => t.classList.remove('visible'), duration);
+}
+
+function getAccessClass(access) {
+  return access === 'subscriber' ? 'subscriber' : access === 'ppv' ? 'ppv' : 'free';
+}
+
+// ============================================================
+//  Subscription
+// ============================================================
+function toggleSubscribe() {
+  isSubscribed = !isSubscribed;
+  const btn = document.getElementById('nav-subscribe-btn');
+  if (isSubscribed) {
+    btn.textContent = '✓ Подписан';
+    btn.classList.add('subscribed');
+    showToast('✓ Вы подписаны на Анну Морозову!');
+    document.getElementById('subscribe-promo').style.display = 'none';
+  } else {
+    btn.textContent = 'Подписаться';
+    btn.classList.remove('subscribed');
+    showToast('Подписка отменена');
+    document.getElementById('subscribe-promo').style.display = 'flex';
+  }
+  // Re-render if in detail view
+  if (currentCollection) {
+    openCollection(currentCollection.id);
+  }
+}
+
+function handleSubscribe() {
+  toggleSubscribe();
+  if (isSubscribed) {
+    navigateTo('checkout.html');
+  }
+}
+
+// ============================================================
+//  Tab switching
+// ============================================================
+function switchTab(btn, tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentTab = tab;
+  showCollectionsView();
+
+  if (tab === 'free') {
+    filterCollections(document.querySelector('.filter-chip[data-filter="free"]') || document.querySelector('.filter-chip'), 'free');
+  } else {
+    filterCollections(document.querySelector('.filter-chip.active'), 'all');
+    renderCollections();
+  }
+}
+
+// ============================================================
+//  Filter
+// ============================================================
+function filterCollections(btn, filter) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  currentFilter = filter;
+  renderCollections();
+}
+
+// ============================================================
+//  Build collection card
+// ============================================================
+function buildCard(col) {
+  const isLocked = col.access === 'subscriber' && !isSubscribed;
+  const isPPV = col.access === 'ppv' && !unlockedPPV.has(col.id);
+  const accessClass = getAccessClass(col.access);
+
+  // Preview thumbs
+  const thumbsHTML = col.thumbGradients.map((g, i) => `
+    <div class="preview-thumb" style="background:${g};display:flex;align-items:center;justify-content:center;font-size:14px;">${col.thumbEmojis[i]}</div>
+  `).join('');
+
+  const card = document.createElement('div');
+  card.className = 'collection-card';
+  card.dataset.colId = col.id;
+  card.innerHTML = `
+    <div class="card-cover">
+      <div class="card-cover-bg" style="background:${col.gradient}">
+        <span>${col.emoji}</span>
+      </div>
+      <div class="card-hover-overlay">
+        <div class="card-hover-btn">👁 Смотреть</div>
+      </div>
+      <div class="card-lock-badge ${accessClass}">
+        ${col.access === 'ppv' ? `💎 ${col.price}` : col.access === 'subscriber' ? '🔒 Подписка' : '🆓 Бесплатно'}
+      </div>
+      <div class="card-count-badge">${col.count}</div>
+      <div class="card-preview-strip">${thumbsHTML}</div>
+    </div>
+    <div class="card-body">
+      <div class="card-name">${col.name}</div>
+      <div class="card-meta">
+        <span>${col.isVideo ? '🎬 Видео' : '📸 Фото'}</span>
+        <span class="card-access ${accessClass}">${col.accessLabel}</span>
+      </div>
+    </div>
+  `;
+
+  card.addEventListener('click', () => openCollection(col.id));
+  return card;
+}
+
+// ============================================================
+//  Render collections grid
+// ============================================================
+function renderCollections() {
+  const grid = document.getElementById('collections-grid');
+  grid.innerHTML = '';
+
+  let filtered = COLLECTIONS;
+  if (currentFilter === 'free') filtered = COLLECTIONS.filter(c => c.access === 'free');
+  else if (currentFilter === 'subscriber') filtered = COLLECTIONS.filter(c => c.access === 'subscriber');
+  else if (currentFilter === 'ppv') filtered = COLLECTIONS.filter(c => c.access === 'ppv');
+
+  if (currentTab === 'videos') filtered = COLLECTIONS.filter(c => c.isVideo);
+  else if (currentTab === 'photos') filtered = COLLECTIONS.filter(c => !c.isVideo);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-state-icon">📭</div>
+        <h3>Ничего не найдено</h3>
+        <p>Попробуйте другой фильтр</p>
+      </div>
+    `;
+    return;
+  }
+
+  filtered.forEach(col => grid.appendChild(buildCard(col)));
+}
+
+// ============================================================
+//  Open collection detail
+// ============================================================
+function openCollection(colId) {
+  const col = COLLECTIONS.find(c => c.id === colId);
+  if (!col) return;
+  currentCollection = col;
+
+  const isUnlocked = col.access === 'free'
+    || (col.access === 'subscriber' && isSubscribed)
+    || (col.access === 'ppv' && unlockedPPV.has(col.id));
+
+  // Hide collections, show detail
+  document.getElementById('collections-view').style.display = 'none';
+  const dv = document.getElementById('detail-view');
+  dv.classList.add('visible');
+
+  // Title & meta
+  document.getElementById('detail-title').textContent = col.name;
+  const metaRow = document.getElementById('detail-meta-row');
+  const accessClass = getAccessClass(col.access);
+  metaRow.innerHTML = `
+    <span class="detail-meta-pill info">📅 Обновлено ${col.updated}</span>
+    <span class="detail-meta-pill info">📦 ${col.count}</span>
+    <span class="detail-meta-pill ${accessClass}">${col.accessLabel}</span>
+    ${col.access === 'ppv' && isUnlocked ? '<span class="detail-meta-pill free">✓ Разблокировано</span>' : ''}
+  `;
+
+  // Gates
+  document.getElementById('ppv-gate').classList.remove('visible');
+  document.getElementById('sub-gate').classList.remove('visible');
+  document.getElementById('content-grid').innerHTML = '';
+
+  if (col.access === 'ppv' && !unlockedPPV.has(col.id)) {
+    // PPV gate
+    const gate = document.getElementById('ppv-gate');
+    gate.classList.add('visible');
+    document.getElementById('ppv-cover-inner').style.background = col.gradient;
+    document.getElementById('ppv-cover-inner').textContent = col.emoji;
+    document.getElementById('ppv-price-label').textContent = `Разблокировать за ${col.price}`;
+    document.getElementById('ppv-desc').textContent = col.description;
+    document.getElementById('ppv-unlock-btn').textContent = `💎 Разблокировать за ${col.price}`;
+
+    // Update payment modal price
+    document.getElementById('payment-price-amount').textContent = col.price;
+    document.getElementById('payment-title').textContent = `Разблокировать «${col.name}»`;
+    document.getElementById('payment-desc').textContent = col.description;
+  } else if (col.access === 'subscriber' && !isSubscribed) {
+    // Show first 3 free, rest blurred
+    renderContentGrid(col, false);
+    document.getElementById('sub-gate').classList.add('visible');
+  } else {
+    // Full access
+    renderContentGrid(col, true);
+  }
+
+  // Recommendations
+  renderRecommendations(col.id);
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================
+//  Content grid
+// ============================================================
+function renderContentGrid(col, fullAccess) {
+  const grid = document.getElementById('content-grid');
+  grid.innerHTML = '';
+
+  // Generate placeholder items
+  const count = Math.min(col.totalItems, 16);
+  const freeCount = fullAccess ? count : 3;
+
+  const emojis = ['📸','🖼️','🌟','✨','💫','🎭','🎬','🌸','💜','🔥','🌊','☀️','🎁','👑','💎','🌙'];
+
+  for (let i = 0; i < count; i++) {
+    const isBlurred = i >= freeCount;
+    const colorAngle = (i * 37) % 360;
+    const thumb = document.createElement('div');
+    thumb.className = 'content-thumb' + (isBlurred ? ' blurred' : '');
+    thumb.innerHTML = `
+      <div class="content-thumb-inner" style="background:linear-gradient(${colorAngle}deg, ${col.gradient.match(/#[0-9A-Fa-f]{6}/g)?.[0] || '#222'}, ${col.gradient.match(/#[0-9A-Fa-f]{6}/g)?.[1] || '#444'})">
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="index.html">🏠 Главная</a><span class="sep">›</span><a href="profile.html">Профиль</a><span class="sep">›</span><span class="current">Коллекция</span></nav>
+
+        ${col.isVideo && i < 3 ? '▶' : emojis[i % emojis.length]}
+      </div>
+      <div class="content-thumb-lock">
+        🔒
+        <span>Подпишитесь</span>
+      </div>
+    `;
+    if (!isBlurred) {
+      thumb.addEventListener('click', () => openLightbox(col, i, freeCount));
+    }
+    grid.appendChild(thumb);
+  }
+
+  lightboxItems = Array.from({length: freeCount}, (_, i) => ({
+    gradient: `linear-gradient(${i * 37}deg, ${col.gradient.match(/#[0-9A-Fa-f]{6}/g)?.[0] || '#222'}, ${col.gradient.match(/#[0-9A-Fa-f]{6}/g)?.[1] || '#444'})`,
+    emoji: emojis[i % emojis.length],
+    isVideo: col.isVideo
+  }));
+}
+
+// ============================================================
+//  Lightbox
+// ============================================================
+function openLightbox(col, idx, total) {
+  currentLightboxIdx = idx;
+  updateLightboxSlide();
+  document.getElementById('lightbox').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function updateLightboxSlide() {
+  const item = lightboxItems[currentLightboxIdx];
+  if (!item) return;
+  const inner = document.getElementById('lightbox-inner');
+  inner.style.background = item.gradient;
+  inner.textContent = item.isVideo ? '▶' : item.emoji;
+  inner.style.fontSize = item.isVideo ? '60px' : '80px';
+  document.getElementById('lightbox-counter').textContent = `${currentLightboxIdx + 1} / ${lightboxItems.length}`;
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+function lightboxNav(dir) {
+  currentLightboxIdx = Math.max(0, Math.min(lightboxItems.length - 1, currentLightboxIdx + dir));
+  document.getElementById('lightbox-inner').style.animation = 'none';
+  document.getElementById('lightbox-inner').offsetHeight;
+  document.getElementById('lightbox-inner').style.animation = 'unlock-burst 0.2s ease';
+  updateLightboxSlide();
+}
+
+function handleDownload() {
+  showToast('⚠️ Скачивание недоступно. Контент защищён водяным знаком.');
+}
+
+// ============================================================
+//  PPV Payment
+// ============================================================
+function openPaymentModal() {
+  document.getElementById('payment-modal').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePaymentModal() {
+  document.getElementById('payment-modal').classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+function selectPayMethod(btn) {
+  document.querySelectorAll('.payment-method-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+// Card number formatting
+document.getElementById('card-number-input').addEventListener('input', function(e) {
+  let val = e.target.value.replace(/\D/g, '').slice(0, 16);
+  val = val.replace(/(.{4})/g, '$1 ').trim();
+  e.target.value = val;
+});
+
+function processPayment() {
+  closePaymentModal();
+
+  // Show unlock animation
+  const anim = document.getElementById('unlock-anim');
+  anim.classList.add('visible');
+
+  setTimeout(() => {
+    anim.classList.remove('visible');
+    document.body.style.overflow = '';
+
+    if (currentCollection) {
+      unlockedPPV.add(currentCollection.id);
+      openCollection(currentCollection.id);
+      showToast('🎉 Коллекция разблокирована!');
+    }
+  }, 2000);
+}
+
+// ============================================================
+//  Navigation
+// ============================================================
+function showCollectionsView() {
+  document.getElementById('collections-view').style.display = 'block';
+  document.getElementById('detail-view').classList.remove('visible');
+  currentCollection = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function shareCollection() {
+  if (navigator.share && currentCollection) {
+    navigator.share({
+      title: currentCollection.name,
+      text: currentCollection.description,
+      url: window.location.href
+    }).catch(() => {});
+  } else {
+    navigator.clipboard?.writeText(window.location.href).catch(() => {});
+    showToast('Ссылка скопирована!');
+  }
+}
+
+// ============================================================
+//  Recommendations
+// ============================================================
+function renderRecommendations(excludeId) {
+  const row = document.getElementById('rec-row');
+  row.innerHTML = '';
+  const recs = COLLECTIONS.filter(c => c.id !== excludeId).slice(0, 4);
+  recs.forEach(col => {
+    const card = document.createElement('div');
+    card.className = 'rec-card';
+    card.innerHTML = `
+      <div class="rec-cover">
+        <div class="rec-cover-inner" style="background:${col.gradient}">${col.emoji}</div>
+      </div>
+      <div class="rec-body">
+        <div class="rec-name">${col.name}</div>
+        <div class="rec-meta">${col.count} • ${col.accessLabel}</div>
+      </div>
+    `;
+    card.addEventListener('click', () => openCollection(col.id));
+    row.appendChild(card);
+  });
+}
+
+// ============================================================
+//  Keyboard shortcuts
+// ============================================================
+document.addEventListener('keydown', (e) => {
+  const lb = document.getElementById('lightbox');
+  if (lb.classList.contains('visible')) {
+    if (e.key === 'ArrowRight') lightboxNav(1);
+    else if (e.key === 'ArrowLeft') lightboxNav(-1);
+    else if (e.key === 'Escape') closeLightbox();
+    return;
+  }
+  const pm = document.getElementById('payment-modal');
+  if (pm.classList.contains('visible')) {
+    if (e.key === 'Escape') closePaymentModal();
+    return;
+  }
+  if (e.key === 'Escape' && currentCollection) {
+    showCollectionsView();
+  }
+});
+
+// ============================================================
+//  Click outside modals
+// ============================================================
+document.getElementById('payment-modal').addEventListener('click', function(e) {
+  if (e.target === this) closePaymentModal();
+});
+
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this || e.target === document.getElementById('lightbox-content')) return;
+  if (e.target.closest('#lightbox-inner') && !e.target.closest('.lb-nav-btn')) {
+    // clicking the image itself — do nothing
+  }
+});
+
+// Touch swipe on lightbox
+let lbTouchStartX = null;
+document.getElementById('lightbox').addEventListener('touchstart', (e) => {
+  lbTouchStartX = e.touches[0].clientX;
+}, { passive: true });
+
+document.getElementById('lightbox').addEventListener('touchend', (e) => {
+  if (lbTouchStartX === null) return;
+  const dx = e.changedTouches[0].clientX - lbTouchStartX;
+  if (Math.abs(dx) > 40) lightboxNav(dx < 0 ? 1 : -1);
+  lbTouchStartX = null;
+});
+
+// ============================================================
+//  Navigate helper
+// ============================================================
+function navigateTo(href) {
+  document.body.classList.remove('kol-entering');
+  document.body.classList.add('kol-leaving');
+  setTimeout(() => { window.location.href = href; }, 220);
+}
+
+// ============================================================
+//  Init
+// ============================================================
+renderCollections();
+</script>
+
+<script>
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="collection.html" class="active" style="color:#fff;font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="en/collection.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     KOL Studio Global Components
+     1. GDPR Cookie Consent Banner
+     2. Dark / Light Theme Toggle
+     3. PWA Install Prompt
+═══════════════════════════════════════════════════════════ -->
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="cookie.html">Подробнее</a> · <a href="report.html">Пожаловаться</a> · <a href="api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+<!-- ── Unified Report Modal ── -->
+<style>
+#kol-report-modal{position:fixed;inset:0;z-index:10100;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-report-modal.show{display:flex}
+#kol-report-modal-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-report-modal-box{position:relative;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;z-index:1;animation:kol-modal-in 0.25s ease}
+@keyframes kol-modal-in{from{opacity:0;transform:scale(0.92) translateY(20px)}to{opacity:1;transform:none}}
+#kol-report-modal-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 6px}
+#kol-report-modal-box p{color:#A0A0C0;font-size:14px;margin:0 0 20px;line-height:1.6}
+.krm-types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.krm-type{background:#181835;border:1.5px solid #22224A;border-radius:12px;padding:12px;cursor:pointer;text-align:left;font-family:inherit;color:#E8E8F0;font-size:13px;transition:all 0.2s;display:flex;flex-direction:column;gap:4px}
+.krm-type:hover{border-color:#D42B6A;background:#1E1E3F}
+.krm-type.selected{border-color:#D42B6A;background:rgba(212,43,106,0.1);box-shadow:0 0 0 3px rgba(212,43,106,0.15)}
+.krm-type-icon{font-size:20px}
+.krm-type-label{font-weight:600;font-size:12px}
+.krm-desc{background:#181835;border:1.5px solid #22224A;border-radius:12px;width:100%;padding:12px 14px;font-family:inherit;font-size:14px;color:#E8E8F0;resize:vertical;min-height:100px;box-sizing:border-box;outline:none;transition:border-color 0.2s;margin-bottom:16px}
+.krm-desc:focus{border-color:#8B2BE2}
+.krm-footer{display:flex;gap:12px;justify-content:flex-end}
+.krm-cancel{background:none;border:1.5px solid #22224A;color:#A0A0C0;border-radius:10px;padding:10px 20px;font-size:14px;font-family:inherit;cursor:pointer;transition:all 0.2s}
+.krm-cancel:hover{border-color:#D42B6A;color:#E8E8F0}
+.krm-submit{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:10px 24px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:opacity 0.2s}
+.krm-submit:hover{opacity:0.9}
+.krm-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;line-height:1;padding:4px}
+.krm-close:hover{color:#E8E8F0}
+.krm-success{text-align:center;padding:20px 0}
+.krm-success-icon{font-size:48px;margin-bottom:12px}
+.krm-success h4{font-size:18px;font-weight:700;color:#00E676;margin:0 0 8px}
+.krm-success p{color:#A0A0C0;font-size:14px;margin:0}
+.krm-ticket{display:inline-block;background:#181835;border:1px solid #22224A;border-radius:8px;padding:6px 14px;font-size:12px;color:#FFB300;margin-top:12px;font-family:monospace}
+</style>
+<div id="kol-report-modal">
+  <div id="kol-report-modal-backdrop" onclick="kolCloseReport()"></div>
+  <div id="kol-report-modal-box">
+    <button class="krm-close" onclick="kolCloseReport()" aria-label="Закрыть">✕</button>
+    <div id="krm-form">
+      <h3>🚩 Пожаловаться</h3>
+      <p>Выберите причину жалобы. Мы рассмотрим её в течение 24–48 часов.</p>
+      <div class="krm-types">
+        <button class="krm-type" onclick="krmSelect(this,'illegal')">
+          <span class="krm-type-icon">🚫</span>
+          <span class="krm-type-label">Незаконный контент</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'fraud')">
+          <span class="krm-type-icon">💰</span>
+          <span class="krm-type-label">Мошенничество</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'dmca')">
+          <span class="krm-type-icon">📋</span>
+          <span class="krm-type-label">Авторские права</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'spam')">
+          <span class="krm-type-icon">🤖</span>
+          <span class="krm-type-label">Спам / Бот</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'harassment')">
+          <span class="krm-type-icon">😤</span>
+          <span class="krm-type-label">Харассмент</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'other')">
+          <span class="krm-type-icon">📌</span>
+          <span class="krm-type-label">Другое</span>
+        </button>
+      </div>
+      <textarea class="krm-desc" id="krm-desc" placeholder="Опишите проблему подробнее (необязательно)..." maxlength="1000"></textarea>
+      <div class="krm-footer">
+        <button class="krm-cancel" onclick="kolCloseReport()">Отмена</button>
+        <button class="krm-submit" onclick="krmSubmit()">Отправить</button>
+      </div>
+    </div>
+    <div id="krm-success" class="krm-success" style="display:none">
+      <div class="krm-success-icon">✅</div>
+      <h4>Жалоба отправлена</h4>
+      <p>Мы рассмотрим её в течение 24–48 часов</p>
+      <div class="krm-ticket" id="krm-ticket-id"></div>
+    </div>
+  </div>
+</div>
+<script>
+window._krmType = null;
+function kolOpenReport(targetId){
+  window._krmReportTarget = targetId||null;
+  document.getElementById('krm-form').style.display='';
+  document.getElementById('krm-success').style.display='none';
+  document.querySelectorAll('.krm-type').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('krm-desc').value='';
+  window._krmType=null;
+  document.getElementById('kol-report-modal').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function kolCloseReport(){
+  document.getElementById('kol-report-modal').classList.remove('show');
+  document.body.style.overflow='';
+}
+function krmSelect(btn,type){
+  document.querySelectorAll('.krm-type').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  window._krmType=type;
+}
+function krmSubmit(){
+  if(!window._krmType){
+    if(window.kolShowToast) kolShowToast('Выберите причину жалобы','error');
+    return;
+  }
+  document.getElementById('krm-form').style.display='none';
+  document.getElementById('krm-success').style.display='block';
+  const id='RPT-'+new Date().getFullYear()+'-'+Math.floor(1000+Math.random()*9000);
+  document.getElementById('krm-ticket-id').textContent='Номер: '+id;
+  setTimeout(kolCloseReport,4000);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')kolCloseReport();});
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href = 'search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href = 'upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

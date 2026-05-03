@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Фан-клуб — KOL Studio</title>
+  <link rel="canonical" href="https://kolstudio.com/en/fan-club.html">
+  <meta property="og:title" content="Фан-клуб KOL Studio — программа лояльности">
+  <meta property="og:description" content="Вступи в эксклюзивный фан-клуб KOL Studio. Получай привилегии, скидки и уникальный доступ к контенту.">
+  <meta property="og:url" content="https://kolstudio.com/fan-club.html">
+  <meta property="og:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Фан-клуб KOL Studio",
+    "description": "Эксклюзивная программа лояльности для фанатов KOL Studio",
+    "url": "https://kolstudio.com/fan-club.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "KOL Studio",
+      "url": "https://kolstudio.com"
+    }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:     #07071A;
+      --card:   #111128;
+      --card2:  #181835;
+      --border: #22224A;
+      --accent: #D42B6A;
+      --purple: #8B2BE2;
+      --green:  #00E676;
+      --gold:   #FFB300;
+      --text:   #E8E8F0;
+      --muted:  #7070A0;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      opacity: 1;
+      transition: opacity 0.35s ease;
+    }
+    body.fade-out { opacity: 0; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(7,7,26,0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 64px;
+    }
+    .nav-logo {
+      font-size: 1.25rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-size: 0.88rem; font-weight: 500; color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      color: #fff !important; font-weight: 700 !important;
+      padding: 9px 22px; border-radius: 10px;
+      font-size: 0.85rem !important; transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── Layout ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 72px 24px 52px;
+      text-align: center;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(139,43,226,0.15) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(139,43,226,0.15); border: 1px solid rgba(139,43,226,0.35);
+      color: #bf87ff; font-size: 0.8rem; font-weight: 600;
+      padding: 6px 16px; border-radius: 100px; margin-bottom: 20px;
+      letter-spacing: 0.05em;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900; line-height: 1.15; margin-bottom: 16px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub { color: var(--muted); font-size: 1.1rem; max-width: 520px; margin: 0 auto; }
+
+    /* ── Section titles ── */
+    .section { padding: 56px 0; }
+    .section-title {
+      font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;
+    }
+    .section-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 36px; }
+
+    /* ── Tier cards ── */
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+    .tier-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      cursor: pointer;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .tier-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      opacity: 0; transition: opacity 0.3s;
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(139,43,226,0.12), transparent);
+    }
+    .tier-card:hover { transform: translateY(-3px); }
+    .tier-card.active { border-color: var(--purple); box-shadow: 0 0 0 1px var(--purple), 0 16px 48px rgba(139,43,226,0.2); }
+    .tier-card.active::before { opacity: 1; }
+    .tier-card.gold-tier.active { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 16px 48px rgba(255,179,0,0.2); }
+
+    .current-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--purple); color: #fff;
+      font-size: 0.7rem; font-weight: 700;
+      padding: 4px 10px; border-radius: 100px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .tier-icon { font-size: 2.8rem; margin-bottom: 14px; display: block; }
+    .tier-name { font-size: 1.3rem; font-weight: 800; margin-bottom: 4px; }
+    .tier-price {
+      font-size: 2rem; font-weight: 900; margin-bottom: 16px;
+    }
+    .tier-price span { font-size: 0.9rem; font-weight: 500; color: var(--muted); }
+    .tier-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .tier-features li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.88rem; color: var(--muted);
+    }
+    .tier-features li::before {
+      content: '✓';
+      color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    }
+    .tier-btn {
+      display: block; width: 100%; margin-top: 24px;
+      padding: 13px; border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700; font-size: 0.92rem;
+      cursor: pointer; border: none; transition: opacity 0.2s, transform 0.15s;
+      text-align: center;
+    }
+    .tier-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; border: 1.5px solid var(--border) !important;
+      color: var(--text);
+    }
+    .btn-purple { background: linear-gradient(135deg, var(--purple), #6e22b8); color: #fff; }
+    .btn-gold   { background: linear-gradient(135deg, var(--gold), #e6950a); color: #07071A; }
+
+    /* ── Comparison table ── */
+    .table-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      background: var(--card2);
+      padding: 16px 20px;
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+      text-align: center;
+    }
+    thead th:first-child { text-align: left; }
+    tbody tr { border-top: 1px solid var(--border); }
+    tbody tr:hover { background: rgba(255,255,255,0.02); }
+    tbody td { padding: 15px 20px; font-size: 0.9rem; text-align: center; }
+    tbody td:first-child { text-align: left; font-weight: 500; }
+    .check { color: var(--green); font-size: 1.1rem; }
+    .cross { color: #444466; font-size: 1.1rem; }
+    .hl-col { background: rgba(139,43,226,0.07); }
+
+    /* ── Leaderboard ── */
+    .leaderboard { display: flex; flex-direction: column; gap: 12px; }
+    .lb-row {
+      display: flex; align-items: center; gap: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px 20px;
+      transition: border-color 0.2s;
+    }
+    .lb-row:hover { border-color: var(--border); background: var(--card2); }
+    .lb-rank {
+      font-size: 1.1rem; font-weight: 800; width: 32px; text-align: center;
+      flex-shrink: 0;
+    }
+    .lb-rank.gold   { color: var(--gold); }
+    .lb-rank.silver { color: #C0C0C0; }
+    .lb-rank.bronze { color: #CD7F32; }
+    .lb-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0;
+      border: 2px solid var(--border);
+    }
+    .lb-info { flex: 1; }
+    .lb-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 3px; }
+    .lb-meta { font-size: 0.78rem; color: var(--muted); }
+    .tier-badge {
+      font-size: 0.7rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 100px;
+      letter-spacing: 0.05em;
+    }
+    .badge-vip    { background: rgba(255,179,0,0.15); color: var(--gold); border: 1px solid rgba(255,179,0,0.3); }
+    .badge-fan    { background: rgba(139,43,226,0.15); color: #bf87ff; border: 1px solid rgba(139,43,226,0.3); }
+    .badge-basic  { background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border); }
+    .lb-spent { font-weight: 700; font-size: 0.9rem; text-align: right; }
+    .lb-streak { font-size: 0.75rem; color: var(--gold); text-align: right; }
+
+    /* ── Achievements ── */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .achievement-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px;
+      display: flex; align-items: flex-start; gap: 14px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .achievement-card:hover { border-color: var(--purple); transform: translateY(-2px); }
+    .ach-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; flex-shrink: 0;
+      background: var(--card2);
+    }
+    .ach-name { font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; }
+    .ach-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .lang-switcher {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 12px;
+    }
+    .lang-switcher a {
+      color: var(--muted); padding: 4px 10px;
+      border-radius: 6px; font-size: 0.82rem; transition: all 0.2s;
+    }
+    .lang-switcher a.active { background: var(--border); color: var(--text); font-weight: 600; }
+    .lang-switcher a:hover:not(.active) { background: #1a1a38; color: var(--text); }
+    .lang-switcher span { color: var(--border); }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--green); color: #07071A;
+      font-weight: 700; font-size: 0.88rem;
+      padding: 12px 28px; border-radius: 100px;
+      box-shadow: 0 8px 32px rgba(0,230,118,0.3);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 9999; pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+
+<style id="kol-skeleton-css">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skel-title{height:22px;width:60%;margin-bottom:12px;border-radius:6px}
+.skel-avatar{width:44px;height:44px;border-radius:50%}
+.skel-thumb{width:100%;height:180px;border-radius:12px}
+.skel-btn{height:38px;width:120px;border-radius:10px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px}
+.skel-row{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #22224A}
+.skel-body{display:flex;flex-direction:column;gap:8px;flex:1}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a class="nav-logo" href="../index.html" onclick="fadeOut(event,'index.html')">KOL Studio</a>
+  <div class="nav-links">
+    <a href="../feed.html"     onclick="fadeOut(event,'feed.html')">Лента</a>
+    <a href="../search.html"   onclick="fadeOut(event,'search.html')">Поиск</a>
+    <a href="../fan-club.html" class="active">Фан-клуб</a>
+    <a href="../messages.html" onclick="fadeOut(event,'messages.html')">Сообщения</a>
+    <a href="../checkout.html" class="nav-cta" onclick="fadeOut(event,'checkout.html')">Подписаться</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">💜 Эксклюзивно для участников</div>
+  <h1>Фан-клуб<br><span>KOL Studio</span></h1>
+  <p class="hero-sub">Эксклюзивная программа лояльности — получай привилегии, скидки и уникальный доступ к любимым авторам</p>
+</section>
+
+<div class="container">
+
+  <!-- Tier cards -->
+  <section class="section">
+    <h2 class="section-title">Выбери свой уровень</h2>
+    <p class="section-sub">Нажми на карточку, чтобы выбрать тариф</p>
+    <div class="tiers-grid">
+
+      <!-- Basic -->
+      <div class="tier-card" data-tier="basic" onclick="selectTier(this)">
+        <span class="tier-icon">🥉</span>
+        <div class="tier-name">Базовый</div>
+        <div class="tier-price">Бесплатно<span></span></div>
+        <ul class="tier-features">
+          <li>Доступ к публичному контенту</li>
+          <li>1 бесплатный чаевой в месяц</li>
+          <li>Участие в открытых чатах</li>
+          <li>Базовый бейдж фаната</li>
+        </ul>
+        <button class="tier-btn btn-outline">Текущий план</button>
+      </div>
+
+      <!-- Fan -->
+      <div class="tier-card active" data-tier="fan" onclick="selectTier(this)">
+        <span class="current-badge">Текущий</span>
+        <span class="tier-icon">🥈</span>
+        <div class="tier-name">Фанат</div>
+        <div class="tier-price">$9.99<span>/мес</span></div>
+        <ul class="tier-features">
+          <li>Скидка 10% на PPV-контент</li>
+          <li>Ранний доступ к новому контенту</li>
+          <li>Специальный бейдж «Фанат»</li>
+          <li>Приоритет в комментариях</li>
+          <li>Доступ к закрытым стримам</li>
+        </ul>
+        <button class="tier-btn btn-purple" onclick="goCheckout(event)">Управление</button>
+      </div>
+
+      <!-- VIP -->
+      <div class="tier-card gold-tier" data-tier="vip" onclick="selectTier(this)">
+        <span class="tier-icon">🥇</span>
+        <div class="tier-name">VIP-фан</div>
+        <div class="tier-price">$24.99<span>/мес</span></div>
+        <ul class="tier-features">
+          <li>Все функции тарифа «Фанат»</li>
+          <li>Выделенный личный чат с автором</li>
+          <li>Эксклюзивные виртуальные встречи</li>
+          <li>100 монет в подарок каждый месяц</li>
+          <li>Приоритетная поддержка 24/7</li>
+          <li>VIP-бейдж и отметка в профиле</li>
+        </ul>
+        <button class="tier-btn btn-gold" onclick="goCheckout(event)">Перейти на VIP</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison table -->
+  <section class="section" style="padding-top:0">
+    <h2 class="section-title">Сравнение тарифов</h2>
+    <p class="section-sub">Подробный обзор всех возможностей</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Возможность</th>
+            <th>🥉 Базовый</th>
+            <th class="hl-col">🥈 Фанат</th>
+            <th>🥇 VIP-фан</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Публичный контент</td>
+            <td><span class="check">✓</span></td>
+            <td class="hl-col"><span class="check">✓</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Скидка на PPV</td>
+            <td><span class="cross">—</span></td>
+            <td class="hl-col">10%</td>
+            <td>15%</td>
+          </tr>
+          <tr>
+            <td>Ранний доступ к контенту</td>
+            <td><span class="cross">—</span></td>
+            <td class="hl-col"><span class="check">✓</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Специальный бейдж</td>
+            <td><span class="cross">—</span></td>
+            <td class="hl-col">«Фанат»</td>
+            <td>«VIP»</td>
+          </tr>
+          <tr>
+            <td>Личный чат с автором</td>
+            <td><span class="cross">—</span></td>
+            <td class="hl-col"><span class="cross">—</span></td>
+            <td><span class="check">✓</span></td>
+          </tr>
+          <tr>
+            <td>Ежемесячные монеты</td>
+            <td><span class="cross">—</span></td>
+            <td class="hl-col"><span class="cross">—</span></td>
+            <td>100 монет</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Leaderboard -->
+  <section class="section" style="padding-top:0">
+    <h2 class="section-title">Топ фанаты</h2>
+    <p class="section-sub">Самые преданные участники этого месяца</p>
+    <div class="leaderboard">
+      <div class="lb-row">
+        <div class="lb-rank gold">🥇</div>
+        <div class="lb-avatar" style="background:linear-gradient(135deg,#FFB300,#e6950a)">👸</div>
+        <div class="lb-info">
+          <div class="lb-name">Anastasia_V</div>
+          <div class="lb-meta">Участник с марта 2023 · 🔥 142 дня подряд</div>
+        </div>
+        <span class="tier-badge badge-vip">VIP</span>
+        <div style="text-align:right">
+          <div class="lb-spent">$1 248</div>
+          <div class="lb-streak">142 дня 🔥</div>
+        </div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank silver">🥈</div>
+        <div class="lb-avatar" style="background:linear-gradient(135deg,#8B2BE2,#6e22b8)">🦋</div>
+        <div class="lb-info">
+          <div class="lb-name">dark_phoenix99</div>
+          <div class="lb-meta">Участник с июля 2023 · 🔥 88 дней подряд</div>
+        </div>
+        <span class="tier-badge badge-vip">VIP</span>
+        <div style="text-align:right">
+          <div class="lb-spent">$976</div>
+          <div class="lb-streak">88 дней 🔥</div>
+        </div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank bronze">🥉</div>
+        <div class="lb-avatar" style="background:linear-gradient(135deg,#D42B6A,#a0204f)">🌙</div>
+        <div class="lb-info">
+          <div class="lb-name">MoonlightFan</div>
+          <div class="lb-meta">Участник с января 2024 · 🔥 55 дней подряд</div>
+        </div>
+        <span class="tier-badge badge-fan">Фанат</span>
+        <div style="text-align:right">
+          <div class="lb-spent">$654</div>
+          <div class="lb-streak">55 дней 🔥</div>
+        </div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank" style="color:var(--muted)">4</div>
+        <div class="lb-avatar" style="background:linear-gradient(135deg,#00E676,#00b55a)">🐉</div>
+        <div class="lb-info">
+          <div class="lb-name">DragonKing_M</div>
+          <div class="lb-meta">Участник с апреля 2024 · 🔥 31 день подряд</div>
+        </div>
+        <span class="tier-badge badge-fan">Фанат</span>
+        <div style="text-align:right">
+          <div class="lb-spent">$412</div>
+          <div class="lb-streak">31 день 🔥</div>
+        </div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank" style="color:var(--muted)">5</div>
+        <div class="lb-avatar" style="background:linear-gradient(135deg,#22224A,#111128)">🌟</div>
+        <div class="lb-info">
+          <div class="lb-name">starlight_pro</div>
+          <div class="lb-meta">Участник с августом 2024 · 🔥 12 дней подряд</div>
+        </div>
+        <span class="tier-badge badge-basic">Базовый</span>
+        <div style="text-align:right">
+          <div class="lb-spent">$189</div>
+          <div class="lb-streak">12 дней</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Achievements -->
+  <section class="section" style="padding-top:0">
+    <h2 class="section-title">Достижения фаната</h2>
+    <p class="section-sub">Разблокируй значки за верность и активность</p>
+    <div class="achievements-grid">
+      <div class="achievement-card">
+        <div class="ach-icon">🌱</div>
+        <div>
+          <div class="ach-name">Первый шаг</div>
+          <div class="ach-desc">Вступи в фан-клуб и начни свой путь</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">❤️</div>
+        <div>
+          <div class="ach-name">Преданный фанат</div>
+          <div class="ach-desc">Оставайся активным 30 дней подряд</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">💸</div>
+        <div>
+          <div class="ach-name">Щедрая душа</div>
+          <div class="ach-desc">Отправь 10+ чаевых своим любимым авторам</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">🔥</div>
+        <div>
+          <div class="ach-name">На огне</div>
+          <div class="ach-desc">Серия активности 90 дней без перерыва</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">💬</div>
+        <div>
+          <div class="ach-name">Голос сообщества</div>
+          <div class="ach-desc">Оставь 100 комментариев к публикациям</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">👑</div>
+        <div>
+          <div class="ach-name">Истинный VIP</div>
+          <div class="ach-desc">Поддерживай VIP-статус 6 месяцев</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">🌍</div>
+        <div>
+          <div class="ach-name">Амбассадор</div>
+          <div class="ach-desc">Пригласи 5 друзей в KOL Studio</div>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <div class="ach-icon">💎</div>
+        <div>
+          <div class="ach-name">Бриллиантовый</div>
+          <div class="ach-desc">Потрать более $1000 суммарно на платформе</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<footer>
+  <div class="lang-switcher">
+    <a href="../fan-club.html" class="active">🇷🇺 RU</a>
+    <span>|</span>
+    <a href="../en/fan-club.html">🇬🇧 EN</a>
+  </div>
+  <p>© 2024 KOL Studio. Все права защищены.</p>
+</footer>
+
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="../cookie.html">Подробнее</a> · <a href="../report.html">Пожаловаться</a> · <a href="../api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+<!-- ── Unified Report Modal ── -->
+<style>
+#kol-report-modal{position:fixed;inset:0;z-index:10100;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-report-modal.show{display:flex}
+#kol-report-modal-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-report-modal-box{position:relative;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;z-index:1;animation:kol-modal-in 0.25s ease}
+@keyframes kol-modal-in{from{opacity:0;transform:scale(0.92) translateY(20px)}to{opacity:1;transform:none}}
+#kol-report-modal-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 6px}
+#kol-report-modal-box p{color:#A0A0C0;font-size:14px;margin:0 0 20px;line-height:1.6}
+.krm-types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.krm-type{background:#181835;border:1.5px solid #22224A;border-radius:12px;padding:12px;cursor:pointer;text-align:left;font-family:inherit;color:#E8E8F0;font-size:13px;transition:all 0.2s;display:flex;flex-direction:column;gap:4px}
+.krm-type:hover{border-color:#D42B6A;background:#1E1E3F}
+.krm-type.selected{border-color:#D42B6A;background:rgba(212,43,106,0.1);box-shadow:0 0 0 3px rgba(212,43,106,0.15)}
+.krm-type-icon{font-size:20px}
+.krm-type-label{font-weight:600;font-size:12px}
+.krm-desc{background:#181835;border:1.5px solid #22224A;border-radius:12px;width:100%;padding:12px 14px;font-family:inherit;font-size:14px;color:#E8E8F0;resize:vertical;min-height:100px;box-sizing:border-box;outline:none;transition:border-color 0.2s;margin-bottom:16px}
+.krm-desc:focus{border-color:#8B2BE2}
+.krm-footer{display:flex;gap:12px;justify-content:flex-end}
+.krm-cancel{background:none;border:1.5px solid #22224A;color:#A0A0C0;border-radius:10px;padding:10px 20px;font-size:14px;font-family:inherit;cursor:pointer;transition:all 0.2s}
+.krm-cancel:hover{border-color:#D42B6A;color:#E8E8F0}
+.krm-submit{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:10px 24px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:opacity 0.2s}
+.krm-submit:hover{opacity:0.9}
+.krm-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;line-height:1;padding:4px}
+.krm-close:hover{color:#E8E8F0}
+.krm-success{text-align:center;padding:20px 0}
+.krm-success-icon{font-size:48px;margin-bottom:12px}
+.krm-success h4{font-size:18px;font-weight:700;color:#00E676;margin:0 0 8px}
+.krm-success p{color:#A0A0C0;font-size:14px;margin:0}
+.krm-ticket{display:inline-block;background:#181835;border:1px solid #22224A;border-radius:8px;padding:6px 14px;font-size:12px;color:#FFB300;margin-top:12px;font-family:monospace}
+</style>
+<div id="kol-report-modal">
+  <div id="kol-report-modal-backdrop" onclick="kolCloseReport()"></div>
+  <div id="kol-report-modal-box">
+    <button class="krm-close" onclick="kolCloseReport()" aria-label="Закрыть">✕</button>
+    <div id="krm-form">
+      <h3>🚩 Пожаловаться</h3>
+      <p>Выберите причину жалобы. Мы рассмотрим её в течение 24–48 часов.</p>
+      <div class="krm-types">
+        <button class="krm-type" onclick="krmSelect(this,'illegal')">
+          <span class="krm-type-icon">🚫</span>
+          <span class="krm-type-label">Незаконный контент</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'fraud')">
+          <span class="krm-type-icon">💰</span>
+          <span class="krm-type-label">Мошенничество</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'dmca')">
+          <span class="krm-type-icon">📋</span>
+          <span class="krm-type-label">Авторские права</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'spam')">
+          <span class="krm-type-icon">🤖</span>
+          <span class="krm-type-label">Спам / Бот</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'harassment')">
+          <span class="krm-type-icon">😤</span>
+          <span class="krm-type-label">Харассмент</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'other')">
+          <span class="krm-type-icon">📌</span>
+          <span class="krm-type-label">Другое</span>
+        </button>
+      </div>
+      <textarea class="krm-desc" id="krm-desc" placeholder="Опишите проблему подробнее (необязательно)..." maxlength="1000"></textarea>
+      <div class="krm-footer">
+        <button class="krm-cancel" onclick="kolCloseReport()">Отмена</button>
+        <button class="krm-submit" onclick="krmSubmit()">Отправить</button>
+      </div>
+    </div>
+    <div id="krm-success" class="krm-success" style="display:none">
+      <div class="krm-success-icon">✅</div>
+      <h4>Жалоба отправлена</h4>
+      <p>Мы рассмотрим её в течение 24–48 часов</p>
+      <div class="krm-ticket" id="krm-ticket-id"></div>
+    </div>
+  </div>
+</div>
+<script>
+window._krmType = null;
+function kolOpenReport(targetId){
+  window._krmReportTarget = targetId||null;
+  document.getElementById('krm-form').style.display='';
+  document.getElementById('krm-success').style.display='none';
+  document.querySelectorAll('.krm-type').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('krm-desc').value='';
+  window._krmType=null;
+  document.getElementById('kol-report-modal').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function kolCloseReport(){
+  document.getElementById('kol-report-modal').classList.remove('show');
+  document.body.style.overflow='';
+}
+function krmSelect(btn,type){
+  document.querySelectorAll('.krm-type').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  window._krmType=type;
+}
+function krmSubmit(){
+  if(!window._krmType){
+    if(window.kolShowToast) kolShowToast('Выберите причину жалобы','error');
+    return;
+  }
+  document.getElementById('krm-form').style.display='none';
+  document.getElementById('krm-success').style.display='block';
+  const id='RPT-'+new Date().getFullYear()+'-'+Math.floor(1000+Math.random()*9000);
+  document.getElementById('krm-ticket-id').textContent='Номер: '+id;
+  setTimeout(kolCloseReport,4000);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')kolCloseReport();});
+</script>
+
+<!-- ── Turbo Tips System ── -->
+<style>
+.kol-turbo-tip{position:fixed;pointer-events:none;z-index:10200;font-weight:900;text-shadow:0 0 20px currentColor;animation:kol-tip-fly 1.8s ease-out forwards}
+@keyframes kol-tip-fly{0%{opacity:1;transform:translateY(0) scale(1)}60%{opacity:1;transform:translateY(-80px) scale(1.3)}100%{opacity:0;transform:translateY(-160px) scale(0.8)}}
+.kol-tip-burst{position:fixed;pointer-events:none;z-index:10199;border-radius:50%;animation:kol-burst 0.6s ease-out forwards}
+@keyframes kol-burst{0%{transform:scale(0);opacity:0.8}100%{transform:scale(3);opacity:0}}
+#kol-tip-streak{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10300;pointer-events:none;text-align:center;display:none}
+#kol-tip-streak.show{display:block;animation:kol-streak-pop 2s ease-out forwards}
+@keyframes kol-streak-pop{0%{opacity:0;transform:translate(-50%,-50%) scale(0.5)}15%{opacity:1;transform:translate(-50%,-60%) scale(1.2)}30%{transform:translate(-50%,-60%) scale(1)}85%{opacity:1;transform:translate(-50%,-60%) scale(1)}100%{opacity:0;transform:translate(-50%,-80%) scale(0.9)}}
+#kol-tip-streak .streak-emoji{font-size:64px;display:block}
+#kol-tip-streak .streak-text{font-size:28px;font-weight:900;background:linear-gradient(135deg,#FFB300,#D42B6A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;margin-top:8px}
+#kol-tip-streak .streak-sub{font-size:14px;color:#A0A0C0;display:block;margin-top:4px}
+</style>
+<div id="kol-tip-streak">
+  <span class="streak-emoji" id="kol-streak-emoji">🔥</span>
+  <span class="streak-text" id="kol-streak-text">MEGA TIP!</span>
+  <span class="streak-sub" id="kol-streak-sub"></span>
+</div>
+<script>
+(function(){
+  const TIP_CONFIG = [
+    {min:0,max:99,emoji:'💰',color:'#FFB300',size:'24px',label:''},
+    {min:100,max:499,emoji:'💎',color:'#00E676',size:'32px',label:'Щедро!'},
+    {min:500,max:999,emoji:'🔥',color:'#FF6B35',size:'40px',label:'Огонь!'},
+    {min:1000,max:Infinity,emoji:'👑',color:'#D42B6A',size:'52px',label:'МЕГА ТИП!'}
+  ];
+
+  window.kolFireTip = function(amount, x, y){
+    const cfg = TIP_CONFIG.find(c => amount >= c.min && amount <= c.max) || TIP_CONFIG[0];
+    
+    // Floating emoji
+    const el = document.createElement('div');
+    el.className = 'kol-turbo-tip';
+    el.textContent = cfg.emoji + ' +' + amount;
+    el.style.cssText = 'left:'+(x||window.innerWidth/2)+'px;top:'+(y||window.innerHeight/2)+'px;font-size:'+cfg.size+';color:'+cfg.color;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', ()=>el.remove());
+    
+    // Burst ring for large tips
+    if(amount >= 100){
+      const burst = document.createElement('div');
+      burst.className = 'kol-tip-burst';
+      burst.style.cssText = 'left:'+(x||window.innerWidth/2)+'px;top:'+(y||window.innerHeight/2)+'px;width:60px;height:60px;background:'+cfg.color+';margin:-30px 0 0 -30px';
+      document.body.appendChild(burst);
+      burst.addEventListener('animationend', ()=>burst.remove());
+    }
+    
+    // Streak popup for mega tips
+    if(amount >= 500 && cfg.label){
+      const streak = document.getElementById('kol-tip-streak');
+      document.getElementById('kol-streak-emoji').textContent = cfg.emoji;
+      document.getElementById('kol-streak-text').textContent = cfg.label;
+      document.getElementById('kol-streak-sub').textContent = amount + ' монет отправлено!';
+      streak.classList.remove('show');
+      void streak.offsetWidth;
+      streak.classList.add('show');
+      streak.addEventListener('animationend',()=>streak.classList.remove('show'),{once:true});
+    }
+    
+    // Trigger toast
+    if(window.kolShowToast) kolShowToast(cfg.emoji + ' Чаевые ' + amount + ' монет отправлены!', 'success');
+  };
+  
+  // Auto-wire tip buttons
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-tip-amount]');
+    if(!btn) return;
+    const amt = parseInt(btn.dataset.tipAmount);
+    if(!isNaN(amt)) kolFireTip(amt, e.clientX, e.clientY);
+  });
+})();
+</script>
+
+<!-- ── Badge & Achievement System ── -->
+<style>
+.kol-achievement-toast{position:fixed;top:80px;right:16px;z-index:10150;background:linear-gradient(135deg,#1E1E3F,#111128);border:1.5px solid #FFB300;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;max-width:320px;transform:translateX(120%);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 8px 32px rgba(255,179,0,0.2)}
+.kol-achievement-toast.show{transform:translateX(0)}
+.kol-ach-icon{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#FFB300,#FF6B35);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.kol-ach-body{flex:1;min-width:0}
+.kol-ach-label{font-size:10px;font-weight:700;color:#FFB300;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+.kol-ach-title{font-size:15px;font-weight:700;color:#E8E8F0;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kol-ach-desc{font-size:12px;color:#A0A0C0}
+
+/* Badge display components */
+.kol-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.kol-badge-gold{background:rgba(255,179,0,0.15);border:1px solid rgba(255,179,0,0.4);color:#FFB300}
+.kol-badge-pink{background:rgba(212,43,106,0.15);border:1px solid rgba(212,43,106,0.4);color:#D42B6A}
+.kol-badge-purple{background:rgba(139,43,226,0.15);border:1px solid rgba(139,43,226,0.4);color:#8B2BE2}
+.kol-badge-green{background:rgba(0,230,118,0.15);border:1px solid rgba(0,230,118,0.4);color:#00E676}
+
+/* Streak indicator */
+.kol-streak-badge{display:inline-flex;align-items:center;gap:6px;background:#181835;border:1.5px solid #22224A;border-radius:20px;padding:6px 14px;font-size:13px;font-weight:700;color:#FFB300}
+.kol-streak-badge .streak-fire{font-size:16px}
+.kol-streak-badge .streak-count{font-size:18px;background:linear-gradient(135deg,#FFB300,#FF6B35);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+</style>
+<div id="kol-achievement-toast" class="kol-achievement-toast">
+  <div class="kol-ach-icon" id="kol-ach-icon">🏆</div>
+  <div class="kol-ach-body">
+    <div class="kol-ach-label">Достижение разблокировано!</div>
+    <div class="kol-ach-title" id="kol-ach-title">Первая подписка</div>
+    <div class="kol-ach-desc" id="kol-ach-desc">Ты подписался впервые!</div>
+  </div>
+</div>
+<script>
+window.kolUnlockAchievement = function(icon, title, desc){
+  const toast = document.getElementById('kol-achievement-toast');
+  document.getElementById('kol-ach-icon').textContent = icon;
+  document.getElementById('kol-ach-title').textContent = title;
+  document.getElementById('kol-ach-desc').textContent = desc;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'), 4000);
+};
+
+// Predefined achievements
+window.KOL_ACHIEVEMENTS = {
+  first_sub: ['🎉','Первый шаг','Ты оформил первую подписку!'],
+  top_fan: ['👑','Топ-фан','Ты в числе 10% самых активных поклонников'],
+  big_tipper: ['💎','Щедрая душа','Ты отправил чаевые на 1000+ монет'],
+  early_bird: ['🌅','Ранний пташка','Ты среди первых 100 подписчиков'],
+  streak_7: ['🔥','Недельный стрик','7 дней подряд на платформе'],
+  streak_30: ['⚡','Месячный стрик','30 дней без перерыва — впечатляет!'],
+  vip_member: ['💜','VIP-статус','Ты получил VIP-статус подписчика'],
+  collector: ['🗂️','Коллекционер','Сохранено 50+ материалов в закладки'],
+};
+</script>
+
+<script>
+// Empty state toggle for feed filters
+(function(){
+  function checkFeedEmpty(){
+    var posts = document.querySelectorAll('.feed-card,.post-card,.kol-card');
+    var visible = Array.from(posts).filter(function(el){
+      return el.style.display !== 'none' && !el.closest('[style*="display:none"]');
+    });
+    var empty = document.getElementById('kol-feed-empty');
+    if(empty) empty.style.display = visible.length === 0 ? 'flex' : 'none';
+  }
+  // Run after any filter click
+  document.addEventListener('click', function(e){
+    if(e.target.closest('[data-filter],[class*="filter"],[class*="tab"],[class*="pill"]')){
+      setTimeout(checkFeedEmpty, 100);
+    }
+  });
+  // Initial check after load
+  window.addEventListener('load', checkFeedEmpty);
+})();
+</script>
+
+<script>
+  function fadeOut(e, url) {
+    e.preventDefault();
+    document.body.classList.add('fade-out');
+    setTimeout(() => { window.location.href = url; }, 320);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function selectTier(card) {
+    document.querySelectorAll('.tier-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+  }
+
+  function goCheckout(e) {
+    e.stopPropagation();
+    fadeOut({ preventDefault: () => {} }, 'checkout.html');
+  }
+
+  // Also handle all <a> tags with fadeOut
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (href && !href.startsWith('#') && !href.startsWith('http') && !a.onclick) {
+      a.addEventListener('click', (e) => fadeOut(e, href));
+    }
+  });
+</script>
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

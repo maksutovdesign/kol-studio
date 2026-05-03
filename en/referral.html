@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Referral Program — KOL Studio</title>
+  <link rel="apple-touch-icon" href="../icons/icon.svg">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @keyframes kol-fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes kol-fade-out { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-8px); } }
+    body.kol-entering { animation: kol-fade-in 0.28s ease forwards; }
+    body.kol-leaving { animation: kol-fade-out 0.22s ease forwards; pointer-events: none; }
+
+    :root {
+      --bg: #07071A;
+      --card: #111128;
+      --card2: #181835;
+      --border: #22224A;
+      --accent: #D42B6A;
+      --accent2: #8B2BE2;
+      --green: #00E676;
+      --gold: #FFB300;
+      --text: #FFFFFF;
+      --text-muted: #8888BB;
+      --text-sub: #5555AA;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 7, 26, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      height: 56px;
+      gap: 12px;
+    }
+
+    .topbar-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 10px;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .topbar-back:hover { background: rgba(212, 43, 106, 0.12); }
+    .topbar-back svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    .topbar-title {
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      flex: 1;
+    }
+
+    .topbar-action {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 8px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .topbar-action:hover { background: var(--card2); color: var(--text); }
+    .topbar-action svg { width: 22px; height: 22px; }
+
+    /* LAYOUT */
+    .page { max-width: 760px; margin: 0 auto; padding: 20px 16px 100px; }
+
+    /* HERO */
+    .hero-card {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-emoji { font-size: 52px; display: block; margin-bottom: 12px; line-height: 1; }
+    .hero-title {
+      font-size: clamp(22px, 5vw, 28px);
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .hero-sub {
+      font-size: 14px;
+      opacity: 0.88;
+      line-height: 1.6;
+      max-width: 500px;
+      margin: 0 auto 28px;
+    }
+
+    .stat-badges {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .stat-badge {
+      background: rgba(0,0,0,0.22);
+      backdrop-filter: blur(10px);
+      border-radius: 14px;
+      padding: 14px 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .stat-badge-icon { font-size: 18px; margin-bottom: 6px; }
+    .stat-badge-value {
+      font-size: clamp(20px, 4vw, 26px);
+      font-weight: 800;
+      display: block;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-badge-label { font-size: 10px; opacity: 0.8; line-height: 1.3; }
+
+    /* SECTION */
+    .section { margin-bottom: 24px; }
+    .section-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title .count-badge {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .card-inner { padding: 20px; }
+
+    /* TAB SWITCHER */
+    .tab-switcher {
+      display: flex;
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(212, 43, 106, 0.3);
+    }
+
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* REFERRAL EXPLANATION */
+    .ref-explanation {
+      background: rgba(139, 43, 226, 0.08);
+      border: 1px solid rgba(139, 43, 226, 0.25);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    /* LINK FIELD */
+    .link-field-wrap {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .link-field {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      outline: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .link-field:focus { border-color: var(--accent); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: none;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .btn-accent {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(212, 43, 106, 0.25);
+    }
+    .btn-accent:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212, 43, 106, 0.35); }
+    .btn-ghost {
+      background: var(--card2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { background: var(--border); color: var(--text); }
+    .btn-sm { padding: 7px 12px; font-size: 12px; border-radius: 8px; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* SHARE BUTTONS */
+    .share-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-decoration: none;
+    }
+    .share-btn:hover { transform: translateY(-1px); }
+    .share-btn.tg { border-color: #229ED9; }
+    .share-btn.tg:hover { background: rgba(34,158,217,0.15); color: #229ED9; }
+    .share-btn.vk { border-color: #4680C2; }
+    .share-btn.vk:hover { background: rgba(70,128,194,0.15); color: #4680C2; }
+    .share-btn.tw { border-color: #1D9BF0; }
+    .share-btn.tw:hover { background: rgba(29,155,240,0.15); color: #1D9BF0; }
+    .share-btn.wa { border-color: #25D366; }
+    .share-btn.wa:hover { background: rgba(37,211,102,0.15); color: #25D366; }
+    .share-btn.copy-btn:hover { background: rgba(212,43,106,0.15); color: var(--accent); border-color: var(--accent); }
+
+    /* QR */
+    .qr-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 20px;
+      background: var(--bg);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+    }
+    .qr-label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+    .qr-canvas {
+      width: 160px;
+      height: 160px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* PROMO MATERIALS */
+    .promo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 480px) { .promo-grid { grid-template-columns: 1fr; } }
+
+    .promo-card {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .promo-card-icon { font-size: 28px; }
+    .promo-card-name { font-size: 13px; font-weight: 600; }
+    .promo-card-meta { font-size: 11px; color: var(--text-muted); }
+
+    /* TABLE */
+    .referrals-table-wrap { overflow-x: auto; }
+    .referrals-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 520px;
+    }
+    .referrals-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .referrals-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(34, 34, 74, 0.6);
+      vertical-align: middle;
+    }
+    .referrals-table tr:last-child td { border-bottom: none; }
+    .referrals-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .referrals-table tr.top-referral td { background: rgba(255,179,0,0.05); }
+
+    .avatar-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .avatar-placeholder {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .avatar-name { font-weight: 600; }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .status-active { background: rgba(0,230,118,0.12); color: var(--green); }
+    .status-pending { background: rgba(255,179,0,0.12); color: var(--gold); }
+    .status-inactive { background: rgba(255,255,255,0.06); color: var(--text-muted); }
+
+    .income-cell { font-weight: 600; }
+    .income-mine { color: var(--green); font-weight: 700; }
+    .top-label {
+      background: linear-gradient(135deg, var(--gold), #FF8F00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 10px;
+      font-weight: 700;
+      display: block;
+    }
+
+    .table-total {
+      padding: 14px 16px;
+      border-top: 2px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .table-total span { color: var(--green); }
+
+    /* FILTER TABS */
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .filter-tab.active {
+      background: rgba(212, 43, 106, 0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .filter-tab:hover:not(.active) { border-color: var(--text-sub); color: var(--text); }
+
+    /* PAYOUT HISTORY */
+    .payout-list { display: flex; flex-direction: column; gap: 10px; }
+    .payout-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--card2);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .payout-row:hover { background: rgba(34, 34, 74, 0.8); }
+    .payout-date { font-size: 13px; color: var(--text-muted); }
+    .payout-amount { font-size: 16px; font-weight: 700; }
+    .payout-status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+    }
+
+    /* PANEL OVERLAY (payout history) */
+    .panel-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .panel-overlay.open { display: flex; }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px 24px 0 0;
+      padding: 28px 20px 40px;
+      width: 100%;
+      max-width: 760px;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: panel-up 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes panel-up { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .panel-title { font-size: 18px; font-weight: 700; }
+    .panel-close {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 18px;
+      transition: all 0.15s;
+    }
+    .panel-close:hover { background: var(--border); color: var(--text); }
+
+    /* FAQ ACCORDION */
+    .faq-list { display: flex; flex-direction: column; gap: 8px; }
+    .faq-item {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .faq-item.open { border-color: rgba(212, 43, 106, 0.4); }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      text-align: left;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .faq-chevron {
+      color: var(--text-muted);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--accent); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-answer-inner { padding: 0 18px 16px; }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .toast-icon { font-size: 16px; }
+
+    /* NAV BAR (bottom) */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(7, 7, 26, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+      z-index: 50;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-decoration: none;
+      color: var(--text-sub);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 10px;
+      transition: color 0.15s;
+    }
+    .nav-item.active { color: var(--accent); }
+    .nav-item svg { width: 22px; height: 22px; }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: var(--border); margin: 4px 0; }
+
+    /* RESPONSIVE */
+    @media (max-width: 520px) {
+      .stat-badges { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .stat-badge-value { font-size: 18px; }
+      .hero-card { padding: 28px 18px; }
+    }
+
+    /* GRADIENT TEXT */
+    .grad-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  </style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/referral.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/referral.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/referral.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/referral.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <a href="model-cabinet.html" class="topbar-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15,18 9,12 15,6"/>
+    </svg>
+    Назад
+  </a>
+  <span class="topbar-title">Referral Program</span>
+  <button class="topbar-action" onclick="openPayoutPanel()" title="History выплат">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12,6 12,12 16,14"/>
+    </svg>
+  </button>
+</header>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✅</span>
+  <span id="toast-text">Скопировано!</span>
+</div>
+
+<!-- PAYOUT PANEL OVERLAY -->
+<div class="panel-overlay" id="payoutPanel" onclick="closePayoutPanel(event)">
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">History выплат</span>
+      <button class="panel-close" onclick="closePayoutPanel()">✕</button>
+    </div>
+    <div class="payout-list">
+      <div class="payout-row">
+        <div>
+          <div class="payout-date">3 мая 2026</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">За апрель 2026</div>
+        </div>
+        <div class="payout-amount">$247.00</div>
+        <div class="payout-status">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+          Paid
+        </div>
+      </div>
+      <div class="payout-row">
+        <div>
+          <div class="payout-date">3 апреля 2026</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">За март 2026</div>
+        </div>
+        <div class="payout-amount">$198.50</div>
+        <div class="payout-status">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+          Paid
+        </div>
+      </div>
+      <div class="payout-row">
+        <div>
+          <div class="payout-date">3 марта 2026</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">За февраль 2026</div>
+        </div>
+        <div class="payout-amount">$156.00</div>
+        <div class="payout-status">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+          Paid
+        </div>
+      </div>
+      <div class="payout-row">
+        <div>
+          <div class="payout-date">3 февраля 2026</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">За январь 2026</div>
+        </div>
+        <div class="payout-amount">$112.00</div>
+        <div class="payout-status">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+          Paid
+        </div>
+      </div>
+      <div class="payout-row">
+        <div>
+          <div class="payout-date">3 января 2026</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:2px">За декабрь 2025</div>
+        </div>
+        <div class="payout-amount">$88.50</div>
+        <div class="payout-status">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+          Paid
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:14px 16px;background:rgba(0,230,118,0.07);border:1px solid rgba(0,230,118,0.2);border-radius:12px;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-weight:700;">Всего выплачено</span>
+      <span style="color:var(--green);font-size:18px;font-weight:800;">$802.00</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN PAGE -->
+<main class="page">
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="../index.html">🏠 Главная</a><span class="sep">›</span><a href="../user-cabinet.html">Кабинет</a><span class="sep">›</span><span class="current">Рефералы</span></nav>
+
+  <!-- HERO -->
+  <div class="hero-card">
+    <span class="hero-emoji">🤝</span>
+    <h1 class="hero-title">Зарабатывайте вместе с нами</h1>
+    <p class="hero-sub">Приглашайте моделей и получайте 5% от их дохода пожизненно. Без ограничений, без потолка.</p>
+    <div class="stat-badges">
+      <div class="stat-badge">
+        <div class="stat-badge-icon">⚡</div>
+        <span class="stat-badge-value">5%</span>
+        <span class="stat-badge-label">от дохода модели навсегда</span>
+      </div>
+      <div class="stat-badge">
+        <div class="stat-badge-icon">💰</div>
+        <span class="stat-badge-value">$247</span>
+        <span class="stat-badge-label">ваш реферальный доход за апрель</span>
+      </div>
+      <div class="stat-badge">
+        <div class="stat-badge-icon">👥</div>
+        <span class="stat-badge-value">12</span>
+        <span class="stat-badge-label">активных рефералов</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MY REFERRAL LINK -->
+  <div class="section">
+    <h2 class="section-title">Моя реферальная ссылка</h2>
+    <div class="card">
+      <div class="card-inner">
+
+        <!-- TABS -->
+        <div class="tab-switcher">
+          <button class="tab-btn active" data-tab="models" onclick="switchTab('models', this)">Для моделей</button>
+          <button class="tab-btn" data-tab="fans" onclick="switchTab('fans', this)">Для фанатов</button>
+        </div>
+
+        <!-- TAB: MODELS -->
+        <div class="tab-pane active" id="tab-models">
+          <div class="ref-explanation">
+            Когда новая модель регистрируется по вашей ссылке и начинает зарабатывать, вы получаете <strong style="color:var(--text)">5% от её дохода — пожизненно</strong>, независимо от суммы.
+          </div>
+          <div class="link-field-wrap">
+            <input class="link-field" type="text" id="modelRefLink" value="https://kolstudio.com/en/join?ref=anna_m" readonly>
+            <button class="btn btn-accent btn-sm" onclick="copyLink('modelRefLink')">Copy</button>
+          </div>
+          <div class="share-row">
+            <button class="share-btn tg" onclick="shareLink('telegram','models')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.94 8.19l-2.04 9.6c-.15.68-.55.84-1.11.52l-3-2.21-1.45 1.4c-.16.16-.3.3-.61.3l.21-3.03 5.5-4.97c.24-.21-.05-.33-.37-.12l-6.79 4.27-2.93-.91c-.63-.2-.64-.63.14-.93l11.43-4.41c.52-.19.98.13.82.49z"/></svg>
+              Telegram
+            </button>
+            <button class="share-btn vk" onclick="shareLink('vk','models')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.07 4.38H3.93C3.42 4.38 3 4.8 3 5.31v13.38c0 .51.42.93.93.93h16.14c.51 0 .93-.42.93-.93V5.31c0-.51-.42-.93-.93-.93zM17.9 13.74c-.18.2-.38.39-.61.55-.28.2-.56.33-.84.38-.28.05-.54.05-.79.01-.25-.04-.5-.13-.76-.27-.26-.14-.52-.32-.78-.54-.26-.22-.53-.49-.82-.81l-.1-.1c.05.54.05 1.04 0 1.5-.05.46-.15.85-.3 1.17h-2.36c.09-.3.16-.62.2-.97.04-.35.06-.72.06-1.11 0-.39-.02-.79-.07-1.2-.05-.41-.13-.82-.24-1.23h-.05c-.34.83-.68 1.57-1.02 2.22-.34.65-.68 1.21-1.02 1.68h-2.2c.31-.46.64-.99.98-1.59.34-.6.66-1.23.97-1.9.31-.67.58-1.35.82-2.04.24-.69.42-1.37.52-2.04H8c-.05.23-.09.47-.12.72-.03.25-.06.51-.07.77h-1.7c0-.4.03-.79.1-1.17.07-.38.16-.73.28-1.05.12-.32.25-.59.4-.82.15-.23.3-.41.46-.55h2.36c-.11.37-.2.73-.25 1.09h.05c.23-.37.47-.7.72-1.01.25-.31.52-.57.81-.79h2.08c-.17.24-.36.52-.55.84-.19.32-.38.66-.56 1.02.44-.08.87-.1 1.29-.04.42.06.81.19 1.17.39.36.2.67.47.93.81.26.34.42.75.47 1.23.06.48.01.93-.15 1.34-.16.41-.4.77-.72 1.07z"/></svg>
+              VK
+            </button>
+            <button class="share-btn tw" onclick="shareLink('twitter','models')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              Twitter
+            </button>
+            <button class="share-btn wa" onclick="shareLink('whatsapp','models')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.562 4.14 1.544 5.872L0 24l6.306-1.518A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.512-5.23-1.4l-.376-.217-3.744.902.937-3.655-.239-.387C2.475 15.56 2 13.839 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              WhatsApp
+            </button>
+            <button class="share-btn copy-btn" onclick="copyLink('modelRefLink')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+
+          <!-- QR -->
+          <div class="qr-section">
+            <span class="qr-label">QR-код для ссылки модели</span>
+            <div class="qr-canvas">
+              <svg id="qrSvgModels" width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" style="display:block;"></svg>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="downloadQR('qrSvgModels','qr-models')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Скачать QR
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB: FANS -->
+        <div class="tab-pane" id="tab-fans">
+          <div class="ref-explanation" style="border-color:rgba(212,43,106,0.25);background:rgba(212,43,106,0.07);">
+            Приглашайте друзей и получайте <strong style="color:var(--text)">$5 на баланс</strong> за каждого нового subscriberа, который оформит подписку по вашей ссылке.
+          </div>
+          <div class="link-field-wrap">
+            <input class="link-field" type="text" id="fanRefLink" value="https://kolstudio.com/en/fan?ref=anna_m" readonly>
+            <button class="btn btn-accent btn-sm" onclick="copyLink('fanRefLink')">Copy</button>
+          </div>
+          <div class="share-row">
+            <button class="share-btn tg" onclick="shareLink('telegram','fans')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.94 8.19l-2.04 9.6c-.15.68-.55.84-1.11.52l-3-2.21-1.45 1.4c-.16.16-.3.3-.61.3l.21-3.03 5.5-4.97c.24-.21-.05-.33-.37-.12l-6.79 4.27-2.93-.91c-.63-.2-.64-.63.14-.93l11.43-4.41c.52-.19.98.13.82.49z"/></svg>
+              Telegram
+            </button>
+            <button class="share-btn vk" onclick="shareLink('vk','fans')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.07 4.38H3.93C3.42 4.38 3 4.8 3 5.31v13.38c0 .51.42.93.93.93h16.14c.51 0 .93-.42.93-.93V5.31c0-.51-.42-.93-.93-.93zM17.9 13.74c-.18.2-.38.39-.61.55-.28.2-.56.33-.84.38-.28.05-.54.05-.79.01-.25-.04-.5-.13-.76-.27-.26-.14-.52-.32-.78-.54-.26-.22-.53-.49-.82-.81l-.1-.1c.05.54.05 1.04 0 1.5-.05.46-.15.85-.3 1.17h-2.36c.09-.3.16-.62.2-.97.04-.35.06-.72.06-1.11 0-.39-.02-.79-.07-1.2-.05-.41-.13-.82-.24-1.23h-.05c-.34.83-.68 1.57-1.02 2.22-.34.65-.68 1.21-1.02 1.68h-2.2c.31-.46.64-.99.98-1.59.34-.6.66-1.23.97-1.9.31-.67.58-1.35.82-2.04.24-.69.42-1.37.52-2.04H8c-.05.23-.09.47-.12.72-.03.25-.06.51-.07.77h-1.7c0-.4.03-.79.1-1.17.07-.38.16-.73.28-1.05.12-.32.25-.59.4-.82.15-.23.3-.41.46-.55h2.36c-.11.37-.2.73-.25 1.09h.05c.23-.37.47-.7.72-1.01.25-.31.52-.57.81-.79h2.08c-.17.24-.36.52-.55.84-.19.32-.38.66-.56 1.02.44-.08.87-.1 1.29-.04.42.06.81.19 1.17.39.36.2.67.47.93.81.26.34.42.75.47 1.23.06.48.01.93-.15 1.34-.16.41-.4.77-.72 1.07z"/></svg>
+              VK
+            </button>
+            <button class="share-btn tw" onclick="shareLink('twitter','fans')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              Twitter
+            </button>
+            <button class="share-btn wa" onclick="shareLink('whatsapp','fans')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.562 4.14 1.544 5.872L0 24l6.306-1.518A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.512-5.23-1.4l-.376-.217-3.744.902.937-3.655-.239-.387C2.475 15.56 2 13.839 2 12 2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              WhatsApp
+            </button>
+            <button class="share-btn copy-btn" onclick="copyLink('fanRefLink')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <div class="qr-section">
+            <span class="qr-label">QR-код для ссылки фанатов</span>
+            <div class="qr-canvas">
+              <svg id="qrSvgFans" width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" style="display:block;"></svg>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="downloadQR('qrSvgFans','qr-fans')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Скачать QR
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMO MATERIALS -->
+  <div class="section">
+    <h2 class="section-title">Промо-материалы для скачивания</h2>
+    <div class="promo-grid">
+      <div class="promo-card">
+        <div class="promo-card-icon">🖼️</div>
+        <div class="promo-card-name">Баннер для Instagram Stories</div>
+        <div class="promo-card-meta">Размер: 9:16 • PNG • 1080×1920</div>
+        <button class="btn btn-accent btn-sm" onclick="fakeDownload('Instagram Stories PNG')">Скачать PNG</button>
+      </div>
+      <div class="promo-card">
+        <div class="promo-card-icon">🖼️</div>
+        <div class="promo-card-name">Пост для ленты</div>
+        <div class="promo-card-meta">Размер: 1:1 • PNG • 1080×1080</div>
+        <button class="btn btn-accent btn-sm" onclick="fakeDownload('Пост PNG')">Скачать PNG</button>
+      </div>
+      <div class="promo-card">
+        <div class="promo-card-icon">📝</div>
+        <div class="promo-card-name">Готовый текст для поста</div>
+        <div class="promo-card-meta">Адаптирован для соцсетей</div>
+        <button class="btn btn-ghost btn-sm" onclick="copyPromoText()">Копировать текст</button>
+      </div>
+      <div class="promo-card">
+        <div class="promo-card-icon">🎬</div>
+        <div class="promo-card-name">Video-темплейт</div>
+        <div class="promo-card-meta">Формат: MP4 • 1080×1920</div>
+        <button class="btn btn-ghost btn-sm" disabled style="opacity:0.4;cursor:not-allowed;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Скоро
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFERRALS TABLE -->
+  <div class="section">
+    <h2 class="section-title">
+      Мои рефералы
+      <span class="count-badge">12</span>
+    </h2>
+
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterReferrals('active', this)">Активные</button>
+      <button class="filter-tab" onclick="filterReferrals('pending', this)">Ожидают верификации</button>
+      <button class="filter-tab" onclick="filterReferrals('all', this)">Все</button>
+    </div>
+
+    <div class="card">
+      <div class="referrals-table-wrap">
+        <table class="referrals-table" id="referralsTable">
+          <thead>
+            <tr>
+              <th>Модель</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Income модели</th>
+              <th>Ваш доход</th>
+            </tr>
+          </thead>
+          <tbody id="referralsTbody">
+            <tr data-status="active">
+              <td><div class="avatar-cell">
+                <div class="avatar-placeholder" style="background:linear-gradient(135deg,#D42B6A,#8B2BE2);">V</div>
+                <span class="avatar-name">@victoria_l</span>
+              </div></td>
+              <td style="color:var(--text-muted);font-size:12px;">12 мар 2026</td>
+              <td><span class="status-badge status-active">● Active</span></td>
+              <td class="income-cell">$2,840</td>
+              <td class="income-mine">$142.00</td>
+            </tr>
+            <tr data-status="active">
+              <td><div class="avatar-cell">
+                <div class="avatar-placeholder" style="background:linear-gradient(135deg,#8B2BE2,#4444CC);">K</div>
+                <span class="avatar-name">@kira_s</span>
+              </div></td>
+              <td style="color:var(--text-muted);font-size:12px;">28 янв 2026</td>
+              <td><span class="status-badge status-active">● Active</span></td>
+              <td class="income-cell">$1,920</td>
+              <td class="income-mine">$96.00</td>
+            </tr>
+            <tr data-status="active">
+              <td><div class="avatar-cell">
+                <div class="avatar-placeholder" style="background:linear-gradient(135deg,#333366,#8B2BE2);">B</div>
+                <span class="avatar-name">@bella_noir</span>
+              </div></td>
+              <td style="color:var(--text-muted);font-size:12px;">5 фев 2026</td>
+              <td><span class="status-badge status-active">● Active</span></td>
+              <td class="income-cell">$1,100</td>
+              <td class="income-mine">$55.00</td>
+            </tr>
+            <tr data-status="active" class="top-referral">
+              <td><div class="avatar-cell">
+                <div class="avatar-placeholder" style="background:linear-gradient(135deg,#FFB300,#FF6F00);">L</div>
+                <div>
+                  <div class="avatar-name">@luna_rose</div>
+                  <span class="top-label">★ Топ-реферал</span>
+                </div>
+              </div></td>
+              <td style="color:var(--text-muted);font-size:12px;">15 янв 2026</td>
+              <td><span class="status-badge status-active">● Active</span></td>
+              <td class="income-cell" style="color:var(--gold);">$3,450</td>
+              <td class="income-mine" style="color:var(--gold);">$172.50</td>
+            </tr>
+            <tr data-status="active">
+              <td><div class="avatar-cell">
+                <div class="avatar-placeholder" style="background:linear-gradient(135deg,#D42B6A,#660033);">S</div>
+                <span class="avatar-name">@sofiya_v</span>
+              </div></td>
+              <td style="color:var(--text-muted);font-size:12px;">8 фев 2026</td>
+              <td><span class="status-badge status-active">● Active</span></td>
+              <td class="income-cell">$890</td>
+              <td class="income-mine">$44.50</td>
+            </tr>
+            <tr data-status="active">
+              <td><div class="avatar-cell">
+                <div class="avatar-placeholder" style="background:linear-gradient(135deg,#22224A,#555599);">M</div>
+                <span class="avatar-name">@mira_x</span>
+              </div></td>
+              <td style="color:var(--text-muted);font-size:12px;">20 мар 2026</td>
+              <td><span class="status-badge status-active">● Active</span></td>
+              <td class="income-cell">$660</td>
+              <td class="income-mine">$33.00</td>
+            </tr>
+            <tr data-status="pending">
+              <td><div class="avatar-cell">
+                <div class="avatar-placeholder" style="background:rgba(255,179,0,0.2);color:var(--gold);">N</div>
+                <span class="avatar-name">@new_model_2</span>
+              </div></td>
+              <td style="color:var(--text-muted);font-size:12px;">20 апр 2026</td>
+              <td><span class="status-badge status-pending">⏳ Pending Verification</span></td>
+              <td class="income-cell" style="color:var(--text-muted);">—</td>
+              <td class="income-mine" style="color:var(--text-muted);">—</td>
+            </tr>
+            <tr data-status="inactive">
+              <td><div class="avatar-cell">
+                <div class="avatar-placeholder" style="background:rgba(255,255,255,0.05);color:var(--text-muted);">O</div>
+                <span class="avatar-name" style="color:var(--text-muted);">@olga_k</span>
+              </div></td>
+              <td style="color:var(--text-muted);font-size:12px;">10 мар 2026</td>
+              <td><span class="status-badge status-inactive">○ Inactive</span></td>
+              <td class="income-cell" style="color:var(--text-muted);">$0</td>
+              <td class="income-mine" style="color:var(--text-muted);">$0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-total">
+        Total заработано: <span>$2,470.00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYOUT HISTORY (inline) -->
+  <div class="section">
+    <h2 class="section-title">History выплат</h2>
+    <div class="payout-list">
+      <div class="payout-row">
+        <div>
+          <div style="font-weight:600;font-size:14px;">За апрель 2026</div>
+          <div class="payout-date">3 мая 2026</div>
+        </div>
+        <div class="payout-amount">$247.00</div>
+        <div class="payout-status">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+          Paid
+        </div>
+      </div>
+      <div class="payout-row">
+        <div>
+          <div style="font-weight:600;font-size:14px;">За март 2026</div>
+          <div class="payout-date">3 апреля 2026</div>
+        </div>
+        <div class="payout-amount">$198.50</div>
+        <div class="payout-status">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+          Paid
+        </div>
+      </div>
+      <div class="payout-row">
+        <div>
+          <div style="font-weight:600;font-size:14px;">За февраль 2026</div>
+          <div class="payout-date">3 марта 2026</div>
+        </div>
+        <div class="payout-amount">$156.00</div>
+        <div class="payout-status">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+          Paid
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <h2 class="section-title">Часто задаваемые вопросы</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Когда начисляются реферальные?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Реферальные выплаты начисляются ежемесячно 1-го числа за предыдущий месяц и выплачиваются вместе с основными доходами каждую пятницу.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Есть ли ограничение по количеству рефералов?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Нет никаких ограничений. Вы можете пригласить любое количество моделей и получать 5% от дохода каждой из них бесплатно.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Что значит "пожизненно"?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Вы получаете % от дохода реферала всё время, пока она зарегистрирована и активна на платформе — без срока истечения.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Что происходит, если реферал временно неактивен?
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Если модель делает паузу и возвращается, начисления возобновляются автоматически с первого дохода после возвращения.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="nav-bar">
+  <a href="feed.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+    Feed
+  </a>
+  <a href="search.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    Search
+  </a>
+  <a href="model-cabinet.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Cabinet
+  </a>
+  <a href="user-cabinet.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    Меню
+  </a>
+</nav>
+
+<script>
+  // ─── TAB SWITCHER ────────────────────────────────────────────
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  }
+
+  // ─── TOAST ───────────────────────────────────────────────────
+  let toastTimer;
+  function showToast(msg, icon = '✅') {
+    const t = document.getElementById('toast');
+    const ti = document.getElementById('toast-text');
+    t.querySelector('.toast-icon').textContent = icon;
+    ti.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+  }
+
+  // ─── COPY ────────────────────────────────────────────────────
+  function copyLink(inputId) {
+    const el = document.getElementById(inputId);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(el.value).then(() => showToast('Ссылка скопирована!', '🔗'));
+    } else {
+      el.select();
+      document.execCommand('copy');
+      showToast('Ссылка скопирована!', '🔗');
+    }
+  }
+
+  function copyPromoText() {
+    const text = 'Я зарабатываю на KOL Studio 💰 Регистрируйтесь по моей ссылке и получите 7 дней Premium бесплатно! kolstudio.com/join?ref=anna_m';
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => showToast('Текст скопирован!', '📋'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('Текст скопирован!', '📋');
+    }
+  }
+
+  // ─── SHARE ───────────────────────────────────────────────────
+  function shareLink(platform, type) {
+    const link = type === 'fans'
+      ? 'https://kolstudio.com/en/fan?ref=anna_m'
+      : 'https://kolstudio.com/en/join?ref=anna_m';
+    const text = type === 'fans'
+      ? 'Подпишись на KOL Studio — лучший контент! Регистрируйся по моей ссылке:'
+      : 'Присоединяйся к KOL Studio и зарабатывай! Регистрация по ссылке:';
+    const urls = {
+      telegram: `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`,
+      vk: `https://vk.com/share.php?url=${encodeURIComponent(link)}&title=${encodeURIComponent(text)}`,
+      twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`,
+      whatsapp: `https://wa.me/?text=${encodeURIComponent(text + ' ' + link)}`
+    };
+    if (urls[platform]) window.open(urls[platform], '_blank');
+    showToast('Открываем ' + platform + '...', '🚀');
+  }
+
+  // ─── FAKE DOWNLOAD ───────────────────────────────────────────
+  function fakeDownload(name) {
+    showToast('Скачивание: ' + name, '⬇️');
+  }
+
+  // ─── FILTER REFERRALS ────────────────────────────────────────
+  function filterReferrals(filter, btn) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    const rows = document.querySelectorAll('#referralsTbody tr');
+    rows.forEach(row => {
+      const status = row.dataset.status;
+      if (filter === 'all') {
+        row.style.display = '';
+      } else if (filter === 'active') {
+        row.style.display = (status === 'active') ? '' : 'none';
+      } else if (filter === 'pending') {
+        row.style.display = (status === 'pending') ? '' : 'none';
+      }
+    });
+  }
+
+  // ─── PAYOUT PANEL ────────────────────────────────────────────
+  function openPayoutPanel() {
+    document.getElementById('payoutPanel').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePayoutPanel(e) {
+    if (e && e.target !== document.getElementById('payoutPanel')) return;
+    document.getElementById('payoutPanel').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ─── FAQ ACCORDION ───────────────────────────────────────────
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ─── QR CODE GENERATOR (visual / realistic-looking) ──────────
+  function generateQR(svgId, seed) {
+    const svg = document.getElementById(svgId);
+    if (!svg) return;
+    const size = 21; // modules
+    const cellSize = Math.floor(140 / size);
+    const offset = Math.floor((140 - size * cellSize) / 2);
+
+    // Deterministic "random" from seed string
+    function seededRand(str) {
+      let h = 0;
+      for (let i = 0; i < str.length; i++) {
+        h = Math.imul(31, h) + str.charCodeAt(i) | 0;
+      }
+      return function() {
+        h ^= h << 13; h ^= h >> 7; h ^= h << 17;
+        return (h >>> 0) / 4294967296;
+      };
+    }
+    const rand = seededRand(seed);
+
+    // Build grid
+    const grid = Array.from({ length: size }, () => Array(size).fill(0));
+
+    // Finder patterns (top-left, top-right, bottom-left)
+    function drawFinder(r, c) {
+      for (let i = 0; i < 7; i++) for (let j = 0; j < 7; j++) {
+        const onBorder = i === 0 || i === 6 || j === 0 || j === 6;
+        const inner = i >= 2 && i <= 4 && j >= 2 && j <= 4;
+        if (r + i < size && c + j < size)
+          grid[r + i][c + j] = (onBorder || inner) ? 1 : 2;
+      }
+    }
+    drawFinder(0, 0); drawFinder(0, 14); drawFinder(14, 0);
+
+    // Timing patterns
+    for (let i = 8; i < 13; i++) {
+      grid[6][i] = (i % 2 === 0) ? 1 : 2;
+      grid[i][6] = (i % 2 === 0) ? 1 : 2;
+    }
+
+    // Data modules (pseudo-random, seeded from the link text)
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        if (grid[r][c] === 0) grid[r][c] = rand() > 0.5 ? 1 : 2;
+      }
+    }
+
+    // Build SVG
+    let rects = '';
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        if (grid[r][c] === 1) {
+          const x = offset + c * cellSize;
+          const y = offset + r * cellSize;
+          rects += `<rect x="${x}" y="${y}" width="${cellSize}" height="${cellSize}" fill="#111128"/>`;
+        }
+      }
+    }
+    svg.innerHTML = `<rect width="140" height="140" fill="white" rx="4"/>` + rects;
+  }
+
+  // ─── DOWNLOAD QR ─────────────────────────────────────────────
+  function downloadQR(svgId, filename) {
+    const svg = document.getElementById(svgId);
+    if (!svg) return;
+    const data = new XMLSerializer().serializeToString(svg);
+    const blob = new Blob([data], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename + '.svg';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('QR-код скачан!', '⬇️');
+  }
+
+  // ─── INIT ────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function () {
+    generateQR('qrSvgModels', 'https://kolstudio.com/en/join?ref=anna_m');
+    generateQR('qrSvgFans', 'https://kolstudio.com/en/fan?ref=anna_m');
+  });
+
+  // ─── PAGE TRANSITIONS ────────────────────────────────────────
+  (function(){
+    document.body.classList.add('kol-entering');
+    document.addEventListener('click', function(e) {
+      const a = e.target.closest('a[href]');
+      if (!a) return;
+      const href = a.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel')) return;
+      if (a.target === "_blank") return;
+      e.preventDefault();
+      document.body.classList.remove('kol-entering');
+      document.body.classList.add('kol-leaving');
+      setTimeout(() => { window.location.href = href; }, 220);
+    });
+  })();
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => { navigator.serviceWorker.register("sw.js").catch(() => {}); });
+  }
+</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../referral.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="referral.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
+<style>
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline}
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A}
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+</style>
+<div id="kol-cookie-banner">
+  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
+  </div>
+</div>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div style="flex:1;min-width:0"><strong style="font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:#E8E8F0">Install KOL Studio</strong><span style="font-size:12px;color:#A0A0C0">Works offline • Faster than browser</span></div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="document.getElementById('kol-pwa-prompt').classList.remove('show')">×</button>
+</div>
+<script>
+(function(){
+  var CONSENT_KEY='kol_consent_v2',THEME_KEY='kol_theme';
+  window.kolAcceptCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:true,marketing:true,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  window.kolRejectCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:false,marketing:false,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  var btn=document.getElementById('kol-theme-btn');
+  window.kolToggleTheme=function(){var c=localStorage.getItem(THEME_KEY)||'dark';var n=c==='dark'?'light':'dark';localStorage.setItem(THEME_KEY,n);if(n==='light'){document.body.classList.add('kol-light');btn.textContent='☀️'}else{document.body.classList.remove('kol-light');btn.textContent='🌙'}};
+  var st=localStorage.getItem(THEME_KEY);if(st==='light'){document.body.classList.add('kol-light');if(btn)btn.textContent='☀️'}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!sessionStorage.getItem('kol_pwa_dismissed')&&!localStorage.getItem('kol_pwa_installed'))setTimeout(function(){document.getElementById('kol-pwa-prompt').classList.add('show')},4000)});
+  var ib=document.getElementById('kol-pwa-install-btn');if(ib)ib.addEventListener('click',function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')localStorage.setItem('kol_pwa_installed','1');document.getElementById('kol-pwa-prompt').classList.remove('show');deferredPrompt=null})});
+  document.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem(CONSENT_KEY))setTimeout(function(){document.getElementById('kol-cookie-banner').classList.add('show')},1500)});
+})();
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

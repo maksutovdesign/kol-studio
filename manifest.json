@@ -1,0 +1,29 @@
+{
+  "name": "KOL Studio",
+  "short_name": "KOL",
+  "description": "Exclusive content from top models. 18+ adult platform.",
+  "start_url": "/splash.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#07071A",
+  "theme_color": "#D42B6A",
+  "lang": "ru",
+  "dir": "ltr",
+  "categories": ["entertainment", "lifestyle"],
+  "icons": [
+    { "src": "icons/icon-72.png",  "sizes": "72x72",   "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-96.png",  "sizes": "96x96",   "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-128.png", "sizes": "128x128", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon.svg",     "sizes": "any",     "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Feed",     "url": "/feed.html",         "icons": [{"src": "icons/icon-96.png", "sizes": "96x96"}] },
+    { "name": "Search",   "url": "/search.html",       "icons": [{"src": "icons/icon-96.png", "sizes": "96x96"}] },
+    { "name": "Messages", "url": "/messages.html",     "icons": [{"src": "icons/icon-96.png", "sizes": "96x96"}] },
+    { "name": "Upload",   "url": "/upload.html",       "icons": [{"src": "icons/icon-96.png", "sizes": "96x96"}] },
+    { "name": "Cabinet",  "url": "/user-cabinet.html", "icons": [{"src": "icons/icon-96.png", "sizes": "96x96"}] }
+  ]
+}

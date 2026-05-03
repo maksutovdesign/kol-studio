@@ -1,0 +1,2115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="apple-touch-icon" href="../icons/icon.svg">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#D42B6A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KOL Studio">
+<meta name="description" content="Истории от авторов KOL Studio">
+<title>KOL Studio — Истории</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07071A;
+  --card: #111128;
+  --card2: #181835;
+  --border: #22224A;
+  --accent: #D42B6A;
+  --accent2: #8B2BE2;
+  --green: #00E676;
+  --gold: #FFB300;
+  --text: #E8E8F0;
+  --text-muted: #7070A0;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+
+@keyframes progress-fill {
+  from { width: 0% }
+  to { width: 100% }
+}
+
+@keyframes story-zoom {
+  from { transform: scale(1.04); }
+  to { transform: scale(1.0); }
+}
+
+@keyframes sticker-bounce {
+  0% { transform: translateY(20px); opacity: 0; }
+  60% { transform: translateY(-4px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes emoji-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes tap-flash {
+  0% { opacity: 0; }
+  30% { opacity: 0.15; }
+  100% { opacity: 0; }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #000;
+  color: #fff;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+/* ============ STORY VIEWER SHELL ============ */
+#story-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============ STORY SLIDE ============ */
+#story-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: story-zoom 5s ease-out forwards;
+}
+
+#story-slide .story-bg {
+  position: absolute;
+  inset: 0;
+  transition: background 0.3s ease;
+}
+
+#story-slide .story-emoji {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(80px, 18vw, 140px);
+  animation: emoji-pulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 8px 32px rgba(0,0,0,0.5));
+  margin-bottom: 180px;
+}
+
+/* ============ HUD OVERLAY ============ */
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: env(safe-area-inset-top, 12px) 12px 0;
+}
+
+/* Progress bars */
+#progress-row {
+  display: flex;
+  gap: 3px;
+  padding: 12px 0 8px;
+}
+
+.prog-bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.prog-bar-fill {
+  height: 100%;
+  background: #fff;
+  border-radius: 2px;
+  width: 0%;
+  transition: none;
+}
+
+.prog-bar.done .prog-bar-fill { width: 100%; }
+.prog-bar.active .prog-bar-fill {
+  animation: progress-fill var(--story-duration, 5s) linear forwards;
+}
+.prog-bar.paused .prog-bar-fill {
+  animation-play-state: paused;
+}
+
+/* Model info row */
+#model-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+
+#model-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+#model-info {
+  flex: 1;
+  min-width: 0;
+}
+
+#model-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#model-time {
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  margin-top: 1px;
+}
+
+.hud-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 15px;
+  transition: background 0.15s, transform 0.1s;
+  flex-shrink: 0;
+}
+
+.hud-btn:hover { background: rgba(255,255,255,0.15); }
+.hud-btn:active { transform: scale(0.9); }
+
+#story-counter {
+  position: absolute;
+  top: 16px;
+  right: 12px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  background: rgba(0,0,0,0.3);
+  padding: 2px 8px;
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 11;
+}
+
+/* ============ STORY TEXT CONTENT ============ */
+#story-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 8;
+  padding: 0 16px;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 120px);
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+}
+
+#story-text {
+  font-size: clamp(15px, 3.5vw, 19px);
+  font-weight: 500;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+.story-sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 14px;
+  animation: sticker-bounce 0.5s 0.3s ease both;
+  border: none;
+  transition: transform 0.15s, filter 0.15s;
+}
+
+.story-sticker:hover { transform: scale(1.05); filter: brightness(1.1); }
+.story-sticker:active { transform: scale(0.97); }
+
+.sticker-cta { background: linear-gradient(135deg, #D42B6A, #8B2BE2); color: #fff; }
+.sticker-promo { background: linear-gradient(135deg, #FFB300, #FF6D00); color: #000; }
+.sticker-remind { background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+.sticker-reply-open { background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); color: #fff; border: 1px solid rgba(255,255,255,0.25); }
+
+/* ============ BOTTOM ACTIONS BAR ============ */
+#bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  padding: 12px 14px;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#like-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50px;
+  padding: 8px 14px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s, background 0.15s;
+}
+
+#like-btn:hover { background: rgba(212,43,106,0.3); }
+#like-btn.liked { background: rgba(212,43,106,0.5); }
+#like-btn:active { transform: scale(0.95); }
+
+#reply-field {
+  flex: 1;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50px;
+  padding: 9px 16px;
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#reply-field:hover { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.85); }
+
+.bottom-icon-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.bottom-icon-btn:hover { background: rgba(255,255,255,0.15); }
+.bottom-icon-btn:active { transform: scale(0.9); }
+
+/* ============ TAP ZONES ============ */
+#tap-left, #tap-right {
+  position: absolute;
+  top: 80px;
+  bottom: 100px;
+  z-index: 7;
+}
+
+#tap-left { left: 0; width: 30%; }
+#tap-right { right: 0; width: 70%; }
+
+.tap-flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+#tap-left .tap-flash { background: linear-gradient(to right, rgba(255,255,255,0.2), transparent); }
+#tap-right .tap-flash { background: linear-gradient(to left, rgba(255,255,255,0.2), transparent); }
+
+/* ============ MODEL STRIP (bottom thumbnails) ============ */
+#model-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 12;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+  padding-top: 40px;
+}
+
+#model-strip.visible { display: flex; }
+
+#model-strip-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+#model-strip-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 0 16px;
+  scrollbar-width: none;
+}
+
+#model-strip-row::-webkit-scrollbar { display: none; }
+
+.model-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: transform 0.15s;
+  flex-shrink: 0;
+}
+
+.model-chip:hover { transform: scale(1.08); }
+
+.model-chip-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.model-chip.current-model .model-chip-avatar {
+  border-color: #fff;
+  border-width: 3px;
+}
+
+.model-chip-name {
+  font-size: 10px;
+  color: rgba(255,255,255,0.6);
+  max-width: 60px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============ REPLY POPUP ============ */
+#reply-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#reply-popup.visible { display: flex; }
+
+#reply-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+}
+
+#reply-sheet {
+  position: relative;
+  z-index: 1;
+  background: #181835;
+  border-radius: 20px 20px 0 0;
+  border: 1px solid #22224A;
+  border-bottom: none;
+  padding: 20px 16px;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+  animation: slide-up 0.3s ease;
+}
+
+#reply-reactions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+.reaction-pill {
+  font-size: 22px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #22224A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+  border: none;
+}
+
+.reaction-pill:hover { transform: scale(1.2); background: #2D2D5A; }
+.reaction-pill:active { transform: scale(0.9); }
+
+#reply-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+#reply-text-input {
+  flex: 1;
+  background: #111128;
+  border: 1px solid #22224A;
+  border-radius: 50px;
+  padding: 12px 18px;
+  color: #E8E8F0;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+#reply-text-input:focus { border-color: #D42B6A; }
+#reply-text-input::placeholder { color: #7070A0; }
+
+#reply-send-btn {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #D42B6A, #8B2BE2);
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+
+#reply-send-btn:hover { opacity: 0.9; }
+#reply-send-btn:active { transform: scale(0.97); }
+
+#reply-emoji-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+  justify-content: center;
+  font-size: 20px;
+}
+
+#reply-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #7070A0;
+  font-size: 20px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+
+#reply-close-btn:hover { background: rgba(255,255,255,0.08); }
+
+#reply-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #E8E8F0;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+/* ============ MORE OPTIONS POPUP ============ */
+#more-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#more-popup.visible { display: flex; }
+
+#more-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+}
+
+#more-sheet {
+  position: relative;
+  z-index: 1;
+  background: #181835;
+  border-radius: 20px 20px 0 0;
+  border: 1px solid #22224A;
+  border-bottom: none;
+  overflow: hidden;
+  animation: slide-up 0.3s ease;
+}
+
+.more-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #22224A;
+  transition: background 0.15s;
+  font-size: 15px;
+  color: #E8E8F0;
+}
+
+.more-option:last-child { border-bottom: none; margin-bottom: env(safe-area-inset-bottom, 0px); }
+.more-option:hover { background: rgba(255,255,255,0.05); }
+.more-option.danger { color: #D42B6A; }
+.more-option-icon { font-size: 20px; width: 28px; text-align: center; }
+
+/* ============ TOAST NOTIFICATION ============ */
+#toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 200;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+#toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============ END OF MODEL CARD ============ */
+#end-card {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+}
+
+#end-card.visible { display: flex; }
+
+#end-card-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  border: 3px solid rgba(255,255,255,0.4);
+}
+
+#end-card-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+#end-card-text {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  padding: 0 40px;
+}
+
+#end-card-profile-btn {
+  padding: 13px 32px;
+  background: linear-gradient(135deg, #D42B6A, #8B2BE2);
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+#end-card-profile-btn:hover { opacity: 0.9; }
+#end-card-profile-btn:active { transform: scale(0.97); }
+
+#end-card-next-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 11px 28px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.15s;
+}
+
+#end-card-next-btn:hover { background: rgba(255,255,255,0.2); }
+
+/* ============ PAYMENT REMINDER BANNER ============ */
+#remind-banner {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  background: linear-gradient(135deg, #D42B6A22, #8B2BE222);
+  border: 1px solid #D42B6A55;
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 14px 20px;
+  display: none;
+  gap: 12px;
+  align-items: center;
+  min-width: 280px;
+  max-width: 90vw;
+  animation: slide-up 0.3s ease;
+}
+
+#remind-banner.visible { display: flex; }
+
+#remind-banner-icon { font-size: 24px; }
+#remind-banner-text { flex: 1; font-size: 13px; color: #E8E8F0; line-height: 1.4; }
+#remind-banner-text strong { font-weight: 700; color: #fff; }
+#remind-banner-close { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 18px; cursor: pointer; padding: 4px; }
+#remind-banner-close:hover { color: #fff; }
+
+/* ============ SHARE ANIMATION ============ */
+@keyframes share-pop {
+  0% { transform: scale(0.8) translateY(10px); opacity: 0; }
+  70% { transform: scale(1.05) translateY(-2px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+#share-popup {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  background: #181835;
+  border: 1px solid #22224A;
+  border-radius: 20px;
+  padding: 20px;
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 280px;
+  animation: share-pop 0.25s ease forwards;
+}
+
+#share-popup.visible { display: flex; }
+
+#share-popup h3 { font-size: 15px; font-weight: 600; color: #E8E8F0; }
+
+#share-options {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.share-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.share-option:hover { transform: scale(1.08); }
+
+.share-option-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #22224A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.share-option-label { font-size: 11px; color: #7070A0; }
+
+#share-close {
+  background: #22224A;
+  border: none;
+  border-radius: 50px;
+  padding: 11px;
+  color: #E8E8F0;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  transition: background 0.15s;
+}
+
+#share-close:hover { background: #2D2D5A; }
+</style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/stories.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/stories.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/stories.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/stories.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+
+<!-- ===================== STORY VIEWER ===================== -->
+<div id="story-viewer">
+
+  <!-- Story slide background and emoji -->
+  <div id="story-slide">
+    <div class="story-bg" id="story-bg"></div>
+    <div class="story-emoji" id="story-emoji"></div>
+  </div>
+
+  <!-- HUD: progress + model info -->
+  <div id="hud">
+    <div id="progress-row"></div>
+    <div id="model-row">
+      <div class="hud-btn" id="model-avatar" style="border:none;cursor:default;"></div>
+      <div id="model-info">
+        <div id="model-name"></div>
+        <div id="model-time"></div>
+      </div>
+      <button class="hud-btn" id="pause-btn" title="Пауза/Воспроизведение">⏸</button>
+      <button class="hud-btn" id="mute-btn" title="Звук">🔊</button>
+      <button class="hud-btn" id="close-btn" title="Закрыть">✕</button>
+    </div>
+  </div>
+
+  <!-- Story counter -->
+  <div id="story-counter"></div>
+
+  <!-- Story text and stickers -->
+  <div id="story-content">
+    <div id="story-text"></div>
+    <div id="story-sticker-area"></div>
+  </div>
+
+  <!-- Bottom actions bar -->
+  <div id="bottom-bar">
+    <button id="like-btn">❤️ <span id="like-count">4.2K</span></button>
+    <div id="reply-field">Reply @anna_m…</div>
+    <button class="bottom-icon-btn" id="more-btn" title="Ещё">⋯</button>
+    <button class="bottom-icon-btn" id="share-btn" title="Share">↗</button>
+  </div>
+
+  <!-- Tap zones -->
+  <div id="tap-left"><div class="tap-flash" id="flash-left"></div></div>
+  <div id="tap-right"><div class="tap-flash" id="flash-right"></div></div>
+
+  <!-- Model end card -->
+  <div id="end-card">
+    <div id="end-card-avatar"></div>
+    <div id="end-card-name"></div>
+    <div id="end-card-text">Все истории просмотрены</div>
+    <button id="end-card-profile-btn">Посмотреть профиль</button>
+    <button id="end-card-next-btn">Следующий автор →</button>
+  </div>
+
+  <!-- Model strip -->
+  <div id="model-strip">
+    <div id="model-strip-label">Другие авторы</div>
+    <div id="model-strip-row"></div>
+  </div>
+
+</div>
+
+<!-- ===================== REPLY POPUP ===================== -->
+<div id="reply-popup">
+  <div id="reply-backdrop"></div>
+  <div id="reply-sheet">
+    <button id="reply-close-btn">✕</button>
+    <div id="reply-title">Reply @anna_m</div>
+    <div id="reply-reactions">
+      <button class="reaction-pill" data-emoji="❤️">❤️</button>
+      <button class="reaction-pill" data-emoji="🔥">🔥</button>
+      <button class="reaction-pill" data-emoji="😍">😍</button>
+      <button class="reaction-pill" data-emoji="💜">💜</button>
+      <button class="reaction-pill" data-emoji="🙌">🙌</button>
+      <button class="reaction-pill" data-emoji="👏">👏</button>
+    </div>
+    <div id="reply-input-row">
+      <input type="text" id="reply-text-input" placeholder="Write сообщение…" maxlength="200">
+      <button id="reply-send-btn">Send</button>
+    </div>
+    <div id="reply-emoji-row">😊 😂 🥰 😘 💋 🤩 💌 🌸 ✨ 🎉</div>
+  </div>
+</div>
+
+<!-- ===================== MORE OPTIONS POPUP ===================== -->
+<div id="more-popup">
+  <div id="more-backdrop"></div>
+  <div id="more-sheet">
+    <div class="more-option"><span class="more-option-icon">🚫</span> Пожаловаться</div>
+    <div class="more-option"><span class="more-option-icon">🙈</span> Скрыть истории</div>
+    <div class="more-option"><span class="more-option-icon">👤</span> Перейти в профиль</div>
+    <div class="more-option"><span class="more-option-icon">🔔</span> Notifications о публикациях</div>
+    <div class="more-option danger"><span class="more-option-icon">🚫</span> Заблокировать</div>
+    <div class="more-option" id="more-cancel" style="justify-content:center;font-weight:600;color:#E8E8F0;">Cancel</div>
+  </div>
+</div>
+
+<!-- ===================== SHARE POPUP ===================== -->
+<div id="share-popup">
+  <h3>Share историей</h3>
+  <div id="share-options">
+    <div class="share-option"><div class="share-option-icon">📋</div><span class="share-option-label">Copy</span></div>
+    <div class="share-option"><div class="share-option-icon">💬</div><span class="share-option-label">Сообщение</span></div>
+    <div class="share-option"><div class="share-option-icon">📷</div><span class="share-option-label">Инстаграм</span></div>
+    <div class="share-option"><div class="share-option-icon">✈️</div><span class="share-option-label">Telegram</span></div>
+  </div>
+  <button id="share-close">Закрыть</button>
+</div>
+
+<!-- ===================== REMIND BANNER ===================== -->
+<div id="remind-banner">
+  <div id="remind-banner-icon">🔴</div>
+  <div id="remind-banner-text"><strong>Напоминание установлено!</strong><br>Today в 21:00 МСК — Live Stream</div>
+  <button id="remind-banner-close">✕</button>
+</div>
+
+<!-- ===================== TOAST ===================== -->
+<div id="toast"></div>
+
+<script>
+// ============================================================
+//  KOL Studio — Story Viewer State Machine
+// ============================================================
+
+const STORY_DURATION = 5000; // ms per story
+
+const MODELS = [
+  {
+    id: 'anna',
+    initials: 'АМ',
+    name: 'Анна Морозова',
+    handle: 'anna_m',
+    time: '3 ч назад',
+    gradient: 'linear-gradient(135deg, #5C1A7A, #D42B6A)',
+    stories: [
+      {
+        gradient: 'linear-gradient(135deg, #5C1A7A, #D42B6A)',
+        emoji: '📸',
+        text: 'Утренняя фотосессия 🤍 Новый контент уже загружен!',
+        sticker: { type: 'cta', label: 'Смотреть →', href: 'profile.html' }
+      },
+      {
+        gradient: 'linear-gradient(135deg, #0D47A1, #8B2BE2)',
+        emoji: '🎬',
+        text: 'Съёмка закончилась! Скоро будет что-то особенное для вас 💜'
+      },
+      {
+        gradient: 'linear-gradient(135deg, #1A3A2A, #00E676)',
+        emoji: '💰',
+        text: 'Специальное предложение только сегодня — скидка 30% на Premium подписку!',
+        sticker: { type: 'promo', label: '🎁 КОД: ANNA30' }
+      },
+      {
+        gradient: 'linear-gradient(135deg, #7A1A1A, #FFB300)',
+        emoji: '📺',
+        text: 'Today в 21:00 МСК — Live Stream! Не пропустите 🔴',
+        sticker: { type: 'remind', label: '🔔 Напомнить' }
+      },
+      {
+        gradient: 'linear-gradient(135deg, #2A1A5A, #D42B6A)',
+        emoji: '🎁',
+        text: 'Thank you всем кто поддерживает меня! Вы лучшие 💜',
+        sticker: { type: 'reply-open', label: '💌 Write Анне' }
+      }
+    ]
+  },
+  {
+    id: 'vika',
+    initials: 'ВЛ',
+    name: 'Виктория Л.',
+    handle: 'vika_l',
+    time: '5 ч назад',
+    gradient: 'linear-gradient(135deg, #0D1B6B, #2979FF)',
+    stories: [
+      {
+        gradient: 'linear-gradient(135deg, #0D1B6B, #2979FF)',
+        emoji: '🌊',
+        text: 'Путешествие продолжается! Мальдивы — это нечто невероятное 💙'
+      },
+      {
+        gradient: 'linear-gradient(135deg, #1565C0, #29B6F6)',
+        emoji: '🤿',
+        text: 'Today дайвинг! Новые фото уже в коллекции 📸',
+        sticker: { type: 'cta', label: 'Смотреть коллекцию →', href: 'collection.html' }
+      },
+      {
+        gradient: 'linear-gradient(135deg, #0A2A5A, #1A6BC4)',
+        emoji: '🌅',
+        text: 'Закат на острове. Такое не забывается ✨'
+      }
+    ]
+  },
+  {
+    id: 'kira',
+    initials: 'КС',
+    name: 'Кира С.',
+    handle: 'kira_s',
+    time: '6 ч назад',
+    gradient: 'linear-gradient(135deg, #1B5E20, #00E676)',
+    stories: [
+      {
+        gradient: 'linear-gradient(135deg, #1B5E20, #00E676)',
+        emoji: '🌿',
+        text: 'Утренняя медитация и йога. Начинаю каждый день с этого 🧘‍♀️'
+      },
+      {
+        gradient: 'linear-gradient(135deg, #2E7D32, #4CAF50)',
+        emoji: '🥗',
+        text: 'Healthy food prep для всей недели! Рецепты в профиле 💚',
+        sticker: { type: 'cta', label: 'Смотреть рецепты →', href: 'profile.html' }
+      },
+      {
+        gradient: 'linear-gradient(135deg, #1A4A20, #00C853)',
+        emoji: '💪',
+        text: 'Тренировка завершена! 45 минут интенсива 🔥'
+      },
+      {
+        gradient: 'linear-gradient(135deg, #0A3A1A, #00E676)',
+        emoji: '🌙',
+        text: 'Вечерний ритуал. Всем спокойной ночи 💚',
+        sticker: { type: 'promo', label: '🌿 КОД: KIRA20' }
+      }
+    ]
+  },
+  {
+    id: 'diana',
+    initials: 'ДВ',
+    name: 'Диана В.',
+    handle: 'diana_v',
+    time: '8 ч назад',
+    gradient: 'linear-gradient(135deg, #4A0E0E, #E53935)',
+    stories: [
+      {
+        gradient: 'linear-gradient(135deg, #4A0E0E, #E53935)',
+        emoji: '🔥',
+        text: 'Новая фотосессия в красном! Горячее лето 💋',
+        sticker: { type: 'cta', label: 'Смотреть →', href: 'profile.html' }
+      },
+      {
+        gradient: 'linear-gradient(135deg, #7A1A1A, #FF5252)',
+        emoji: '💄',
+        text: 'За кулисами съёмки. Любите? ❤️‍🔥'
+      }
+    ]
+  },
+  {
+    id: 'alisa',
+    initials: 'АН',
+    name: 'Алиса Н.',
+    handle: 'alisa_n',
+    time: '1 д назад',
+    gradient: 'linear-gradient(135deg, #4A148C, #7B1FA2)',
+    stories: [
+      {
+        gradient: 'linear-gradient(135deg, #4A148C, #7B1FA2)',
+        emoji: '👑',
+        text: 'VIP-сет уже доступен для subscribers! Успейте 💜'
+      },
+      {
+        gradient: 'linear-gradient(135deg, #6A1B9A, #AB47BC)',
+        emoji: '✨',
+        text: 'Готовлюсь к съёмке. Как вам образ? 💜',
+        sticker: { type: 'reply-open', label: '💜 Write Алисе' }
+      },
+      {
+        gradient: 'linear-gradient(135deg, #3A0A6A, #8B2BE2)',
+        emoji: '🎭',
+        text: 'Backstage из последнего проекта. Скоро покажу результат! 🤫'
+      },
+      {
+        gradient: 'linear-gradient(135deg, #5C1A7A, #CE93D8)',
+        emoji: '🌸',
+        text: 'Весенний конкурс! Напиши "Весна" в личку и получи бонус 🌺',
+        sticker: { type: 'promo', label: '🌸 КОД: SPRING26' }
+      },
+      {
+        gradient: 'linear-gradient(135deg, #4A148C, #D42B6A)',
+        emoji: '💌',
+        text: 'Люблю вас всех! Thank you за поддержку 💜✨',
+        sticker: { type: 'cta', label: 'Смотреть профиль →', href: 'profile.html' }
+      },
+      {
+        gradient: 'linear-gradient(135deg, #2A0A4A, #7B1FA2)',
+        emoji: '🎬',
+        text: 'Последний эфир собрал 2000 зрителей! 🔥 Thank you вам!'
+      }
+    ]
+  }
+];
+
+// ============================================================
+//  State
+// ============================================================
+let currentModelIdx = 0;
+let currentStoryIdx = 0;
+let isPaused = false;
+let isMuted = false;
+let isEnded = false;
+let timerHandle = null;
+let startTime = null;
+let pausedElapsed = 0;
+let holdTimeout = null;
+let likeCount = 4200;
+let isLiked = false;
+
+// DOM refs
+const storyBg = document.getElementById('story-bg');
+const storyEmoji = document.getElementById('story-emoji');
+const storyText = document.getElementById('story-text');
+const storyStickerArea = document.getElementById('story-sticker-area');
+const progressRow = document.getElementById('progress-row');
+const modelAvatar = document.getElementById('model-avatar');
+const modelNameEl = document.getElementById('model-name');
+const modelTimeEl = document.getElementById('model-time');
+const storyCounter = document.getElementById('story-counter');
+const pauseBtn = document.getElementById('pause-btn');
+const muteBtn = document.getElementById('mute-btn');
+const closeBtn = document.getElementById('close-btn');
+const tapLeft = document.getElementById('tap-left');
+const tapRight = document.getElementById('tap-right');
+const flashLeft = document.getElementById('flash-left');
+const flashRight = document.getElementById('flash-right');
+const likeBtn = document.getElementById('like-btn');
+const likeCountEl = document.getElementById('like-count');
+const replyField = document.getElementById('reply-field');
+const moreBtn = document.getElementById('more-btn');
+const shareBtn = document.getElementById('share-btn');
+const endCard = document.getElementById('end-card');
+const endCardAvatar = document.getElementById('end-card-avatar');
+const endCardName = document.getElementById('end-card-name');
+const endCardNextBtn = document.getElementById('end-card-next-btn');
+const endCardProfileBtn = document.getElementById('end-card-profile-btn');
+const modelStrip = document.getElementById('model-strip');
+const modelStripRow = document.getElementById('model-strip-row');
+const replyPopup = document.getElementById('reply-popup');
+const replyBackdrop = document.getElementById('reply-backdrop');
+const replyCloseBtn = document.getElementById('reply-close-btn');
+const replySendBtn = document.getElementById('reply-send-btn');
+const replyTextInput = document.getElementById('reply-text-input');
+const morePopup = document.getElementById('more-popup');
+const moreBackdrop = document.getElementById('more-backdrop');
+const moreCancel = document.getElementById('more-cancel');
+const sharePopup = document.getElementById('share-popup');
+const shareClose = document.getElementById('share-close');
+const remindBanner = document.getElementById('remind-banner');
+const remindClose = document.getElementById('remind-banner-close');
+const toast = document.getElementById('toast');
+const storySlide = document.getElementById('story-slide');
+
+// ============================================================
+//  Helpers
+// ============================================================
+function showToast(msg, duration = 2000) {
+  toast.textContent = msg;
+  toast.classList.add('visible');
+  setTimeout(() => toast.classList.remove('visible'), duration);
+}
+
+function flashZone(el) {
+  el.style.animation = 'none';
+  el.offsetHeight; // reflow
+  el.style.animation = 'tap-flash 0.4s ease forwards';
+}
+
+function formatLikes(n) {
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+  return n.toString();
+}
+
+// ============================================================
+//  Build model strip
+// ============================================================
+function buildModelStrip() {
+  modelStripRow.innerHTML = '';
+  MODELS.forEach((m, idx) => {
+    const chip = document.createElement('div');
+    chip.className = 'model-chip' + (idx === currentModelIdx ? ' current-model' : '');
+    chip.innerHTML = `
+      <div class="model-chip-avatar" style="background:${m.gradient}">${m.initials}</div>
+      <div class="model-chip-name">${m.name.split(' ')[0]}</div>
+    `;
+    chip.addEventListener('click', () => {
+      goToModel(idx);
+    });
+    modelStripRow.appendChild(chip);
+  });
+}
+
+// ============================================================
+//  Build progress bars
+// ============================================================
+function buildProgressBars(model, activeIdx) {
+  progressRow.innerHTML = '';
+  model.stories.forEach((_, i) => {
+    const bar = document.createElement('div');
+    bar.className = 'prog-bar' + (i < activeIdx ? ' done' : i === activeIdx ? ' active' : '');
+    bar.innerHTML = '<div class="prog-bar-fill"></div>';
+    bar.style.setProperty('--story-duration', STORY_DURATION / 1000 + 's');
+    progressRow.appendChild(bar);
+  });
+}
+
+// ============================================================
+//  Render current story
+// ============================================================
+function renderStory() {
+  clearTimer();
+  isEnded = false;
+
+  const model = MODELS[currentModelIdx];
+  const story = model.stories[currentStoryIdx];
+
+  // Background
+  storyBg.style.background = story.gradient;
+
+  // Reset slide animation
+  storySlide.style.animation = 'none';
+  storySlide.offsetHeight;
+  storySlide.style.animation = 'story-zoom 5s ease-out forwards';
+
+  // Emoji
+  storyEmoji.textContent = story.emoji;
+  storyEmoji.style.animation = 'none';
+  storyEmoji.offsetHeight;
+  storyEmoji.style.animation = 'emoji-pulse 3s ease-in-out infinite';
+
+  // Text
+  storyText.textContent = story.text;
+
+  // Sticker
+  storyStickerArea.innerHTML = '';
+  if (story.sticker) {
+    const s = story.sticker;
+    const btn = document.createElement('button');
+    btn.textContent = s.label;
+    btn.className = `story-sticker sticker-${s.type}`;
+    if (s.href) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateTo(s.href);
+      });
+    } else if (s.type === 'remind') {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        btn.textContent = '✅ Напоминание установлено';
+        btn.disabled = true;
+        remindBanner.classList.add('visible');
+        setTimeout(() => remindBanner.classList.remove('visible'), 4000);
+      });
+    } else if (s.type === 'reply-open') {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openReplyPopup();
+      });
+    } else {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showToast('Промокод скопирован!');
+        navigator.clipboard?.writeText(s.label.split(': ')[1] || s.label).catch(() => {});
+      });
+    }
+    storyStickerArea.appendChild(btn);
+  }
+
+  // Model HUD
+  modelAvatar.textContent = model.initials;
+  modelAvatar.style.background = model.gradient;
+  modelNameEl.textContent = model.name;
+  modelTimeEl.textContent = model.time;
+  replyField.textContent = `Reply @${model.handle}…`;
+  document.getElementById('reply-title').textContent = `Reply @${model.handle}`;
+  replyTextInput.placeholder = `Write сообщение @${model.handle}…`;
+
+  // Story counter
+  storyCounter.textContent = `${currentStoryIdx + 1} / ${model.stories.length}`;
+
+  // Progress bars
+  buildProgressBars(model, currentStoryIdx);
+
+  // Hide end card
+  endCard.classList.remove('visible');
+  modelStrip.classList.remove('visible');
+
+  // Start timer
+  if (!isPaused) {
+    startTimer();
+  }
+}
+
+// ============================================================
+//  Timer
+// ============================================================
+function startTimer() {
+  pausedElapsed = 0;
+  startTime = Date.now();
+  clearTimer();
+  timerHandle = setTimeout(() => {
+    advanceStory();
+  }, STORY_DURATION);
+}
+
+function clearTimer() {
+  if (timerHandle) {
+    clearTimeout(timerHandle);
+    timerHandle = null;
+  }
+}
+
+function pauseStory() {
+  if (isPaused) return;
+  isPaused = true;
+  pausedElapsed += Date.now() - startTime;
+  clearTimer();
+  pauseBtn.textContent = '▶';
+
+  // Pause progress bar animation
+  const bars = progressRow.querySelectorAll('.prog-bar.active');
+  bars.forEach(b => b.classList.add('paused'));
+}
+
+function resumeStory() {
+  if (!isPaused) return;
+  isPaused = false;
+  pauseBtn.textContent = '⏸';
+
+  const remaining = STORY_DURATION - pausedElapsed;
+  clearTimer();
+
+  // Resume progress bar animation
+  const bars = progressRow.querySelectorAll('.prog-bar.active');
+  bars.forEach(b => {
+    b.classList.remove('paused');
+    // Adjust animation to reflect remaining time
+    const fill = b.querySelector('.prog-bar-fill');
+    const elapsed = pausedElapsed;
+    const pct = Math.min(100, (elapsed / STORY_DURATION) * 100);
+    fill.style.animation = 'none';
+    fill.style.width = pct + '%';
+    fill.offsetHeight;
+    fill.style.animation = `progress-fill ${remaining / 1000}s linear forwards`;
+  });
+
+  timerHandle = setTimeout(() => {
+    advanceStory();
+  }, Math.max(0, remaining));
+  startTime = Date.now();
+  pausedElapsed = 0;
+}
+
+// ============================================================
+//  Navigation
+// ============================================================
+function advanceStory() {
+  const model = MODELS[currentModelIdx];
+  if (currentStoryIdx < model.stories.length - 1) {
+    currentStoryIdx++;
+    renderStory();
+  } else {
+    showEndCard();
+  }
+}
+
+function prevStory() {
+  if (currentStoryIdx > 0) {
+    currentStoryIdx--;
+    renderStory();
+  } else if (currentModelIdx > 0) {
+    currentModelIdx--;
+    currentStoryIdx = MODELS[currentModelIdx].stories.length - 1;
+    renderStory();
+  }
+}
+
+function showEndCard() {
+  clearTimer();
+  isEnded = true;
+  const model = MODELS[currentModelIdx];
+
+  endCardAvatar.textContent = model.initials;
+  endCardAvatar.style.background = model.gradient;
+  endCardName.textContent = model.name;
+
+  endCard.classList.add('visible');
+  modelStrip.classList.add('visible');
+  buildModelStrip();
+
+  // Auto advance after 4s
+  timerHandle = setTimeout(() => {
+    goToNextModel();
+  }, 4000);
+}
+
+function goToNextModel() {
+  if (currentModelIdx < MODELS.length - 1) {
+    currentModelIdx++;
+    currentStoryIdx = 0;
+    isPaused = false;
+    pausedElapsed = 0;
+    renderStory();
+  } else {
+    navigateTo('feed.html');
+  }
+}
+
+function goToModel(idx) {
+  currentModelIdx = idx;
+  currentStoryIdx = 0;
+  isPaused = false;
+  pausedElapsed = 0;
+  renderStory();
+}
+
+function navigateTo(href) {
+  document.body.classList.remove('kol-entering');
+  document.body.classList.add('kol-leaving');
+  setTimeout(() => { window.location.href = href; }, 220);
+}
+
+// ============================================================
+//  Reply popup
+// ============================================================
+function openReplyPopup() {
+  pauseStory();
+  replyPopup.classList.add('visible');
+  setTimeout(() => replyTextInput.focus(), 300);
+}
+
+function closeReplyPopup() {
+  replyPopup.classList.remove('visible');
+  resumeStory();
+}
+
+// ============================================================
+//  Event listeners
+// ============================================================
+
+// Tap zones
+tapLeft.addEventListener('click', () => {
+  flashZone(flashLeft);
+  prevStory();
+});
+
+tapRight.addEventListener('click', () => {
+  flashZone(flashRight);
+  advanceStory();
+});
+
+// Long press to pause
+tapLeft.addEventListener('pointerdown', () => {
+  holdTimeout = setTimeout(() => pauseStory(), 150);
+});
+tapRight.addEventListener('pointerdown', () => {
+  holdTimeout = setTimeout(() => pauseStory(), 150);
+});
+
+document.addEventListener('pointerup', () => {
+  if (holdTimeout) {
+    clearTimeout(holdTimeout);
+    holdTimeout = null;
+  }
+  if (isPaused) resumeStory();
+});
+
+document.addEventListener('pointercancel', () => {
+  if (holdTimeout) { clearTimeout(holdTimeout); holdTimeout = null; }
+  if (isPaused) resumeStory();
+});
+
+// Pause button
+pauseBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (isPaused) resumeStory(); else pauseStory();
+});
+
+// Mute button
+muteBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  isMuted = !isMuted;
+  muteBtn.textContent = isMuted ? '🔇' : '🔊';
+  showToast(isMuted ? 'Звук выключен' : 'Звук включён');
+});
+
+// Close button
+closeBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  clearTimer();
+  if (history.length > 1) history.back();
+  else navigateTo('feed.html');
+});
+
+// Like button
+likeBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  isLiked = !isLiked;
+  likeCount += isLiked ? 1 : -1;
+  likeCountEl.textContent = formatLikes(likeCount);
+  likeBtn.classList.toggle('liked', isLiked);
+  likeBtn.style.transform = 'scale(1.2)';
+  setTimeout(() => likeBtn.style.transform = '', 150);
+});
+
+// Reply
+replyField.addEventListener('click', (e) => {
+  e.stopPropagation();
+  openReplyPopup();
+});
+
+replyBackdrop.addEventListener('click', closeReplyPopup);
+replyCloseBtn.addEventListener('click', closeReplyPopup);
+
+replySendBtn.addEventListener('click', () => {
+  const msg = replyTextInput.value.trim();
+  if (msg) {
+    closeReplyPopup();
+    showToast('Сообщение отправлено ✓');
+    replyTextInput.value = '';
+  }
+});
+
+replyTextInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    replySendBtn.click();
+  }
+});
+
+// Reaction pills
+document.querySelectorAll('.reaction-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const emoji = btn.dataset.emoji;
+    closeReplyPopup();
+    showToast(`${emoji} реакция отправлена!`);
+  });
+});
+
+// More options
+moreBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  pauseStory();
+  morePopup.classList.add('visible');
+});
+
+moreBackdrop.addEventListener('click', () => {
+  morePopup.classList.remove('visible');
+  resumeStory();
+});
+
+moreCancel.addEventListener('click', () => {
+  morePopup.classList.remove('visible');
+  resumeStory();
+});
+
+document.querySelectorAll('#more-sheet .more-option:not(#more-cancel)').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const label = opt.textContent.trim();
+    morePopup.classList.remove('visible');
+    resumeStory();
+    if (label.includes('профиль')) navigateTo('profile.html');
+    else showToast('Готово');
+  });
+});
+
+// Share
+shareBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  pauseStory();
+  sharePopup.classList.add('visible');
+});
+
+shareClose.addEventListener('click', () => {
+  sharePopup.classList.remove('visible');
+  resumeStory();
+});
+
+document.querySelectorAll('.share-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    sharePopup.classList.remove('visible');
+    resumeStory();
+    showToast('Ссылка скопирована!');
+  });
+});
+
+// End card
+endCardProfileBtn.addEventListener('click', () => {
+  clearTimer();
+  navigateTo('profile.html');
+});
+
+endCardNextBtn.addEventListener('click', () => {
+  clearTimer();
+  goToNextModel();
+});
+
+// Remind banner close
+remindClose.addEventListener('click', () => {
+  remindBanner.classList.remove('visible');
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (replyPopup.classList.contains('visible') || morePopup.classList.contains('visible')) return;
+  switch(e.key) {
+    case 'ArrowRight':
+    case 'l':
+      e.preventDefault();
+      flashZone(flashRight);
+      advanceStory();
+      break;
+    case 'ArrowLeft':
+    case 'j':
+      e.preventDefault();
+      flashZone(flashLeft);
+      prevStory();
+      break;
+    case ' ':
+      e.preventDefault();
+      if (isPaused) resumeStory(); else pauseStory();
+      break;
+    case 'Escape':
+      e.preventDefault();
+      clearTimer();
+      if (history.length > 1) history.back();
+      else navigateTo('feed.html');
+      break;
+    case 'm':
+      e.preventDefault();
+      muteBtn.click();
+      break;
+  }
+});
+
+// Prevent context menu on long press mobile
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// ============================================================
+//  Init
+// ============================================================
+renderStory();
+</script>
+
+<script>
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../stories.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="stories.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
+<style>
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline}
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A}
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+</style>
+<div id="kol-cookie-banner">
+  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
+  </div>
+</div>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div style="flex:1;min-width:0"><strong style="font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:#E8E8F0">Install KOL Studio</strong><span style="font-size:12px;color:#A0A0C0">Works offline • Faster than browser</span></div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="document.getElementById('kol-pwa-prompt').classList.remove('show')">×</button>
+</div>
+<script>
+(function(){
+  var CONSENT_KEY='kol_consent_v2',THEME_KEY='kol_theme';
+  window.kolAcceptCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:true,marketing:true,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  window.kolRejectCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:false,marketing:false,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  var btn=document.getElementById('kol-theme-btn');
+  window.kolToggleTheme=function(){var c=localStorage.getItem(THEME_KEY)||'dark';var n=c==='dark'?'light':'dark';localStorage.setItem(THEME_KEY,n);if(n==='light'){document.body.classList.add('kol-light');btn.textContent='☀️'}else{document.body.classList.remove('kol-light');btn.textContent='🌙'}};
+  var st=localStorage.getItem(THEME_KEY);if(st==='light'){document.body.classList.add('kol-light');if(btn)btn.textContent='☀️'}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!sessionStorage.getItem('kol_pwa_dismissed')&&!localStorage.getItem('kol_pwa_installed'))setTimeout(function(){document.getElementById('kol-pwa-prompt').classList.add('show')},4000)});
+  var ib=document.getElementById('kol-pwa-install-btn');if(ib)ib.addEventListener('click',function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')localStorage.setItem('kol_pwa_installed','1');document.getElementById('kol-pwa-prompt').classList.remove('show');deferredPrompt=null})});
+  document.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem(CONSENT_KEY))setTimeout(function(){document.getElementById('kol-cookie-banner').classList.add('show')},1500)});
+})();
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

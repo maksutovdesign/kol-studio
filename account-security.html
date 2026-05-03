@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Безопасность аккаунта — KOL Studio">
+  <meta property="og:description" content="Управляй безопасностью: смени пароль, проверь активные сессии и подключённые устройства.">
+  <meta property="og:url" content="https://kolstudio.com/account-security.html">
+  <meta property="og:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Безопасность аккаунта — KOL Studio">
+  <meta name="twitter:description" content="Управляй безопасностью: смени пароль, проверь активные сессии и подключённые устройства.">
+  <meta name="twitter:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <meta name="description" content="Управляй безопасностью: смени пароль, проверь активные сессии и подключённые устройства.">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#D42B6A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KOL Studio">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<meta name="description" content="Безопасность аккаунта — пароль, сессии, уведомления">
+<title>KOL Studio — Безопасность аккаунта</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1}to{opacity:0}}
+body{animation:kol-fade-in 0.3s ease both}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07071A;--card:#111128;--card2:#181835;--border:#22224A;--bh:#3A3A70;
+  --accent:#D42B6A;--accent2:#8B2BE2;--text:#E8E8F0;--text2:#A0A0C0;--text3:#6A6A8A;
+  --green:#00E676;--gold:#FFB300;--r:12px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+.glow-tl{position:fixed;top:-150px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(212,43,106,0.1) 0%,transparent 70%);pointer-events:none;z-index:0}
+.glow-br{position:fixed;bottom:-150px;right:-150px;width:600px;height:600px;background:radial-gradient(circle,rgba(139,43,226,0.08) 0%,transparent 70%);pointer-events:none;z-index:0}
+
+.layout{display:flex;flex:1;position:relative;z-index:1}
+
+/* SIDEBAR */
+.sidebar{width:240px;min-width:240px;background:#0A0A1E;border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sb-logo{padding:20px 20px 16px;border-bottom:1px solid var(--border)}
+.sb-logo .logo-name{font-size:20px;font-weight:900;color:var(--accent);letter-spacing:3px}
+.sb-logo .logo-sub{font-size:7px;color:var(--accent2);letter-spacing:4px;margin-top:1px}
+.sb-section-title{padding:16px 20px 8px;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 20px;cursor:pointer;border-left:3px solid transparent;transition:all 0.2s;font-size:13px;color:var(--text2);text-decoration:none}
+.nav-item:hover{background:var(--card);color:var(--text)}
+.nav-item.active{background:rgba(212,43,106,0.1);border-left-color:var(--accent);color:var(--text)}
+.nav-item .icon{font-size:15px;width:20px;text-align:center}
+.nav-back{display:flex;align-items:center;gap:10px;padding:12px 20px;font-size:12px;color:var(--text3);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.2s}
+.nav-back:hover{color:var(--text2)}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;padding:32px 40px}
+
+.page-hero{margin-bottom:28px}
+.page-hero h1{font-size:26px;font-weight:800;margin-bottom:6px}
+.page-hero p{font-size:14px;color:var(--text2)}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:20px}
+.card.danger-zone{border-color:rgba(255,71,87,0.35)}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card-title-left{display:flex;align-items:center;gap:8px}
+
+/* FORM */
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;letter-spacing:0.3px}
+.form-input{width:100%;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:11px 14px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s}
+.form-input:focus{border-color:var(--accent)}
+.form-hint{font-size:11px;color:var(--text3);margin-top:5px}
+
+/* PASSWORD STRENGTH */
+.strength-wrap{margin-top:6px}
+.strength-bars{display:flex;gap:4px;margin-bottom:6px}
+.strength-bar{height:4px;flex:1;background:var(--border);border-radius:2px;transition:background 0.3s}
+.strength-bar.weak{background:#FF4757}
+.strength-bar.fair{background:var(--gold)}
+.strength-bar.good{background:#4CAF50}
+.strength-bar.strong{background:var(--green)}
+.strength-label{font-size:11px;font-weight:600}
+
+/* REQUIREMENTS */
+.req-list{list-style:none;margin-top:10px}
+.req-list li{font-size:12px;color:var(--text3);padding:3px 0;display:flex;align-items:center;gap:8px;transition:color 0.2s}
+.req-list li.met{color:var(--green)}
+.req-list li::before{content:'○';font-size:10px}
+.req-list li.met::before{content:'●';color:var(--green)}
+
+/* SESSIONS TABLE */
+.sessions-table{width:100%;border-collapse:collapse}
+.sessions-table th{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;padding:8px 12px;border-bottom:1px solid var(--border);text-align:left}
+.sessions-table td{padding:12px;border-bottom:1px solid rgba(34,34,74,0.5);font-size:13px;color:var(--text2);vertical-align:middle}
+.sessions-table tr:last-child td{border-bottom:none}
+.sessions-table tr:hover td{background:rgba(255,255,255,0.02)}
+.device-label{font-weight:600;color:var(--text);font-size:13px}
+.device-meta{font-size:11px;color:var(--text3);margin-top:2px}
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.badge-this{background:rgba(139,43,226,0.15);color:var(--accent2)}
+.badge-warn{background:rgba(255,179,0,0.15);color:var(--gold);border:1px solid rgba(255,179,0,0.25)}
+.ip-masked{font-family:monospace;font-size:12px;color:var(--text3)}
+
+/* CONNECTED ACCOUNTS */
+.connected-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)}
+.connected-row:last-child{border-bottom:none}
+.connected-info{display:flex;align-items:center;gap:12px}
+.service-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.service-g{background:rgba(234,67,53,0.15)}
+.service-x{background:rgba(255,255,255,0.08)}
+.service-a{background:rgba(255,255,255,0.06)}
+.connected-name{font-size:14px;font-weight:600}
+.connected-status{font-size:12px;margin-top:2px}
+.status-conn{color:var(--green)}
+.status-disc{color:var(--text3)}
+
+/* TOGGLES */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)}
+.toggle-row:last-child{border-bottom:none}
+.toggle-info{flex:1;padding-right:20px}
+.toggle-info h4{font-size:14px;font-weight:600;margin-bottom:3px}
+.toggle-info p{font-size:12px;color:var(--text2)}
+.toggle{position:relative;width:46px;height:26px;cursor:pointer;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:var(--border);border-radius:13px;transition:background 0.3s}
+.toggle input:checked ~ .toggle-track{background:var(--green)}
+.toggle-thumb{position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform 0.3s;box-shadow:0 2px 4px rgba(0,0,0,0.3)}
+.toggle input:checked ~ .toggle-thumb{transform:translateX(20px)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border:none;transition:all 0.2s;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#a0205a);color:#fff}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-outline{background:none;border:1px solid var(--border);color:var(--text2)}
+.btn-outline:hover{border-color:var(--bh);color:var(--text)}
+.btn-sm{padding:7px 14px;font-size:12px}
+.btn-danger{background:none;border:1px solid rgba(255,71,87,0.4);color:#FF4757}
+.btn-danger:hover{background:rgba(255,71,87,0.1)}
+.btn-danger-solid{background:rgba(255,71,87,0.15);border:1px solid rgba(255,71,87,0.4);color:#FF4757}
+.btn-danger-solid:hover{background:rgba(255,71,87,0.25)}
+.btn-green{background:none;border:1px solid rgba(0,230,118,0.3);color:var(--green)}
+.btn-green:hover{background:rgba(0,230,118,0.08)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;max-width:420px;width:90%;transform:scale(0.95);transition:transform 0.25s}
+.modal-overlay.open .modal{transform:scale(1)}
+.modal h3{font-size:18px;font-weight:800;margin-bottom:8px}
+.modal p{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.modal-danger{border-color:rgba(255,71,87,0.35)}
+.delete-input{width:100%;background:var(--card2);border:2px solid rgba(255,71,87,0.3);border-radius:8px;padding:12px;color:var(--text);font-family:monospace;font-size:16px;text-align:center;outline:none;margin-bottom:16px;letter-spacing:2px}
+.delete-input:focus{border-color:rgba(255,71,87,0.6)}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end}
+
+@media(max-width:768px){
+  .layout{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:static;flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--border)}
+  .sb-logo{display:none}
+  .sb-section-title{display:none}
+  .nav-back{padding:12px 16px;white-space:nowrap}
+  .nav-item{padding:12px 16px;white-space:nowrap;border-left:none;border-bottom:3px solid transparent}
+  .nav-item.active{border-left-color:transparent;border-bottom-color:var(--accent)}
+  .main{padding:20px 16px}
+  .sessions-table{font-size:12px}
+  .sessions-table th,.sessions-table td{padding:8px}
+}
+</style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"Безопасность аккаунта — KOL Studio","description":"Управляй безопасностью: смени пароль, проверь активные сессии и подключённые устройства.","url":"https://kolstudio.com/account-security.html","publisher":{"@type":"Organization","name":"KOL Studio","logo":{"@type":"ImageObject","url":"https://kolstudio.com/icons/icon-192.png"}}}
+  </script>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/account-security.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/account-security.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/account-security.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/account-security.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+<div class="glow-tl"></div>
+<div class="glow-br"></div>
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="logo-name">KOL</div>
+    <div class="logo-sub">STUDIO</div>
+  </div>
+  <a href="user-cabinet.html" class="nav-back">← Назад в аккаунт</a>
+  <div class="sb-section-title">Безопасность</div>
+  <a href="account-security.html" class="nav-item active"><span class="icon">🔑</span> Пароль</a>
+  <a href="2fa.html" class="nav-item"><span class="icon">🔐</span> Двухфакторная аутентификация</a>
+  <a href="#sessions" class="nav-item"><span class="icon">💻</span> Сессии входа</a>
+  <a href="#apps" class="nav-item"><span class="icon">🔗</span> Подключённые приложения</a>
+  <a href="notifications.html" class="nav-item"><span class="icon">🔔</span> Уведомления</a>
+</aside>
+
+<!-- MAIN -->
+<main id="kol-main" class="main">
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="index.html">🏠 Главная</a><span class="sep">›</span><a href="user-cabinet.html">Кабинет</a><span class="sep">›</span><span class="current">Безопасность аккаунта</span></nav>
+
+  <div class="page-hero">
+    <h1>🔑 Безопасность аккаунта</h1>
+    <p>Управляйте паролем, активными сессиями и настройками безопасности</p>
+  </div>
+
+  <!-- PASSWORD SECTION -->
+  <div class="card">
+    <div class="card-title">
+      <div class="card-title-left">🔒 Пароль</div>
+      <span style="font-size:12px;color:var(--text3);font-weight:400">Изменён 45 дней назад</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="form-group" style="grid-column:1/-1">
+        <label class="form-label">Текущий пароль</label>
+        <input class="form-input" type="password" placeholder="••••••••••••" id="current-pw">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Новый пароль</label>
+        <input class="form-input" type="password" placeholder="Минимум 8 символов" id="new-pw" oninput="checkStrength(this.value)">
+        <div class="strength-wrap" id="strength-wrap" style="display:none">
+          <div class="strength-bars">
+            <div class="strength-bar" id="sb1"></div>
+            <div class="strength-bar" id="sb2"></div>
+            <div class="strength-bar" id="sb3"></div>
+            <div class="strength-bar" id="sb4"></div>
+          </div>
+          <span class="strength-label" id="strength-label" style="color:var(--text3)"></span>
+        </div>
+        <ul class="req-list" id="req-list">
+          <li id="req-len">Минимум 8 символов</li>
+          <li id="req-upper">Хотя бы одна заглавная буква</li>
+          <li id="req-num">Хотя бы одна цифра</li>
+          <li id="req-special">Хотя бы один спецсимвол (!@#$...)</li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Подтвердите новый пароль</label>
+        <input class="form-input" type="password" placeholder="Повторите пароль" id="confirm-pw" oninput="checkConfirm()">
+        <div class="form-hint" id="confirm-hint"></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
+      <button class="btn btn-primary" onclick="updatePassword()">Обновить пароль</button>
+      <span id="pw-success" style="font-size:13px;color:var(--green);display:none">✓ Пароль успешно изменён</span>
+    </div>
+  </div>
+
+  <!-- SESSIONS SECTION -->
+  <div class="card" id="sessions">
+    <div class="card-title">
+      <div class="card-title-left">💻 Активные сессии</div>
+      <button class="btn btn-danger btn-sm" onclick="signOutAll()">Выйти со всех устройств</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="sessions-table">
+        <thead>
+          <tr>
+            <th>Устройство</th>
+            <th>Местоположение</th>
+            <th>IP-адрес</th>
+            <th>Активность</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="device-label">💻 Chrome на macOS</div>
+              <div class="device-meta">MacBook Pro 14" M3</div>
+            </td>
+            <td>Москва, Россия</td>
+            <td class="ip-masked">178.*.*.214</td>
+            <td>Сейчас онлайн</td>
+            <td><span class="badge badge-this">Это устройство</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="device-label">📱 Safari на iPhone</div>
+              <div class="device-meta">iPhone 15 Pro</div>
+            </td>
+            <td>Москва, Россия</td>
+            <td class="ip-masked">178.*.*.214</td>
+            <td>2 часа назад</td>
+            <td><button class="btn btn-danger btn-sm" onclick="signOutSession(this)">Выйти</button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="device-label">🖥 Firefox на Windows</div>
+              <div class="device-meta">Desktop PC</div>
+            </td>
+            <td>Санкт-Петербург, Россия</td>
+            <td class="ip-masked">46.*.*.88</td>
+            <td>Вчера, 20:31</td>
+            <td><button class="btn btn-danger btn-sm" onclick="signOutSession(this)">Выйти</button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="device-label">📱 Chrome на Android</div>
+              <div class="device-meta">Samsung Galaxy S24</div>
+            </td>
+            <td style="color:var(--gold)">⚠️ Новое местоположение<br><span style="color:var(--text3);font-size:11px">Екатеринбург, Россия</span></td>
+            <td class="ip-masked">95.*.*.12</td>
+            <td>3 дня назад</td>
+            <td><button class="btn btn-danger btn-sm" onclick="signOutSession(this)">Выйти</button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="device-label">💻 Edge на Windows</div>
+              <div class="device-meta">Ноутбук HP</div>
+            </td>
+            <td>Москва, Россия</td>
+            <td class="ip-masked">178.*.*.91</td>
+            <td>7 дней назад</td>
+            <td><button class="btn btn-danger btn-sm" onclick="signOutSession(this)">Выйти</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CONNECTED ACCOUNTS -->
+  <div class="card" id="apps">
+    <div class="card-title"><div class="card-title-left">🔗 Подключённые аккаунты</div></div>
+    <div>
+      <div class="connected-row">
+        <div class="connected-info">
+          <div class="service-icon service-g">G</div>
+          <div>
+            <div class="connected-name">Google</div>
+            <div class="connected-status status-conn">✓ Подключён — anna.k@gmail.com</div>
+          </div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="disconnectService(this,'Google')">Отключить</button>
+      </div>
+      <div class="connected-row">
+        <div class="connected-info">
+          <div class="service-icon service-x">𝕏</div>
+          <div>
+            <div class="connected-name">Twitter / X</div>
+            <div class="connected-status status-disc">Не подключён</div>
+          </div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="connectService(this,'Twitter')">Подключить</button>
+      </div>
+      <div class="connected-row">
+        <div class="connected-info">
+          <div class="service-icon service-a"></div>
+          <div>
+            <div class="connected-name">Apple ID</div>
+            <div class="connected-status status-disc">Не подключён</div>
+          </div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="connectService(this,'Apple ID')">Подключить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN NOTIFICATIONS -->
+  <div class="card">
+    <div class="card-title"><div class="card-title-left">🔔 Уведомления о безопасности</div></div>
+    <div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Уведомить при входе с нового устройства</h4>
+          <p>Получайте email при каждом входе в аккаунт с незнакомого устройства</p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" checked>
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Уведомить о неудачных попытках входа</h4>
+          <p>Оповещение при нескольких неправильных вводах пароля подряд</p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" checked>
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h4>Еженедельный отчёт о безопасности</h4>
+          <p>Сводка активности аккаунта и событий безопасности за неделю</p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- DANGER ZONE -->
+  <div class="card danger-zone">
+    <div class="card-title"><div class="card-title-left" style="color:#FF4757">⚠️ Опасная зона</div></div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:4px">Деактивировать аккаунт</div>
+          <div style="font-size:12px;color:var(--text2)">Временно скрыть профиль и приостановить доступ. Можно восстановить в любое время.</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="deactivateAccount()">Деактивировать</button>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div>
+          <div style="font-size:14px;font-weight:600;color:#FF4757;margin-bottom:4px">Удалить аккаунт</div>
+          <div style="font-size:12px;color:var(--text2)">Безвозвратно удалить аккаунт, все данные, подписки и историю. Это действие нельзя отменить.</div>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="showDeleteModal()">Удалить аккаунт</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal-overlay" id="delete-modal">
+  <div class="modal modal-danger">
+    <h3>⚠️ Удалить аккаунт?</h3>
+    <p>Это действие безвозвратно удалит ваш аккаунт, все данные, подписки, историю платежей и купленный контент. Восстановление будет невозможно.</p>
+    <div style="background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.2);border-radius:8px;padding:12px;margin-bottom:16px;font-size:13px;color:#FF4757">
+      Введите <strong>DELETE</strong> для подтверждения:
+    </div>
+    <input class="delete-input" type="text" placeholder="DELETE" id="delete-confirm-input" oninput="checkDeleteInput()">
+    <div class="modal-actions">
+      <button class="btn btn-outline btn-sm" onclick="closeDeleteModal()">Отмена</button>
+      <button class="btn btn-danger btn-sm" id="delete-confirm-btn" disabled onclick="confirmDelete()">Удалить аккаунт</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid #22224A;padding:32px 24px;margin-top:40px;position:relative;z-index:1">
+  <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <a href="terms.html" style="color:#6A6A8A;font-size:13px;text-decoration:none">Terms</a>
+      <a href="privacy.html" style="color:#6A6A8A;font-size:13px;text-decoration:none">Privacy</a>
+      <a href="cookie.html" style="color:#6A6A8A;font-size:13px;text-decoration:none">Cookie</a>
+      <a href="dmca.html" style="color:#6A6A8A;font-size:13px;text-decoration:none">DMCA</a>
+      <a href="help.html" style="color:#6A6A8A;font-size:13px;text-decoration:none">Help</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px">
+        <a href="account-security.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇷🇺 RU</a>
+        <span style="color:#22224A">|</span>
+        <a href="en/account-security.html" style="color:#6A6A8A;font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;">🇬🇧 EN</a>
+      </div>
+      <span style="color:#6A6A8A;font-size:13px">© 2026 KOL Studio</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('a[href]').forEach(a=>{
+    const h=a.getAttribute('href');
+    if(!h||h.startsWith('#')||h.startsWith('http')||h.startsWith('mailto'))return;
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      document.body.style.animation='kol-fade-out 0.25s ease forwards';
+      setTimeout(()=>location.href=h,250);
+    });
+  });
+});
+
+function checkStrength(val){
+  const wrap=document.getElementById('strength-wrap');
+  const label=document.getElementById('strength-label');
+  const bars=[document.getElementById('sb1'),document.getElementById('sb2'),document.getElementById('sb3'),document.getElementById('sb4')];
+  if(!val){wrap.style.display='none';return;}
+  wrap.style.display='block';
+
+  let score=0;
+  const hasLen=val.length>=8;
+  const hasUpper=/[A-Z]/.test(val);
+  const hasNum=/[0-9]/.test(val);
+  const hasSpecial=/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val);
+
+  document.getElementById('req-len').classList.toggle('met',hasLen);
+  document.getElementById('req-upper').classList.toggle('met',hasUpper);
+  document.getElementById('req-num').classList.toggle('met',hasNum);
+  document.getElementById('req-special').classList.toggle('met',hasSpecial);
+
+  if(hasLen)score++;if(hasUpper)score++;if(hasNum)score++;if(hasSpecial)score++;
+
+  const classes=['','weak','fair','good','strong'];
+  const labels=['','Слабый','Удовлетворительно','Хорошо','Надёжный'];
+  const colors=['','#FF4757','var(--gold)','#4CAF50','var(--green)'];
+  bars.forEach((b,i)=>{
+    b.className='strength-bar '+(i<score?classes[score]:'');
+  });
+  label.textContent=labels[score];
+  label.style.color=colors[score];
+}
+
+function checkConfirm(){
+  const newPw=document.getElementById('new-pw').value;
+  const confirm=document.getElementById('confirm-pw').value;
+  const hint=document.getElementById('confirm-hint');
+  if(!confirm)return;
+  if(newPw===confirm){hint.textContent='✓ Пароли совпадают';hint.style.color='var(--green)';}
+  else{hint.textContent='✗ Пароли не совпадают';hint.style.color='#FF4757';}
+}
+
+function updatePassword(){
+  const cur=document.getElementById('current-pw').value;
+  const nw=document.getElementById('new-pw').value;
+  const con=document.getElementById('confirm-pw').value;
+  if(!cur||!nw||!con){alert('Заполните все поля');return;}
+  if(nw!==con){alert('Пароли не совпадают');return;}
+  if(nw.length<8){alert('Пароль слишком короткий');return;}
+  const s=document.getElementById('pw-success');
+  s.style.display='inline';
+  setTimeout(()=>s.style.display='none',3000);
+  document.getElementById('current-pw').value='';
+  document.getElementById('new-pw').value='';
+  document.getElementById('confirm-pw').value='';
+  document.getElementById('strength-wrap').style.display='none';
+  document.getElementById('confirm-hint').textContent='';
+}
+
+function signOutSession(btn){
+  if(confirm('Завершить эту сессию?')){
+    btn.closest('tr').remove();
+  }
+}
+
+function signOutAll(){
+  if(confirm('Выйти со всех устройств, кроме текущего?')){
+    const rows=document.querySelectorAll('.sessions-table tbody tr:not(:first-child)');
+    rows.forEach(r=>r.remove());
+  }
+}
+
+function disconnectService(btn,name){
+  if(confirm('Отключить '+name+'? Вы не сможете использовать его для входа.')){
+    const row=btn.closest('.connected-row');
+    row.querySelector('.connected-status').className='connected-status status-disc';
+    row.querySelector('.connected-status').textContent='Не подключён';
+    btn.textContent='Подключить';
+    btn.onclick=function(){connectService(this,name)};
+  }
+}
+
+function connectService(btn,name){
+  btn.textContent='Подключение...';
+  setTimeout(()=>{
+    const row=btn.closest('.connected-row');
+    row.querySelector('.connected-status').className='connected-status status-conn';
+    row.querySelector('.connected-status').textContent='✓ Подключён';
+    btn.textContent='Отключить';
+    btn.onclick=function(){disconnectService(this,name)};
+  },1200);
+}
+
+function deactivateAccount(){
+  if(confirm('Временно деактивировать аккаунт? Ваш профиль будет скрыт до восстановления.')){
+    alert('Аккаунт деактивирован. Для восстановления войдите снова.');
+  }
+}
+
+function showDeleteModal(){
+  document.getElementById('delete-modal').classList.add('open');
+  document.getElementById('delete-confirm-input').value='';
+  document.getElementById('delete-confirm-btn').disabled=true;
+}
+
+function closeDeleteModal(){
+  document.getElementById('delete-modal').classList.remove('open');
+}
+
+function checkDeleteInput(){
+  const val=document.getElementById('delete-confirm-input').value;
+  document.getElementById('delete-confirm-btn').disabled=val!=='DELETE';
+}
+
+function confirmDelete(){
+  alert('Запрос на удаление аккаунта отправлен. Аккаунт будет удалён через 30 дней. Вы можете отменить это в течение этого срока.');
+  closeDeleteModal();
+}
+
+document.getElementById('delete-modal').addEventListener('click',function(e){
+  if(e.target===this)closeDeleteModal();
+});
+</script>
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="cookie.html">Подробнее</a> · <a href="report.html">Пожаловаться</a> · <a href="api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href = 'search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href = 'upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

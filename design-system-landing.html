@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOL Studio — Design System</title>
+<meta name="description" content="Дизайн-система KOL Studio: токены, компоненты и паттерны для 124 страниц платформы">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#07071A;
+  --l1:#111128;
+  --l2:#181835;
+  --border:#22224A;
+  --pink:#D42B6A;
+  --purple:#8B2BE2;
+  --green:#00E676;
+  --gold:#FFB300;
+  --t1:#E8E8F0;
+  --t2:#A0A0C0;
+  --t3:#6A6A8A;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--t1);
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ─── Animations ──────────────────────────── */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@keyframes rotate-slow{to{transform:rotate(360deg)}}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@keyframes fade-up{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+@keyframes pulse-ring{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.6);opacity:0}}
+@keyframes slide-right{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+@keyframes counter{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@keyframes gradient-shift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes card-in{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.fade-up{opacity:0;transform:translateY(32px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-up-d1{transition-delay:.1s}
+.fade-up-d2{transition-delay:.2s}
+.fade-up-d3{transition-delay:.3s}
+.fade-up-d4{transition-delay:.4s}
+.fade-up-d5{transition-delay:.5s}
+.fade-up-d6{transition-delay:.6s}
+
+/* ─── Nav ─────────────────────────────────── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:16px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(7,7,26,.8);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(34,34,74,.6);
+  transition:all .3s;
+}
+.nav-logo{
+  font-size:17px;font-weight:800;
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-decoration:none;
+}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{color:var(--t2);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--t1)}
+.nav-cta{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 20px;border-radius:10px;
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+  color:#fff;text-decoration:none;font-size:14px;font-weight:700;
+  transition:opacity .2s,transform .1s;
+}
+.nav-cta:hover{opacity:.9}
+
+/* ─── Hero ────────────────────────────────── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:120px 24px 80px;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%,rgba(139,43,226,.18) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 80%,rgba(212,43,106,.12) 0%,transparent 50%),
+    radial-gradient(ellipse 40% 30% at 80% 70%,rgba(139,43,226,.1) 0%,transparent 50%);
+  pointer-events:none;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(34,34,74,.3) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(34,34,74,.3) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 30%,transparent 80%);
+  pointer-events:none;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 16px;border-radius:20px;
+  background:rgba(212,43,106,.12);border:1px solid rgba(212,43,106,.3);
+  color:#D42B6A;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:24px;animation:fade-in .8s ease both;
+}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:#D42B6A;animation:blink 1.5s ease infinite}
+.hero-title{
+  font-size:clamp(42px,8vw,90px);font-weight:900;
+  line-height:1.05;letter-spacing:-2px;
+  margin-bottom:24px;
+  animation:fade-up .8s ease .1s both;
+}
+.hero-title-line1{
+  background:linear-gradient(135deg,#E8E8F0 0%,#A0A0C0 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;
+}
+.hero-title-line2{
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2,#D42B6A);
+  background-size:200% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:gradient-shift 4s ease infinite;
+  display:block;
+}
+.hero-sub{
+  font-size:18px;color:var(--t2);max-width:520px;line-height:1.7;
+  margin-bottom:40px;animation:fade-up .8s ease .2s both;
+}
+.hero-actions{
+  display:flex;gap:16px;flex-wrap:wrap;justify-content:center;
+  animation:fade-up .8s ease .3s both;
+}
+.btn-hero{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:12px;
+  font-size:15px;font-weight:700;cursor:pointer;
+  text-decoration:none;transition:all .2s;border:none;font-family:'Inter',sans-serif;
+}
+.btn-hero-primary{
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;
+  box-shadow:0 8px 32px rgba(212,43,106,.35);
+}
+.btn-hero-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(212,43,106,.5)}
+.btn-hero-secondary{
+  background:var(--l1);border:1.5px solid var(--border);color:var(--t2);
+}
+.btn-hero-secondary:hover{border-color:#D42B6A;color:var(--t1);transform:translateY(-2px)}
+
+/* Floating orbs */
+.orb{
+  position:absolute;border-radius:50%;pointer-events:none;
+  background:linear-gradient(135deg,rgba(212,43,106,.15),rgba(139,43,226,.15));
+  border:1px solid rgba(212,43,106,.1);
+  animation:float linear infinite;
+}
+
+/* Hero stats */
+.hero-stats{
+  display:flex;gap:48px;flex-wrap:wrap;justify-content:center;
+  margin-top:72px;
+  animation:fade-up .8s ease .4s both;
+}
+.hero-stat{text-align:center;position:relative}
+.hero-stat-num{
+  font-size:36px;font-weight:900;
+  background:linear-gradient(135deg,#E8E8F0,#A0A0C0);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;line-height:1;
+}
+.hero-stat-num.accent{background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text}
+.hero-stat-lbl{font-size:12px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.stat-sep{width:1px;background:var(--border);align-self:stretch}
+
+/* ─── Section base ────────────────────────── */
+section{padding:96px 24px}
+.container{max-width:1160px;margin:0 auto}
+.section-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 14px;border-radius:20px;
+  background:rgba(212,43,106,.1);border:1px solid rgba(212,43,106,.25);
+  color:#D42B6A;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.section-title{
+  font-size:clamp(28px,4vw,48px);font-weight:900;
+  line-height:1.1;letter-spacing:-1px;margin-bottom:16px;
+}
+.section-sub{font-size:16px;color:var(--t2);max-width:560px;line-height:1.7}
+
+/* ─── Color Showcase ─────────────────────── */
+.colors-section{background:var(--l1)}
+.color-showcase{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:16px;margin-top:48px;
+}
+.color-chip{
+  border-radius:16px;overflow:hidden;
+  border:1px solid var(--border);
+  transition:transform .2s,border-color .2s;cursor:pointer;
+}
+.color-chip:hover{transform:translateY(-4px);border-color:rgba(212,43,106,.4)}
+.color-swatch{height:90px;position:relative}
+.color-swatch-label{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;opacity:0;
+  transition:opacity .2s;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);
+}
+.color-chip:hover .color-swatch-label{opacity:1}
+.color-info{padding:10px 12px;background:var(--l2)}
+.color-name{font-size:12px;font-weight:700;margin-bottom:2px}
+.color-hex{font-size:10px;font-family:monospace;color:var(--t3)}
+.color-role{font-size:10px;color:var(--t2);margin-top:2px}
+
+/* ─── Typography Showcase ────────────────── */
+.type-showcase{margin-top:48px}
+.type-specimen{
+  padding:32px;
+  background:var(--l1);border:1px solid var(--border);border-radius:20px;
+  margin-bottom:16px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  transition:border-color .2s;
+}
+.type-specimen:hover{border-color:rgba(212,43,106,.3)}
+.type-specimen-text{flex:1}
+.type-specimen-meta{
+  text-align:right;flex-shrink:0;
+}
+.type-meta-weight{font-size:12px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px}
+.type-meta-spec{font-size:11px;font-family:monospace;color:var(--t3);margin-top:4px}
+
+/* ─── Components Grid ────────────────────── */
+.components-section{overflow:hidden}
+.comp-masonry{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:56px;
+}
+.comp-tile{
+  background:var(--l1);border:1px solid var(--border);border-radius:20px;
+  padding:24px;transition:border-color .3s,transform .3s;
+  position:relative;overflow:hidden;
+}
+.comp-tile:hover{border-color:rgba(212,43,106,.4);transform:translateY(-3px)}
+.comp-tile::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(212,43,106,.03),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.comp-tile:hover::before{opacity:1}
+.comp-tile-label{
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--t3);margin-bottom:20px;
+}
+.comp-tile-span2{grid-column:span 2}
+.comp-tile-span3{grid-column:span 3}
+
+/* Button showcase */
+.btn-showcase{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.b{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 18px;border-radius:10px;border:none;
+  font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;
+  transition:all .15s;
+}
+.b:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.b:active{transform:scale(.97)}
+.b-primary{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff}
+.b-secondary{background:transparent;border:1.5px solid var(--border);color:var(--t2)}
+.b-ghost{background:rgba(212,43,106,.1);border:1px solid rgba(212,43,106,.25);color:#D42B6A}
+.b-gold{background:rgba(255,179,0,.12);border:1px solid rgba(255,179,0,.3);color:#FFB300}
+.b-green{background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.25);color:#00E676}
+.b-sm{padding:5px 12px;font-size:11px;border-radius:8px}
+.b-icon{width:36px;height:36px;padding:0;border-radius:50%;justify-content:center}
+
+/* Badge showcase */
+.bdg{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.bdg-pink{background:rgba(212,43,106,.15);border:1px solid rgba(212,43,106,.4);color:#D42B6A}
+.bdg-purple{background:rgba(139,43,226,.15);border:1px solid rgba(139,43,226,.4);color:#8B2BE2}
+.bdg-green{background:rgba(0,230,118,.15);border:1px solid rgba(0,230,118,.4);color:#00E676}
+.bdg-gold{background:rgba(255,179,0,.15);border:1px solid rgba(255,179,0,.4);color:#FFB300}
+
+/* Input showcase */
+.inp-demo{
+  background:var(--l2);border:1.5px solid var(--border);border-radius:10px;
+  padding:11px 16px;color:var(--t1);font-size:14px;font-family:'Inter',sans-serif;
+  outline:none;width:100%;transition:border-color .2s;
+}
+.inp-demo:focus{border-color:#D42B6A}
+
+/* Toggle */
+.tog-wrap{display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--l2);border-radius:10px;margin-bottom:6px}
+.tog-info .tog-t{font-size:13px;font-weight:600}
+.tog-info .tog-d{font-size:11px;color:var(--t3)}
+.tog{position:relative;width:44px;height:24px;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0;position:absolute}
+.tog-track{position:absolute;inset:0;background:var(--border);border-radius:12px;cursor:pointer;transition:background .3s}
+.tog input:checked~.tog-track{background:#D42B6A}
+.tog-thumb{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .3s;pointer-events:none}
+.tog input:checked~.tog-thumb{transform:translateX(20px)}
+
+/* Skeleton */
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.sk{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:sk 1.5s infinite;border-radius:6px}
+
+/* Avatar */
+.av{border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;flex-shrink:0}
+
+/* Card showcase */
+.kcard{background:var(--l2);border:1px solid var(--border);border-radius:14px;padding:16px;transition:all .2s}
+.kcard:hover{border-color:rgba(212,43,106,.4);transform:translateY(-2px)}
+
+/* Toast demo */
+.toast-ex{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:var(--l2);border:1px solid var(--border);font-size:13px;font-weight:500;margin-bottom:8px}
+.toast-ex.s{border-left:3px solid #00E676}
+.toast-ex.e{border-left:3px solid #D42B6A}
+.toast-ex.i{border-left:3px solid #8B2BE2}
+
+/* Progress */
+.prog-t{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.prog-f{height:100%;border-radius:3px;background:linear-gradient(90deg,#D42B6A,#8B2BE2)}
+
+/* ─── Spacing visual ─────────────────────── */
+.spacing-section{background:var(--l1)}
+.spacing-visual{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:16px;margin-top:48px;
+}
+.sp-item{display:flex;flex-direction:column;align-items:center;gap:10px}
+.sp-box-wrap{width:100%;display:flex;align-items:flex-end;justify-content:center;height:80px}
+.sp-box{background:linear-gradient(135deg,rgba(212,43,106,.25),rgba(139,43,226,.25));border:1px solid rgba(212,43,106,.3);border-radius:4px;width:100%}
+.sp-label{font-size:12px;font-weight:800;color:var(--t1)}
+.sp-desc{font-size:10px;color:var(--t3);text-align:center}
+
+/* ─── Motion Showcase ────────────────────── */
+.motion-section{}
+.motion-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px;
+}
+.motion-card{
+  background:var(--l1);border:1px solid var(--border);border-radius:20px;padding:32px 20px;
+  text-align:center;transition:border-color .2s;
+}
+.motion-card:hover{border-color:rgba(212,43,106,.4)}
+.motion-box{
+  width:64px;height:64px;border-radius:16px;
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;margin:0 auto 16px;
+}
+.motion-name{font-size:14px;font-weight:700;margin-bottom:4px}
+.motion-spec{font-size:11px;color:var(--t3);font-family:monospace}
+.mf{animation:float 3s ease-in-out infinite}
+.mp{animation:pulse-ring 1.5s ease infinite; background:rgba(212,43,106,.2);border:2px solid #D42B6A}
+.mr{animation:rotate-slow 3s linear infinite}
+.mb{animation:float 1s ease-in-out infinite}
+
+/* ─── Token table ─────────────────────────── */
+.tokens-section{background:var(--l1)}
+.token-table{width:100%;border-collapse:collapse;margin-top:40px;font-size:13px}
+.token-table th{
+  text-align:left;padding:10px 16px;
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);
+  border-bottom:1px solid var(--border);
+}
+.token-table td{padding:12px 16px;border-bottom:1px solid rgba(34,34,74,.5);vertical-align:middle}
+.token-table tr:hover td{background:rgba(212,43,106,.03)}
+.token-name{font-family:monospace;font-size:12px;color:#D42B6A;font-weight:700}
+.token-val{font-family:monospace;font-size:12px;color:var(--t2)}
+.token-dot{width:20px;height:20px;border-radius:4px;display:inline-block}
+
+/* ─── Interactive Demo ────────────────────── */
+.demo-section{}
+.demo-frame{
+  background:var(--l1);border:1.5px solid var(--border);border-radius:24px;
+  overflow:hidden;margin-top:48px;
+  box-shadow:0 32px 80px rgba(0,0,0,.5);
+}
+.demo-topbar{
+  padding:12px 20px;background:var(--l2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.demo-dot{width:12px;height:12px;border-radius:50%}
+.demo-url{
+  flex:1;margin:0 16px;background:var(--bg);border-radius:6px;
+  padding:5px 12px;font-size:12px;color:var(--t3);font-family:monospace;
+}
+.demo-body{padding:32px;display:grid;grid-template-columns:220px 1fr;gap:24px;min-height:420px}
+.demo-sidebar{
+  background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:16px;
+}
+.demo-sidebar-logo{
+  font-size:16px;font-weight:800;
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:20px;display:block;
+}
+.demo-nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;
+  font-size:13px;font-weight:500;color:var(--t2);margin-bottom:2px;cursor:pointer;
+  transition:all .15s;
+}
+.demo-nav-item:hover{background:var(--l2);color:var(--t1)}
+.demo-nav-item.active{background:rgba(212,43,106,.12);color:#D42B6A;border-left:2px solid #D42B6A}
+.demo-main{}
+.demo-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.demo-stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px}
+.demo-stat-num{font-size:22px;font-weight:900;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.demo-stat-lbl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.demo-card-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.demo-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;gap:10px;align-items:flex-start;cursor:pointer;transition:border-color .15s}
+.demo-card:hover{border-color:rgba(212,43,106,.3)}
+
+/* ─── Layers / Architecture ──────────────── */
+.arch-section{background:var(--l1)}
+.arch-layers{
+  display:flex;flex-direction:column;gap:12px;margin-top:48px;max-width:720px;
+}
+.arch-layer{
+  display:flex;align-items:center;gap:20px;
+  padding:20px 24px;border-radius:16px;
+  border:1px solid var(--border);
+  background:var(--l2);
+  transition:border-color .2s,transform .2s;cursor:pointer;
+}
+.arch-layer:hover{border-color:rgba(212,43,106,.4);transform:translateX(6px)}
+.arch-layer-icon{font-size:24px;width:48px;text-align:center;flex-shrink:0}
+.arch-layer-title{font-size:15px;font-weight:700;margin-bottom:2px}
+.arch-layer-desc{font-size:13px;color:var(--t2)}
+.arch-layer-count{margin-left:auto;flex-shrink:0}
+
+/* ─── Coverage ────────────────────────────── */
+.coverage-section{}
+.coverage-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;margin-top:48px;
+}
+.cov-card{
+  background:var(--l1);border:1px solid var(--border);border-radius:16px;padding:20px;
+  transition:border-color .2s;
+}
+.cov-card:hover{border-color:rgba(212,43,106,.35)}
+.cov-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.cov-title{font-size:14px;font-weight:700}
+.cov-pct{font-size:22px;font-weight:900;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.cov-bar-track{height:4px;background:var(--l2);border-radius:2px;margin-bottom:8px}
+.cov-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#D42B6A,#8B2BE2);transition:width 1s ease}
+.cov-detail{font-size:12px;color:var(--t3)}
+
+/* ─── CTA Section ────────────────────────── */
+.cta-section{
+  padding:96px 24px;text-align:center;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 100%,rgba(212,43,106,.15) 0%,transparent 60%);
+  border-top:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(34,34,74,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(34,34,74,.2) 1px,transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 100%,black,transparent);
+  pointer-events:none;
+}
+.cta-title{
+  font-size:clamp(32px,5vw,56px);font-weight:900;
+  background:linear-gradient(135deg,#E8E8F0,#A0A0C0);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:16px;
+}
+.cta-sub{font-size:16px;color:var(--t2);max-width:480px;margin:0 auto 40px}
+.cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.cta-info{margin-top:24px;font-size:12px;color:var(--t3)}
+
+/* ─── Footer ──────────────────────────────── */
+footer{
+  border-top:1px solid var(--border);
+  padding:32px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+}
+.footer-logo{
+  font-size:15px;font-weight:800;
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap}
+.footer-links a{color:var(--t3);text-decoration:none;font-size:13px;transition:color .2s}
+.footer-links a:hover{color:var(--t1)}
+.footer-copy{font-size:12px;color:var(--t3)}
+
+/* ─── Scroll indicator ────────────────────── */
+.scroll-progress{
+  position:fixed;top:0;left:0;right:0;height:2px;z-index:2000;
+  background:linear-gradient(90deg,#D42B6A,#8B2BE2);
+  transform-origin:left;transform:scaleX(0);transition:transform .05s linear;
+}
+
+/* ─── Code block ──────────────────────────── */
+pre{
+  background:var(--l2);border:1px solid var(--border);border-radius:12px;
+  padding:20px;font-family:'Fira Code','Cascadia Code',monospace;font-size:12px;
+  color:var(--t2);overflow-x:auto;line-height:1.8;
+}
+.kw{color:#8B2BE2}
+.str{color:#00E676}
+.cm{color:var(--t3);font-style:italic}
+.pk{color:#D42B6A}
+.num{color:#FFB300}
+
+/* ─── Responsive ──────────────────────────── */
+@media(max-width:1024px){
+  .comp-masonry{grid-template-columns:repeat(2,1fr)}
+  .comp-tile-span3{grid-column:span 2}
+  .motion-grid{grid-template-columns:repeat(2,1fr)}
+  .demo-body{grid-template-columns:1fr;gap:16px}
+  .demo-sidebar{display:none}
+}
+@media(max-width:768px){
+  .nav{padding:16px 24px}
+  .nav-links{display:none}
+  .hero{padding:100px 24px 60px}
+  .hero-stats{gap:24px}
+  .stat-sep{display:none}
+  .comp-masonry{grid-template-columns:1fr}
+  .comp-tile-span2,.comp-tile-span3{grid-column:span 1}
+  .color-showcase{grid-template-columns:repeat(3,1fr)}
+  footer{flex-direction:column;text-align:center;padding:24px}
+}
+@media(max-width:480px){
+  .color-showcase{grid-template-columns:repeat(2,1fr)}
+  .motion-grid{grid-template-columns:1fr 1fr}
+  .demo-stats-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scrollBar"></div>
+
+<!-- Nav -->
+<nav class="nav" id="navbar">
+  <a href="#" class="nav-logo">KOL Studio · DS</a>
+  <div class="nav-links">
+    <a href="#colors">Цвета</a>
+    <a href="#components">Компоненты</a>
+    <a href="#motion">Анимации</a>
+    <a href="#tokens">Токены</a>
+    <a href="#coverage">Покрытие</a>
+  </div>
+  <a href="design-system.html" class="nav-cta">📖 Документация →</a>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <!-- Floating orbs -->
+  <div class="orb" style="width:320px;height:320px;top:-80px;right:-60px;animation-duration:8s;animation-delay:-2s;opacity:.6"></div>
+  <div class="orb" style="width:200px;height:200px;bottom:80px;left:-40px;animation-duration:6s;opacity:.4"></div>
+  <div class="orb" style="width:120px;height:120px;top:40%;right:10%;animation-duration:5s;animation-delay:-1s;opacity:.3"></div>
+
+  <div class="hero-tag">
+    <div class="hero-dot"></div>
+    Living Design System
+  </div>
+
+  <h1 class="hero-title">
+    <span class="hero-title-line1">KOL Studio</span>
+    <span class="hero-title-line2">Design System</span>
+  </h1>
+
+  <p class="hero-sub">
+    Полная система токенов, компонентов и паттернов для 124 страниц платформы. Тёмная тема, PWA, i18n — всё в едином языке дизайна.
+  </p>
+
+  <div class="hero-actions">
+    <a href="design-system.html" class="btn-hero btn-hero-primary">📖 Открыть документацию</a>
+    <a href="feed.html" class="btn-hero btn-hero-secondary">🚀 Посмотреть платформу</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num accent" data-target="124">0</span>
+      <div class="hero-stat-lbl">HTML страниц</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num accent" data-target="40">0</span>
+      <div class="hero-stat-lbl">компонентов</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num" data-target="2">0</span>
+      <div class="hero-stat-lbl">языка</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num" data-target="0" data-suffix="MB" data-float="8.8">0</span>
+      <div class="hero-stat-lbl">размер проекта</div>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num accent" data-target="100">0</span>
+      <div class="hero-stat-lbl">% pure HTML/CSS/JS</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ COLORS ═══════ -->
+<section class="colors-section" id="colors">
+  <div class="container">
+    <div class="section-tag fade-up">🎨 Foundations</div>
+    <h2 class="section-title fade-up fade-up-d1">Цветовая палитра</h2>
+    <p class="section-sub fade-up fade-up-d2">Dark-first система с полным light-mode оверрайдом. Два акцентных цвета формируют единый градиентный язык на всей платформе.</p>
+
+    <div class="color-showcase fade-up fade-up-d3">
+      <!-- Dark BGs -->
+      <div class="color-chip"><div class="color-swatch" style="background:#07071A"><div class="color-swatch-label">Page Background</div></div><div class="color-info"><div class="color-name">--bg</div><div class="color-hex">#07071A</div><div class="color-role">Body, page</div></div></div>
+      <div class="color-chip"><div class="color-swatch" style="background:#111128"><div class="color-swatch-label">Card Layer 1</div></div><div class="color-info"><div class="color-name">--card-l1</div><div class="color-hex">#111128</div><div class="color-role">Cards, modals</div></div></div>
+      <div class="color-chip"><div class="color-swatch" style="background:#181835"><div class="color-swatch-label">Card Layer 2</div></div><div class="color-info"><div class="color-name">--card-l2</div><div class="color-hex">#181835</div><div class="color-role">Inputs, nested</div></div></div>
+      <div class="color-chip"><div class="color-swatch" style="background:#22224A"><div class="color-swatch-label">Border</div></div><div class="color-info"><div class="color-name">--border</div><div class="color-hex">#22224A</div><div class="color-role">Dividers, lines</div></div></div>
+      <!-- Accents -->
+      <div class="color-chip"><div class="color-swatch" style="background:#D42B6A"><div class="color-swatch-label">Primary CTA</div></div><div class="color-info"><div class="color-name">Pink / CTA</div><div class="color-hex">#D42B6A</div><div class="color-role">CTA, focus, active</div></div></div>
+      <div class="color-chip"><div class="color-swatch" style="background:#8B2BE2"><div class="color-swatch-label">Secondary</div></div><div class="color-info"><div class="color-name">Purple</div><div class="color-hex">#8B2BE2</div><div class="color-role">Secondary accent</div></div></div>
+      <div class="color-chip"><div class="color-swatch" style="background:linear-gradient(135deg,#D42B6A,#8B2BE2)"><div class="color-swatch-label">Gradient</div></div><div class="color-info"><div class="color-name">Primary Grad</div><div class="color-hex">135deg →</div><div class="color-role">Buttons, text</div></div></div>
+      <div class="color-chip"><div class="color-swatch" style="background:#00E676"><div class="color-swatch-label">Success / Online</div></div><div class="color-info"><div class="color-name">Green</div><div class="color-hex">#00E676</div><div class="color-role">Success, online</div></div></div>
+      <div class="color-chip"><div class="color-swatch" style="background:#FFB300"><div class="color-swatch-label">VIP / Warning</div></div><div class="color-info"><div class="color-name">Gold</div><div class="color-hex">#FFB300</div><div class="color-role">VIP, warnings</div></div></div>
+      <!-- Text -->
+      <div class="color-chip"><div class="color-swatch" style="background:#E8E8F0"><div class="color-swatch-label">Primary Text</div></div><div class="color-info"><div class="color-name">Text Primary</div><div class="color-hex">#E8E8F0</div><div class="color-role">Headers, body</div></div></div>
+      <div class="color-chip"><div class="color-swatch" style="background:#A0A0C0"><div class="color-swatch-label">Secondary Text</div></div><div class="color-info"><div class="color-name">Text Secondary</div><div class="color-hex">#A0A0C0</div><div class="color-role">Meta, captions</div></div></div>
+      <div class="color-chip"><div class="color-swatch" style="background:#6A6A8A"><div class="color-swatch-label">Muted Text</div></div><div class="color-info"><div class="color-name">Text Muted</div><div class="color-hex">#6A6A8A</div><div class="color-role">Placeholders</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TYPOGRAPHY ═══════ -->
+<section id="typography" style="padding:96px 24px">
+  <div class="container">
+    <div class="section-tag fade-up">✍️ Typography</div>
+    <h2 class="section-title fade-up fade-up-d1">Шрифтовая система</h2>
+    <p class="section-sub fade-up fade-up-d2">Inter — единственный шрифт платформы. 9 весов, fluid scaling через <code style="background:var(--l1);padding:2px 6px;border-radius:4px;font-size:12px;color:#D42B6A">clamp()</code>, код на Fira Code.</p>
+
+    <div class="type-showcase fade-up fade-up-d3">
+      <div class="type-specimen">
+        <div class="type-specimen-text">
+          <div style="font-size:clamp(36px,6vw,72px);font-weight:900;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1">KOL Studio</div>
+        </div>
+        <div class="type-specimen-meta">
+          <div class="type-meta-weight">Display / Hero</div>
+          <div class="type-meta-spec">900 · clamp(36,6vw,72px)</div>
+        </div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-specimen-text"><div style="font-size:clamp(28px,4vw,48px);font-weight:800">Discover Creators</div></div>
+        <div class="type-specimen-meta"><div class="type-meta-weight">Heading 1</div><div class="type-meta-spec">800 · clamp(28,4vw,48px)</div></div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-specimen-text"><div style="font-size:28px;font-weight:700">Top Creators This Week</div></div>
+        <div class="type-specimen-meta"><div class="type-meta-weight">Heading 2</div><div class="type-meta-spec">700 · 24–32px</div></div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-specimen-text"><div style="font-size:20px;font-weight:600">Subscription plan details</div></div>
+        <div class="type-specimen-meta"><div class="type-meta-weight">Heading 3</div><div class="type-meta-spec">600 · 18–22px</div></div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-specimen-text"><div style="font-size:15px;line-height:1.6;color:var(--t2);max-width:520px">Platform for exclusive content. Subscribe to unlock photos, videos, and live sessions from your favourite creators anytime.</div></div>
+        <div class="type-specimen-meta"><div class="type-meta-weight">Body</div><div class="type-meta-spec">400 · 14–16px · 1.6</div></div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-specimen-text"><div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3)">Category · Creator Tools · Analytics</div></div>
+        <div class="type-specimen-meta"><div class="type-meta-weight">Label</div><div class="type-meta-spec">700 · 11px · 1.5px ls</div></div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-specimen-text"><div style="font-family:'Fira Code','Cascadia Code',monospace;font-size:14px;color:#D42B6A">GET /api/v1/creators/{id}/posts</div></div>
+        <div class="type-specimen-meta"><div class="type-meta-weight">Code</div><div class="type-meta-spec">Fira Code · 12–14px</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ COMPONENTS ═══════ -->
+<section id="components" style="padding:96px 24px;background:var(--l1)">
+  <div class="container">
+    <div class="section-tag fade-up">🧩 Components</div>
+    <h2 class="section-title fade-up fade-up-d1">Библиотека компонентов</h2>
+    <p class="section-sub fade-up fade-up-d2">Все компоненты — чистый HTML/CSS/JS. Zero dependencies. Одинаково работают на всех 124 страницах.</p>
+
+    <div class="comp-masonry fade-up fade-up-d3">
+
+      <!-- Buttons -->
+      <div class="comp-tile">
+        <div class="comp-tile-label">Кнопки</div>
+        <div class="btn-showcase" style="margin-bottom:12px">
+          <button class="b b-primary">✨ Subscribe</button>
+          <button class="b b-secondary">Cancel</button>
+          <button class="b b-ghost">👑 VIP</button>
+        </div>
+        <div class="btn-showcase" style="margin-bottom:12px">
+          <button class="b b-primary" style="padding:5px 12px;font-size:11px;border-radius:8px">Small</button>
+          <button class="b b-gold" style="padding:5px 12px;font-size:11px;border-radius:8px">💰 Tip</button>
+          <button class="b b-green" style="padding:5px 12px;font-size:11px;border-radius:8px">✅ Done</button>
+        </div>
+        <div class="btn-showcase">
+          <button class="b b-primary b-icon">➕</button>
+          <button class="b b-secondary b-icon">🔍</button>
+          <button class="b b-ghost b-icon">💬</button>
+          <button class="b b-gold b-icon">⭐</button>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="comp-tile">
+        <div class="comp-tile-label">Бейджи</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span class="bdg bdg-pink">🔥 HOT</span>
+          <span class="bdg bdg-pink">NEW</span>
+          <span class="bdg bdg-purple">💎 VIP</span>
+          <span class="bdg bdg-purple">PRO</span>
+          <span class="bdg bdg-green">✅ ONLINE</span>
+          <span class="bdg bdg-green">LIVE 🔴</span>
+          <span class="bdg bdg-gold">👑 TOP</span>
+          <span class="bdg bdg-gold">FEATURED</span>
+          <span class="bdg" style="background:var(--l2);border:1px solid var(--border);color:var(--t2)">BETA</span>
+          <span class="bdg" style="background:var(--l2);border:1px solid var(--border);color:var(--t2)">18+</span>
+        </div>
+      </div>
+
+      <!-- Creator card -->
+      <div class="comp-tile">
+        <div class="comp-tile-label">Карточка автора</div>
+        <div class="kcard">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <div class="av" style="width:44px;height:44px;font-size:15px">AK</div>
+            <div>
+              <div style="font-weight:700;font-size:14px">Anna K. <span class="bdg bdg-purple" style="font-size:9px">VIP</span></div>
+              <div style="font-size:11px;color:var(--t3)">@annakova · 142K</div>
+            </div>
+            <button class="b b-primary b-sm" style="margin-left:auto">Follow</button>
+          </div>
+          <div style="font-size:13px;color:var(--t2);line-height:1.5;margin-bottom:12px">Эксклюзивный контент каждую неделю 💕</div>
+          <div style="display:flex;gap:16px">
+            <div><div style="font-size:16px;font-weight:900;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">1.2K</div><div style="font-size:10px;color:var(--t3)">постов</div></div>
+            <div><div style="font-size:16px;font-weight:900;color:#00E676">$12</div><div style="font-size:10px;color:var(--t3)">/мес</div></div>
+            <div><div style="font-size:16px;font-weight:900;color:#FFB300">4.9★</div><div style="font-size:10px;color:var(--t3)">рейтинг</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inputs -->
+      <div class="comp-tile">
+        <div class="comp-tile-label">Поля ввода</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <input class="inp-demo" type="text" placeholder="🔍  Search creators...">
+          <input class="inp-demo" type="email" placeholder="your@email.com">
+          <input class="inp-demo" style="border-color:#D42B6A;box-shadow:0 0 0 3px rgba(212,43,106,.15)" type="text" value="invalid value" placeholder="">
+          <input class="inp-demo" style="border-color:#00E676" type="text" value="koluser_88">
+        </div>
+      </div>
+
+      <!-- Toggles -->
+      <div class="comp-tile">
+        <div class="comp-tile-label">Переключатели</div>
+        <div class="tog-wrap"><div class="tog-info"><div class="tog-t">Новые подписчики</div><div class="tog-d">Push-уведомления</div></div><label class="tog"><input type="checkbox" checked><div class="tog-track"></div><div class="tog-thumb"></div></label></div>
+        <div class="tog-wrap"><div class="tog-info"><div class="tog-t">Сообщения</div><div class="tog-d">Только платные</div></div><label class="tog"><input type="checkbox" checked><div class="tog-track"></div><div class="tog-thumb"></div></label></div>
+        <div class="tog-wrap"><div class="tog-info"><div class="tog-t">Маркетинговые</div><div class="tog-d">Акции и скидки</div></div><label class="tog"><input type="checkbox"><div class="tog-track"></div><div class="tog-thumb"></div></label></div>
+      </div>
+
+      <!-- Stats card -->
+      <div class="comp-tile">
+        <div class="comp-tile-label">Статистика</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center">
+            <div style="font-size:22px;font-weight:900;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">$4.2K</div>
+            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Revenue</div>
+          </div>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center">
+            <div style="font-size:22px;font-weight:900;color:#00E676">142K</div>
+            <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-top:2px">Fans</div>
+          </div>
+        </div>
+        <div style="margin-bottom:6px"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t2);margin-bottom:4px"><span>Retention</span><span>87%</span></div><div class="prog-t"><div class="prog-f" style="width:87%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t2);margin-bottom:4px"><span>Growth</span><span>64%</span></div><div class="prog-t"><div class="prog-f" style="width:64%;background:linear-gradient(90deg,#8B2BE2,#D42B6A)"></div></div></div>
+      </div>
+
+      <!-- Toast -->
+      <div class="comp-tile comp-tile-span2">
+        <div class="comp-tile-label">Уведомления (Toasts)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <div class="toast-ex s"><span>✅</span>Подписка оформлена!</div>
+            <div class="toast-ex e"><span>❌</span>Ошибка платежа</div>
+          </div>
+          <div>
+            <div class="toast-ex i"><span>💎</span>Вы в топ-10% авторов</div>
+            <div class="toast-ex"><span>🔔</span>Новое от Anna K.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skeleton -->
+      <div class="comp-tile">
+        <div class="comp-tile-label">Skeleton Loaders</div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div class="sk" style="width:44px;height:44px;border-radius:50%;flex-shrink:0"></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+            <div class="sk" style="height:13px;width:55%"></div>
+            <div class="sk" style="height:11px;width:35%"></div>
+            <div class="sk" style="height:80px;width:100%;border-radius:10px;margin-top:4px"></div>
+            <div style="display:flex;gap:8px">
+              <div class="sk" style="height:10px;width:30%"></div>
+              <div class="sk" style="height:10px;width:20%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty states -->
+      <div class="comp-tile">
+        <div class="comp-tile-label">Empty States</div>
+        <div style="text-align:center;padding:20px 0">
+          <div style="font-size:42px;opacity:.3;margin-bottom:10px">📭</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:6px">Нет постов</div>
+          <div style="font-size:12px;color:var(--t2);margin-bottom:14px">Загрузите первый контент</div>
+          <button class="b b-primary b-sm">📤 Загрузить</button>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="comp-tile comp-tile-span3">
+        <div class="comp-tile-label">Модальные окна</div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+          <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:18px;padding:24px;max-width:320px;flex:1;min-width:240px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+              <div style="font-size:16px;font-weight:800">🔒 Подтвердите</div>
+              <button style="width:28px;height:28px;border-radius:50%;border:none;background:var(--l2);color:var(--t2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">×</button>
+            </div>
+            <div style="font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:20px">Вы хотите отменить подписку? Доступ закроется по истечении периода.</div>
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+              <button class="b b-secondary b-sm">Отмена</button>
+              <button class="b b-primary b-sm">Подтвердить</button>
+            </div>
+          </div>
+          <div style="background:var(--bg);border:1.5px solid rgba(212,43,106,.3);border-radius:18px;padding:24px;max-width:280px;flex:1;min-width:200px">
+            <div style="text-align:center;margin-bottom:16px">
+              <div style="font-size:36px;margin-bottom:8px">🎉</div>
+              <div style="font-size:17px;font-weight:800;margin-bottom:6px">VIP разблокирован!</div>
+              <div style="font-size:12px;color:var(--t2)">Доступ к эксклюзивному контенту открыт</div>
+            </div>
+            <button class="b b-primary" style="width:100%;justify-content:center">Посмотреть →</button>
+          </div>
+          <div style="flex:1;min-width:200px">
+            <div style="font-size:12px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Z-index: 10100</div>
+            <pre style="font-size:11px;padding:14px">/* Modal animation */
+@keyframes kol-modal-in {
+  <span class="kw">from</span> {
+    opacity: <span class="num">0</span>;
+    transform:
+      scale(<span class="num">.92</span>)
+      translateY(<span class="num">20px</span>);
+  }
+}
+<span class="cm">/* Mobile → bottom sheet */</span>
+@media (<span class="pk">max-width</span>: 768px) {
+  .modal { <span class="pk">bottom</span>: <span class="num">0</span> }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ INTERACTIVE PREVIEW ═══════ -->
+<section id="preview" style="padding:96px 24px">
+  <div class="container">
+    <div class="section-tag fade-up">🖥️ Preview</div>
+    <h2 class="section-title fade-up fade-up-d1">Интерфейс в действии</h2>
+    <p class="section-sub fade-up fade-up-d2">Как дизайн-токены собираются в реальный интерфейс платформы.</p>
+
+    <div class="demo-frame fade-up fade-up-d3">
+      <div class="demo-topbar">
+        <div class="demo-dot" style="background:#FF5F57"></div>
+        <div class="demo-dot" style="background:#FEBC2E"></div>
+        <div class="demo-dot" style="background:#28C840"></div>
+        <div class="demo-url">kolstudio.com/creator-dashboard.html</div>
+        <span class="bdg bdg-green" style="font-size:9px">LIVE</span>
+      </div>
+      <div class="demo-body">
+        <div class="demo-sidebar">
+          <span class="demo-sidebar-logo">KOL Studio</span>
+          <div class="demo-nav-item active">📊 Дашборд</div>
+          <div class="demo-nav-item">🔥 Лента</div>
+          <div class="demo-nav-item">📤 Загрузить</div>
+          <div class="demo-nav-item">💬 Сообщения <span class="bdg bdg-pink" style="font-size:9px;margin-left:auto">3</span></div>
+          <div class="demo-nav-item">📅 Расписание</div>
+          <div class="demo-nav-item">💰 Выплаты</div>
+          <div style="margin-top:20px;padding:12px;background:linear-gradient(135deg,rgba(212,43,106,.1),rgba(139,43,226,.1));border:1px solid rgba(212,43,106,.2);border-radius:10px">
+            <div style="font-size:11px;font-weight:700;color:#D42B6A;margin-bottom:4px">👑 PRO план</div>
+            <div style="font-size:10px;color:var(--t2)">До 15 июня</div>
+          </div>
+        </div>
+        <div class="demo-main">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <div>
+              <div style="font-size:18px;font-weight:800;margin-bottom:2px">Добро пожаловать, Anna 👋</div>
+              <div style="font-size:12px;color:var(--t3)">Последнее обновление: сегодня в 14:32</div>
+            </div>
+            <button class="b b-primary b-sm">+ Новый пост</button>
+          </div>
+          <div class="demo-stats-row">
+            <div class="demo-stat"><div class="demo-stat-num">$4,280</div><div class="demo-stat-lbl">Доход за месяц</div><div style="font-size:11px;color:#00E676;margin-top:2px">▲ +14.3%</div></div>
+            <div class="demo-stat"><div class="demo-stat-num" style="-webkit-text-fill-color:#00E676">142K</div><div class="demo-stat-lbl">Подписчиков</div><div style="font-size:11px;color:#00E676;margin-top:2px">▲ +840</div></div>
+            <div class="demo-stat"><div class="demo-stat-num" style="-webkit-text-fill-color:#FFB300">4.9★</div><div class="demo-stat-lbl">Рейтинг</div><div style="font-size:11px;color:var(--t3);margin-top:2px">топ 3%</div></div>
+          </div>
+          <div class="demo-card-row">
+            <div class="demo-card">
+              <div class="av" style="width:36px;height:36px;font-size:12px;flex-shrink:0">МК</div>
+              <div><div style="font-size:13px;font-weight:600">Mikhail K. оформил подписку</div><div style="font-size:11px;color:var(--t3)">2 мин назад · $12/мес</div></div>
+            </div>
+            <div class="demo-card">
+              <div style="font-size:24px">💰</div>
+              <div><div style="font-size:13px;font-weight:600">Новые чаевые</div><div style="font-size:11px;color:#FFB300;font-weight:700">+$50 от @user88</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SPACING ═══════ -->
+<section class="spacing-section" id="spacing" style="padding:96px 24px">
+  <div class="container">
+    <div class="section-tag fade-up">📐 Spacing</div>
+    <h2 class="section-title fade-up fade-up-d1">Система отступов</h2>
+    <p class="section-sub fade-up fade-up-d2">Все отступы кратны 4px. Base unit = 4. Консистентность на всех 124 страницах.</p>
+
+    <div class="spacing-visual fade-up fade-up-d3">
+      <div class="sp-item"><div class="sp-box-wrap"><div class="sp-box" style="height:4px"></div></div><div class="sp-label">4px</div><div class="sp-desc">micro · icon gap</div></div>
+      <div class="sp-item"><div class="sp-box-wrap"><div class="sp-box" style="height:8px"></div></div><div class="sp-label">8px</div><div class="sp-desc">xs · badge row</div></div>
+      <div class="sp-item"><div class="sp-box-wrap"><div class="sp-box" style="height:12px"></div></div><div class="sp-label">12px</div><div class="sp-desc">sm · nav gap</div></div>
+      <div class="sp-item"><div class="sp-box-wrap"><div class="sp-box" style="height:16px;background:linear-gradient(135deg,rgba(212,43,106,.5),rgba(139,43,226,.5));border-color:rgba(212,43,106,.5)"></div></div><div class="sp-label" style="color:#D42B6A">16px ★</div><div class="sp-desc">md · base unit</div></div>
+      <div class="sp-item"><div class="sp-box-wrap"><div class="sp-box" style="height:20px"></div></div><div class="sp-label">20px</div><div class="sp-desc">lg · card gap</div></div>
+      <div class="sp-item"><div class="sp-box-wrap"><div class="sp-box" style="height:24px"></div></div><div class="sp-label">24px</div><div class="sp-desc">xl · card pad</div></div>
+      <div class="sp-item"><div class="sp-box-wrap"><div class="sp-box" style="height:32px"></div></div><div class="sp-label">32px</div><div class="sp-desc">2xl · section</div></div>
+      <div class="sp-item"><div class="sp-box-wrap"><div class="sp-box" style="height:48px"></div></div><div class="sp-label">48px</div><div class="sp-desc">4xl · separator</div></div>
+      <div class="sp-item"><div class="sp-box-wrap"><div class="sp-box" style="height:64px"></div></div><div class="sp-label">64px</div><div class="sp-desc">5xl · empty state</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ MOTION ═══════ -->
+<section id="motion" style="padding:96px 24px">
+  <div class="container">
+    <div class="section-tag fade-up">✨ Motion</div>
+    <h2 class="section-title fade-up fade-up-d1">Система анимаций</h2>
+    <p class="section-sub fade-up fade-up-d2">Движение усиливает смысл — не отвлекает. Все переходы 200–400ms, easing cubic-bezier.</p>
+
+    <div class="motion-grid fade-up fade-up-d3">
+      <div class="motion-card">
+        <div class="motion-box mf">🌐</div>
+        <div class="motion-name">Float</div>
+        <div class="motion-spec">6–8s · ease infinite</div>
+        <div style="font-size:11px;color:var(--t3);margin-top:6px">Декоративные orbs, фоновые элементы</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-box" style="background:transparent;width:64px;height:64px;position:relative;margin:0 auto 16px">
+          <div style="position:absolute;inset:0;border-radius:50%;background:rgba(212,43,106,.2);border:2px solid #D42B6A;animation:pulse-ring 1.5s ease infinite"></div>
+          <div style="position:absolute;inset:8px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px">🔴</div>
+        </div>
+        <div class="motion-name">Pulse Ring</div>
+        <div class="motion-spec">1.5s · ease infinite</div>
+        <div style="font-size:11px;color:var(--t3);margin-top:6px">LIVE, онлайн-статус, кнопки</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-box mr">⚙️</div>
+        <div class="motion-name">Rotate</div>
+        <div class="motion-spec">2s · linear infinite</div>
+        <div style="font-size:11px;color:var(--t3);margin-top:6px">Loader, обработка, загрузка</div>
+      </div>
+      <div class="motion-card">
+        <div class="sk" style="width:100%;height:56px;border-radius:10px;margin-bottom:16px"></div>
+        <div class="motion-name">Shimmer</div>
+        <div class="motion-spec">1.5s · infinite</div>
+        <div style="font-size:11px;color:var(--t3);margin-top:6px">Skeleton loaders, 45 страниц</div>
+      </div>
+      <div class="motion-card" style="grid-column:span 2">
+        <div class="motion-name" style="margin-bottom:12px">Page Transitions · 0.3s fade-up</div>
+        <pre style="font-size:11px;margin:0">@keyframes kol-fade-in {
+  <span class="kw">from</span> { opacity: <span class="num">0</span>; transform: translateY(<span class="num">8px</span>) }
+}
+body { animation: kol-fade-in <span class="num">.3s</span> ease <span class="kw">both</span> }
+
+<span class="cm">/* Navigation click */</span>
+document.body.style.animation = <span class="str">'kol-fade-out .25s ease forwards'</span>
+setTimeout(() => location.href = url, <span class="num">250</span>)</pre>
+      </div>
+      <div class="motion-card" style="grid-column:span 2">
+        <div class="motion-name" style="margin-bottom:12px">Turbo Tips · Gamification burst</div>
+        <pre style="font-size:11px;margin:0"><span class="cm">// Burst animation: scale(0→3) + fade, .6s</span>
+<span class="kw">window</span>.kolFireTip(<span class="num">amount</span>, x, y)
+<span class="cm">// &lt;100:   💰 gold  · 100-499: 💎 green</span>
+<span class="cm">// 500-999: 🔥 orange · 1000+: 👑 fullscreen</span>
+
+<span class="cm">// Achievement toast: slide + spring bounce</span>
+<span class="kw">window</span>.kolUnlockAchievement(<span class="str">'👑'</span>, <span class="str">'Топ-фан'</span>, desc)
+<span class="cm">// cubic-bezier(0.34, 1.56, 0.64, 1)</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TOKENS ═══════ -->
+<section class="tokens-section" id="tokens" style="padding:96px 24px">
+  <div class="container">
+    <div class="section-tag fade-up">🔢 Tokens</div>
+    <h2 class="section-title fade-up fade-up-d1">Дизайн-токены</h2>
+    <p class="section-sub fade-up fade-up-d2">Все значения, используемые на платформе. Справочник для разработчика и дизайнера.</p>
+
+    <table class="token-table fade-up fade-up-d3">
+      <thead>
+        <tr>
+          <th>Токен</th>
+          <th>Значение</th>
+          <th>Превью</th>
+          <th>Использование</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="token-name">--bg</td><td class="token-val">#07071A</td><td><span class="token-dot" style="background:#07071A;border:1px solid #333"></span></td><td style="color:var(--t2);font-size:12px">body, page background</td></tr>
+        <tr><td class="token-name">--card-l1</td><td class="token-val">#111128</td><td><span class="token-dot" style="background:#111128;border:1px solid #333"></span></td><td style="color:var(--t2);font-size:12px">cards, sidebar, modals</td></tr>
+        <tr><td class="token-name">--card-l2</td><td class="token-val">#181835</td><td><span class="token-dot" style="background:#181835;border:1px solid #333"></span></td><td style="color:var(--t2);font-size:12px">inputs, nested elements</td></tr>
+        <tr><td class="token-name">--border</td><td class="token-val">#22224A</td><td><span class="token-dot" style="background:#22224A"></span></td><td style="color:var(--t2);font-size:12px">all borders, dividers</td></tr>
+        <tr><td class="token-name">--pink</td><td class="token-val">#D42B6A</td><td><span class="token-dot" style="background:#D42B6A"></span></td><td style="color:var(--t2);font-size:12px">CTA, focus, active states</td></tr>
+        <tr><td class="token-name">--purple</td><td class="token-val">#8B2BE2</td><td><span class="token-dot" style="background:#8B2BE2"></span></td><td style="color:var(--t2);font-size:12px">secondary accent, gradient pair</td></tr>
+        <tr><td class="token-name">--green</td><td class="token-val">#00E676</td><td><span class="token-dot" style="background:#00E676"></span></td><td style="color:var(--t2);font-size:12px">success, online, positive delta</td></tr>
+        <tr><td class="token-name">--gold</td><td class="token-val">#FFB300</td><td><span class="token-dot" style="background:#FFB300"></span></td><td style="color:var(--t2);font-size:12px">VIP, warnings, tips, streak</td></tr>
+        <tr><td class="token-name">--t1</td><td class="token-val">#E8E8F0</td><td><span class="token-dot" style="background:#E8E8F0"></span></td><td style="color:var(--t2);font-size:12px">primary text, headings</td></tr>
+        <tr><td class="token-name">--t2</td><td class="token-val">#A0A0C0</td><td><span class="token-dot" style="background:#A0A0C0"></span></td><td style="color:var(--t2);font-size:12px">secondary text, descriptions</td></tr>
+        <tr><td class="token-name">--t3</td><td class="token-val">#6A6A8A</td><td><span class="token-dot" style="background:#6A6A8A"></span></td><td style="color:var(--t2);font-size:12px">muted, placeholders, labels</td></tr>
+        <tr><td class="token-name">radius-sm</td><td class="token-val">8px</td><td><span class="token-dot" style="background:var(--l2);border:1px solid var(--border);border-radius:4px"></span></td><td style="color:var(--t2);font-size:12px">code, small buttons</td></tr>
+        <tr><td class="token-name">radius-md</td><td class="token-val">12px</td><td><span class="token-dot" style="background:var(--l2);border:1px solid var(--border);border-radius:6px"></span></td><td style="color:var(--t2);font-size:12px">small cards, nav items</td></tr>
+        <tr><td class="token-name">radius-lg</td><td class="token-val">16px</td><td><span class="token-dot" style="background:var(--l2);border:1px solid var(--border);border-radius:8px"></span></td><td style="color:var(--t2);font-size:12px">standard cards</td></tr>
+        <tr><td class="token-name">radius-xl</td><td class="token-val">20px</td><td><span class="token-dot" style="background:var(--l2);border:1px solid var(--border);border-radius:10px"></span></td><td style="color:var(--t2);font-size:12px">modals, hero cards</td></tr>
+        <tr><td class="token-name">font-primary</td><td class="token-val">Inter</td><td>—</td><td style="color:var(--t2);font-size:12px">all UI text, 300–900 weights</td></tr>
+        <tr><td class="token-name">font-code</td><td class="token-val">Fira Code</td><td>—</td><td style="color:var(--t2);font-size:12px">api-docs, code blocks</td></tr>
+        <tr><td class="token-name">transition</td><td class="token-val">0.2s ease</td><td>—</td><td style="color:var(--t2);font-size:12px">color, border, opacity transitions</td></tr>
+        <tr><td class="token-name">shadow-card</td><td class="token-val">0 2px 16px rgba(0,0,0,.4)</td><td>—</td><td style="color:var(--t2);font-size:12px">elevated cards</td></tr>
+        <tr><td class="token-name">shadow-pink</td><td class="token-val">0 4px 20px rgba(212,43,106,.35)</td><td>—</td><td style="color:var(--t2);font-size:12px">FAB, primary CTA hover</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════ ARCHITECTURE ═══════ -->
+<section class="arch-section" id="arch" style="padding:96px 24px">
+  <div class="container">
+    <div class="section-tag fade-up">🏗️ Architecture</div>
+    <h2 class="section-title fade-up fade-up-d1">Глобальные системы</h2>
+    <p class="section-sub fade-up fade-up-d2">12 глобальных систем, инжектированных на все страницы через Python-скрипты.</p>
+
+    <div class="arch-layers fade-up fade-up-d3">
+      <div class="arch-layer">
+        <div class="arch-layer-icon">🍪</div>
+        <div><div class="arch-layer-title">GDPR + Cookie Consent</div><div class="arch-layer-desc">Banner + modal, 4 категории, localStorage kol_consent_v2</div></div>
+        <div class="arch-layer-count"><span class="bdg bdg-green">54/62</span></div>
+      </div>
+      <div class="arch-layer">
+        <div class="arch-layer-icon">🌓</div>
+        <div><div class="arch-layer-title">Dark / Light Theme</div><div class="arch-layer-desc">73 CSS override-селектора, body.kol-light, localStorage kol_theme</div></div>
+        <div class="arch-layer-count"><span class="bdg bdg-green">62/62</span></div>
+      </div>
+      <div class="arch-layer">
+        <div class="arch-layer-icon">📱</div>
+        <div><div class="arch-layer-title">PWA (Service Worker v8)</div><div class="arch-layer-desc">63 precache URLs, Network-first HTML, Cache-first assets, push notifications</div></div>
+        <div class="arch-layer-count"><span class="bdg bdg-green">54/62</span></div>
+      </div>
+      <div class="arch-layer">
+        <div class="arch-layer-icon">🔍</div>
+        <div><div class="arch-layer-title">SEO: Canonical + hreflang + OG + Schema</div><div class="arch-layer-desc">124 страницы с canonical/hreflang, OG-теги, Schema.org JSON-LD</div></div>
+        <div class="arch-layer-count"><span class="bdg bdg-green">124/124</span></div>
+      </div>
+      <div class="arch-layer">
+        <div class="arch-layer-icon">♿</div>
+        <div><div class="arch-layer-title">Accessibility (WCAG 2.1 AA)</div><div class="arch-layer-desc">Skip-link, :focus-visible 2.5px, aria-label, breadcrumbs, lazy loading</div></div>
+        <div class="arch-layer-count"><span class="bdg bdg-green">62/62</span></div>
+      </div>
+      <div class="arch-layer">
+        <div class="arch-layer-icon">➕</div>
+        <div><div class="arch-layer-title">FAB + Keyboard Shortcuts</div><div class="arch-layer-desc">10 shortcuts (?/N/T/G+F...), analytics stub, A/B flags KOL_FLAGS</div></div>
+        <div class="arch-layer-count"><span class="bdg bdg-gold">50/62</span></div>
+      </div>
+      <div class="arch-layer">
+        <div class="arch-layer-icon">🎮</div>
+        <div><div class="arch-layer-title">Gamification</div><div class="arch-layer-desc">Turbo Tips 4 тира, 8 Achievement badges, streak popups</div></div>
+        <div class="arch-layer-count"><span class="bdg bdg-gold">6/62</span></div>
+      </div>
+      <div class="arch-layer">
+        <div class="arch-layer-icon">💀</div>
+        <div><div class="arch-layer-title">Skeleton Loaders</div><div class="arch-layer-desc">shimmer CSS + JS show/hide, сброс при загрузке контента</div></div>
+        <div class="arch-layer-count"><span class="bdg bdg-green">45/62</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ COVERAGE ═══════ -->
+<section id="coverage" style="padding:96px 24px;background:var(--l1)">
+  <div class="container">
+    <div class="section-tag fade-up">📊 Coverage</div>
+    <h2 class="section-title fade-up fade-up-d1">Покрытие по категориям</h2>
+    <p class="section-sub fade-up fade-up-d2">62 RU + 62 EN страниц. Итого 124 файла, 8.8MB, 0 зависимостей.</p>
+
+    <div class="coverage-grid fade-up fade-up-d3">
+      <div class="cov-card"><div class="cov-header"><div class="cov-title">🔍 SEO Complete</div><div class="cov-pct">100%</div></div><div class="cov-bar-track"><div class="cov-bar-fill" style="width:100%"></div></div><div class="cov-detail">Canonical · hreflang · OG · Schema.org на всех страницах</div></div>
+      <div class="cov-card"><div class="cov-header"><div class="cov-title">🌓 Dark/Light Theme</div><div class="cov-pct">100%</div></div><div class="cov-bar-track"><div class="cov-bar-fill" style="width:100%"></div></div><div class="cov-detail">73 CSS override-селектора, плавный переход 0.2s</div></div>
+      <div class="cov-card"><div class="cov-header"><div class="cov-title">♿ Accessibility</div><div class="cov-pct">~85%</div></div><div class="cov-bar-track"><div class="cov-bar-fill" style="width:85%"></div></div><div class="cov-detail">Skip-link · focus-visible · aria-label · breadcrumbs</div></div>
+      <div class="cov-card"><div class="cov-header"><div class="cov-title">📱 PWA</div><div class="cov-pct">87%</div></div><div class="cov-bar-track"><div class="cov-bar-fill" style="width:87%"></div></div><div class="cov-detail">SW v8 · 63 precache URLs · manifest · offline page</div></div>
+      <div class="cov-card"><div class="cov-header"><div class="cov-title">🍪 GDPR</div><div class="cov-pct">87%</div></div><div class="cov-bar-track"><div class="cov-bar-fill" style="width:87%"></div></div><div class="cov-detail">Banner + modal · 4 категории согласия</div></div>
+      <div class="cov-card"><div class="cov-header"><div class="cov-title">💀 Skeleton Loaders</div><div class="cov-pct">73%</div></div><div class="cov-bar-track"><div class="cov-bar-fill" style="width:73%"></div></div><div class="cov-detail">Shimmer CSS · JS show/hide · 45 из 62 страниц</div></div>
+      <div class="cov-card"><div class="cov-header"><div class="cov-title">➕ FAB + Shortcuts</div><div class="cov-pct">81%</div></div><div class="cov-bar-track"><div class="cov-bar-fill" style="width:81%"></div></div><div class="cov-detail">10 keyboard shortcuts · analytics · A/B flags</div></div>
+      <div class="cov-card"><div class="cov-header"><div class="cov-title">🍞 Breadcrumbs</div><div class="cov-pct">56%</div></div><div class="cov-bar-track"><div class="cov-bar-fill" style="width:56%;background:linear-gradient(90deg,#FFB300,#D42B6A)"></div></div><div class="cov-detail">35 из 62 страниц · aria-label="breadcrumb"</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CTA ═══════ -->
+<section class="cta-section">
+  <div class="container" style="position:relative;z-index:1">
+    <div class="section-tag fade-up" style="margin:0 auto 24px;display:inline-flex">✦ Ready to explore</div>
+    <h2 class="cta-title fade-up fade-up-d1">Откройте полную<br>документацию</h2>
+    <p class="cta-sub fade-up fade-up-d2">Все компоненты, токены и паттерны — живые, интерактивные, с кодом.</p>
+    <div class="cta-buttons fade-up fade-up-d3">
+      <a href="design-system.html" class="btn-hero btn-hero-primary" style="font-size:16px;padding:16px 32px">
+        📖 Открыть Design System
+      </a>
+      <a href="index.html" class="btn-hero btn-hero-secondary" style="font-size:16px;padding:16px 32px">
+        🚀 Перейти на платформу
+      </a>
+    </div>
+    <div class="cta-info fade-up fade-up-d4">
+      Pure HTML · CSS · JS · Zero dependencies · Inter · Service Worker v8
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">KOL Studio</div>
+  <div class="footer-links">
+    <a href="design-system.html">Design System</a>
+    <a href="index.html">Платформа</a>
+    <a href="api-docs.html">API Docs</a>
+    <a href="landing.html">Landing</a>
+    <a href="creator-landing.html">Для авторов</a>
+    <a href="help.html">Help</a>
+  </div>
+  <div class="footer-copy">© 2025 KOL Studio · 124 pages · v8</div>
+</footer>
+
+<script>
+// Scroll progress bar
+const bar = document.getElementById('scrollBar');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  bar.style.transform = `scaleX(${pct})`;
+});
+
+// Fade-up on scroll
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+// Animated counters
+const counters = document.querySelectorAll('[data-target]');
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseInt(el.dataset.target);
+    const float = el.dataset.float;
+    const suffix = el.dataset.suffix || '';
+    if (float) {
+      el.textContent = float + suffix;
+      counterObs.unobserve(el);
+      return;
+    }
+    let current = 0;
+    const step = Math.max(1, Math.floor(target / 40));
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 30);
+    counterObs.unobserve(el);
+  });
+}, { threshold: 0.5 });
+counters.forEach(c => counterObs.observe(c));
+
+// Tabs interaction
+document.querySelectorAll('[data-tab]').forEach(tab => {
+  tab.addEventListener('click', function() {
+    const group = this.closest('[data-tabs]');
+    if (!group) return;
+    group.querySelectorAll('[data-tab]').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// Color chip copy hex
+document.querySelectorAll('.color-chip').forEach(chip => {
+  chip.addEventListener('click', function() {
+    const hex = this.querySelector('.color-hex')?.textContent;
+    if (hex && hex.startsWith('#')) {
+      navigator.clipboard?.writeText(hex).then(() => {
+        const label = this.querySelector('.color-swatch-label');
+        if (label) { label.textContent = 'Скопировано!'; setTimeout(() => label.textContent = hex, 1200); }
+      });
+    }
+  });
+});
+
+// Nav highlight on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? '#D42B6A' : '';
+  });
+}, { passive: true });
+</script>
+</body>
+</html>

@@ -1,0 +1,477 @@
+<svg width="1440" height="900" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <linearGradient id="pageBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09091A"/>
+      <stop offset="100%" stop-color="#150A28"/>
+    </linearGradient>
+    <linearGradient id="card1Photo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5C1A7A"/>
+      <stop offset="100%" stop-color="#D42B6A"/>
+    </linearGradient>
+    <linearGradient id="card2Photo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D47A1"/>
+      <stop offset="100%" stop-color="#7B1FA2"/>
+    </linearGradient>
+    <linearGradient id="card3Photo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#AD1457"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <linearGradient id="card4Photo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00695C"/>
+      <stop offset="100%" stop-color="#1565C0"/>
+    </linearGradient>
+    <linearGradient id="card5Photo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4E342E"/>
+      <stop offset="100%" stop-color="#880E4F"/>
+    </linearGradient>
+    <linearGradient id="card6Photo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#37474F"/>
+      <stop offset="100%" stop-color="#263238"/>
+    </linearGradient>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1A1A30"/>
+      <stop offset="100%" stop-color="#13132A"/>
+    </linearGradient>
+    <linearGradient id="accentBtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D42B6A"/>
+      <stop offset="100%" stop-color="#8B2BE2"/>
+    </linearGradient>
+    <linearGradient id="searchBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1E1E38"/>
+      <stop offset="100%" stop-color="#1A1A32"/>
+    </linearGradient>
+    <filter id="cardShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#D42B6A" flood-opacity="0.12"/>
+    </filter>
+    <filter id="glow">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#D42B6A" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Page Background -->
+  <rect width="1440" height="900" fill="url(#pageBg)"/>
+
+  <!-- Subtle grid pattern -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#FFFFFF" stroke-width="0.15" opacity="0.3"/>
+  </pattern>
+  <rect width="1440" height="900" fill="url(#grid)" opacity="0.4"/>
+
+  <!-- ===== HEADER ===== -->
+  <rect width="1440" height="68" fill="#0D0D22" opacity="0.97"/>
+  <rect y="68" width="1440" height="1" fill="#2A2A50"/>
+
+  <!-- Logo -->
+  <text x="36" y="44" font-weight="900" font-size="28" fill="#D42B6A" letter-spacing="4">KOL</text>
+  <text x="36" y="59" font-size="9" fill="#8B2BE2" letter-spacing="6">STUDIO</text>
+
+  <!-- Nav links -->
+  <text x="140" y="40" font-size="14" fill="#EEEEFF" font-weight="600">Модели</text>
+  <rect x="140" y="44" width="52" height="2" rx="1" fill="#D42B6A"/>
+
+  <text x="216" y="40" font-size="14" fill="#888899">Live</text>
+  <text x="270" y="40" font-size="14" fill="#888899">Видео</text>
+  <text x="340" y="40" font-size="14" fill="#888899">Фото</text>
+  <text x="404" y="40" font-size="14" fill="#888899">Чат</text>
+
+  <!-- Search bar -->
+  <rect x="490" y="17" width="440" height="34" rx="17" fill="url(#searchBar)" stroke="#2A2A50" stroke-width="1"/>
+  <!-- Search icon -->
+  <circle cx="514" cy="34" r="7" fill="none" stroke="#888899" stroke-width="1.5"/>
+  <line x1="519" y1="39" x2="524" y2="44" stroke="#888899" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="534" y="39" font-size="13" fill="#555577">Найти модель по имени, тегу или стилю...</text>
+
+  <!-- Auth buttons -->
+  <rect x="1260" y="18" width="72" height="32" rx="16" fill="none" stroke="#D42B6A" stroke-width="1.5"/>
+  <text x="1283" y="39" font-size="13" fill="#D42B6A">Войти</text>
+
+  <rect x="1346" y="18" width="78" height="32" rx="16" fill="url(#accentBtn)"/>
+  <text x="1363" y="39" font-size="13" fill="white" font-weight="600">Регистр.</text>
+
+  <!-- ===== FILTER BAR ===== -->
+  <rect y="69" width="1440" height="52" fill="#0F0F24"/>
+  <rect y="121" width="1440" height="1" fill="#2A2A50"/>
+
+  <!-- Active tag -->
+  <rect x="284" y="82" width="46" height="26" rx="13" fill="url(#accentBtn)"/>
+  <text x="296" y="100" font-size="12" fill="white" font-weight="700">Все</text>
+
+  <rect x="340" y="82" width="76" height="26" rx="13" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <circle cx="357" cy="95" r="5" fill="#00E676"/>
+  <text x="368" y="100" font-size="12" fill="#CCCCDD">Онлайн</text>
+
+  <rect x="428" y="82" width="54" height="26" rx="13" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <circle cx="444" cy="95" r="5" fill="#FF1744"/>
+  <text x="455" y="100" font-size="12" fill="#CCCCDD">Live</text>
+
+  <rect x="494" y="82" width="58" height="26" rx="13" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="510" y="100" font-size="12" fill="#CCCCDD">Видео</text>
+
+  <rect x="564" y="82" width="52" height="26" rx="13" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="578" y="100" font-size="12" fill="#CCCCDD">Фото</text>
+
+  <rect x="628" y="82" width="48" height="26" rx="13" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="641" y="100" font-size="12" fill="#CCCCDD">Чат</text>
+
+  <rect x="688" y="82" width="90" height="26" rx="13" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="700" y="100" font-size="12" fill="#CCCCDD">Спецзапрос</text>
+
+  <!-- Sort -->
+  <text x="1160" y="100" font-size="13" fill="#555577">Сортировать:</text>
+  <text x="1258" y="100" font-size="13" fill="#D42B6A" font-weight="600">Рейтинг</text>
+  <text x="1312" y="100" font-size="13" fill="#D42B6A">&#9660;</text>
+
+  <!-- Count -->
+  <text x="1360" y="100" font-size="13" fill="#555577">847 моделей</text>
+
+  <!-- ===== LEFT SIDEBAR ===== -->
+  <rect x="0" y="121" width="272" height="779" fill="#0D0D20"/>
+  <rect x="272" y="121" width="1" height="779" fill="#2A2A50"/>
+
+  <!-- Sidebar header -->
+  <rect x="0" y="121" width="272" height="44" fill="#111128"/>
+  <text x="24" y="150" font-size="15" fill="#EEEEFF" font-weight="700">Фильтры</text>
+  <rect x="224" y="136" width="28" height="18" rx="9" fill="#D42B6A" opacity="0.2"/>
+  <text x="232" y="149" font-size="10" fill="#D42B6A">3</text>
+
+  <!-- Category Section -->
+  <text x="24" y="184" font-size="10" fill="#555577" letter-spacing="2">КАТЕГОРИЯ</text>
+
+  <!-- Category items -->
+  <rect x="16" y="194" width="240" height="34" rx="8" fill="#1E1E38"/>
+  <text x="40" y="216" font-size="13" fill="#D42B6A">&#9679;</text>
+  <text x="56" y="216" font-size="13" fill="#EEEEFF" font-weight="600">Все категории</text>
+
+  <text x="40" y="246" font-size="13" fill="#555577">&#9675;</text>
+  <text x="56" y="246" font-size="13" fill="#888899">Fashion &amp; Style</text>
+
+  <text x="40" y="270" font-size="13" fill="#555577">&#9675;</text>
+  <text x="56" y="270" font-size="13" fill="#888899">Portrait</text>
+
+  <text x="40" y="294" font-size="13" fill="#555577">&#9675;</text>
+  <text x="56" y="294" font-size="13" fill="#888899">Lifestyle</text>
+
+  <text x="40" y="318" font-size="13" fill="#555577">&#9675;</text>
+  <text x="56" y="318" font-size="13" fill="#888899">Art &amp; Creative</text>
+
+  <text x="40" y="342" font-size="13" fill="#555577">&#9675;</text>
+  <text x="56" y="342" font-size="13" fill="#888899">Commercial</text>
+
+  <!-- Divider -->
+  <rect x="16" y="360" width="240" height="1" fill="#1E1E38"/>
+
+  <!-- Price Section -->
+  <text x="24" y="386" font-size="10" fill="#555577" letter-spacing="2">СТОИМОСТЬ СЕССИИ</text>
+  <text x="24" y="412" font-size="13" fill="#CCCCDD">$0 — <tspan fill="#D42B6A" font-weight="700">$250</tspan></text>
+
+  <!-- Slider track -->
+  <rect x="24" y="428" width="224" height="4" rx="2" fill="#1E1E38"/>
+  <rect x="24" y="428" width="140" height="4" rx="2" fill="url(#accentBtn)"/>
+  <circle cx="164" cy="430" r="9" fill="#D42B6A" stroke="#09091A" stroke-width="2" filter="url(#glow)"/>
+
+  <text x="24" y="456" font-size="11" fill="#555577">$0</text>
+  <text x="218" y="456" font-size="11" fill="#555577">$500+</text>
+
+  <!-- Divider -->
+  <rect x="16" y="472" width="240" height="1" fill="#1E1E38"/>
+
+  <!-- Availability Section -->
+  <text x="24" y="496" font-size="10" fill="#555577" letter-spacing="2">ДОСТУПНОСТЬ</text>
+
+  <!-- Toggle: Online now (ON) -->
+  <text x="24" y="522" font-size="13" fill="#CCCCDD">Онлайн сейчас</text>
+  <rect x="196" y="511" width="44" height="22" rx="11" fill="#D42B6A"/>
+  <circle cx="229" cy="522" r="9" fill="white"/>
+
+  <!-- Toggle: Has Live (OFF) -->
+  <text x="24" y="556" font-size="13" fill="#888899">Есть прямой эфир</text>
+  <rect x="196" y="545" width="44" height="22" rx="11" fill="#1E1E38"/>
+  <circle cx="207" cy="556" r="9" fill="#555577"/>
+
+  <!-- Toggle: Accepts special requests (ON) -->
+  <text x="24" y="590" font-size="13" fill="#CCCCDD">Особые пожелания</text>
+  <rect x="196" y="579" width="44" height="22" rx="11" fill="#D42B6A"/>
+  <circle cx="229" cy="590" r="9" fill="white"/>
+
+  <!-- Divider -->
+  <rect x="16" y="608" width="240" height="1" fill="#1E1E38"/>
+
+  <!-- Rating Section -->
+  <text x="24" y="632" font-size="10" fill="#555577" letter-spacing="2">МИНИМАЛЬНЫЙ РЕЙТИНГ</text>
+
+  <text x="24" y="658" font-size="19" fill="#FFB300">&#9733;&#9733;&#9733;&#9733;&#9733;</text>
+  <text x="24" y="682" font-size="19" fill="#FFB300">&#9733;&#9733;&#9733;&#9733;</text>
+  <text x="100" y="682" font-size="19" fill="#1E1E38">&#9733;</text>
+  <text x="24" y="706" font-size="19" fill="#FFB300">&#9733;&#9733;&#9733;</text>
+  <text x="76" y="706" font-size="19" fill="#1E1E38">&#9733;&#9733;</text>
+
+  <!-- Divider -->
+  <rect x="16" y="724" width="240" height="1" fill="#1E1E38"/>
+
+  <!-- Services section -->
+  <text x="24" y="748" font-size="10" fill="#555577" letter-spacing="2">УСЛУГИ</text>
+
+  <rect x="16" y="758" width="112" height="28" rx="14" fill="#1E1E38" stroke="#D42B6A" stroke-width="1.5"/>
+  <text x="32" y="777" font-size="12" fill="#D42B6A">Фото-сессия</text>
+
+  <rect x="136" y="758" width="72" height="28" rx="14" fill="#1E1E38"/>
+  <text x="148" y="777" font-size="12" fill="#888899">Видео</text>
+
+  <rect x="16" y="796" width="62" height="28" rx="14" fill="#1E1E38" stroke="#D42B6A" stroke-width="1.5"/>
+  <text x="30" y="815" font-size="12" fill="#D42B6A">Стрим</text>
+
+  <rect x="88" y="796" width="52" height="28" rx="14" fill="#1E1E38"/>
+  <text x="101" y="815" font-size="12" fill="#888899">Чат</text>
+
+  <!-- Apply button -->
+  <rect x="16" y="852" width="240" height="40" rx="20" fill="url(#accentBtn)"/>
+  <text x="92" y="877" font-size="14" fill="white" font-weight="700">Применить фильтр</text>
+
+  <rect x="16" y="860" width="240" height="40" rx="20" fill="white" opacity="0.05"/>
+
+  <!-- Reset link -->
+  <text x="105" y="904" font-size="12" fill="#555577">Сбросить все</text>
+
+  <!-- ===== MAIN GRID ===== -->
+
+  <!-- === CARD 1 === -->
+  <rect x="284" y="137" width="352" height="384" rx="14" fill="url(#cardBg)" stroke="#2A2A50" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <!-- Photo -->
+  <clipPath id="clip1">
+    <rect x="284" y="137" width="352" height="384" rx="14"/>
+  </clipPath>
+  <rect x="284" y="137" width="352" height="218" fill="url(#card1Photo)" clip-path="url(#clip1)"/>
+
+  <!-- Silhouette hint -->
+  <ellipse cx="460" cy="270" rx="28" ry="28" fill="rgba(255,255,255,0.08)"/>
+  <rect x="432" y="298" width="56" height="57" rx="28" fill="rgba(255,255,255,0.06)"/>
+
+  <!-- Photo overlay gradient -->
+  <rect x="284" y="310" width="352" height="45" fill="url(#cardBg)" clip-path="url(#clip1)" opacity="0.8"/>
+
+  <!-- Online badge -->
+  <rect x="300" y="153" width="76" height="24" rx="12" fill="#00E676" opacity="0.92"/>
+  <circle cx="315" cy="165" r="4" fill="white"/>
+  <text x="324" y="169" font-size="11" fill="#003820" font-weight="700">ОНЛАЙН</text>
+
+  <!-- Viewer count -->
+  <rect x="548" y="153" width="72" height="24" rx="12" fill="#0D0D22" opacity="0.8"/>
+  <text x="562" y="169" font-size="11" fill="#CCCCDD">&#128065; 142</text>
+
+  <!-- Card content -->
+  <text x="304" y="378" font-size="17" fill="#EEEEFF" font-weight="700">Анна Морозова</text>
+  <text x="578" y="378" font-size="14" fill="#FFB300" text-anchor="end">&#9733; 4.9</text>
+
+  <!-- Tags -->
+  <rect x="304" y="386" width="60" height="20" rx="10" fill="#2A1545"/>
+  <text x="316" y="400" font-size="10" fill="#C580FF">Fashion</text>
+
+  <rect x="372" y="386" width="62" height="20" rx="10" fill="#2A1545"/>
+  <text x="382" y="400" font-size="10" fill="#C580FF">Portrait</text>
+
+  <rect x="442" y="386" width="42" height="20" rx="10" fill="#2A1545"/>
+  <text x="451" y="400" font-size="10" fill="#C580FF">Live</text>
+
+  <!-- Description -->
+  <text x="304" y="424" font-size="12" fill="#888899">Профессиональный фотограф и стример.</text>
+  <text x="304" y="440" font-size="12" fill="#888899">Опыт 5+ лет. Особые запросы приветствуются.</text>
+
+  <!-- Services icons -->
+  <rect x="304" y="452" width="26" height="18" rx="4" fill="#1E1E38"/>
+  <text x="308" y="465" font-size="9" fill="#888899">ФОТО</text>
+
+  <rect x="336" y="452" width="30" height="18" rx="4" fill="#1E1E38"/>
+  <text x="340" y="465" font-size="9" fill="#888899">ВИДЕО</text>
+
+  <rect x="372" y="452" width="26" height="18" rx="4" fill="#1E1E38"/>
+  <text x="376" y="465" font-size="9" fill="#888899">LIVE</text>
+
+  <rect x="404" y="452" width="26" height="18" rx="4" fill="#1E1E38"/>
+  <text x="408" y="465" font-size="9" fill="#888899">ЧАТ</text>
+
+  <!-- Price -->
+  <text x="304" y="488" font-size="12" fill="#888899">от</text>
+  <text x="320" y="488" font-size="15" fill="#D42B6A" font-weight="700">$25</text>
+  <text x="346" y="488" font-size="12" fill="#555577">/сессия</text>
+
+  <!-- Connect button -->
+  <rect x="304" y="498" width="308" height="38" rx="19" fill="url(#accentBtn)"/>
+  <rect x="304" y="498" width="308" height="38" rx="19" fill="white" opacity="0.05"/>
+  <text x="400" y="522" font-size="14" fill="white" font-weight="700">Подключиться</text>
+
+
+  <!-- === CARD 2 === -->
+  <rect x="656" y="137" width="352" height="384" rx="14" fill="url(#cardBg)" stroke="#2A2A50" stroke-width="1" filter="url(#cardShadow)"/>
+  <clipPath id="clip2">
+    <rect x="656" y="137" width="352" height="384" rx="14"/>
+  </clipPath>
+  <rect x="656" y="137" width="352" height="218" fill="url(#card2Photo)" clip-path="url(#clip2)"/>
+  <ellipse cx="832" cy="270" rx="28" ry="28" fill="rgba(255,255,255,0.08)"/>
+  <rect x="804" y="298" width="56" height="57" rx="28" fill="rgba(255,255,255,0.06)"/>
+  <rect x="656" y="310" width="352" height="45" fill="url(#cardBg)" clip-path="url(#clip2)" opacity="0.8"/>
+
+  <!-- LIVE badge -->
+  <rect x="672" y="153" width="58" height="24" rx="12" fill="#FF1744"/>
+  <circle cx="686" cy="165" r="4" fill="white"/>
+  <text x="694" y="169" font-size="11" fill="white" font-weight="700">LIVE</text>
+
+  <rect x="878" y="153" width="60" height="24" rx="12" fill="#0D0D22" opacity="0.8"/>
+  <text x="890" y="169" font-size="11" fill="#CCCCDD">&#128065; 318</text>
+
+  <text x="676" y="378" font-size="17" fill="#EEEEFF" font-weight="700">Мария Козлова</text>
+  <text x="950" y="378" font-size="14" fill="#FFB300" text-anchor="end">&#9733; 4.7</text>
+
+  <rect x="676" y="386" width="66" height="20" rx="10" fill="#1A2545"/>
+  <text x="686" y="400" font-size="10" fill="#80B0FF">Lifestyle</text>
+
+  <rect x="750" y="386" width="40" height="20" rx="10" fill="#1A2545"/>
+  <text x="759" y="400" font-size="10" fill="#80B0FF">Art</text>
+
+  <rect x="798" y="386" width="54" height="20" rx="10" fill="#1A2545"/>
+  <text x="807" y="400" font-size="10" fill="#80B0FF">Creative</text>
+
+  <text x="676" y="424" font-size="12" fill="#888899">Художник и видеоблогер. Арт-дирекция,</text>
+  <text x="676" y="440" font-size="12" fill="#888899">творческие коллаборации.</text>
+
+  <rect x="676" y="452" width="26" height="18" rx="4" fill="#1E1E38"/>
+  <text x="680" y="465" font-size="9" fill="#888899">ФОТО</text>
+
+  <rect x="708" y="452" width="30" height="18" rx="4" fill="#1E1E38"/>
+  <text x="712" y="465" font-size="9" fill="#888899">ВИДЕО</text>
+
+  <rect x="744" y="452" width="26" height="18" rx="4" fill="#FF1744" opacity="0.3"/>
+  <text x="748" y="465" font-size="9" fill="#FF8080">LIVE</text>
+
+  <text x="676" y="488" font-size="12" fill="#888899">от</text>
+  <text x="692" y="488" font-size="15" fill="#D42B6A" font-weight="700">$40</text>
+  <text x="718" y="488" font-size="12" fill="#555577">/сессия</text>
+
+  <rect x="676" y="498" width="308" height="38" rx="19" fill="url(#accentBtn)"/>
+  <rect x="676" y="498" width="308" height="38" rx="19" fill="white" opacity="0.05"/>
+  <text x="772" y="522" font-size="14" fill="white" font-weight="700">Подключиться</text>
+
+
+  <!-- === CARD 3 === -->
+  <rect x="1028" y="137" width="352" height="384" rx="14" fill="url(#cardBg)" stroke="#2A2A50" stroke-width="1" filter="url(#cardShadow)"/>
+  <clipPath id="clip3">
+    <rect x="1028" y="137" width="352" height="384" rx="14"/>
+  </clipPath>
+  <rect x="1028" y="137" width="352" height="218" fill="url(#card3Photo)" clip-path="url(#clip3)"/>
+  <ellipse cx="1204" cy="270" rx="28" ry="28" fill="rgba(255,255,255,0.08)"/>
+  <rect x="1176" y="298" width="56" height="57" rx="28" fill="rgba(255,255,255,0.06)"/>
+  <rect x="1028" y="310" width="352" height="45" fill="url(#cardBg)" clip-path="url(#clip3)" opacity="0.8"/>
+
+  <!-- Offline badge -->
+  <rect x="1044" y="153" width="72" height="24" rx="12" fill="#1E1E35" opacity="0.92" stroke="#2A2A50" stroke-width="1"/>
+  <circle cx="1058" cy="165" r="4" fill="#555577"/>
+  <text x="1067" y="169" font-size="11" fill="#888899">ОФЛАЙН</text>
+
+  <text x="1048" y="378" font-size="17" fill="#EEEEFF" font-weight="700">Дарья Петрова</text>
+  <text x="1322" y="378" font-size="14" fill="#FFB300" text-anchor="end">&#9733; 5.0</text>
+
+  <rect x="1048" y="386" width="58" height="20" rx="10" fill="#2A1520"/>
+  <text x="1058" y="400" font-size="10" fill="#FF80AB">Portrait</text>
+
+  <rect x="1114" y="386" width="50" height="20" rx="10" fill="#2A1520"/>
+  <text x="1122" y="400" font-size="10" fill="#FF80AB">Studio</text>
+
+  <rect x="1172" y="386" width="54" height="20" rx="10" fill="#2A1520"/>
+  <text x="1178" y="400" font-size="10" fill="#FF80AB">Boudoir</text>
+
+  <text x="1048" y="424" font-size="12" fill="#888899">Студийный фотограф. Работаю с брендами</text>
+  <text x="1048" y="440" font-size="12" fill="#888899">и частными клиентами. Рейтинг 5.0.</text>
+
+  <rect x="1048" y="452" width="26" height="18" rx="4" fill="#1E1E38"/>
+  <text x="1052" y="465" font-size="9" fill="#888899">ФОТО</text>
+
+  <rect x="1080" y="452" width="30" height="18" rx="4" fill="#1E1E38"/>
+  <text x="1084" y="465" font-size="9" fill="#888899">ВИДЕО</text>
+
+  <text x="1048" y="488" font-size="12" fill="#888899">от</text>
+  <text x="1064" y="488" font-size="15" fill="#D42B6A" font-weight="700">$60</text>
+  <text x="1090" y="488" font-size="12" fill="#555577">/сессия</text>
+
+  <!-- Offline - leave request button -->
+  <rect x="1048" y="498" width="308" height="38" rx="19" fill="#1E1E38" stroke="#2A2A50" stroke-width="1.5"/>
+  <text x="1126" y="522" font-size="14" fill="#888899" font-weight="600">Оставить запрос</text>
+
+
+  <!-- ===== ROW 2 PREVIEW ===== -->
+
+  <!-- Card 4 preview -->
+  <rect x="284" y="537" width="352" height="220" rx="14" fill="url(#cardBg)" stroke="#2A2A50" stroke-width="1" opacity="0.85"/>
+  <clipPath id="clip4">
+    <rect x="284" y="537" width="352" height="220" rx="14"/>
+  </clipPath>
+  <rect x="284" y="537" width="352" height="220" fill="url(#card4Photo)" clip-path="url(#clip4)" opacity="0.7"/>
+  <rect x="284" y="655" width="352" height="102" fill="url(#cardBg)" clip-path="url(#clip4)"/>
+  <rect x="300" y="553" width="78" height="24" rx="12" fill="#00E676" opacity="0.85"/>
+  <circle cx="315" cy="565" r="4" fill="white"/>
+  <text x="324" y="569" font-size="11" fill="#003820" font-weight="700">ОНЛАЙН</text>
+  <text x="304" y="682" font-size="16" fill="#EEEEFF" font-weight="700">Елена Соколова</text>
+  <text x="578" y="682" font-size="13" fill="#FFB300" text-anchor="end">&#9733; 4.8</text>
+  <text x="304" y="702" font-size="12" fill="#888899">Lifestyle / Fashion. от <tspan fill="#D42B6A" font-weight="700">$35</tspan>/сессия</text>
+  <rect x="304" y="714" width="308" height="34" rx="17" fill="url(#accentBtn)" opacity="0.9"/>
+  <text x="390" y="736" font-size="13" fill="white" font-weight="700">Подключиться</text>
+
+  <!-- Card 5 preview -->
+  <rect x="656" y="537" width="352" height="220" rx="14" fill="url(#cardBg)" stroke="#2A2A50" stroke-width="1" opacity="0.85"/>
+  <clipPath id="clip5">
+    <rect x="656" y="537" width="352" height="220" rx="14"/>
+  </clipPath>
+  <rect x="656" y="537" width="352" height="220" fill="url(#card5Photo)" clip-path="url(#clip5)" opacity="0.7"/>
+  <rect x="656" y="655" width="352" height="102" fill="url(#cardBg)" clip-path="url(#clip5)"/>
+  <rect x="672" y="553" width="58" height="24" rx="12" fill="#FF1744"/>
+  <circle cx="686" cy="565" r="4" fill="white"/>
+  <text x="694" y="569" font-size="11" fill="white" font-weight="700">LIVE</text>
+  <text x="676" y="682" font-size="16" fill="#EEEEFF" font-weight="700">Кристина Нова</text>
+  <text x="950" y="682" font-size="13" fill="#FFB300" text-anchor="end">&#9733; 4.6</text>
+  <text x="676" y="702" font-size="12" fill="#888899">Art / Creative. от <tspan fill="#D42B6A" font-weight="700">$50</tspan>/сессия</text>
+  <rect x="676" y="714" width="308" height="34" rx="17" fill="url(#accentBtn)" opacity="0.9"/>
+  <text x="760" y="736" font-size="13" fill="white" font-weight="700">Подключиться</text>
+
+  <!-- Card 6 preview -->
+  <rect x="1028" y="537" width="352" height="220" rx="14" fill="url(#cardBg)" stroke="#2A2A50" stroke-width="1" opacity="0.85"/>
+  <clipPath id="clip6">
+    <rect x="1028" y="537" width="352" height="220" rx="14"/>
+  </clipPath>
+  <rect x="1028" y="537" width="352" height="220" fill="url(#card6Photo)" clip-path="url(#clip6)" opacity="0.7"/>
+  <rect x="1028" y="655" width="352" height="102" fill="url(#cardBg)" clip-path="url(#clip6)"/>
+  <rect x="1044" y="553" width="72" height="24" rx="12" fill="#1E1E35" opacity="0.92" stroke="#2A2A50" stroke-width="1"/>
+  <circle cx="1058" cy="565" r="4" fill="#555577"/>
+  <text x="1067" y="569" font-size="11" fill="#888899">ОФЛАЙН</text>
+  <text x="1048" y="682" font-size="16" fill="#EEEEFF" font-weight="700">Виктория Лейн</text>
+  <text x="1322" y="682" font-size="13" fill="#FFB300" text-anchor="end">&#9733; 4.5</text>
+  <text x="1048" y="702" font-size="12" fill="#888899">Commercial. от <tspan fill="#D42B6A" font-weight="700">$80</tspan>/сессия</text>
+  <rect x="1048" y="714" width="308" height="34" rx="17" fill="#1E1E38" stroke="#2A2A50" stroke-width="1.5"/>
+  <text x="1126" y="736" font-size="13" fill="#888899">Оставить запрос</text>
+
+  <!-- ===== BOTTOM PAGINATION ===== -->
+  <rect x="0" y="780" width="1440" height="120" fill="#0D0D20"/>
+  <rect y="780" width="1440" height="1" fill="#2A2A50"/>
+
+  <!-- Pagination controls -->
+  <rect x="616" y="810" width="40" height="40" rx="20" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="630" y="835" font-size="14" fill="#888899">&#8592;</text>
+
+  <rect x="668" y="810" width="40" height="40" rx="20" fill="url(#accentBtn)"/>
+  <text x="682" y="835" font-size="14" fill="white" font-weight="700">1</text>
+
+  <rect x="720" y="810" width="40" height="40" rx="20" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="734" y="835" font-size="14" fill="#CCCCDD">2</text>
+
+  <rect x="772" y="810" width="40" height="40" rx="20" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="786" y="835" font-size="14" fill="#CCCCDD">3</text>
+
+  <text x="824" y="835" font-size="14" fill="#555577">...</text>
+
+  <rect x="848" y="810" width="40" height="40" rx="20" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="862" y="835" font-size="14" fill="#CCCCDD">42</text>
+
+  <rect x="900" y="810" width="40" height="40" rx="20" fill="#1E1E38" stroke="#2A2A50" stroke-width="1"/>
+  <text x="914" y="835" font-size="14" fill="#888899">&#8594;</text>
+
+  <text x="720" y="876" font-size="12" fill="#555577" text-anchor="middle">Показано 6 из 847 моделей</text>
+
+</svg>

@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics — KOL Studio</title>
+  <link rel="apple-touch-icon" href="../icons/icon.svg">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07071A;
+      --card: #111128;
+      --card2: #181835;
+      --border: #22224A;
+      --accent: #D42B6A;
+      --accent2: #8B2BE2;
+      --green: #00E676;
+      --gold: #FFB300;
+      --danger: #FF4444;
+      --text: #FFFFFF;
+      --text2: rgba(255,255,255,0.6);
+      --text3: rgba(255,255,255,0.35);
+    }
+
+    @keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+    body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+    body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7,7,26,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+    }
+    .top-bar-back {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+    .top-bar-back svg { width: 18px; height: 18px; }
+    .top-bar-title {
+      font-size: 17px;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    /* PERIOD TABS */
+    .period-tabs {
+      display: flex;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 3px;
+      gap: 2px;
+      overflow-x: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .period-tabs::-webkit-scrollbar { display: none; }
+    .period-tab {
+      padding: 6px 12px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--text2);
+      transition: all 0.2s;
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+    }
+    .period-tab.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+    }
+
+    /* CONTAINER */
+    .container { max-width: 720px; margin: 0 auto; padding: 16px 14px; }
+
+    /* SECTION CARD */
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .section-title-badge {
+      font-size: 11px;
+      background: rgba(212,43,106,0.12);
+      color: var(--accent);
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-weight: 600;
+    }
+
+    /* KPI ROW */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .kpi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .kpi-card:nth-child(1)::before { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    .kpi-card:nth-child(2)::before { background: linear-gradient(90deg, var(--accent2), #6b21d6); }
+    .kpi-card:nth-child(3)::before { background: linear-gradient(90deg, var(--green), #00b259); }
+    .kpi-card:nth-child(4)::before { background: linear-gradient(90deg, var(--gold), #ff8c00); }
+    .kpi-icon { font-size: 22px; margin-bottom: 8px; }
+    .kpi-label { font-size: 11px; color: var(--text2); font-weight: 500; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+    .kpi-value { font-size: 24px; font-weight: 900; margin-bottom: 4px; }
+    .kpi-delta {
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .kpi-delta.up { color: var(--green); }
+    .kpi-delta.down { color: var(--danger); }
+
+    /* CHART AREA */
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+    }
+    .chart-svg {
+      width: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    /* CHART TOOLTIP */
+    .chart-tooltip {
+      position: absolute;
+      background: rgba(7,7,26,0.95);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
+      pointer-events: none;
+      display: none;
+      z-index: 50;
+      min-width: 130px;
+    }
+    .chart-tooltip.visible { display: block; }
+    .chart-tooltip-title { font-weight: 700; margin-bottom: 4px; font-size: 13px; }
+    .chart-tooltip-row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 2px; }
+
+    /* LEGEND */
+    .legend {
+      display: flex;
+      gap: 18px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text2);
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* DONUT */
+    .donut-wrap {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .donut-svg-wrap {
+      flex-shrink: 0;
+      position: relative;
+      width: 160px;
+      height: 160px;
+    }
+    .donut-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      text-align: center;
+      pointer-events: none;
+    }
+    .donut-center-amount { font-size: 18px; font-weight: 800; }
+    .donut-center-label { font-size: 10px; color: var(--text2); }
+    .donut-legend { flex: 1; min-width: 180px; }
+    .donut-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(34,34,74,0.5);
+    }
+    .donut-legend-item:last-child { border-bottom: none; }
+    .donut-color {
+      width: 12px; height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .donut-legend-name { font-size: 13px; flex: 1; }
+    .donut-legend-pct { font-size: 12px; color: var(--text2); }
+    .donut-legend-amt { font-size: 13px; font-weight: 700; }
+
+    /* GEOGRAPHY */
+    .geo-list { display: flex; flex-direction: column; gap: 10px; }
+    .geo-item {}
+    .geo-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .geo-country { font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+    .geo-count { font-size: 12px; color: var(--text2); }
+    .geo-bar { height: 6px; background: var(--card2); border-radius: 3px; overflow: hidden; }
+    .geo-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    /* GRID 2 */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    /* DEVICES */
+    .device-list { display: flex; flex-direction: column; gap: 12px; }
+    .device-item {}
+    .device-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; }
+    .device-pct { font-weight: 700; }
+    .device-bar { height: 8px; background: var(--card2); border-radius: 4px; overflow: hidden; }
+    .device-bar-fill { height: 100%; border-radius: 4px; }
+
+    /* HEATMAP */
+    .heatmap-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* CONTENT TABLE */
+    .content-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .content-table th {
+      text-align: left;
+      padding: 10px 8px;
+      font-size: 11px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .content-table th:hover { color: var(--text); }
+    .content-table th.sorted-asc::after { content: ' ↑'; color: var(--accent); }
+    .content-table th.sorted-desc::after { content: ' ↓'; color: var(--accent); }
+    .content-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid rgba(34,34,74,0.4);
+      vertical-align: middle;
+    }
+    .content-table tr:last-child td { border-bottom: none; }
+    .content-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .post-thumb {
+      width: 44px; height: 44px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .post-desc { font-size: 12px; color: var(--text2); max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .green-text { color: var(--green); font-weight: 700; }
+
+    /* RETENTION BARS */
+    .retention-chart { display: flex; align-items: flex-end; gap: 14px; height: 160px; padding-top: 20px; }
+    .ret-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .ret-bars { display: flex; gap: 3px; align-items: flex-end; height: 120px; }
+    .ret-bar {
+      width: 20px;
+      border-radius: 4px 4px 0 0;
+      transition: opacity 0.2s;
+    }
+    .ret-bar:hover { opacity: 0.8; }
+    .ret-bar.new { background: linear-gradient(180deg, var(--green), #00a854); }
+    .ret-bar.left { background: linear-gradient(180deg, var(--danger), #cc0000); }
+    .ret-label { font-size: 11px; color: var(--text2); }
+
+    /* FUNNEL */
+    .funnel { display: flex; flex-direction: column; gap: 8px; }
+    .funnel-step { position: relative; }
+    .funnel-bar-wrap {
+      background: var(--card2);
+      border-radius: 8px;
+      height: 44px;
+      overflow: hidden;
+      position: relative;
+    }
+    .funnel-bar-fill {
+      height: 100%;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      padding-left: 14px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .funnel-meta { display: flex; justify-content: space-between; margin-top: 4px; font-size: 11px; color: var(--text2); }
+    .funnel-arrow { text-align: center; font-size: 12px; color: var(--text3); margin: 2px 0; }
+
+    /* TOP FANS TABLE */
+    .fans-table { width: 100%; border-collapse: collapse; }
+    .fans-table th {
+      text-align: left;
+      padding: 8px 10px;
+      font-size: 11px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      border-bottom: 1px solid var(--border);
+    }
+    .fans-table td {
+      padding: 11px 10px;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(34,34,74,0.4);
+      vertical-align: middle;
+    }
+    .fans-table tr:last-child td { border-bottom: none; }
+    .fans-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .fan-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .rank-medal { font-size: 18px; }
+    .badge-sub {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 20px;
+      background: rgba(212,43,106,0.15);
+      color: var(--accent);
+    }
+    .badge-sub.vip { background: rgba(139,43,226,0.15); color: var(--accent2); }
+    .badge-sub.basic { background: rgba(255,255,255,0.08); color: var(--text2); }
+    .total-amount { font-weight: 800; font-size: 14px; }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+    @media (max-width: 540px) {
+      .kpi-row { grid-template-columns: 1fr 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .donut-wrap { flex-direction: column; }
+      .fans-table th:nth-child(4),
+      .fans-table td:nth-child(4),
+      .fans-table th:nth-child(5),
+      .fans-table td:nth-child(5) { display: none; }
+      .kpi-value { font-size: 20px; }
+    }
+  </style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/analytics.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/analytics.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/analytics.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/analytics.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+
+<style id="kol-skeleton-css">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skel-title{height:22px;width:60%;margin-bottom:12px;border-radius:6px}
+.skel-avatar{width:44px;height:44px;border-radius:50%}
+.skel-thumb{width:100%;height:180px;border-radius:12px}
+.skel-btn{height:38px;width:120px;border-radius:10px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px}
+.skel-row{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #22224A}
+.skel-body{display:flex;flex-direction:column;gap:8px;flex:1}
+</style>
+</head>
+<body>
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="../index.html">🏠 Главная</a><span class="sep">›</span><a href="../model-cabinet.html">Кабинет модели</a><span class="sep">›</span><span class="current">Аналитика</span></nav>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <a href="model-cabinet.html" class="top-bar-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      Назад
+    </a>
+    <div class="top-bar-title">Analytics</div>
+    <div class="period-tabs">
+      <button class="period-tab" onclick="setPeriod(this,'7d')">7д</button>
+      <button class="period-tab active" onclick="setPeriod(this,'30d')">30д</button>
+      <button class="period-tab" onclick="setPeriod(this,'3m')">3м</button>
+      <button class="period-tab" onclick="setPeriod(this,'year')">Год</button>
+      <button class="period-tab" onclick="setPeriod(this,'all')">Всё время</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- KPI HERO ROW -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-icon">💰</div>
+        <div class="kpi-label">Income</div>
+        <div class="kpi-value" id="kpi-income">$4,247</div>
+        <div class="kpi-delta up">↑ +23% vs прошлый период</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">👥</div>
+        <div class="kpi-label">Новых subscribers</div>
+        <div class="kpi-value" id="kpi-subs">147</div>
+        <div class="kpi-delta up">↑ +18% vs прошлый период</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">👁</div>
+        <div class="kpi-label">Views</div>
+        <div class="kpi-value" id="kpi-views">28.4K</div>
+        <div class="kpi-delta up">↑ +31% vs прошлый период</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">💬</div>
+        <div class="kpi-label">Сообщений</div>
+        <div class="kpi-value" id="kpi-msgs">412</div>
+        <div class="kpi-delta down">↓ −5% vs прошлый период</div>
+      </div>
+    </div>
+
+    <!-- REVENUE CHART -->
+    <div class="section-card">
+      <div class="section-title">
+        Динамика доходов
+        <span class="section-title-badge" id="chartPeriodLabel">30 дней</span>
+      </div>
+      <div class="chart-wrap" id="lineChartWrap">
+        <div class="chart-tooltip" id="lineTooltip"></div>
+        <!-- SVG rendered by JS -->
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background:var(--accent);"></div>
+          Subscriptions
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:var(--accent2);"></div>
+          PPV и чаевые
+        </div>
+      </div>
+    </div>
+
+    <!-- DONUT + AUDIENCE -->
+    <div class="grid-2">
+
+      <!-- DONUT CHART -->
+      <div class="section-card" style="margin-bottom:0;">
+        <div class="section-title">Income Sources</div>
+        <div class="donut-wrap">
+          <div class="donut-svg-wrap">
+            <!-- SVG rendered by JS -->
+            <div class="donut-center">
+              <div class="donut-center-amount">$4,247</div>
+              <div class="donut-center-label">/ мес</div>
+            </div>
+          </div>
+          <div class="donut-legend">
+            <div class="donut-legend-item">
+              <div class="donut-color" style="background:var(--accent);"></div>
+              <div class="donut-legend-name">Subscriptions</div>
+              <div class="donut-legend-pct">52%</div>
+              <div class="donut-legend-amt">$2,208</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="donut-color" style="background:var(--accent2);"></div>
+              <div class="donut-legend-name">PPV-контент</div>
+              <div class="donut-legend-pct">24%</div>
+              <div class="donut-legend-amt">$1,019</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="donut-color" style="background:var(--gold);"></div>
+              <div class="donut-legend-name">Чаевые</div>
+              <div class="donut-legend-pct">14%</div>
+              <div class="donut-legend-amt">$595</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="donut-color" style="background:var(--green);"></div>
+              <div class="donut-legend-name">Приватные шоу</div>
+              <div class="donut-legend-pct">10%</div>
+              <div class="donut-legend-amt">$425</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GEOGRAPHY -->
+      <div class="section-card" style="margin-bottom:0;">
+        <div class="section-title">🌍 География</div>
+        <div class="geo-list">
+          <div class="geo-item">
+            <div class="geo-row">
+              <span class="geo-country">🇷🇺 Россия</span>
+              <span class="geo-count">576 чел. — 68%</span>
+            </div>
+            <div class="geo-bar"><div class="geo-bar-fill" style="width:68%;"></div></div>
+          </div>
+          <div class="geo-item">
+            <div class="geo-row">
+              <span class="geo-country">🇺🇦 Украина</span>
+              <span class="geo-count">102 чел. — 12%</span>
+            </div>
+            <div class="geo-bar"><div class="geo-bar-fill" style="width:12%;background:var(--accent2);"></div></div>
+          </div>
+          <div class="geo-item">
+            <div class="geo-row">
+              <span class="geo-country">🇩🇪 Германия</span>
+              <span class="geo-count">68 чел. — 8%</span>
+            </div>
+            <div class="geo-bar"><div class="geo-bar-fill" style="width:8%;background:var(--gold);"></div></div>
+          </div>
+          <div class="geo-item">
+            <div class="geo-row">
+              <span class="geo-country">🇺🇸 США</span>
+              <span class="geo-count">51 чел. — 6%</span>
+            </div>
+            <div class="geo-bar"><div class="geo-bar-fill" style="width:6%;background:var(--green);"></div></div>
+          </div>
+          <div class="geo-item">
+            <div class="geo-row">
+              <span class="geo-country">🇰🇿 Казахстан</span>
+              <span class="geo-count">34 чел. — 4%</span>
+            </div>
+            <div class="geo-bar"><div class="geo-bar-fill" style="width:4%;background:#00bcd4;"></div></div>
+          </div>
+          <div class="geo-item">
+            <div class="geo-row">
+              <span class="geo-country">🌐 Другие</span>
+              <span class="geo-count">16 чел. — 2%</span>
+            </div>
+            <div class="geo-bar"><div class="geo-bar-fill" style="width:2%;background:var(--text3);"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEVICES & HEATMAP -->
+    <div class="grid-2" style="margin-top:14px;">
+
+      <!-- DEVICES -->
+      <div class="section-card" style="margin-bottom:0;">
+        <div class="section-title">Устройства</div>
+        <div class="device-list">
+          <div class="device-item">
+            <div class="device-row">
+              <span>📱 Мобильные</span>
+              <span class="device-pct">74%</span>
+            </div>
+            <div class="device-bar">
+              <div class="device-bar-fill" style="width:74%;background:linear-gradient(90deg,var(--accent),var(--accent2));"></div>
+            </div>
+          </div>
+          <div class="device-item">
+            <div class="device-row">
+              <span>💻 Десктоп</span>
+              <span class="device-pct">21%</span>
+            </div>
+            <div class="device-bar">
+              <div class="device-bar-fill" style="width:21%;background:var(--accent2);"></div>
+            </div>
+          </div>
+          <div class="device-item">
+            <div class="device-row">
+              <span>📟 Планшет</span>
+              <span class="device-pct">5%</span>
+            </div>
+            <div class="device-bar">
+              <div class="device-bar-fill" style="width:5%;background:var(--gold);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEATMAP CARD -->
+      <div class="section-card" style="margin-bottom:0;">
+        <div class="section-title">⏰ Активность по часам</div>
+        <div class="heatmap-container" id="heatmapWrap">
+          <!-- rendered by JS -->
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:8px;">
+          Пик: Пятница 21:00–23:00
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT PERFORMANCE TABLE -->
+    <div class="section-card" style="margin-top:14px;">
+      <div class="section-title">
+        🏆 Топ публикаций
+        <span class="section-title-badge">Кликните заголовок для сортировки</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="content-table" id="contentTable">
+          <thead>
+            <tr>
+              <th>Превью</th>
+              <th>Description</th>
+              <th data-col="views" onclick="sortTable('views',this)">Views</th>
+              <th data-col="likes" onclick="sortTable('likes',this)">Лайки</th>
+              <th data-col="comments" onclick="sortTable('comments',this)">Ком.</th>
+              <th data-col="income" onclick="sortTable('income',this)">Income</th>
+            </tr>
+          </thead>
+          <tbody id="contentTableBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SUBSCRIBER METRICS -->
+    <div class="section-card">
+      <div class="section-title">📊 Retention subscribers</div>
+      <div class="retention-chart" id="retentionChart">
+        <!-- rendered by JS -->
+      </div>
+      <div style="display:flex;gap:16px;margin-top:12px;">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--green);"></div> Новые</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--danger);"></div> Ушли</div>
+      </div>
+    </div>
+
+    <!-- CONVERSION FUNNEL -->
+    <div class="section-card">
+      <div class="section-title">🔻 Воронка конверсии</div>
+      <div class="funnel" id="funnelWrap">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+
+    <!-- TOP FANS -->
+    <div class="section-card">
+      <div class="section-title">
+        ⭐ Топ-10 фанатов
+        <span class="section-title-badge">по расходам за 30 дней</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="fans-table" id="fansTable">
+          <thead>
+            <tr>
+              <th>Ранг</th>
+              <th>Username</th>
+              <th>Подписка</th>
+              <th>PPV</th>
+              <th>Чаевые</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="fansTableBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+
+<script>
+// ════════════════════════════════════════
+// PERIOD SWITCHER
+// ════════════════════════════════════════
+const periodData = {
+  '7d':  { income:'$1,042', subs:'38', views:'7.2K', msgs:'98',  label:'7 дней',   subVals:[420,380,510,490,780,920,747], ppvVals:[120,230,180,310,420,380,292], days:['Пн','Вт','Ср','Чт','Пт','Сб','Вс'] },
+  '30d': { income:'$4,247', subs:'147', views:'28.4K', msgs:'412', label:'30 дней', subVals:[420,380,510,490,780,920,747], ppvVals:[120,230,180,310,420,380,292], days:['Пн','Вт','Ср','Чт','Пт','Сб','Вс'] },
+  '3m':  { income:'$11,890', subs:'423', views:'82.1K', msgs:'1.2K', label:'3 месяца', subVals:[1200,1380,1750,1490,1980,2120,1847], ppvVals:[420,530,480,610,720,580,492], days:['Янв','Фев','Мар','Апр','Май','Июн','Июл'] },
+  'year':{ income:'$38,420', subs:'1,240', views:'314K', msgs:'4.8K', label:'Год',    subVals:[2200,2580,3510,3490,3780,4120,3847], ppvVals:[820,1030,1180,1310,1620,1480,1292], days:['Кв1','Кв2','Кв3','Кв4','Мар','Апр','Май'] },
+  'all': { income:'$128,450', subs:'4,120', views:'1.2M', msgs:'18.4K', label:'Всё время', subVals:[5200,7580,9510,8490,10780,12120,11847], ppvVals:[1820,2030,2580,3310,3620,3480,3292], days:['2021','2022','2023','2024','2025','Апр','Май'] },
+};
+
+let currentPeriod = '30d';
+
+function setPeriod(btn, period) {
+  document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  currentPeriod = period;
+  const d = periodData[period];
+  document.getElementById('kpi-income').textContent = d.income;
+  document.getElementById('kpi-subs').textContent = d.subs;
+  document.getElementById('kpi-views').textContent = d.views;
+  document.getElementById('kpi-msgs').textContent = d.msgs;
+  document.getElementById('chartPeriodLabel').textContent = d.label;
+  drawLineChart(d.subVals, d.ppvVals, d.days);
+}
+
+// ════════════════════════════════════════
+// LINE CHART (SVG)
+// ════════════════════════════════════════
+function drawLineChart(subVals, ppvVals, days) {
+  const wrap = document.getElementById('lineChartWrap');
+  const W = wrap.clientWidth || 600;
+  const H = 200;
+  const padL = 48, padR = 16, padT = 16, padB = 36;
+  const chartW = W - padL - padR;
+  const chartH = H - padT - padB;
+  const maxVal = 1500;
+  const yLabels = [0, 500, 1000, 1500];
+  const n = days.length;
+
+  function px(i) { return padL + (i / (n-1)) * chartW; }
+  function py(v) { return padT + chartH - (v / maxVal) * chartH; }
+
+  // Build polyline points
+  const subPts = subVals.map((v,i) => `${px(i)},${py(v)}`).join(' ');
+  const ppvPts = ppvVals.map((v,i) => `${px(i)},${py(v)}`).join(' ');
+
+  // Filled area (subscription line)
+  const areaPath = `M${px(0)},${py(subVals[0])} ` +
+    subVals.map((v,i) => `L${px(i)},${py(v)}`).join(' ') +
+    ` L${px(n-1)},${padT+chartH} L${px(0)},${padT+chartH} Z`;
+
+  // Dots
+  const subDots = subVals.map((v,i) => `<circle cx="${px(i)}" cy="${py(v)}" r="5" fill="#D42B6A" stroke="#07071A" stroke-width="2" class="chart-dot" data-idx="${i}" data-line="sub" data-v="${v}"/>`).join('');
+  const ppvDots = ppvVals.map((v,i) => `<circle cx="${px(i)}" cy="${py(v)}" r="5" fill="#8B2BE2" stroke="#07071A" stroke-width="2" class="chart-dot" data-idx="${i}" data-line="ppv" data-v="${v}"/>`).join('');
+
+  // Y axis labels
+  const yAxisLabels = yLabels.map(v => `<text x="${padL-8}" y="${py(v)+4}" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="10" font-family="Inter">${v>0?'$'+v/1000+'K':'$0'}</text>`).join('');
+  const yGridLines = yLabels.map(v => `<line x1="${padL}" y1="${py(v)}" x2="${padL+chartW}" y2="${py(v)}" stroke="rgba(34,34,74,0.8)" stroke-dasharray="3,3"/>`).join('');
+
+  // X axis labels
+  const xAxisLabels = days.map((d,i) => `<text x="${px(i)}" y="${padT+chartH+18}" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="10" font-family="Inter">${d}</text>`).join('');
+
+  // Invisible hover zones
+  const hoverZones = days.map((d,i) => `<rect x="${px(i)-chartW/(2*(n-1))}" y="${padT}" width="${chartW/(n-1)}" height="${chartH}" fill="transparent" class="hover-zone" data-idx="${i}" data-day="${d}" data-sub="${subVals[i]}" data-ppv="${ppvVals[i]}"/>`).join('');
+
+  const svg = `<svg class="chart-svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="subAreaGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#D42B6A" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#D42B6A" stop-opacity="0.02"/>
+      </linearGradient>
+    </defs>
+    ${yGridLines}
+    <path d="${areaPath}" fill="url(#subAreaGrad)"/>
+    <polyline points="${subPts}" fill="none" stroke="#D42B6A" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <polyline points="${ppvPts}" fill="none" stroke="#8B2BE2" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    ${subDots}
+    ${ppvDots}
+    ${yAxisLabels}
+    ${xAxisLabels}
+    ${hoverZones}
+  </svg>`;
+
+  const existing = wrap.querySelector('svg');
+  if(existing) existing.remove();
+  wrap.insertAdjacentHTML('beforeend', svg);
+
+  // Attach hover events
+  wrap.querySelectorAll('.hover-zone').forEach(zone => {
+    zone.addEventListener('mouseenter', function(e) {
+      const tt = document.getElementById('lineTooltip');
+      const idx = parseInt(this.dataset.idx);
+      const day = this.dataset.day;
+      const sub = parseInt(this.dataset.sub);
+      const ppv = parseInt(this.dataset.ppv);
+      tt.innerHTML = `<div class="chart-tooltip-title">${day}</div>
+        <div class="chart-tooltip-row"><span style="color:var(--accent)">● Subscriptions</span><strong>$${sub}</strong></div>
+        <div class="chart-tooltip-row"><span style="color:var(--accent2)">● PPV+Чаевые</span><strong>$${ppv}</strong></div>
+        <div class="chart-tooltip-row" style="border-top:1px solid var(--border);margin-top:4px;padding-top:4px;"><span>Total</span><strong>$${sub+ppv}</strong></div>`;
+      const rect = wrap.getBoundingClientRect();
+      const dotX = padL + (idx / (n-1)) * chartW;
+      let left = dotX + 10;
+      if(left + 150 > W) left = dotX - 145;
+      tt.style.left = left + 'px';
+      tt.style.top = '20px';
+      tt.classList.add('visible');
+    });
+    zone.addEventListener('mouseleave', function() {
+      document.getElementById('lineTooltip').classList.remove('visible');
+    });
+  });
+}
+
+// ════════════════════════════════════════
+// DONUT CHART (SVG)
+// ════════════════════════════════════════
+function drawDonut() {
+  const segments = [
+    { pct: 52, color: '#D42B6A' },
+    { pct: 24, color: '#8B2BE2' },
+    { pct: 14, color: '#FFB300' },
+    { pct: 10, color: '#00E676' },
+  ];
+  const cx = 80, cy = 80, r = 62, innerR = 42;
+  const gap = 2;
+  let cumAngle = -90;
+  let paths = '';
+
+  segments.forEach(seg => {
+    const angle = (seg.pct / 100) * 360;
+    const startRad = (cumAngle * Math.PI) / 180;
+    const endRad = ((cumAngle + angle - gap) * Math.PI) / 180;
+    const x1 = cx + r * Math.cos(startRad);
+    const y1 = cy + r * Math.sin(startRad);
+    const x2 = cx + r * Math.cos(endRad);
+    const y2 = cy + r * Math.sin(endRad);
+    const ix1 = cx + innerR * Math.cos(startRad);
+    const iy1 = cy + innerR * Math.sin(startRad);
+    const ix2 = cx + innerR * Math.cos(endRad);
+    const iy2 = cy + innerR * Math.sin(endRad);
+    const largeArc = angle > 180 ? 1 : 0;
+    paths += `<path d="M${x1.toFixed(2)},${y1.toFixed(2)} A${r},${r} 0 ${largeArc},1 ${x2.toFixed(2)},${y2.toFixed(2)} L${ix2.toFixed(2)},${iy2.toFixed(2)} A${innerR},${innerR} 0 ${largeArc},0 ${ix1.toFixed(2)},${iy1.toFixed(2)} Z" fill="${seg.color}" opacity="0.92"/>`;
+    cumAngle += angle;
+  });
+
+  const svg = `<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">${paths}</svg>`;
+  document.querySelector('.donut-svg-wrap').insertAdjacentHTML('afterbegin', svg);
+}
+
+// ════════════════════════════════════════
+// HEATMAP (SVG)
+// ════════════════════════════════════════
+function drawHeatmap() {
+  const days = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+  const hours = 24;
+  const cellW = 16, cellH = 14, gap = 2;
+  const padL = 26, padT = 4;
+  const W = padL + hours * (cellW + gap);
+  const H = padT + days.length * (cellH + gap) + 20;
+
+  // Generate activity data — peaks on Friday evenings
+  function intensity(dayIdx, hour) {
+    let base = 0.05;
+    if(hour >= 20 && hour <= 23) base += 0.5;
+    else if(hour >= 18 && hour <= 22) base += 0.3;
+    else if(hour >= 12 && hour <= 16) base += 0.15;
+    if(dayIdx === 4) base *= 1.8; // Friday
+    if(dayIdx === 5 || dayIdx === 6) base *= 1.4; // Sat/Sun
+    base += Math.random() * 0.1;
+    return Math.min(1, base);
+  }
+
+  let cells = '';
+  days.forEach((day, di) => {
+    cells += `<text x="${padL - 4}" y="${padT + di*(cellH+gap) + cellH/2 + 4}" text-anchor="end" fill="rgba(255,255,255,0.35)" font-size="9" font-family="Inter">${day}</text>`;
+    for(let h = 0; h < hours; h++) {
+      const inten = intensity(di, h);
+      const alpha = 0.06 + inten * 0.94;
+      const r = 211, g = 43, b = 106;
+      cells += `<rect x="${padL + h*(cellW+gap)}" y="${padT + di*(cellH+gap)}" width="${cellW}" height="${cellH}" rx="3" fill="rgba(${r},${g},${b},${alpha.toFixed(2)})">
+        <title>${day} ${h}:00 — ${Math.round(inten*100)}% активность</title>
+      </rect>`;
+    }
+  });
+
+  // X axis hour labels (every 4h)
+  for(let h = 0; h < hours; h += 4) {
+    cells += `<text x="${padL + h*(cellW+gap) + cellW/2}" y="${H - 4}" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter">${h}</text>`;
+  }
+
+  const svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${cells}</svg>`;
+  document.getElementById('heatmapWrap').innerHTML = svg;
+}
+
+// ════════════════════════════════════════
+// CONTENT TABLE
+// ════════════════════════════════════════
+const contentData = [
+  { emoji:'🌹', desc:"Photo-сет «Красная роза»", views:4820, likes:892, comments:134, income:248.00 },
+  { emoji:'🌊', desc:"Video «Летний пляж»", views:3910, likes:741, comments:98, income:195.50 },
+  { emoji:'✨', desc:"Photo-сет «Звёздная ночь»", views:3480, likes:668, comments:87, income:182.00 },
+  { emoji:'🎭', desc:"Video «Маскарад»", views:3120, likes:592, comments:76, income:156.80 },
+  { emoji:'🌙', desc:"Photo-сет «Луна»", views:2840, likes:541, comments:63, income:144.00 },
+  { emoji:'🔥', desc:"Live-запись «Вечер у камина»", views:2650, likes:498, comments:121, income:210.40 },
+  { emoji:'💎', desc:"Photo-сет «Белое кружево»", views:2310, likes:447, comments:55, income:138.00 },
+  { emoji:'🌺', desc:"Коллаборация с @luna_x", views:2100, likes:398, comments:82, income:124.50 },
+  { emoji:'🎵', desc:"Video «Ночная музыка»", views:1890, likes:342, comments:41, income:98.00 },
+  { emoji:'🪷', desc:"Photo-сет «Цветы»", views:1650, likes:298, comments:38, income:84.20 },
+];
+
+let sortCol = null;
+let sortDir = 1;
+
+function sortTable(col, th) {
+  if(sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = -1; }
+  document.querySelectorAll('.content-table th').forEach(t => {
+    t.classList.remove('sorted-asc','sorted-desc');
+  });
+  th.classList.add(sortDir === -1 ? 'sorted-desc' : 'sorted-asc');
+  contentData.sort((a,b) => (a[col] - b[col]) * sortDir);
+  renderContentTable();
+}
+
+function renderContentTable() {
+  const tbody = document.getElementById('contentTableBody');
+  tbody.innerHTML = contentData.map(row => `
+    <tr>
+      <td><div class="post-thumb">${row.emoji}</div></td>
+      <td>
+        <div style="font-size:13px;font-weight:600;">${row.desc}</div>
+      </td>
+      <td><strong>${row.views.toLocaleString()}</strong></td>
+      <td>${row.likes.toLocaleString()}</td>
+      <td>${row.comments}</td>
+      <td class="green-text">$${row.income.toFixed(2)}</td>
+    </tr>
+  `).join('');
+}
+
+// ════════════════════════════════════════
+// RETENTION CHART
+// ════════════════════════════════════════
+function drawRetention() {
+  const months = ['Янв', 'Фев', 'Мар', 'Апр'];
+  const data = [
+    {new: 45, left: 12},
+    {new: 67, left: 18},
+    {new: 89, left: 23},
+    {new: 147, left: 31},
+  ];
+  const maxVal = 150;
+  const maxH = 120;
+
+  const wrap = document.getElementById('retentionChart');
+  wrap.innerHTML = '';
+
+  // Y axis label
+  const yAxis = document.createElement('div');
+  yAxis.style.cssText = 'display:flex;flex-direction:column;justify-content:space-between;height:120px;padding-bottom:0;margin-right:4px;';
+  ['150','100','50','0'].forEach(v => {
+    const lbl = document.createElement('div');
+    lbl.style.cssText = 'font-size:10px;color:rgba(255,255,255,0.3);';
+    lbl.textContent = v;
+    yAxis.appendChild(lbl);
+  });
+  wrap.appendChild(yAxis);
+
+  data.forEach((d, i) => {
+    const group = document.createElement('div');
+    group.className = 'ret-group';
+    const newH = Math.round((d.new / maxVal) * maxH);
+    const leftH = Math.round((d.left / maxVal) * maxH);
+    group.innerHTML = `
+      <div class="ret-bars">
+        <div class="ret-bar new" style="height:${newH}px;" title="+${d.new} новых"></div>
+        <div class="ret-bar left" style="height:${leftH}px;" title="-${d.left} ушли"></div>
+      </div>
+      <div class="ret-label">${months[i]}</div>
+    `;
+    wrap.appendChild(group);
+  });
+}
+
+// ════════════════════════════════════════
+// CONVERSION FUNNEL
+// ════════════════════════════════════════
+function drawFunnel() {
+  const steps = [
+    { label: 'Профиль посещён', count: 4200, color: 'linear-gradient(90deg,#D42B6A,#8B2BE2)', pct: 100 },
+    { label: 'Нажали «Подписаться»', count: 890, color: 'linear-gradient(90deg,#8B2BE2,#6b21d6)', pct: 21.2 },
+    { label: 'Завершили оплату', count: 720, color: 'linear-gradient(90deg,#FFB300,#ff8c00)', pct: 17.1 },
+    { label: 'Подписаны >30 дней', count: 591, color: 'linear-gradient(90deg,#00E676,#00a854)', pct: 14.1 },
+  ];
+  const wrap = document.getElementById('funnelWrap');
+  wrap.innerHTML = '';
+  steps.forEach((step, i) => {
+    const stepEl = document.createElement('div');
+    stepEl.className = 'funnel-step';
+    const barW = 40 + step.pct * 0.6;
+    stepEl.innerHTML = `
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar-fill" style="width:${barW}%;background:${step.color};">
+          ${step.label}
+        </div>
+        <div style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;">${step.count.toLocaleString()}</div>
+      </div>
+      <div class="funnel-meta">
+        <span>→ ${step.pct}% от посетителей</span>
+        ${i > 0 ? `<span>↓ ${((step.count / steps[i-1].count)*100).toFixed(1)}% от предыдущего</span>` : ''}
+      </div>
+    `;
+    if(i < steps.length - 1) {
+      const arrow = document.createElement('div');
+      arrow.className = 'funnel-arrow';
+      arrow.textContent = '▼';
+      wrap.appendChild(stepEl);
+      wrap.appendChild(arrow);
+    } else {
+      wrap.appendChild(stepEl);
+    }
+  });
+}
+
+// ════════════════════════════════════════
+// TOP FANS TABLE
+// ════════════════════════════════════════
+const fansData = [
+  { rank:'🥇', name:'@phantom_leo', avatar:'PL', color:'#D42B6A', sub:'Premium', subAmt:44.97, ppv:36, tips:25, total:106 },
+  { rank:'🥈', name:'@dark_wolf', avatar:'DW', color:'#8B2BE2', sub:'VIP', subAmt:29.99, ppv:29.99, tips:38, total:98 },
+  { rank:'🥉', name:'@cosmos_fan', avatar:'CF', color:'#FFB300', sub:'VIP', subAmt:29.99, ppv:42, tips:15, total:87 },
+  { rank:'4', name:'@midnight_x', avatar:'MX', color:'#00E676', sub:'Premium', subAmt:14.99, ppv:28, tips:30, total:73 },
+  { rank:'5', name:'@neon_fan23', avatar:'NF', color:'#D42B6A', sub:'Basic', subAmt:7.99, ppv:38, tips:20, total:66 },
+  { rank:'6', name:'@luna_reader', avatar:'LR', color:'#8B2BE2', sub:'Premium', subAmt:14.99, ppv:22, tips:25, total:62 },
+  { rank:'7', name:'@silent_w', avatar:'SW', color:'#FFB300', sub:'VIP', subAmt:29.99, ppv:18, tips:10, total:58 },
+  { rank:'8', name:'@vibe_master', avatar:'VM', color:'#00E676', sub:'Basic', subAmt:7.99, ppv:30, tips:15, total:53 },
+  { rank:'9', name:'@night_owl', avatar:'NO', color:'#D42B6A', sub:'Basic', subAmt:7.99, ppv:24, tips:18, total:50 },
+  { rank:'10', name:'@beta_user99', avatar:'BU', color:'#8B2BE2', sub:'Basic', subAmt:7.99, ppv:20, tips:10, total:38 },
+];
+
+function renderFans() {
+  const subClass = { 'VIP': 'vip', 'Premium': '', 'Basic': 'basic' };
+  document.getElementById('fansTableBody').innerHTML = fansData.map(fan => `
+    <tr>
+      <td><span class="rank-medal">${fan.rank}</span></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="fan-avatar" style="background:${fan.color}20;color:${fan.color};">${fan.avatar}</div>
+          <span style="font-weight:600;font-size:13px;">${fan.name}</span>
+        </div>
+      </td>
+      <td><span class="badge-sub ${subClass[fan.sub]||''}">${fan.sub}</span></td>
+      <td style="color:var(--accent2);">$${fan.ppv}</td>
+      <td style="color:var(--gold);">$${fan.tips}</td>
+      <td class="total-amount" style="color:var(--green);">$${fan.total}</td>
+    </tr>
+  `).join('');
+}
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  const d = periodData[currentPeriod];
+  drawLineChart(d.subVals, d.ppvVals, d.days);
+  drawDonut();
+  drawHeatmap();
+  renderContentTable();
+  drawRetention();
+  drawFunnel();
+  renderFans();
+});
+
+window.addEventListener('resize', () => {
+  const d = periodData[currentPeriod];
+  drawLineChart(d.subVals, d.ppvVals, d.days);
+});
+</script>
+
+<script>
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+</script>
+
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../analytics.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="analytics.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
+<style>
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline}
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A}
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+</style>
+<div id="kol-cookie-banner">
+  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
+  </div>
+</div>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div style="flex:1;min-width:0"><strong style="font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:#E8E8F0">Install KOL Studio</strong><span style="font-size:12px;color:#A0A0C0">Works offline • Faster than browser</span></div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="document.getElementById('kol-pwa-prompt').classList.remove('show')">×</button>
+</div>
+<script>
+(function(){
+  var CONSENT_KEY='kol_consent_v2',THEME_KEY='kol_theme';
+  window.kolAcceptCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:true,marketing:true,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  window.kolRejectCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:false,marketing:false,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  var btn=document.getElementById('kol-theme-btn');
+  window.kolToggleTheme=function(){var c=localStorage.getItem(THEME_KEY)||'dark';var n=c==='dark'?'light':'dark';localStorage.setItem(THEME_KEY,n);if(n==='light'){document.body.classList.add('kol-light');btn.textContent='☀️'}else{document.body.classList.remove('kol-light');btn.textContent='🌙'}};
+  var st=localStorage.getItem(THEME_KEY);if(st==='light'){document.body.classList.add('kol-light');if(btn)btn.textContent='☀️'}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!sessionStorage.getItem('kol_pwa_dismissed')&&!localStorage.getItem('kol_pwa_installed'))setTimeout(function(){document.getElementById('kol-pwa-prompt').classList.add('show')},4000)});
+  var ib=document.getElementById('kol-pwa-install-btn');if(ib)ib.addEventListener('click',function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')localStorage.setItem('kol_pwa_installed','1');document.getElementById('kol-pwa-prompt').classList.remove('show');deferredPrompt=null})});
+  document.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem(CONSENT_KEY))setTimeout(function(){document.getElementById('kol-cookie-banner').classList.add('show')},1500)});
+})();
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

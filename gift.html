@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Подарочная подписка — KOL Studio">
+  <meta property="og:description" content="Подари другу подписку на любимого создателя. Выбери сумму и добавь личное сообщение.">
+  <meta property="og:url" content="https://kolstudio.com/gift.html">
+  <meta property="og:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Подарочная подписка — KOL Studio">
+  <meta name="twitter:description" content="Подари другу подписку на любимого создателя. Выбери сумму и добавь личное сообщение.">
+  <meta name="twitter:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <meta name="description" content="Подари другу подписку на любимого создателя. Выбери сумму и добавь личное сообщение.">
+<title>Gift a Subscription — KOL Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07071A;--card:#111128;--card2:#181835;--border:#22224A;--accent:#D42B6A;--accent2:#8B2BE2;--green:#00E676;--gold:#FFB300;--text:#E8E8F0;--text-muted:#7878A0}
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1}to{opacity:0}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes giftOpen{0%{transform:scale(1)}30%{transform:scale(1.2) rotate(-5deg)}60%{transform:scale(1.1) rotate(3deg)}100%{transform:scale(1)}}
+@keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes confetti{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(300px) rotate(720deg);opacity:0}}
+body{animation:kol-fade-in 0.3s ease both;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+a{color:inherit;text-decoration:none}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:100;background:rgba(7,7,26,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.2rem}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.back-link{display:flex;align-items:center;gap:8px;font-size:0.9rem;color:var(--text-muted);transition:color 0.2s}
+.back-link:hover{color:var(--text)}
+
+/* LAYOUT */
+.page-wrap{max-width:1100px;margin:0 auto;padding:0 24px 80px;display:grid;grid-template-columns:1fr 340px;gap:32px}
+@media(max-width:900px){.page-wrap{grid-template-columns:1fr}.sidebar{order:-1}}
+
+/* HERO */
+.hero{padding:56px 24px 40px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(212,43,106,0.12) 0%,transparent 70%);pointer-events:none}
+.gift-emoji{font-size:4rem;display:block;margin-bottom:16px;animation:float 3s ease-in-out infinite}
+.hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1rem;color:var(--text-muted);max-width:480px;margin:0 auto}
+
+/* STEP INDICATOR */
+.steps-indicator{display:flex;align-items:center;justify-content:center;gap:0;margin:32px auto 40px;max-width:500px}
+.step-dot{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;position:relative}
+.step-dot::before{content:'';position:absolute;top:16px;right:-50%;width:100%;height:2px;background:var(--border);z-index:0}
+.step-dot:last-child::before{display:none}
+.step-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;position:relative;z-index:1;border:2px solid var(--border);background:var(--bg);color:var(--text-muted);transition:all 0.4s}
+.step-dot.active .step-num,.step-dot.done .step-num{border-color:var(--accent);background:var(--accent);color:#fff}
+.step-dot.done .step-num{background:var(--green);border-color:var(--green)}
+.step-dot.done::before{background:var(--green)}
+.step-dot.active::before{background:linear-gradient(90deg,var(--green),var(--border))}
+.step-lbl{font-size:0.75rem;color:var(--text-muted);font-weight:500}
+.step-dot.active .step-lbl{color:var(--text)}
+
+/* GIFT PLAN CARDS */
+.gift-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:32px}
+.gift-card{background:var(--card);border:2px solid var(--border);border-radius:18px;padding:24px;cursor:pointer;position:relative;transition:all 0.25s;overflow:hidden}
+.gift-card:hover{border-color:rgba(212,43,106,0.4);transform:translateY(-2px)}
+.gift-card.selected{border-color:var(--accent);background:linear-gradient(145deg,rgba(212,43,106,0.06),var(--card))}
+.gift-card.vip-card{border-color:rgba(255,179,0,0.3)}
+.gift-card.vip-card.selected{border-color:var(--gold);background:linear-gradient(145deg,rgba(255,179,0,0.05),var(--card))}
+.gift-card .popular-badge{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:700}
+.gift-card .check-mark{position:absolute;top:14px;left:14px;width:24px;height:24px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:0.75rem;opacity:0;transition:opacity 0.3s}
+.gift-card.selected .check-mark{opacity:1}
+.gift-card.vip-card.selected .check-mark{background:var(--gold)}
+.ribbon{position:absolute;bottom:0;right:0;width:80px;height:80px;overflow:hidden}
+.ribbon-inner{position:absolute;bottom:10px;right:-20px;width:80px;height:2px;background:linear-gradient(90deg,transparent,rgba(212,43,106,0.3));transform:rotate(-45deg)}
+.vip-shimmer{position:absolute;inset:0;border-radius:16px;background:linear-gradient(90deg,transparent 0%,rgba(255,179,0,0.08) 50%,transparent 100%);background-size:200% 100%;animation:shimmer 2.5s infinite;pointer-events:none}
+.gift-duration{font-size:1rem;font-weight:700;margin-bottom:4px;margin-top:16px}
+.gift-price{font-size:1.8rem;font-weight:800;letter-spacing:-0.5px}
+.gift-price sup{font-size:1rem;font-weight:600;vertical-align:top;margin-top:5px}
+.gift-save{font-size:0.78rem;color:var(--green);margin-bottom:12px}
+.gift-features{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.gift-features li{font-size:0.82rem;color:var(--text-muted);display:flex;align-items:center;gap:7px}
+.gift-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.select-btn{width:100%;padding:10px;border-radius:10px;font-size:0.875rem;font-weight:700;cursor:pointer;border:none;transition:all 0.2s;background:var(--card2);color:var(--text);border:1.5px solid var(--border)}
+.gift-card.selected .select-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-color:transparent}
+.gift-card.vip-card.selected .select-btn{background:linear-gradient(135deg,var(--gold),#ff8f00);color:#000;border-color:transparent}
+
+/* FORM STEPS */
+.form-step{display:none;animation:slideIn 0.4s ease both}
+.form-step.active{display:block}
+.form-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;margin-bottom:24px}
+.form-card h3{font-size:1.1rem;font-weight:700;margin-bottom:6px}
+.form-card .sub{font-size:0.85rem;color:var(--text-muted);margin-bottom:24px}
+.form-group{margin-bottom:20px;position:relative}
+.form-group label{display:block;font-size:0.85rem;font-weight:600;color:var(--text-muted);margin-bottom:8px}
+.form-input{width:100%;padding:12px 16px;background:var(--card2);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-size:0.9rem;font-family:'Inter',sans-serif;transition:border-color 0.2s;outline:none}
+.form-input:focus{border-color:var(--accent)}
+.form-input::placeholder{color:var(--text-muted)}
+textarea.form-input{resize:none;min-height:100px}
+.char-counter{font-size:0.75rem;color:var(--text-muted);text-align:right;margin-top:4px}
+.char-counter.warn{color:var(--gold)}
+.or-divider{text-align:center;color:var(--text-muted);font-size:0.82rem;margin:12px 0;position:relative}
+.or-divider::before,.or-divider::after{content:'';position:absolute;top:50%;width:45%;height:1px;background:var(--border)}
+.or-divider::before{left:0}.or-divider::after{right:0}
+
+/* AUTOCOMPLETE */
+.autocomplete-wrap{position:relative}
+.dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--card2);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;z-index:50;display:none}
+.dropdown.show{display:block}
+.dropdown-item{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;transition:background 0.15s}
+.dropdown-item:hover{background:rgba(255,255,255,0.04)}
+.drop-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0}
+.drop-name{font-weight:600;font-size:0.875rem}
+.drop-handle{font-size:0.78rem;color:var(--text-muted)}
+.drop-verified{color:var(--accent);font-size:0.7rem}
+
+/* DATE OPTIONS */
+.date-opts{display:flex;gap:10px;margin-bottom:12px}
+.date-opt{flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:var(--card2);cursor:pointer;font-size:0.875rem;font-weight:600;text-align:center;color:var(--text-muted);transition:all 0.2s}
+.date-opt.active{border-color:var(--accent);color:var(--accent);background:rgba(212,43,106,0.08)}
+.date-picker-wrap{display:none}
+.date-picker-wrap.show{display:block}
+
+/* PAYMENT STEP */
+.order-summary{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px}
+.order-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:0.875rem;border-bottom:1px solid var(--border)}
+.order-row:last-child{border-bottom:none;font-size:1rem;font-weight:700;padding-top:12px}
+.order-row span:last-child{font-weight:600}
+.card-brands{display:flex;gap:10px;margin-bottom:16px}
+.card-brand{width:48px;height:30px;background:var(--card2);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:var(--text-muted)}
+.card-brand.visa{color:#1a1f71;background:#fff}
+.card-brand.mc{background:linear-gradient(135deg,#eb001b,#f79e1b);color:#fff}
+.card-brand.amex{background:#007bc1;color:#fff}
+.card-brand.disc{background:#ff6600;color:#fff}
+.card-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-pay{width:100%;padding:15px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:1rem;font-weight:700;border:none;cursor:pointer;transition:all 0.2s;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-pay:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-next{width:100%;padding:13px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:0.95rem;font-weight:700;border:none;cursor:pointer;transition:all 0.2s;margin-top:8px}
+.btn-next:hover{opacity:0.9}
+.secure-note{display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--text-muted);justify-content:center;margin-top:10px}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:20px;padding-top:56px}
+@media(max-width:900px){.sidebar{padding-top:0}}
+.sidebar-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px}
+.sidebar-card h3{font-weight:700;font-size:1rem;margin-bottom:16px}
+.why-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+.why-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.why-title{font-weight:600;font-size:0.875rem;margin-bottom:3px}
+.why-desc{font-size:0.8rem;color:var(--text-muted)}
+.gift-card-promo{background:linear-gradient(135deg,rgba(212,43,106,0.1),rgba(139,43,226,0.1));border:1px solid rgba(212,43,106,0.2);border-radius:14px;padding:20px;text-align:center}
+.gift-card-promo .promo-icon{font-size:2.5rem;margin-bottom:10px}
+.gift-card-promo h4{font-weight:700;margin-bottom:6px}
+.gift-card-promo p{font-size:0.82rem;color:var(--text-muted);margin-bottom:14px}
+.btn-promo{padding:9px 20px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:0.85rem;font-weight:700;border:none;cursor:pointer}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.modal-overlay.show{opacity:1;pointer-events:all}
+.modal-box{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:48px 40px;max-width:440px;width:90%;text-align:center;position:relative;transform:scale(0.9);transition:transform 0.3s}
+.modal-overlay.show .modal-box{transform:scale(1)}
+.modal-emoji{font-size:4rem;display:block;margin-bottom:20px;animation:giftOpen 0.8s ease 0.3s both}
+.modal-title{font-size:1.6rem;font-weight:800;margin-bottom:8px}
+.modal-sub{color:var(--text-muted);font-size:0.9rem;margin-bottom:24px}
+.gift-link-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:0.82rem;color:var(--accent);margin-bottom:20px;word-break:break-all;cursor:pointer}
+.btn-copy{padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:0.875rem;font-weight:700;border:none;cursor:pointer;margin-right:8px}
+.btn-modal-close{padding:10px 24px;border-radius:10px;background:var(--card2);border:1px solid var(--border);color:var(--text);font-size:0.875rem;font-weight:600;cursor:pointer}
+.confetti-piece{position:absolute;width:8px;height:8px;border-radius:2px;animation:confetti 1.5s ease forwards}
+
+footer{background:var(--card);border-top:1px solid var(--border);padding:28px 24px;text-align:center}
+.footer-copy{font-size:0.82rem;color:var(--text-muted)}
+</style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"Подарочная подписка — KOL Studio","description":"Подари другу подписку на любимого создателя. Выбери сумму и добавь личное сообщение.","url":"https://kolstudio.com/gift.html","publisher":{"@type":"Organization","name":"KOL Studio","logo":{"@type":"ImageObject","url":"https://kolstudio.com/icons/icon-192.png"}}}
+  </script>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/gift.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/gift.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/gift.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/gift.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">✦</div>
+      KOL Studio
+    </a>
+    <a href="pricing.html" class="back-link">← Back to Pricing</a>
+  </div>
+</header>
+
+<section class="hero">
+  <span class="gift-emoji">🎁</span>
+  <h1>Gift a <span>Subscription</span></h1>
+  <p>Give the gift of exclusive content. The perfect present for fans of their favorite creators — delivered instantly or scheduled for any date.</p>
+</section>
+
+<div style="max-width:600px;margin:0 auto;padding:0 24px">
+  <div class="steps-indicator">
+    <div class="step-dot active" id="step-dot-1">
+      <div class="step-num">1</div>
+      <div class="step-lbl">Choose Plan</div>
+    </div>
+    <div class="step-dot" id="step-dot-2">
+      <div class="step-num">2</div>
+      <div class="step-lbl">Recipient</div>
+    </div>
+    <div class="step-dot" id="step-dot-3">
+      <div class="step-num">3</div>
+      <div class="step-lbl">Payment</div>
+    </div>
+  </div>
+</div>
+
+<div class="page-wrap">
+  <main id="kol-main">
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="index.html">🏠 Главная</a><span class="sep">›</span><a href="pricing.html">Тарифы</a><span class="sep">›</span><span class="current">Подарок</span></nav>
+
+    <!-- STEP 1 -->
+    <div class="form-step active" id="step-1">
+      <div class="gift-cards">
+        <!-- 1 Month Fan -->
+        <div class="gift-card" data-plan="1month" data-price="9.99" data-label="1 Month Fan" onclick="selectPlan(this)">
+          <div class="check-mark">✓</div>
+          <div style="font-size:1.8rem;margin-bottom:4px">🎀</div>
+          <div class="gift-duration">1 Month Fan</div>
+          <div class="gift-price"><sup>$</sup>9.99</div>
+          <div class="gift-save" style="opacity:0;font-size:0.78rem">.</div>
+          <div class="ribbon"><div class="ribbon-inner"></div></div>
+          <ul class="gift-features">
+            <li>Unlimited HD content</li>
+            <li>Message creators directly</li>
+            <li>Full subscriber feed access</li>
+          </ul>
+          <button class="select-btn">Select Plan</button>
+        </div>
+
+        <!-- 3 Months Fan -->
+        <div class="gift-card" data-plan="3months" data-price="26.99" data-label="3 Months Fan" onclick="selectPlan(this)">
+          <div class="popular-badge">Most Popular</div>
+          <div class="check-mark">✓</div>
+          <div style="font-size:1.8rem;margin-bottom:4px">🎊</div>
+          <div class="gift-duration">3 Months Fan</div>
+          <div class="gift-price"><sup>$</sup>26.99</div>
+          <div class="gift-save">Save 10% — was $29.97</div>
+          <ul class="gift-features">
+            <li>Everything in 1-Month Fan</li>
+            <li>Better value — 3 months access</li>
+            <li>Priority customer support</li>
+          </ul>
+          <button class="select-btn">Select Plan</button>
+        </div>
+
+        <!-- 1 Month VIP -->
+        <div class="gift-card vip-card" data-plan="vip" data-price="24.99" data-label="1 Month VIP" onclick="selectPlan(this)">
+          <div class="vip-shimmer"></div>
+          <div class="check-mark" style="background:var(--gold)">✓</div>
+          <div style="font-size:1.8rem;margin-bottom:4px">👑</div>
+          <div class="gift-duration">1 Month VIP</div>
+          <div class="gift-price" style="color:var(--gold)"><sup style="color:var(--gold)">$</sup>24.99</div>
+          <div class="gift-save" style="opacity:0;font-size:0.78rem">.</div>
+          <ul class="gift-features">
+            <li>4K ultra HD content</li>
+            <li>Video calls with creators</li>
+            <li>Exclusive VIP badge + priority DMs</li>
+          </ul>
+          <button class="select-btn">Select Plan</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="form-step" id="step-2">
+      <div class="form-card">
+        <h3>Step 2 — Recipient Details</h3>
+        <div class="sub">Who is this gift for? Search by username or enter their email if they're not on the platform yet.</div>
+
+        <div class="form-group">
+          <label>Recipient Username</label>
+          <div class="autocomplete-wrap">
+            <input type="text" class="form-input" id="recipient-input" placeholder="Search by username..." oninput="searchUsers(this.value)" autocomplete="off">
+            <div class="dropdown" id="user-dropdown">
+              <div class="dropdown-item" onclick="selectUser('luna_vasiliev','Luna Vasiliev')">
+                <div class="drop-avatar" style="background:linear-gradient(135deg,#D42B6A,#8B2BE2)">LV</div>
+                <div>
+                  <div class="drop-name">Luna Vasiliev <span class="drop-verified">✦ Verified</span></div>
+                  <div class="drop-handle">@luna_vasiliev · 28K fans</div>
+                </div>
+              </div>
+              <div class="dropdown-item" onclick="selectUser('mia_rose','Mia Rose')">
+                <div class="drop-avatar" style="background:linear-gradient(135deg,#FFB300,#ff6d00)">MR</div>
+                <div>
+                  <div class="drop-name">Mia Rose</div>
+                  <div class="drop-handle">@mia_rose · 12K fans</div>
+                </div>
+              </div>
+              <div class="dropdown-item" onclick="selectUser('stella_kim','Stella Kim')">
+                <div class="drop-avatar" style="background:linear-gradient(135deg,#00E676,#00bcd4)">SK</div>
+                <div>
+                  <div class="drop-name">Stella Kim <span class="drop-verified">✦ Verified</span></div>
+                  <div class="drop-handle">@stella_kim · 54K fans</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="or-divider">or gift to a non-member</div>
+
+        <div class="form-group">
+          <label>Recipient Email <span style="color:var(--text-muted);font-weight:400">(optional — if not on platform)</span></label>
+          <input type="email" class="form-input" placeholder="friend@example.com">
+        </div>
+
+        <div class="form-group">
+          <label>Personal Message <span style="color:var(--text-muted);font-weight:400">(optional)</span></label>
+          <textarea class="form-input" id="gift-message" placeholder="Write a personal message to include with the gift..." maxlength="200" oninput="countChars(this,'msg-counter',200)"></textarea>
+          <div class="char-counter" id="msg-counter">0 / 200</div>
+        </div>
+
+        <div class="form-group">
+          <label>Delivery Date</label>
+          <div class="date-opts">
+            <div class="date-opt active" onclick="setDate(this,'now')">📬 Send Now</div>
+            <div class="date-opt" onclick="setDate(this,'schedule')">📅 Schedule</div>
+          </div>
+          <div class="date-picker-wrap" id="date-picker">
+            <input type="date" class="form-input" id="scheduled-date">
+          </div>
+        </div>
+
+        <button class="btn-next" onclick="goToStep(3)">Continue to Payment →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="form-step" id="step-3">
+      <div class="form-card">
+        <h3>Step 3 — Order Summary</h3>
+        <div class="sub">Review your gift details before completing the purchase.</div>
+
+        <div class="order-summary">
+          <div class="order-row">
+            <span>Gift Plan</span>
+            <span id="summary-plan">—</span>
+          </div>
+          <div class="order-row">
+            <span>Recipient</span>
+            <span id="summary-recipient">—</span>
+          </div>
+          <div class="order-row">
+            <span>Delivery</span>
+            <span id="summary-date">Immediately</span>
+          </div>
+          <div class="order-row">
+            <span>Subtotal</span>
+            <span id="summary-price">—</span>
+          </div>
+          <div class="order-row">
+            <span>Processing fee</span>
+            <span>$0.00</span>
+          </div>
+          <div class="order-row">
+            <span>Total</span>
+            <span id="summary-total" style="color:var(--accent)">—</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Payment Method</label>
+          <div class="card-brands">
+            <div class="card-brand visa">VISA</div>
+            <div class="card-brand mc">MC</div>
+            <div class="card-brand amex">AMEX</div>
+            <div class="card-brand disc">DISC</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Card Number</label>
+          <input type="text" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)">
+        </div>
+        <div class="card-row">
+          <div class="form-group">
+            <label>Expiry Date</label>
+            <input type="text" class="form-input" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)">
+          </div>
+          <div class="form-group">
+            <label>CVV</label>
+            <input type="text" class="form-input" placeholder="•••" maxlength="4">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Name on Card</label>
+          <input type="text" class="form-input" placeholder="Full name">
+        </div>
+
+        <button class="btn-pay" onclick="completePurchase()">
+          🎁 Complete Purchase
+        </button>
+        <div class="secure-note">🔒 256-bit SSL encrypted · Your data is safe</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h3>Why Gift KOL Studio?</h3>
+      <div class="why-item">
+        <div class="why-icon" style="background:rgba(212,43,106,0.1)">✨</div>
+        <div>
+          <div class="why-title">Exclusive Content Access</div>
+          <div class="why-desc">Gift someone access to creators they love — photos, videos, live streams, and personal messages.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon" style="background:rgba(0,230,118,0.1)">⚡</div>
+        <div>
+          <div class="why-title">Instant Delivery</div>
+          <div class="why-desc">Gifts are delivered instantly by email and in-app notification. Schedule for birthdays or special occasions.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon" style="background:rgba(255,179,0,0.1)">💝</div>
+        <div>
+          <div class="why-title">Personal Touch</div>
+          <div class="why-desc">Include a personal message that the recipient sees when they open their gift. Make it memorable.</div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon" style="background:rgba(139,43,226,0.1)">🔒</div>
+        <div>
+          <div class="why-title">Safe & Secure</div>
+          <div class="why-desc">All transactions are encrypted. Recipient's privacy is fully protected — no personal data shared.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gift-card-promo sidebar-card" style="background:linear-gradient(135deg,rgba(212,43,106,0.08),rgba(139,43,226,0.08))">
+      <div class="promo-icon">🎴</div>
+      <h4>Gift Cards Also Available</h4>
+      <p>Prefer a flexible gift? Get a digital gift card in any amount from $10 to $500 — recipient chooses their own plan.</p>
+      <button class="btn-promo">Get Gift Card</button>
+    </div>
+
+    <div class="sidebar-card" style="background:var(--card2)">
+      <h3 style="font-size:0.875rem;color:var(--text-muted);margin-bottom:12px">TRUSTED BY</h3>
+      <div style="font-size:1.5rem;font-weight:800;margin-bottom:4px">50,000+</div>
+      <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px">gifts sent this year</div>
+      <div style="display:flex;gap:2px;margin-bottom:6px">
+        <span style="color:var(--gold)">★★★★★</span>
+      </div>
+      <div style="font-size:0.82rem;color:var(--text-muted)">"The easiest gift idea — she absolutely loved it!" — Jake T.</div>
+    </div>
+  </aside>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="success-modal">
+  <div class="modal-box">
+    <span class="modal-emoji">🎁</span>
+    <div class="modal-title">Gift Sent! 🎉</div>
+    <div class="modal-sub">Your gift subscription has been delivered. The recipient will receive a notification right away.</div>
+    <div class="gift-link-box" id="gift-link" onclick="copyLink()">
+      https://kolstudio.com/gift/abc123xyz — Click to copy
+    </div>
+    <div style="margin-bottom:12px;font-size:0.82rem;color:var(--text-muted)">Share this link with your friend</div>
+    <button class="btn-copy" onclick="copyLink()">📋 Copy Link</button>
+    <button class="btn-modal-close" onclick="closeModal()">Done</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-copy">© 2026 KOL Studio. All rights reserved. For adults 18+ only.</div>
+</footer>
+
+<script>
+let selectedPlan={plan:'',price:'',label:''};
+let recipientName='Not specified';
+let deliveryDate='Immediately';
+let currentStep=1;
+
+function selectPlan(card){
+  document.querySelectorAll('.gift-card').forEach(c=>c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedPlan={plan:card.dataset.plan,price:card.dataset.price,label:card.dataset.label};
+  card.querySelector('.select-btn').textContent='Selected ✓';
+  setTimeout(()=>goToStep(2),400);
+}
+
+function goToStep(n){
+  document.querySelectorAll('.form-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-'+n).classList.add('active');
+  for(let i=1;i<=3;i++){
+    const dot=document.getElementById('step-dot-'+i);
+    dot.classList.remove('active','done');
+    if(i<n)dot.classList.add('done');
+    if(i===n)dot.classList.add('active');
+  }
+  currentStep=n;
+  if(n===3){
+    document.getElementById('summary-plan').textContent=selectedPlan.label||'1 Month Fan';
+    document.getElementById('summary-price').textContent='$'+(selectedPlan.price||'9.99');
+    document.getElementById('summary-total').textContent='$'+(selectedPlan.price||'9.99');
+    const rec=document.getElementById('recipient-input').value;
+    document.getElementById('summary-recipient').textContent=rec||recipientName;
+    document.getElementById('summary-date').textContent=deliveryDate;
+  }
+  window.scrollTo({top:200,behavior:'smooth'});
+}
+
+function searchUsers(val){
+  const dd=document.getElementById('user-dropdown');
+  dd.classList.toggle('show',val.length>1);
+}
+
+function selectUser(handle,name){
+  document.getElementById('recipient-input').value=name+' (@'+handle+')';
+  document.getElementById('user-dropdown').classList.remove('show');
+  recipientName=name+' (@'+handle+')';
+}
+
+function countChars(el,counterId,max){
+  const n=el.value.length;
+  const counter=document.getElementById(counterId);
+  counter.textContent=n+' / '+max;
+  counter.classList.toggle('warn',n>max*0.8);
+}
+
+function setDate(el,mode){
+  document.querySelectorAll('.date-opt').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+  const picker=document.getElementById('date-picker');
+  picker.classList.toggle('show',mode==='schedule');
+  if(mode==='now'){deliveryDate='Immediately';}
+  else{
+    const d=document.getElementById('scheduled-date');
+    d.onchange=()=>{deliveryDate=d.value||'Scheduled';};
+  }
+}
+
+function formatCard(el){
+  let v=el.value.replace(/\D/g,'').substring(0,16);
+  el.value=v.replace(/(.{4})/g,'$1 ').trim();
+}
+
+function formatExpiry(el){
+  let v=el.value.replace(/\D/g,'').substring(0,4);
+  if(v.length>=3)v=v.substring(0,2)+' / '+v.substring(2);
+  el.value=v;
+}
+
+function completePurchase(){
+  const modal=document.getElementById('success-modal');
+  modal.classList.add('show');
+  spawnConfetti();
+}
+
+function spawnConfetti(){
+  const colors=['#D42B6A','#8B2BE2','#FFB300','#00E676','#fff'];
+  const box=document.querySelector('.modal-box');
+  for(let i=0;i<20;i++){
+    const c=document.createElement('div');
+    c.className='confetti-piece';
+    c.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*20}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*0.5}s;animation-duration:${1+Math.random()*0.5}s`;
+    box.appendChild(c);
+    setTimeout(()=>c.remove(),2000);
+  }
+}
+
+function copyLink(){
+  navigator.clipboard.writeText('https://kolstudio.com/gift/abc123xyz').catch(()=>{});
+  const btn=document.querySelector('.btn-copy');
+  btn.textContent='✓ Copied!';
+  setTimeout(()=>btn.textContent='📋 Copy Link',2000);
+}
+
+function closeModal(){
+  document.getElementById('success-modal').classList.remove('show');
+}
+
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.autocomplete-wrap'))
+    document.getElementById('user-dropdown').classList.remove('show');
+});
+
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('a[href]').forEach(a=>{const h=a.getAttribute('href');if(!h||h.startsWith('#')||h.startsWith('http')||h.startsWith('mailto'))return;a.addEventListener('click',e=>{e.preventDefault();document.body.style.animation='kol-fade-out 0.25s ease forwards';setTimeout(()=>location.href=h,250);});});});
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     KOL Studio Global Components
+     1. GDPR Cookie Consent Banner
+     2. Dark / Light Theme Toggle
+     3. PWA Install Prompt
+═══════════════════════════════════════════════════════════ -->
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="cookie.html">Подробнее</a> · <a href="report.html">Пожаловаться</a> · <a href="api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href = 'search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href = 'upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

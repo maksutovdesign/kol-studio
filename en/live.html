@@ -1,0 +1,2431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="apple-touch-icon" href="../icons/icon.svg">
+  <meta name="description" content="Смотри прямые эфиры любимых моделей в реальном времени">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta property="og:title" content="KOL Studio — Live">
+  <meta property="og:description" content="Смотри прямые эфиры любимых моделей в реальном времени">
+  <meta property="og:url" content="https://kolstudio.com/en/live.html">
+  <meta property="og:image" content="https://kolstudio.com/en/icons/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KOL Studio — Live">
+  <meta name="twitter:description" content="Смотри прямые эфиры любимых моделей в реальном времени">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анна Морозова — Live Stream · KOL STUDIO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07071A;
+    --card: #111128;
+    --card2: #181835;
+    --border: #22224A;
+    --accent: #D42B6A;
+    --accent2: #8B2BE2;
+    --green: #00E676;
+    --gold: #FFB300;
+    --red: #FF1744;
+    --text: #F0F0FF;
+    --text-muted: #7070A0;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, #22224A 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── AMBIENT GLOWS ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at -10% -10%, rgba(212,43,106,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 110% 110%, rgba(139,43,226,0.10) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── LAYOUT SHELL ── */
+  #app {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ══════════════════════════════════════
+     TOP BAR
+  ══════════════════════════════════════ */
+  #topbar {
+    height: 56px;
+    min-height: 56px;
+    background: rgba(17,17,40,0.95);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 12px;
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    flex-shrink: 0;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .btn-back {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: background 0.2s, border-color 0.2s;
+    text-decoration: none;
+  }
+  .btn-back:hover { background: var(--border); border-color: var(--accent); }
+
+  .model-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .model-avatar::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    z-index: -1;
+    opacity: 0.5;
+    animation: avatarGlow 2s ease-in-out infinite alternate;
+  }
+  @keyframes avatarGlow {
+    from { opacity: 0.3; transform: scale(1); }
+    to   { opacity: 0.7; transform: scale(1.05); }
+  }
+
+  .model-info { display: flex; align-items: center; gap: 6px; }
+  .model-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .verified-badge {
+    width: 16px; height: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: #fff; flex-shrink: 0;
+  }
+
+  .live-badge {
+    display: flex; align-items: center; gap: 5px;
+    background: rgba(255,23,68,0.15);
+    border: 1px solid rgba(255,23,68,0.4);
+    border-radius: 20px;
+    padding: 3px 9px;
+    font-size: 11px; font-weight: 700;
+    color: var(--red);
+    letter-spacing: 0.5px;
+  }
+  .live-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: livePulse 1.2s ease-in-out infinite;
+  }
+  @keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  .viewer-count {
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  .topbar-center {
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+  }
+  .stream-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 8px;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .tip-goal {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 130px;
+  }
+  .tip-goal-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+  }
+  .tip-goal-label span { color: var(--gold); font-weight: 600; }
+  .tip-goal-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .tip-goal-fill {
+    height: 100%;
+    width: 67%;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    border-radius: 4px;
+    animation: goalShimmer 2s ease-in-out infinite alternate;
+  }
+  @keyframes goalShimmer {
+    from { opacity: 0.8; }
+    to   { opacity: 1; }
+  }
+
+  .icon-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    transition: all 0.2s;
+  }
+  .icon-btn:hover { background: var(--border); color: var(--text); border-color: var(--accent); }
+
+  /* ══════════════════════════════════════
+     MIDDLE ZONE
+  ══════════════════════════════════════ */
+  #middle {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  /* ══════════════════════════════════════
+     VIDEO AREA
+  ══════════════════════════════════════ */
+  #video-area {
+    flex: 1;
+    position: relative;
+    background: linear-gradient(135deg, #0A0A1E 0%, #1A0520 50%, #0A0A1E 100%);
+    overflow: hidden;
+    cursor: pointer;
+    min-width: 0;
+  }
+
+  /* Scanlines effect */
+  #video-area::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Vignette */
+  #video-area::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── KOL LOGO PLACEHOLDER ── */
+  .video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .kol-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    animation: logoPulse 3s ease-in-out infinite;
+  }
+  @keyframes logoPulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(212,43,106,0.4)); }
+    50% { transform: scale(1.04); filter: drop-shadow(0 0 40px rgba(212,43,106,0.7)); }
+  }
+
+  .kol-logo-ring {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    background: linear-gradient(var(--card), var(--card)) padding-box,
+                linear-gradient(135deg, var(--accent), var(--accent2)) border-box;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .kol-logo-ring::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,43,106,0.3);
+    animation: ringExpand 3s ease-in-out infinite;
+  }
+  .kol-logo-ring::after {
+    content: '';
+    position: absolute;
+    inset: -16px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,43,106,0.15);
+    animation: ringExpand 3s ease-in-out infinite 0.5s;
+  }
+  @keyframes ringExpand {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0; transform: scale(1.3); }
+  }
+
+  .kol-logo-text {
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+  }
+
+  .kol-logo-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* ── PINNED MESSAGE ── */
+  .pinned-message {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(17,17,40,0.92);
+    border: 1px solid rgba(212,43,106,0.4);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ── LIVE TIMER OVERLAY ── */
+  .overlay-live-timer {
+    position: absolute;
+    bottom: 70px;
+    left: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+  }
+  .live-indicator {
+    display: flex; align-items: center; gap: 5px;
+    background: rgba(255,23,68,0.85);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px; font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .live-indicator .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%; background: #fff;
+    animation: livePulse 1.2s ease-in-out infinite;
+  }
+  .timer-display {
+    background: rgba(0,0,0,0.7);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 13px; font-weight: 600;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 1px;
+  }
+
+  /* ── QUALITY BADGE ── */
+  .overlay-quality {
+    position: absolute;
+    bottom: 70px;
+    right: 16px;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px; font-weight: 600;
+    color: #fff;
+    z-index: 10;
+  }
+
+  /* ── VIDEO CONTROLS ── */
+  .video-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 12px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  #video-area:hover .video-controls { opacity: 1; }
+
+  .vc-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .vc-btn:hover { background: rgba(255,255,255,0.1); }
+
+  .vc-volume {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .vc-volume-slider {
+    width: 70px;
+    height: 3px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(255,255,255,0.3);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+  .vc-volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .vc-progress {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+  .vc-progress-fill {
+    height: 100%;
+    width: 58%;
+    background: var(--accent);
+    border-radius: 3px;
+  }
+
+  /* ── TIP ALERTS ── */
+  .tip-alert {
+    position: absolute;
+    left: 16px;
+    bottom: 80px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(212,43,106,0.92);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: tipFloat 4s ease forwards;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 20px rgba(212,43,106,0.4);
+  }
+  @keyframes tipFloat {
+    0%   { opacity: 0; transform: translateY(0) scale(0.8); }
+    10%  { opacity: 1; transform: translateY(-10px) scale(1); }
+    70%  { opacity: 1; transform: translateY(-60px) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(0.95); }
+  }
+
+  /* ══════════════════════════════════════
+     RIGHT SIDEBAR / CHAT
+  ══════════════════════════════════════ */
+  #chat-sidebar {
+    width: 340px;
+    min-width: 340px;
+    background: var(--card);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    position: relative;
+  }
+
+  /* Sidebar Header */
+  .sidebar-header {
+    padding: 14px 16px 0;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .sidebar-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .sidebar-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .online-count {
+    font-size: 12px;
+    color: var(--green);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .online-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%; background: var(--green);
+    animation: livePulse 2s ease-in-out infinite;
+  }
+
+  /* Tab Bar */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px 4px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-align: center;
+  }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab-btn:hover:not(.active) { color: var(--text); }
+
+  /* Tab panels */
+  .tab-panel { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+  .tab-panel.active { display: flex; }
+
+  /* ══ CHAT TAB ══ */
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 12px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    scroll-behavior: smooth;
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-track { background: transparent; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .chat-msg {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 5px 8px;
+    border-radius: 8px;
+    transition: background 0.15s;
+    position: relative;
+  }
+  .chat-msg:hover { background: rgba(34,34,74,0.5); }
+
+  .chat-msg.model-reply {
+    background: rgba(212,43,106,0.07);
+    border-left: 3px solid var(--accent);
+    padding-left: 10px;
+  }
+  .chat-msg.tip-msg {
+    background: rgba(212,43,106,0.12);
+    border: 1px solid rgba(212,43,106,0.25);
+    border-radius: 8px;
+  }
+
+  .msg-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .msg-username {
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .msg-username.vip { color: var(--gold); }
+  .msg-username.new-user { color: var(--green); }
+  .msg-username.model { color: var(--accent); }
+
+  .msg-badge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+  }
+  .badge-vip { background: rgba(255,179,0,0.15); color: var(--gold); border: 1px solid rgba(255,179,0,0.3); }
+  .badge-model { background: rgba(212,43,106,0.15); color: var(--accent); border: 1px solid rgba(212,43,106,0.3); }
+  .badge-new { background: rgba(0,230,118,0.1); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
+
+  .msg-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .msg-text {
+    font-size: 13px;
+    color: rgba(240,240,255,0.85);
+    line-height: 1.5;
+    word-break: break-word;
+  }
+  .tip-amount {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  /* Chat Input */
+  .chat-input-area {
+    border-top: 1px solid var(--border);
+    padding: 10px 12px 12px;
+    flex-shrink: 0;
+    background: var(--card);
+  }
+  .chat-subscriber-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .chat-input-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    position: relative;
+  }
+  .chat-input {
+    flex: 1;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 9px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .chat-input::placeholder { color: var(--text-muted); }
+  .chat-input:focus { border-color: var(--accent); }
+
+  .emoji-btn, .send-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .emoji-btn { background: var(--card2); border: 1px solid var(--border); }
+  .emoji-btn:hover { background: var(--border); }
+  .send-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+  }
+  .send-btn:hover { opacity: 0.85; transform: scale(1.05); }
+
+  /* Emoji Picker */
+  .emoji-picker {
+    position: absolute;
+    bottom: 42px;
+    right: 40px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px;
+    display: none;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    z-index: 50;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  .emoji-picker.open { display: grid; }
+  .emoji-item {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    text-align: center;
+    transition: background 0.15s;
+  }
+  .emoji-item:hover { background: var(--border); }
+
+  /* ══ TOP DONORS TAB ══ */
+  .donors-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+  }
+  .donors-list::-webkit-scrollbar { width: 4px; }
+  .donors-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .donor-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 8px;
+    border-radius: 10px;
+    transition: background 0.15s;
+    cursor: default;
+  }
+  .donor-row:hover { background: var(--card2); }
+
+  .donor-rank {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    width: 22px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .donor-rank.top3 { color: var(--gold); }
+
+  .donor-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+
+  .donor-info { flex: 1; min-width: 0; }
+  .donor-name {
+    font-size: 13px; font-weight: 600; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .donor-amount {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ══ INFO TAB ══ */
+  .info-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .info-content::-webkit-scrollbar { width: 4px; }
+  .info-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .info-section { display: flex; flex-direction: column; gap: 8px; }
+  .info-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .info-bio {
+    font-size: 13px;
+    color: rgba(240,240,255,0.8);
+    line-height: 1.6;
+  }
+  .info-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .info-tag {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--accent2);
+    font-weight: 500;
+  }
+
+  .info-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+  }
+  .info-meta-key { color: var(--text-muted); }
+  .info-meta-val { color: var(--text); font-weight: 500; }
+
+  .info-divider {
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Mini subscription plans */
+  .mini-plans { display: flex; flex-direction: column; gap: 8px; }
+  .mini-plan {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: border-color 0.2s;
+    cursor: pointer;
+  }
+  .mini-plan:hover { border-color: var(--accent); }
+  .mini-plan.featured { border-color: rgba(212,43,106,0.4); background: rgba(212,43,106,0.06); }
+  .mini-plan-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .mini-plan-desc { font-size: 11px; color: var(--text-muted); }
+  .mini-plan-price { font-size: 14px; font-weight: 700; color: var(--accent); }
+
+  /* ══════════════════════════════════════
+     BOTTOM ACTIONS BAR
+  ══════════════════════════════════════ */
+  #bottom-bar {
+    height: 60px;
+    min-height: 60px;
+    background: rgba(17,17,40,0.98);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 10px;
+    z-index: 100;
+    flex-shrink: 0;
+    backdrop-filter: blur(12px);
+  }
+
+  .tip-buttons {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .tip-pill {
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(212,43,106,0.4);
+    background: rgba(212,43,106,0.08);
+    color: var(--accent);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tip-pill:hover {
+    background: rgba(212,43,106,0.2);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .bottom-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .btn-chat-focus {
+    padding: 8px 20px;
+    border-radius: 22px;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-chat-focus:hover { background: var(--border); color: var(--text); }
+
+  .bottom-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .btn-private {
+    padding: 8px 18px;
+    border-radius: 22px;
+    border: none;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(212,43,106,0.3);
+  }
+  .btn-private:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212,43,106,0.45); }
+
+  .btn-heart {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .btn-heart.liked { color: var(--red); border-color: rgba(255,23,68,0.4); background: rgba(255,23,68,0.08); }
+  .btn-heart:hover { transform: scale(1.1); }
+
+  /* ══════════════════════════════════════
+     MODALS
+  ══════════════════════════════════════ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(7,7,26,0.85);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 28px 24px;
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    animation: modalIn 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .modal-close:hover { background: var(--border); color: var(--text); }
+
+  .modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .modal-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .modal-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .amount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .amount-pill {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .amount-pill:hover, .amount-pill.selected {
+    border-color: var(--accent);
+    background: rgba(212,43,106,0.1);
+    color: var(--accent);
+  }
+  .modal-input {
+    width: 100%;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 14px;
+  }
+  .modal-input::placeholder { color: var(--text-muted); }
+  .modal-input:focus { border-color: var(--accent); }
+
+  .modal-balance {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .modal-balance strong { color: var(--green); }
+
+  .btn-modal-primary {
+    width: 100%;
+    padding: 13px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(212,43,106,0.35);
+  }
+  .btn-modal-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-modal-primary:active { transform: translateY(0); }
+
+  /* Duration selector */
+  .duration-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .duration-pill {
+    padding: 10px 4px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .duration-pill:hover, .duration-pill.selected {
+    border-color: var(--accent2);
+    background: rgba(139,43,226,0.1);
+    color: var(--accent2);
+  }
+
+  .cost-display {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cost-label { font-size: 13px; color: var(--text-muted); }
+  .cost-value { font-size: 20px; font-weight: 700; color: var(--text); }
+
+  .modal-terms {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  /* ══════════════════════════════════════
+     MOBILE
+  ══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    #topbar { padding: 0 10px; gap: 8px; }
+    .topbar-center { display: none; }
+    .tip-goal { display: none; }
+    .stream-title { display: none; }
+    .viewer-count { display: none; }
+
+    #middle {
+      flex-direction: column;
+    }
+    #video-area {
+      height: 45vh;
+      min-height: 45vh;
+      flex: none;
+    }
+    #chat-sidebar {
+      width: 100%;
+      min-width: 0;
+      flex: 1;
+      border-left: none;
+      border-top: 1px solid var(--border);
+    }
+
+    #bottom-bar {
+      flex-wrap: wrap;
+      height: auto;
+      padding: 8px 10px;
+      gap: 6px;
+    }
+    .tip-buttons { order: 1; width: 100%; justify-content: center; }
+    .bottom-center { order: 2; }
+    .bottom-right { order: 3; margin-left: auto; }
+    .tip-pill { padding: 6px 10px; font-size: 12px; }
+  }
+
+  /* ══════════════════════════════════════
+     UTILITIES
+  ══════════════════════════════════════ */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 -28px;
+    margin-bottom: 20px;
+  }
+
+  .new-msg-appear {
+    animation: msgAppear 0.35s ease;
+  }
+  @keyframes msgAppear {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+<style id="page-transitions">
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+</style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/live.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/live.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/live.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/live.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+
+<style id="kol-skeleton-css">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skel-title{height:22px;width:60%;margin-bottom:12px;border-radius:6px}
+.skel-avatar{width:44px;height:44px;border-radius:50%}
+.skel-thumb{width:100%;height:180px;border-radius:12px}
+.skel-btn{height:38px;width:120px;border-radius:10px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px}
+.skel-row{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #22224A}
+.skel-body{display:flex;flex-direction:column;gap:8px;flex:1}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ══ TOP BAR ══ -->
+  <div id="topbar">
+    <div class="topbar-left">
+      <a href="profile.html" class="btn-back" title="Назад">←</a>
+      <div class="model-avatar">АМ</div>
+      <div>
+        <div class="model-info">
+          <span class="model-name">Анна Морозова</span>
+          <div class="verified-badge">✓</div>
+          <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+          <div class="viewer-count">👁 <span id="viewer-count">1,247</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topbar-center">
+      <div class="stream-title">💋 Вечерний эфир — спрашивайте всё!</div>
+    </div>
+
+    <div class="topbar-right">
+      <div class="tip-goal">
+        <div class="tip-goal-label">
+          <span>Цель: $500</span>
+          <span>67%</span>
+        </div>
+        <div class="tip-goal-bar">
+          <div class="tip-goal-fill"></div>
+        </div>
+      </div>
+      <button class="icon-btn" id="btn-fullscreen" title="На весь экран">⛶</button>
+      <button class="icon-btn" title="Share">↗</button>
+    </div>
+  </div>
+
+  <!-- ══ MIDDLE ZONE ══ -->
+  <div id="middle">
+
+    <!-- VIDEO AREA -->
+    <div id="video-area">
+
+      <!-- Pinned message -->
+      <div class="pinned-message">
+        📌 Следующий приват через 15 минут! Слоты: 3/5
+      </div>
+
+      <!-- Video placeholder -->
+      <div class="video-placeholder">
+        <div class="kol-logo">
+          <div class="kol-logo-ring">
+            <span class="kol-logo-text">KOL</span>
+          </div>
+          <div class="kol-logo-subtitle">Studio · Live</div>
+        </div>
+      </div>
+
+      <!-- LIVE timer -->
+      <div class="overlay-live-timer">
+        <div class="live-indicator"><div class="dot"></div>LIVE</div>
+        <div class="timer-display" id="live-timer">1:23:47</div>
+      </div>
+
+      <!-- Quality badge -->
+      <div class="overlay-quality">HD 1080p</div>
+
+      <!-- Video controls (show on hover) -->
+      <div class="video-controls">
+        <button class="vc-btn" id="vc-play">⏸</button>
+        <div class="vc-volume">
+          <button class="vc-btn" id="vc-mute">🔊</button>
+          <input type="range" class="vc-volume-slider" min="0" max="100" value="80">
+        </div>
+        <div class="vc-progress"><div class="vc-progress-fill"></div></div>
+        <button class="vc-btn" id="vc-fullscreen">⛶</button>
+      </div>
+
+      <!-- Tip alerts container -->
+      <div id="tip-alerts-container"></div>
+
+    </div>
+
+    <!-- ══ CHAT SIDEBAR ══ -->
+    <div id="chat-sidebar">
+
+      <div class="sidebar-header">
+        <div class="sidebar-header-row">
+          <span class="sidebar-title">Чат эфира</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="online-count"><div class="online-dot"></div><span id="online-count">1,247</span> онлайн</span>
+            <button class="icon-btn" style="width:28px;height:28px;font-size:13px;" title="Settings">⚙</button>
+          </div>
+        </div>
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="chat">💬 Чат</button>
+          <button class="tab-btn" data-tab="donors">🏆 Топ</button>
+          <button class="tab-btn" data-tab="info">📋 Инфо</button>
+        </div>
+      </div>
+
+      <!-- TAB: CHAT -->
+      <div class="tab-panel active" id="tab-chat">
+        <div class="chat-messages" id="chat-messages">
+          <!-- seeded via JS -->
+        </div>
+
+        <div class="chat-input-area">
+          <div class="chat-subscriber-note">✨ Только subscriberи могут писать в чат</div>
+          <div class="chat-input-row">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Write в чат...">
+            <div class="emoji-picker" id="emoji-picker"></div>
+            <button class="emoji-btn" id="emoji-btn">😊</button>
+            <button class="send-btn" id="send-btn">➤</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: TOP DONORS -->
+      <div class="tab-panel" id="tab-donors">
+        <div class="donors-list" id="donors-list">
+          <!-- seeded via JS -->
+        </div>
+      </div>
+
+      <!-- TAB: INFO -->
+      <div class="tab-panel" id="tab-info">
+        <div class="info-content">
+          <div class="info-section">
+            <span class="info-label">О модели</span>
+            <div class="info-bio">
+              Hello! Я Анна 🌸 Люблю живое общение, интересные темы и искренние эмоции.
+              В эфире всегда открыта для ваших вопросов. Welcome!
+            </div>
+          </div>
+
+          <div class="info-section">
+            <span class="info-label">Теги эфира</span>
+            <div class="info-tags">
+              <span class="info-tag">#Live</span>
+              <span class="info-tag">#Boudoir</span>
+              <span class="info-tag">#Q&amp;A</span>
+              <span class="info-tag">#Chat</span>
+              <span class="info-tag">#Russian</span>
+            </div>
+          </div>
+
+          <div class="info-divider"></div>
+
+          <div class="info-section">
+            <div class="info-meta-row">
+              <span class="info-meta-key">Stream начался</span>
+              <span class="info-meta-val">1 ч 24 min ago</span>
+            </div>
+            <div class="info-meta-row">
+              <span class="info-meta-key">Следующий эфир</span>
+              <span class="info-meta-val">Пятница, 21:00 МСК</span>
+            </div>
+            <div class="info-meta-row">
+              <span class="info-meta-key">Rating</span>
+              <span class="info-meta-val" style="color:var(--gold);">⭐ 4.97 (2,340)</span>
+            </div>
+          </div>
+
+          <div class="info-divider"></div>
+
+          <div class="info-section">
+            <span class="info-label">Подписка</span>
+            <div class="mini-plans">
+              <div class="mini-plan">
+                <div>
+                  <div class="mini-plan-name">Базовая</div>
+                  <div class="mini-plan-desc">Photo, чат, эфиры</div>
+                </div>
+                <div class="mini-plan-price">$9.99/мес</div>
+              </div>
+              <div class="mini-plan featured">
+                <div>
+                  <div class="mini-plan-name">VIP 🔥</div>
+                  <div class="mini-plan-desc">Всё включено + приваты</div>
+                </div>
+                <div class="mini-plan-price">$24.99/мес</div>
+              </div>
+              <div class="mini-plan">
+                <div>
+                  <div class="mini-plan-name">Ultimate 👑</div>
+                  <div class="mini-plan-desc">Личный контент + DM</div>
+                </div>
+                <div class="mini-plan-price">$49.99/мес</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end chat-sidebar -->
+  </div><!-- end middle -->
+
+  <!-- ══ BOTTOM BAR ══ -->
+  <div id="bottom-bar">
+    <div class="tip-buttons">
+      <button class="tip-pill" data-amount="2">$2</button>
+      <button class="tip-pill" data-amount="5">$5</button>
+      <button class="tip-pill" data-amount="10">$10</button>
+      <button class="tip-pill" data-amount="25">$25</button>
+      <button class="tip-pill" data-amount="50">$50</button>
+    </div>
+
+    <div class="bottom-center">
+      <button class="btn-chat-focus" id="btn-chat-focus">💬 Write в чат</button>
+    </div>
+
+    <div class="bottom-right">
+      <button class="btn-private" id="btn-private">🔒 Private Show <span style="opacity:0.7;font-size:11px;">$3.99/мин</span></button>
+      <button class="btn-heart" id="btn-heart">❤️</button>
+    </div>
+  </div>
+
+</div><!-- end #app -->
+
+<!-- ══════════════════════════════════════
+     TIP MODAL
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-tip">
+  <div class="modal-box">
+    <button class="modal-close" data-close="modal-tip">✕</button>
+    <div class="modal-title">Send чаевые Анне М. 💸</div>
+    <div class="modal-subtitle">Amount будет видна всем в чате</div>
+
+    <label class="modal-label">Select сумму</label>
+    <div class="amount-grid">
+      <button class="amount-pill" data-val="2">$2</button>
+      <button class="amount-pill selected" data-val="5">$5</button>
+      <button class="amount-pill" data-val="10">$10</button>
+      <button class="amount-pill" data-val="25">$25</button>
+      <button class="amount-pill" data-val="50">$50</button>
+      <button class="amount-pill" data-val="100">$100</button>
+    </div>
+
+    <label class="modal-label">Своя сумма</label>
+    <input type="number" class="modal-input" id="tip-custom" placeholder="Enter сумму в $" min="1">
+
+    <label class="modal-label">Сообщение (видно всем в чате)</label>
+    <input type="text" class="modal-input" id="tip-message" placeholder="Write что-нибудь... (необязательно)">
+
+    <div class="modal-balance">💳 Balance: <strong>$47.50</strong></div>
+
+    <button class="btn-modal-primary" id="btn-send-tip">Send чаевые ✨</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PRIVATE SHOW MODAL
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-private">
+  <div class="modal-box">
+    <button class="modal-close" data-close="modal-private">✕</button>
+    <div class="modal-title">🔒 Запрос на приват</div>
+    <div class="modal-subtitle">Личный сеанс с Анной Морозовой</div>
+
+    <div style="display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:18px;">
+      <div class="model-avatar" style="width:42px;height:42px;font-size:14px;">АМ</div>
+      <div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);">Анна Морозова</div>
+        <div style="font-size:12px;color:var(--text-muted);">Online · Готова к привату</div>
+      </div>
+      <div style="margin-left:auto;font-size:20px;font-weight:800;color:var(--accent);">$3.99<span style="font-size:12px;font-weight:400;color:var(--text-muted);">/мин</span></div>
+    </div>
+
+    <label class="modal-label">Длительность</label>
+    <div class="duration-grid">
+      <button class="duration-pill" data-min="5">5 мин</button>
+      <button class="duration-pill selected" data-min="10">10 мин</button>
+      <button class="duration-pill" data-min="15">15 мин</button>
+      <button class="duration-pill" data-min="30">30 мин</button>
+    </div>
+
+    <div class="cost-display">
+      <span class="cost-label">Totalвая стоимость</span>
+      <span class="cost-value" id="private-cost">$39.90</span>
+    </div>
+
+    <div class="modal-balance">💳 Balance: <strong>$47.50</strong></div>
+
+    <button class="btn-modal-primary" id="btn-start-private">Начать приват 🔒</button>
+    <div class="modal-terms">Вы можете остановить в любой момент · Минимум 1 минута</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+// ── AGE GATE ──
+if (localStorage.getItem('age_verified') !== 'true') {
+  location.href = 'age-gate.html';
+}
+
+// ── TIMER ──
+let timerSeconds = 1 * 3600 + 23 * 60 + 47;
+function formatTime(s) {
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  return `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+}
+const timerEl = document.getElementById('live-timer');
+setInterval(() => {
+  timerSeconds++;
+  timerEl.textContent = formatTime(timerSeconds);
+}, 1000);
+
+// ── VIEWER COUNT FLUCTUATION ──
+let viewerBase = 1247;
+const viewerEl = document.getElementById('viewer-count');
+const onlineEl = document.getElementById('online-count');
+setInterval(() => {
+  viewerBase += Math.floor(Math.random() * 11) - 5;
+  if (viewerBase < 1200) viewerBase = 1200;
+  const formatted = viewerBase.toLocaleString('ru-RU');
+  viewerEl.textContent = formatted;
+  onlineEl.textContent = formatted;
+}, 4000);
+
+// ── TABS ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  });
+});
+
+// ── CHAT MESSAGES DATA ──
+const seedMessages = [
+  { user: 'alex_99',    type: 'regular', text: 'Hello всем! 👋' },
+  { user: 'Анна Морозова', type: 'model', text: 'Welcome в эфир! Рада видеть вас всех 💕' },
+  { user: 'marina_vip', type: 'vip',     text: 'Аня, ты сегодня просто огонь 🔥🔥🔥' },
+  { user: 'new_user77', type: 'new',     text: 'Первый раз здесь, очень круто!' },
+  { user: 'user_k0l',   type: 'regular', text: 'Когда следующий приват?' },
+  { user: 'Анна Морозова', type: 'model', text: 'Минут через 15 начнём приват! Есть ещё 2 слота 😏' },
+  { user: 'topfan',     type: 'vip',     tip: 25, text: 'За лучшую в эфире!' },
+  { user: 'dmitry_pro', type: 'regular', text: 'Аня, расскажи про свои планы на лето ☀️' },
+  { user: 'sasha_k',    type: 'regular', text: 'Что за музыка играет? Классная 🎵' },
+  { user: 'vip_queen',  type: 'vip',     text: 'Моя любимая модель на платформе 👑' },
+  { user: 'Анна Морозова', type: 'model', text: 'Дмитрий, летом планирую поехать на море! Как давно мечтала 🌊' },
+  { user: 'newguy2024', type: 'new',     text: 'Как подписаться?' },
+  { user: 'user_888',   type: 'regular', text: 'Аня ты лучшая! 💖' },
+  { user: 'bigfan_pro', type: 'vip',     tip: 50, text: 'Продолжай! ты супер!' },
+  { user: 'roman_m',    type: 'regular', text: 'Сколько ещё будет длиться эфир?' },
+  { user: 'Анна Морозова', type: 'model', text: 'Ещё часа полтора как минимум! У нас только начинается самое интересное 😉' },
+  { user: 'liza_vip',   type: 'vip',     text: 'Обожаю твои эфиры, всегда так весело!' },
+  { user: 'anon_user',  type: 'regular', text: 'Можно вопрос? 😅' },
+  { user: 'top_alex',   type: 'vip',     tip: 10, text: 'Thank you за эфир 🙏' },
+  { user: 'new_here',   type: 'new',     text: 'Нашёл тебя через рекомендации — не разочарован!' },
+];
+
+const liveMessages = [
+  { user: 'user_99x',    type: 'regular', text: 'Аня, ты как всегда 🔥' },
+  { user: 'max_fan',     type: 'vip',     text: 'Лучший эфир недели! 👑' },
+  { user: 'curious_one', type: 'new',     text: 'Это первый раз в прямом эфире, ого!' },
+  { user: 'Анна Морозова', type: 'model', text: 'Всем привет кто только пришёл! 💋' },
+  { user: 'user_z44',    type: 'regular', text: 'Расскажи анекдот 😄' },
+  { user: 'vip_stars',   type: 'vip',     tip: 15, text: 'За улыбку 😊' },
+  { user: 'kol_super',   type: 'regular', text: 'Зашёл случайно и теперь не могу уйти хаха' },
+  { user: 'Анна Морозова', type: 'model', text: 'Это называется KOL-эффект 😂💕' },
+  { user: 'big_tipper',  type: 'vip',     tip: 100, text: 'Ты лучшая на платформе, безусловно!' },
+  { user: 'shy_viewer',  type: 'new',     text: 'Когда следующий эфир будет?' },
+  { user: 'pro_fan_x',   type: 'vip',     text: 'Пятница 21:00 — уже жду! ⏰' },
+  { user: 'user_light',  type: 'regular', text: 'Продолжай, ты молодец! 💪' },
+  { user: 'Анна Морозова', type: 'model', text: 'Thank you всем! Без вас это было бы невозможно 🙏❤️' },
+  { user: 'night_owl',   type: 'vip',     tip: 20, text: 'Ночной гость 🌙' },
+  { user: 'fan_first',   type: 'new',     text: 'Как попасть на приват?' },
+];
+
+const chatContainer = document.getElementById('chat-messages');
+
+function getTimeStr() {
+  const now = new Date();
+  return `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+}
+
+function buildMessageEl(msg) {
+  const el = document.createElement('div');
+  el.className = 'chat-msg' + (msg.type === 'model' ? ' model-reply' : '') + (msg.tip ? ' tip-msg' : '');
+
+  let badgeHtml = '';
+  if (msg.type === 'vip')   badgeHtml = '<span class="msg-badge badge-vip">VIP</span>';
+  if (msg.type === 'model') badgeHtml = '<span class="msg-badge badge-model">МОДЕЛЬ</span>';
+  if (msg.type === 'new')   badgeHtml = '<span class="msg-badge badge-new">NEW</span>';
+
+  const usernameClass = msg.type === 'vip' ? 'msg-username vip' :
+                        msg.type === 'model' ? 'msg-username model' :
+                        msg.type === 'new' ? 'msg-username new-user' : 'msg-username';
+
+  const tipHtml = msg.tip ? `<div class="tip-amount">💸 $${msg.tip}</div>` : '';
+
+  el.innerHTML = `
+    <div class="msg-header">
+      <span class="${usernameClass}">${msg.user}</span>
+      ${badgeHtml}
+      <span class="msg-time">${getTimeStr()}</span>
+    </div>
+    ${tipHtml}
+    <div class="msg-text">${msg.text}</div>
+  `;
+  return el;
+}
+
+function appendMessage(msg, animate = false) {
+  const el = buildMessageEl(msg);
+  if (animate) el.classList.add('new-msg-appear');
+  chatContainer.appendChild(el);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+// Seed initial messages
+seedMessages.forEach(msg => appendMessage(msg));
+
+// Auto live messages
+let liveIdx = 0;
+function scheduleLiveMessage() {
+  const delay = 4000 + Math.random() * 4000;
+  setTimeout(() => {
+    const msg = liveMessages[liveIdx % liveMessages.length];
+    liveIdx++;
+    appendMessage(msg, true);
+    scheduleLiveMessage();
+  }, delay);
+}
+scheduleLiveMessage();
+
+// ── EMOJI PICKER ──
+const emojis = ['😍','😂','🔥','💕','👑','🌸','💋','😎','🎉','✨','🙏','💸','😏','🥰','💪','🎵','🌊','☀️','😅','💖','👏','😮','❤️','💎','🦋','🌹','😇','🤩'];
+const pickerEl = document.getElementById('emoji-picker');
+emojis.forEach(e => {
+  const div = document.createElement('div');
+  div.className = 'emoji-item';
+  div.textContent = e;
+  div.addEventListener('click', () => {
+    const input = document.getElementById('chat-input');
+    input.value += e;
+    input.focus();
+    pickerEl.classList.remove('open');
+  });
+  pickerEl.appendChild(div);
+});
+
+document.getElementById('emoji-btn').addEventListener('click', (ev) => {
+  ev.stopPropagation();
+  pickerEl.classList.toggle('open');
+});
+document.addEventListener('click', () => pickerEl.classList.remove('open'));
+
+// ── CHAT SEND ──
+function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const val = input.value.trim();
+  if (!val) return;
+  appendMessage({ user: 'Вы', type: 'regular', text: val }, true);
+  input.value = '';
+}
+document.getElementById('send-btn').addEventListener('click', sendChatMessage);
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') sendChatMessage();
+});
+
+// ── FOCUS CHAT ──
+document.getElementById('btn-chat-focus').addEventListener('click', () => {
+  document.querySelector('[data-tab="chat"]').click();
+  document.getElementById('chat-input').focus();
+});
+
+// ── DONORS DATA ──
+const donors = [
+  { name: 'bigfan_pro',   amount: 350, color: 'linear-gradient(135deg,#FFB300,#FF6D00)' },
+  { name: 'topfan',       amount: 280, color: 'linear-gradient(135deg,#D42B6A,#8B2BE2)' },
+  { name: 'vip_queen',    amount: 215, color: 'linear-gradient(135deg,#00E676,#00BCD4)' },
+  { name: 'marina_vip',   amount: 180, color: 'linear-gradient(135deg,#FF4081,#FF1744)' },
+  { name: 'max_fan',      amount: 130, color: 'linear-gradient(135deg,#651FFF,#D500F9)' },
+  { name: 'liza_vip',     amount: 95,  color: 'linear-gradient(135deg,#FF6D00,#FFD600)' },
+  { name: 'top_alex',     amount: 80,  color: 'linear-gradient(135deg,#00BCD4,#1DE9B6)' },
+  { name: 'vip_stars',    amount: 65,  color: 'linear-gradient(135deg,#8B2BE2,#D42B6A)' },
+  { name: 'night_owl',    amount: 55,  color: 'linear-gradient(135deg,#2979FF,#00E5FF)' },
+  { name: 'pro_fan_x',    amount: 40,  color: 'linear-gradient(135deg,#FF1744,#FF6D00)' },
+];
+
+function renderDonors() {
+  const list = document.getElementById('donors-list');
+  list.innerHTML = '';
+  donors.forEach((d, i) => {
+    const rank = i + 1;
+    const isTop3 = rank <= 3;
+    const crown = isTop3 ? '👑 ' : '';
+    const row = document.createElement('div');
+    row.className = 'donor-row';
+    row.innerHTML = `
+      <div class="donor-rank ${isTop3 ? 'top3' : ''}">${isTop3 ? crown : rank}</div>
+      <div class="donor-avatar" style="background:${d.color}">${d.name[0].toUpperCase()}</div>
+      <div class="donor-info"><div class="donor-name">${d.name}</div></div>
+      <div class="donor-amount">$${d.amount}</div>
+    `;
+    list.appendChild(row);
+  });
+}
+renderDonors();
+
+// Periodically update leaderboard amounts
+setInterval(() => {
+  const i = Math.floor(Math.random() * donors.length);
+  donors[i].amount += Math.floor(Math.random() * 10) + 1;
+  donors.sort((a, b) => b.amount - a.amount);
+  renderDonors();
+}, 8000);
+
+// ── TIP ALERTS ON VIDEO ──
+const tipNames  = ['alex_99','bigfan','marina_v','topfan','user_k','vip_star','max99','night_fan','kol_user','liza'];
+const tipAmounts = [5, 10, 15, 20, 25, 50, 100];
+const alertsContainer = document.getElementById('tip-alerts-container');
+
+function showTipAlert(name, amount) {
+  const el = document.createElement('div');
+  el.className = 'tip-alert';
+  el.textContent = `${name} отправил $${amount} 💸`;
+  // stagger vertically so multiple don't overlap
+  el.style.bottom = (80 + Math.random() * 30) + 'px';
+  alertsContainer.appendChild(el);
+  setTimeout(() => el.remove(), 4200);
+}
+
+function scheduleAlert() {
+  const delay = 20000 + Math.random() * 20000;
+  setTimeout(() => {
+    const name = tipNames[Math.floor(Math.random() * tipNames.length)];
+    const amount = tipAmounts[Math.floor(Math.random() * tipAmounts.length)];
+    showTipAlert(name, amount);
+    scheduleAlert();
+  }, delay);
+}
+// Show one right away for demo feel, then schedule
+setTimeout(() => showTipAlert('bigfan_pro', 25), 2500);
+scheduleAlert();
+
+// ── TIP MODAL ──
+let selectedTipAmount = 5;
+
+document.querySelectorAll('.amount-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.amount-pill').forEach(p => p.classList.remove('selected'));
+    pill.classList.add('selected');
+    selectedTipAmount = parseFloat(pill.dataset.val);
+    document.getElementById('tip-custom').value = '';
+  });
+});
+
+document.querySelectorAll('.tip-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const amount = btn.dataset.amount;
+    // Pre-select amount in modal
+    document.querySelectorAll('.amount-pill').forEach(p => {
+      p.classList.remove('selected');
+      if (p.dataset.val === amount) p.classList.add('selected');
+    });
+    selectedTipAmount = parseFloat(amount);
+    document.getElementById('modal-tip').classList.add('open');
+  });
+});
+
+document.getElementById('btn-send-tip').addEventListener('click', () => {
+  const customVal = document.getElementById('tip-custom').value;
+  const amount = customVal ? parseFloat(customVal) : selectedTipAmount;
+  const msg = document.getElementById('tip-message').value.trim();
+  document.getElementById('modal-tip').classList.remove('open');
+  // Show tip alert on video
+  showTipAlert('Вы', amount);
+  // Add to chat
+  setTimeout(() => {
+    appendMessage({
+      user: 'Вы',
+      type: 'regular',
+      tip: amount,
+      text: msg || 'Чаевые отправлены! 💸'
+    }, true);
+  }, 500);
+});
+
+// ── PRIVATE MODAL ──
+let selectedMinutes = 10;
+const pricePerMin = 3.99;
+
+document.querySelectorAll('.duration-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.duration-pill').forEach(p => p.classList.remove('selected'));
+    pill.classList.add('selected');
+    selectedMinutes = parseInt(pill.dataset.min);
+    document.getElementById('private-cost').textContent = '$' + (pricePerMin * selectedMinutes).toFixed(2);
+  });
+});
+
+document.getElementById('btn-private').addEventListener('click', () => {
+  document.getElementById('modal-private').classList.add('open');
+});
+
+document.getElementById('btn-start-private').addEventListener('click', () => {
+  document.getElementById('modal-private').classList.remove('open');
+  // feedback
+  setTimeout(() => {
+    appendMessage({ user: '🔒 Система', type: 'model', text: `Приват запрошен! Подключение через несколько секунд...` }, true);
+  }, 300);
+});
+
+// ── MODAL CLOSE BUTTONS ──
+document.querySelectorAll('.modal-close, [data-close]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.close || btn.closest('.modal-overlay').id;
+    document.getElementById(id).classList.remove('open');
+  });
+});
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ── HEART TOGGLE ──
+const heartBtn = document.getElementById('btn-heart');
+heartBtn.addEventListener('click', () => {
+  heartBtn.classList.toggle('liked');
+  if (heartBtn.classList.contains('liked')) {
+    heartBtn.style.transform = 'scale(1.3)';
+    setTimeout(() => heartBtn.style.transform = '', 200);
+  }
+});
+
+// ── VIDEO CONTROLS ──
+let muted = false;
+document.getElementById('vc-mute').addEventListener('click', () => {
+  muted = !muted;
+  document.getElementById('vc-mute').textContent = muted ? '🔇' : '🔊';
+});
+
+// ── FULLSCREEN ──
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.getElementById('video-area').requestFullscreen().catch(() => {});
+    document.getElementById('btn-fullscreen').textContent = '⊡';
+    document.getElementById('vc-fullscreen').textContent = '⊡';
+  } else {
+    document.exitFullscreen().catch(() => {});
+    document.getElementById('btn-fullscreen').textContent = '⛶';
+    document.getElementById('vc-fullscreen').textContent = '⛶';
+  }
+}
+document.getElementById('btn-fullscreen').addEventListener('click', toggleFullscreen);
+document.getElementById('vc-fullscreen').addEventListener('click', toggleFullscreen);
+
+// ── KEYBOARD SHORTCUTS ──
+document.addEventListener('keydown', (e) => {
+  // Don't trigger if typing in an input
+  if (e.target.matches('input, textarea')) return;
+
+  if (e.key === 'f' || e.key === 'F') {
+    toggleFullscreen();
+  } else if (e.key === 'm' || e.key === 'M') {
+    muted = !muted;
+    document.getElementById('vc-mute').textContent = muted ? '🔇' : '🔊';
+  } else if (e.key === 'Escape') {
+    // Close any open modal first
+    let anyOpen = false;
+    document.querySelectorAll('.modal-overlay.open').forEach(m => {
+      m.classList.remove('open');
+      anyOpen = true;
+    });
+    if (!anyOpen) location.href = 'profile.html';
+  }
+});
+</script>
+<script id="page-nav-transitions">
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+</script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js")});}</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../live.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="live.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
+<style>
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline}
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A}
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+</style>
+<div id="kol-cookie-banner">
+  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
+  </div>
+</div>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div style="flex:1;min-width:0"><strong style="font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:#E8E8F0">Install KOL Studio</strong><span style="font-size:12px;color:#A0A0C0">Works offline • Faster than browser</span></div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="document.getElementById('kol-pwa-prompt').classList.remove('show')">×</button>
+</div>
+<script>
+(function(){
+  var CONSENT_KEY='kol_consent_v2',THEME_KEY='kol_theme';
+  window.kolAcceptCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:true,marketing:true,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  window.kolRejectCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:false,marketing:false,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  var btn=document.getElementById('kol-theme-btn');
+  window.kolToggleTheme=function(){var c=localStorage.getItem(THEME_KEY)||'dark';var n=c==='dark'?'light':'dark';localStorage.setItem(THEME_KEY,n);if(n==='light'){document.body.classList.add('kol-light');btn.textContent='☀️'}else{document.body.classList.remove('kol-light');btn.textContent='🌙'}};
+  var st=localStorage.getItem(THEME_KEY);if(st==='light'){document.body.classList.add('kol-light');if(btn)btn.textContent='☀️'}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!sessionStorage.getItem('kol_pwa_dismissed')&&!localStorage.getItem('kol_pwa_installed'))setTimeout(function(){document.getElementById('kol-pwa-prompt').classList.add('show')},4000)});
+  var ib=document.getElementById('kol-pwa-install-btn');if(ib)ib.addEventListener('click',function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')localStorage.setItem('kol_pwa_installed','1');document.getElementById('kol-pwa-prompt').classList.remove('show');deferredPrompt=null})});
+  document.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem(CONSENT_KEY))setTimeout(function(){document.getElementById('kol-cookie-banner').classList.add('show')},1500)});
+})();
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="apple-touch-icon" href="../icons/icon.svg">
+  <meta name="description" content="Войди или создай аккаунт на KOL Studio">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta property="og:title" content="KOL Studio — Вход">
+  <meta property="og:description" content="Войди или создай аккаунт на KOL Studio">
+  <meta property="og:url" content="https://kolstudio.com/en/auth.html">
+  <meta property="og:image" content="https://kolstudio.com/en/icons/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KOL Studio — Вход">
+  <meta name="twitter:description" content="Войди или создай аккаунт на KOL Studio">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="apple-touch-icon" href="../icons/icon.svg">
+  <meta name="description" content="Войди или создай аккаунт на KOL Studio">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta property="og:title" content="KOL Studio — Вход">
+  <meta property="og:description" content="Войди или создай аккаунт на KOL Studio">
+  <meta property="og:url" content="https://kolstudio.com/en/auth.html">
+  <meta property="og:image" content="https://kolstudio.com/en/icons/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KOL Studio — Вход">
+  <meta name="twitter:description" content="Войди или создай аккаунт на KOL Studio">
+  <title>KOL STUDIO — Sign In / Регистрация</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #07071A;
+      --card:     #111128;
+      --card2:    #181835;
+      --border:   #22224A;
+      --accent:   #D42B6A;
+      --accent2:  #8B2BE2;
+      --green:    #00E676;
+      --gold:     #FFB300;
+      --text:     #E8E8F0;
+      --muted:    #6B6B8A;
+      --subtle:   #2A2A55;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── Grid background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(212,43,106,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,43,106,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Ambient glows ── */
+    .glow-1, .glow-2 {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-1 {
+      width: 600px; height: 600px;
+      top: -150px; left: -150px;
+      background: radial-gradient(circle, rgba(139,43,226,0.18) 0%, transparent 70%);
+    }
+    .glow-2 {
+      width: 500px; height: 500px;
+      bottom: -100px; right: -100px;
+      background: radial-gradient(circle, rgba(212,43,106,0.15) 0%, transparent 70%);
+    }
+
+    /* ── Layout ── */
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ═══════════════════════════════
+       LEFT PANEL
+    ═══════════════════════════════ */
+    .left-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 48px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, rgba(10,8,40,0.97) 0%, rgba(20,10,60,0.93) 100%);
+    }
+
+    /* Blob decorations */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .blob-1 {
+      width: 350px; height: 350px;
+      top: -80px; right: -80px;
+      background: radial-gradient(circle, rgba(212,43,106,0.22) 0%, transparent 70%);
+    }
+    .blob-2 {
+      width: 300px; height: 300px;
+      bottom: 40px; left: -60px;
+      background: radial-gradient(circle, rgba(139,43,226,0.25) 0%, transparent 70%);
+    }
+    .blob-3 {
+      width: 200px; height: 200px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(212,43,106,0.08) 0%, transparent 70%);
+    }
+
+    /* Floating emojis */
+    .float-emoji {
+      position: absolute;
+      font-size: 28px;
+      opacity: 0.18;
+      animation: floatAnim 6s ease-in-out infinite;
+      user-select: none;
+      pointer-events: none;
+    }
+    .float-emoji:nth-child(1) { top: 12%; right: 18%; animation-delay: 0s; }
+    .float-emoji:nth-child(2) { top: 70%; right: 10%; animation-delay: 1.5s; font-size: 22px; }
+    .float-emoji:nth-child(3) { top: 40%; left: 8%;  animation-delay: 3s; font-size: 20px; }
+    .float-emoji:nth-child(4) { bottom: 20%; right: 25%; animation-delay: 4.5s; }
+    @keyframes floatAnim {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50%      { transform: translateY(-18px) rotate(8deg); }
+    }
+
+    .left-content { position: relative; z-index: 2; max-width: 440px; width: 100%; }
+
+    /* Logo */
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .logo-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 0 32px rgba(212,43,106,0.4);
+    }
+    .logo-text-wrap { display: flex; flex-direction: column; }
+    .logo-name {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .logo-sub {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+    .badge-18 {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--accent), #ff5f8f);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 13px; font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.04em;
+      box-shadow: 0 0 16px rgba(212,43,106,0.5);
+      margin-left: 4px;
+      align-self: flex-start;
+    }
+
+    .tagline {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 36px;
+      background: linear-gradient(135deg, #fff 0%, rgba(200,180,255,0.85) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Feature bullets */
+    .features { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; }
+    .feature-item {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 14px 18px;
+      backdrop-filter: blur(8px);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .feature-item:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(212,43,106,0.3);
+    }
+    .feature-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(212,43,106,0.2), rgba(139,43,226,0.2));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .feature-text { display: flex; flex-direction: column; }
+    .feature-title { font-size: 15px; font-weight: 600; color: #fff; }
+    .feature-desc  { font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+
+    /* Stats row */
+    .stats-row {
+      display: flex; gap: 0;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px 24px;
+      justify-content: space-between;
+    }
+    .stat-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+    .stat-item + .stat-item { border-left: 1px solid rgba(255,255,255,0.08); }
+    .stat-num {
+      font-size: 18px; font-weight: 800;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 11px; color: var(--muted); font-weight: 500; text-align: center; }
+
+    /* ═══════════════════════════════
+       RIGHT PANEL
+    ═══════════════════════════════ */
+    .right-panel {
+      width: 520px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 32px;
+      position: relative;
+    }
+
+    .form-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    /* Top gradient line */
+    .form-card::before {
+      content: '';
+      display: block;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+      background-size: 200% 100%;
+      animation: shimmerLine 3s linear infinite;
+    }
+    @keyframes shimmerLine {
+      0%   { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+
+    /* Mobile logo (hidden on desktop) */
+    .mobile-logo {
+      display: none;
+      align-items: center; gap: 12px;
+      padding: 28px 28px 0;
+    }
+    .mobile-logo .logo-icon { width: 44px; height: 44px; font-size: 20px; border-radius: 12px; }
+    .mobile-logo .logo-name { font-size: 22px; }
+
+    /* ── Tabs ── */
+    .tab-bar {
+      display: flex;
+      margin: 0 28px;
+      border-bottom: 1px solid var(--border);
+      margin-top: 28px;
+    }
+    .tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 14px 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--muted);
+      position: relative;
+      transition: color 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .tab-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 20%; right: 20%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      opacity: 0;
+      transition: opacity 0.2s, left 0.2s, right 0.2s;
+    }
+    .tab-btn.active { color: #fff; }
+    .tab-btn.active::after { opacity: 1; left: 10%; right: 10%; }
+
+    /* ── Panels ── */
+    .panel { display: none; padding: 28px 28px 32px; }
+    .panel.active { display: block; }
+
+    .panel-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .panel-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    /* ── Type Pills (register) ── */
+    .type-pills {
+      display: flex; gap: 8px;
+      margin-bottom: 24px;
+    }
+    .type-pill {
+      flex: 1;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 14px; font-weight: 600;
+      color: var(--muted);
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      font-family: 'Inter', sans-serif;
+    }
+    .type-pill.selected {
+      background: rgba(212,43,106,0.12);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 16px rgba(212,43,106,0.2);
+    }
+
+    /* ── Input group ── */
+    .input-group { margin-bottom: 16px; position: relative; }
+    .input-label {
+      display: block;
+      font-size: 13px; font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 8px;
+    }
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--muted);
+      display: flex; align-items: center;
+      pointer-events: none;
+      z-index: 1;
+      transition: color 0.2s;
+    }
+    .input-prefix {
+      position: absolute;
+      left: 40px;
+      color: var(--muted);
+      font-size: 15px; font-weight: 600;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .input-field {
+      width: 100%;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 42px 13px 40px;
+      font-size: 15px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: 'Inter', sans-serif;
+      -webkit-appearance: none;
+    }
+    .input-field.has-prefix { padding-left: 56px; }
+    .input-field::placeholder { color: var(--muted); font-size: 14px; }
+    .input-field:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(212,43,106,0.15), 0 0 20px rgba(212,43,106,0.08);
+    }
+    .input-field:focus + .input-icon,
+    .input-wrap:focus-within .input-icon { color: var(--accent); }
+    .input-group:focus-within .input-icon { color: var(--accent); }
+
+    .input-status {
+      position: absolute;
+      right: 14px;
+      display: flex; align-items: center;
+      font-size: 16px;
+    }
+    .eye-btn {
+      position: absolute;
+      right: 14px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      display: flex; align-items: center;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .eye-btn:hover { color: var(--text); }
+
+    /* Validation icon inside input */
+    .val-icon { font-size: 16px; line-height: 1; }
+    .val-ok  { color: var(--green); }
+    .val-err { color: var(--accent); }
+
+    /* ── Password strength ── */
+    .strength-wrap { margin-top: 8px; }
+    .strength-bars { display: flex; gap: 4px; }
+    .strength-bar {
+      flex: 1; height: 3px; border-radius: 2px;
+      background: var(--border);
+      transition: background 0.3s;
+    }
+    .strength-label { font-size: 11px; color: var(--muted); margin-top: 5px; text-align: right; }
+
+    /* ── Remember row ── */
+    .remember-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .toggle-wrap { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .toggle-track {
+      width: 40px; height: 22px;
+      background: var(--border);
+      border-radius: 11px;
+      position: relative;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .toggle-track.on { background: var(--accent); }
+    .toggle-knob {
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 16px; height: 16px;
+      background: #fff;
+      border-radius: 50%;
+      transition: left 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .toggle-track.on .toggle-knob { left: 21px; }
+    .toggle-label { font-size: 13px; color: var(--muted); }
+    .forgot-link {
+      font-size: 13px; font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .forgot-link:hover { opacity: 0.8; }
+
+    /* ── Big button ── */
+    .btn-primary {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      border-radius: 12px;
+      font-size: 16px; font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.02em;
+      box-shadow: 0 8px 32px rgba(212,43,106,0.35);
+    }
+    .btn-primary:hover { opacity: 0.92; box-shadow: 0 12px 40px rgba(212,43,106,0.45); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      transition: left 0.4s;
+    }
+    .btn-primary:hover::before { left: 100%; }
+
+    /* Spinner */
+    .btn-spinner {
+      display: none;
+      width: 20px; height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-primary.loading .btn-text { display: none; }
+    .btn-primary.loading .btn-spinner { display: block; }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex; align-items: center; gap: 14px;
+      margin: 20px 0;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
+    .divider-text { font-size: 12px; color: var(--muted); font-weight: 500; white-space: nowrap; }
+
+    /* ── Social buttons ── */
+    .social-row { display: flex; gap: 10px; }
+    .btn-social {
+      flex: 1;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 10px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-size: 13px; font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-social:hover {
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
+    }
+    .btn-social svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* ── Switch link ── */
+    .switch-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .switch-link a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .switch-link a:hover { text-decoration: underline; }
+
+    /* ── Checkbox ── */
+    .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; cursor: pointer; }
+    .custom-checkbox {
+      width: 18px; height: 18px; flex-shrink: 0;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .custom-checkbox.checked {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: var(--accent);
+    }
+    .checkbox-label { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.45; }
+    .checkbox-label a { color: var(--accent); text-decoration: none; }
+
+    /* ── Upload area ── */
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 14px;
+      padding: 28px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--card2);
+      margin-bottom: 16px;
+    }
+    .upload-area:hover {
+      border-color: var(--accent);
+      background: rgba(212,43,106,0.05);
+    }
+    .upload-icon { font-size: 32px; margin-bottom: 10px; }
+    .upload-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+    .upload-sub { font-size: 12px; color: var(--muted); }
+
+    /* ── Model-only fields ── */
+    .model-fields { display: none; }
+    .model-fields.visible { display: block; }
+
+    /* ── Forgot password panel ── */
+    .forgot-panel {
+      padding: 28px 28px 32px;
+      display: none;
+    }
+    .forgot-panel.active { display: block; }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: none; border: none;
+      color: var(--muted); font-size: 14px; font-weight: 500;
+      cursor: pointer; padding: 0;
+      margin-bottom: 24px;
+      transition: color 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .back-btn:hover { color: var(--text); }
+
+    /* Forgot success state */
+    .forgot-success {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+    .forgot-success.visible { display: block; }
+    .success-circle {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, rgba(0,230,118,0.2), rgba(0,230,118,0.05));
+      border: 2px solid var(--green);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px;
+      margin: 0 auto 16px;
+      animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes popIn {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .success-title { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .success-sub   { font-size: 14px; color: var(--muted); }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 32px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 22px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 14px; font-weight: 500;
+      color: #fff;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast-icon { font-size: 20px; }
+
+    /* ── Match indicator ── */
+    .match-indicator {
+      font-size: 12px; margin-top: 5px;
+      display: none;
+    }
+    .match-indicator.visible { display: block; }
+    .match-ok  { color: var(--green); }
+    .match-err { color: var(--accent); }
+
+    /* ── Date input ── */
+    input[type="date"] {
+      color-scheme: dark;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.6);
+      cursor: pointer;
+    }
+
+    /* ── Scrollable form on small screens ── */
+    .panel { max-height: calc(100vh - 160px); overflow-y: auto; }
+    .panel::-webkit-scrollbar { width: 4px; }
+    .panel::-webkit-scrollbar-track { background: transparent; }
+    .panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .left-panel { display: none; }
+      .right-panel {
+        width: 100%;
+        padding: 20px 16px 40px;
+        align-items: flex-start;
+        padding-top: 32px;
+      }
+      .form-card { max-width: 100%; }
+      .mobile-logo { display: flex; }
+      .panel { max-height: none; overflow: visible; }
+    }
+
+    @media (max-width: 480px) {
+      .right-panel { padding: 16px 12px 32px; }
+      .panel { padding: 20px 20px 28px; }
+      .tab-bar { margin: 0 20px; }
+      .social-row { flex-direction: column; }
+      .tagline { font-size: 28px; }
+    }
+  </style>
+
+<style id="page-transitions">
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+</style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/auth.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/auth.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/auth.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/auth.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+
+  <!-- Age gate check -->
+  <script>
+    if (localStorage.getItem('age_verified') !== 'true') {
+      window.location.href = 'age-gate.html';
+    }
+  </script>
+
+  <!-- Ambient glow -->
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
+
+  <div class="page-wrap">
+
+    <!-- ════════════════════════════
+         LEFT PANEL
+    ════════════════════════════ -->
+    <div class="left-panel">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+
+      <div class="float-emoji">💎</div>
+      <div class="float-emoji">⭐</div>
+      <div class="float-emoji">🔥</div>
+      <div class="float-emoji">💫</div>
+
+      <div class="left-content">
+
+        <!-- Logo -->
+        <div class="brand-logo">
+          <div class="logo-icon">🌟</div>
+          <div class="logo-text-wrap">
+            <span class="logo-name">KOL STUDIO</span>
+            <span class="logo-sub">Creators Platform</span>
+          </div>
+          <span class="badge-18">18+</span>
+        </div>
+
+        <!-- Tagline -->
+        <div class="tagline">Твой мир<br />эксклюзивного<br />контента</div>
+
+        <!-- Features -->
+        <div class="features">
+          <div class="feature-item">
+            <div class="feature-icon">🔒</div>
+            <div class="feature-text">
+              <span class="feature-title">Приватность и безопасность</span>
+              <span class="feature-desc">Твои данные под надёжной защитой</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">💎</div>
+            <div class="feature-text">
+              <span class="feature-title">Эксклюзивный контент</span>
+              <span class="feature-desc">Уникальные материалы только для тебя</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">⭐</div>
+            <div class="feature-text">
+              <span class="feature-title">Тысячи моделей</span>
+              <span class="feature-desc">Широкий выбор авторов на любой вкус</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">💳</div>
+            <div class="feature-text">
+              <span class="feature-title">Безопасные платежи</span>
+              <span class="feature-desc">Защищённые транзакции без риска</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-item">
+            <span class="stat-num">2,400+</span>
+            <span class="stat-label">Моделей</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">180K+</span>
+            <span class="stat-label">Подписчиков</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">$2M+</span>
+            <span class="stat-label">Paid</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════════════════════
+         RIGHT PANEL
+    ════════════════════════════ -->
+    <div class="right-panel">
+      <div class="form-card">
+
+        <!-- Mobile logo -->
+        <div class="mobile-logo">
+          <div class="logo-icon">🌟</div>
+          <div class="logo-text-wrap">
+            <span class="logo-name">KOL STUDIO</span>
+            <span class="logo-sub">Creators Platform</span>
+          </div>
+        </div>
+
+        <!-- ── Tab bar ── -->
+        <div class="tab-bar" id="mainTabBar">
+          <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+          <button class="tab-btn" id="tabRegister" onclick="switchTab('register')">Sign Up</button>
+        </div>
+
+        <!-- ══════════════════════
+             LOGIN PANEL
+        ══════════════════════ -->
+        <div class="panel active" id="panelLogin">
+          <div class="panel-title">Welcome</div>
+          <div class="panel-sub">Войди в свой аккаунт</div>
+
+          <!-- Email -->
+          <div class="input-group">
+            <label class="input-label">Email</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </span>
+              <input type="email" class="input-field" id="loginEmail" placeholder="you@example.com" autocomplete="email" />
+              <span class="input-status" id="loginEmailStatus"></span>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="input-group">
+            <label class="input-label">Password</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input type="password" class="input-field" id="loginPassword" placeholder="••••••••" autocomplete="current-password" />
+              <button type="button" class="eye-btn" id="loginEye" onclick="toggleEye('loginPassword','loginEye')">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="eye-open">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Remember + Forgot -->
+          <div class="remember-row">
+            <div class="toggle-wrap" id="rememberToggle" onclick="toggleRemember()">
+              <div class="toggle-track" id="rememberTrack">
+                <div class="toggle-knob"></div>
+              </div>
+              <span class="toggle-label">Запомнить меня</span>
+            </div>
+            <a class="forgot-link" onclick="showForgot()">Забыл пароль?</a>
+          </div>
+
+          <!-- Submit -->
+          <button class="btn-primary" id="loginBtn" onclick="doLogin()">
+            <span class="btn-text">Sign In</span>
+            <div class="btn-spinner"></div>
+          </button>
+
+          <!-- Divider -->
+          <div class="divider">
+            <div class="divider-line"></div>
+            <span class="divider-text">или</span>
+            <div class="divider-line"></div>
+          </div>
+
+          <!-- Social -->
+          <div class="social-row">
+            <button class="btn-social">
+              <!-- Google icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              Google
+            </button>
+            <button class="btn-social">
+              <!-- Telegram icon -->
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="12" fill="#26A5E4"/>
+                <path d="M5.5 11.8l11.4-4.4c.5-.2 1 .1.8.9l-1.9 9c-.1.6-.5.8-.9.5l-2.6-1.9-1.2 1.2c-.1.1-.3.2-.6.2l.2-2.7 4.9-4.4c.2-.2 0-.3-.3-.1l-6.1 3.8-2.5-.8c-.5-.2-.5-.5.1-.7z" fill="white"/>
+              </svg>
+              Telegram
+            </button>
+            <button class="btn-social">
+              <!-- X / Twitter icon -->
+              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              Twitter/X
+            </button>
+          </div>
+
+          <div class="switch-link">
+            Нет аккаунта? <a onclick="switchTab('register')">Зарегистрируйся</a>
+          </div>
+        </div>
+
+        <!-- ══════════════════════
+             REGISTER PANEL
+        ══════════════════════ -->
+        <div class="panel" id="panelRegister">
+          <div class="panel-title">Создай аккаунт</div>
+          <div class="panel-sub">Выбери тип аккаунта и заполни форму</div>
+
+          <!-- Type pills -->
+          <div class="type-pills">
+            <button class="type-pill selected" id="pillViewer" onclick="selectType('viewer')">👤 Зритель</button>
+            <button class="type-pill" id="pillModel"  onclick="selectType('model')">💼 Модель</button>
+          </div>
+
+          <!-- Username -->
+          <div class="input-group">
+            <label class="input-label">First Name пользователя</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </span>
+              <span class="input-prefix">@</span>
+              <input type="text" class="input-field has-prefix" id="regUsername" placeholder="username" oninput="validateUsername()" autocomplete="username" />
+              <span class="input-status" id="regUsernameStatus"></span>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="input-group">
+            <label class="input-label">Email</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </span>
+              <input type="email" class="input-field" id="regEmail" placeholder="you@example.com" oninput="validateRegEmail()" autocomplete="email" />
+              <span class="input-status" id="regEmailStatus"></span>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="input-group">
+            <label class="input-label">Password</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input type="password" class="input-field" id="regPassword" placeholder="Минимум 8 символов" oninput="updateStrength(); checkMatch();" autocomplete="new-password" />
+              <button type="button" class="eye-btn" onclick="toggleEye('regPassword', this)">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            <!-- Strength -->
+            <div class="strength-wrap">
+              <div class="strength-bars">
+                <div class="strength-bar" id="sb1"></div>
+                <div class="strength-bar" id="sb2"></div>
+                <div class="strength-bar" id="sb3"></div>
+                <div class="strength-bar" id="sb4"></div>
+              </div>
+              <div class="strength-label" id="strengthLabel"></div>
+            </div>
+          </div>
+
+          <!-- Confirm password -->
+          <div class="input-group">
+            <label class="input-label">Подтверждение пароля</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input type="password" class="input-field" id="regPasswordConfirm" placeholder="Повтори пароль" oninput="checkMatch()" autocomplete="new-password" />
+              <button type="button" class="eye-btn" onclick="toggleEye('regPasswordConfirm', this)">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            <div class="match-indicator" id="matchIndicator"></div>
+          </div>
+
+          <!-- Model-only fields -->
+          <div class="model-fields" id="modelFields">
+
+            <!-- DOB -->
+            <div class="input-group">
+              <label class="input-label">Date of Birth</label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8"  y1="2" x2="8"  y2="6"/>
+                    <line x1="3"  y1="10" x2="21" y2="10"/>
+                  </svg>
+                </span>
+                <input type="date" class="input-field" id="regDOB" oninput="validateDOB()" />
+                <span class="input-status" id="regDOBStatus"></span>
+              </div>
+            </div>
+
+            <!-- Age confirm checkbox -->
+            <div class="checkbox-group" onclick="toggleCheckbox('cbAge18Model')">
+              <div class="custom-checkbox" id="cbAge18Model"></div>
+              <span class="checkbox-label">Я подтверждаю, что мне исполнилось 18 лет</span>
+            </div>
+
+            <!-- Upload area -->
+            <div class="upload-area" onclick="handleUploadClick()">
+              <div class="upload-icon">📄</div>
+              <div class="upload-title">Загрузить документ для верификации</div>
+              <div class="upload-sub">Перетащи файл сюда или нажми для выбора<br/>PNG, JPG, PDF · до 10 MB</div>
+            </div>
+
+          </div>
+
+          <!-- Terms checkbox -->
+          <div class="checkbox-group" onclick="toggleCheckbox('cbTerms')">
+            <div class="custom-checkbox" id="cbTerms"></div>
+            <span class="checkbox-label">Я принимаю <a href="#">Terms of Service</a> и <a href="#">Политику конфиденциальности</a></span>
+          </div>
+
+          <!-- Age checkbox -->
+          <div class="checkbox-group" onclick="toggleCheckbox('cbAge18')">
+            <div class="custom-checkbox" id="cbAge18"></div>
+            <span class="checkbox-label">Мне исполнилось 18 лет</span>
+          </div>
+
+          <!-- Submit -->
+          <button class="btn-primary" id="registerBtn" onclick="doRegister()" style="margin-top:8px;">
+            <span class="btn-text">Create Account</span>
+            <div class="btn-spinner"></div>
+          </button>
+
+          <!-- Divider + social -->
+          <div class="divider">
+            <div class="divider-line"></div>
+            <span class="divider-text">или зарегистрируйся через</span>
+            <div class="divider-line"></div>
+          </div>
+          <div class="social-row">
+            <button class="btn-social">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              Google
+            </button>
+            <button class="btn-social">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="12" fill="#26A5E4"/>
+                <path d="M5.5 11.8l11.4-4.4c.5-.2 1 .1.8.9l-1.9 9c-.1.6-.5.8-.9.5l-2.6-1.9-1.2 1.2c-.1.1-.3.2-.6.2l.2-2.7 4.9-4.4c.2-.2 0-.3-.3-.1l-6.1 3.8-2.5-.8c-.5-.2-.5-.5.1-.7z" fill="white"/>
+              </svg>
+              Telegram
+            </button>
+          </div>
+
+          <div class="switch-link">
+            Уже есть аккаунт? <a onclick="switchTab('login')">Sign In</a>
+          </div>
+        </div>
+
+        <!-- ══════════════════════
+             FORGOT PASSWORD PANEL
+        ══════════════════════ -->
+        <div class="forgot-panel" id="forgotPanel">
+          <button class="back-btn" onclick="hideForgot()">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Назад
+          </button>
+
+          <!-- Form state -->
+          <div id="forgotFormState">
+            <div class="panel-title">Восстановление пароля</div>
+            <div class="panel-sub" style="margin-bottom:24px;">Введи email — мы отправим ссылку для сброса пароля</div>
+
+            <div class="input-group">
+              <label class="input-label">Email</label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </span>
+                <input type="email" class="input-field" id="forgotEmail" placeholder="you@example.com" autocomplete="email" />
+              </div>
+            </div>
+
+            <button class="btn-primary" id="forgotBtn" onclick="doForgot()" style="margin-top:4px;">
+              <span class="btn-text">Send ссылку</span>
+              <div class="btn-spinner"></div>
+            </button>
+          </div>
+
+          <!-- Success state -->
+          <div class="forgot-success" id="forgotSuccess">
+            <div class="success-circle">✓</div>
+            <div class="success-title">Письмо отправлено!</div>
+            <div class="success-sub">Проверь свою почту и перейди по ссылке для сброса пароля.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <span class="toast-icon" id="toastIcon">✅</span>
+    <span id="toastMsg">Success!</span>
+  </div>
+
+  <script>
+    /* ══════════════════════════════════
+       STATE
+    ══════════════════════════════════ */
+    let currentTab = 'login';
+    let currentType = 'viewer';
+    let rememberMe = false;
+    const checkboxState = {};
+
+    /* ══════════════════════════════════
+       TAB SWITCHING
+    ══════════════════════════════════ */
+    function switchTab(tab) {
+      currentTab = tab;
+
+      document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+      document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+
+      document.getElementById('panelLogin').classList.toggle('active', tab === 'login');
+      document.getElementById('panelRegister').classList.toggle('active', tab === 'register');
+
+      // Always hide forgot when switching tabs
+      document.getElementById('forgotPanel').classList.remove('active');
+      document.getElementById('mainTabBar').style.display = '';
+      ['panelLogin','panelRegister'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el.classList.contains('active')) el.style.display = '';
+      });
+    }
+
+    /* ══════════════════════════════════
+       TYPE PILLS (register)
+    ══════════════════════════════════ */
+    function selectType(type) {
+      currentType = type;
+      document.getElementById('pillViewer').classList.toggle('selected', type === 'viewer');
+      document.getElementById('pillModel').classList.toggle('selected', type === 'model');
+      document.getElementById('modelFields').classList.toggle('visible', type === 'model');
+    }
+
+    /* ══════════════════════════════════
+       REMEMBER ME TOGGLE
+    ══════════════════════════════════ */
+    function toggleRemember() {
+      rememberMe = !rememberMe;
+      document.getElementById('rememberTrack').classList.toggle('on', rememberMe);
+    }
+
+    /* ══════════════════════════════════
+       EYE (SHOW/HIDE PASSWORD)
+    ══════════════════════════════════ */
+    function toggleEye(inputId, btnOrId) {
+      const input = document.getElementById(inputId);
+      const btn = typeof btnOrId === 'string' ? document.getElementById(btnOrId) : btnOrId;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.style.color = 'var(--accent)';
+      } else {
+        input.type = 'password';
+        btn.style.color = '';
+      }
+    }
+
+    /* ══════════════════════════════════
+       CHECKBOX TOGGLE
+    ══════════════════════════════════ */
+    function toggleCheckbox(id) {
+      checkboxState[id] = !checkboxState[id];
+      const el = document.getElementById(id);
+      el.classList.toggle('checked', checkboxState[id]);
+      if (checkboxState[id]) {
+        el.innerHTML = '<svg width="11" height="11" fill="none" viewBox="0 0 12 12" stroke="#fff" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg>';
+      } else {
+        el.innerHTML = '';
+      }
+    }
+
+    /* ══════════════════════════════════
+       VALIDATION HELPERS
+    ══════════════════════════════════ */
+    function setStatus(id, ok, show) {
+      const el = document.getElementById(id);
+      if (!show) { el.innerHTML = ''; return; }
+      el.innerHTML = ok
+        ? '<span class="val-icon val-ok">✓</span>'
+        : '<span class="val-icon val-err">✕</span>';
+    }
+
+    function isValidEmail(v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+    /* Username */
+    function validateUsername() {
+      const v = document.getElementById('regUsername').value;
+      if (!v) { setStatus('regUsernameStatus', false, false); return; }
+      const ok = /^[a-zA-Z0-9_]{3,20}$/.test(v);
+      setStatus('regUsernameStatus', ok, true);
+    }
+
+    /* Register email */
+    function validateRegEmail() {
+      const v = document.getElementById('regEmail').value;
+      if (!v) { setStatus('regEmailStatus', false, false); return; }
+      setStatus('regEmailStatus', isValidEmail(v), true);
+    }
+
+    /* Password strength */
+    function getStrengthScore(pw) {
+      let score = 0;
+      if (pw.length >= 8)  score++;
+      if (pw.length >= 12) score++;
+      if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
+      if (/[0-9]/.test(pw)) score++;
+      if (/[^A-Za-z0-9]/.test(pw)) score++;
+      return Math.min(4, score);
+    }
+
+    const STRENGTH_COLORS  = ['', '#EF4444','#F97316','#EAB308','#22C55E'];
+    const STRENGTH_LABELS  = ['', 'Слабый', 'Средний', 'Хороший', 'Отличный'];
+
+    function updateStrength() {
+      const pw = document.getElementById('regPassword').value;
+      const score = pw.length === 0 ? 0 : getStrengthScore(pw);
+      for (let i = 1; i <= 4; i++) {
+        const bar = document.getElementById('sb' + i);
+        bar.style.background = i <= score ? STRENGTH_COLORS[score] : 'var(--border)';
+      }
+      document.getElementById('strengthLabel').textContent = pw.length > 0 ? STRENGTH_LABELS[score] : '';
+    }
+
+    /* Password match */
+    function checkMatch() {
+      const pw  = document.getElementById('regPassword').value;
+      const cpw = document.getElementById('regPasswordConfirm').value;
+      const el  = document.getElementById('matchIndicator');
+      if (!cpw) { el.className = 'match-indicator'; return; }
+      if (pw === cpw) {
+        el.className = 'match-indicator visible match-ok';
+        el.textContent = '✓ Пароли совпадают';
+      } else {
+        el.className = 'match-indicator visible match-err';
+        el.textContent = '✕ Пароли не совпадают';
+      }
+    }
+
+    /* DOB validation (must be 18+) */
+    function validateDOB() {
+      const v = document.getElementById('regDOB').value;
+      if (!v) { setStatus('regDOBStatus', false, false); return; }
+      const dob  = new Date(v);
+      const now  = new Date();
+      const age  = (now - dob) / (365.25 * 24 * 3600 * 1000);
+      setStatus('regDOBStatus', age >= 18, true);
+    }
+
+    /* ══════════════════════════════════
+       UPLOAD CLICK (decorative)
+    ══════════════════════════════════ */
+    function handleUploadClick() {
+      showToast('📎', 'Загрузка документов будет доступна после регистрации');
+    }
+
+    /* ══════════════════════════════════
+       FORGOT PASSWORD
+    ══════════════════════════════════ */
+    function showForgot() {
+      document.getElementById('panelLogin').classList.remove('active');
+      document.getElementById('mainTabBar').style.display = 'none';
+      document.getElementById('forgotPanel').classList.add('active');
+      document.getElementById('forgotFormState').style.display = '';
+      document.getElementById('forgotSuccess').classList.remove('visible');
+    }
+
+    function hideForgot() {
+      document.getElementById('forgotPanel').classList.remove('active');
+      document.getElementById('mainTabBar').style.display = '';
+      document.getElementById('panelLogin').classList.add('active');
+    }
+
+    function doForgot() {
+      const email = document.getElementById('forgotEmail').value.trim();
+      if (!isValidEmail(email)) {
+        showToast('⚠️', 'Введи корректный email');
+        return;
+      }
+      const btn = document.getElementById('forgotBtn');
+      btn.classList.add('loading');
+
+      setTimeout(() => {
+        btn.classList.remove('loading');
+        document.getElementById('forgotFormState').style.display = 'none';
+        document.getElementById('forgotSuccess').classList.add('visible');
+      }, 1600);
+    }
+
+    /* ══════════════════════════════════
+       LOGIN SUBMIT
+    ══════════════════════════════════ */
+    function doLogin() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass  = document.getElementById('loginPassword').value;
+
+      if (!isValidEmail(email)) { showToast('⚠️', 'Введи корректный email'); return; }
+      if (pass.length < 4)      { showToast('⚠️', 'Введи пароль'); return; }
+
+      const btn = document.getElementById('loginBtn');
+      btn.classList.add('loading');
+
+      setTimeout(() => {
+        btn.classList.remove('loading');
+        showToast('✅', 'Welcome! Перенаправляем...');
+        setTimeout(() => { window.location.href = 'feed.html'; }, 1200);
+      }, 1800);
+    }
+
+    /* ══════════════════════════════════
+       REGISTER SUBMIT
+    ══════════════════════════════════ */
+    function doRegister() {
+      const username = document.getElementById('regUsername').value.trim();
+      const email    = document.getElementById('regEmail').value.trim();
+      const pw       = document.getElementById('regPassword').value;
+      const cpw      = document.getElementById('regPasswordConfirm').value;
+
+      if (!username || !/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+        showToast('⚠️', 'Введи корректное имя пользователя (3–20 символов, только буквы/цифры/_)');
+        return;
+      }
+      if (!isValidEmail(email)) { showToast('⚠️', 'Введи корректный email'); return; }
+      if (pw.length < 8)        { showToast('⚠️', 'Password должен быть минимум 8 символов'); return; }
+      if (pw !== cpw)           { showToast('⚠️', 'Пароли не совпадают'); return; }
+
+      if (currentType === 'model') {
+        const dob = document.getElementById('regDOB').value;
+        if (!dob) { showToast('⚠️', 'Укажи дату рождения'); return; }
+        const age = (new Date() - new Date(dob)) / (365.25 * 24 * 3600 * 1000);
+        if (age < 18) { showToast('⚠️', 'Доступ только для лиц 18+'); return; }
+        if (!checkboxState['cbAge18Model']) { showToast('⚠️', 'Подтверди, что тебе исполнилось 18 лет'); return; }
+      }
+
+      if (!checkboxState['cbTerms']) { showToast('⚠️', 'Прими условия использования'); return; }
+      if (!checkboxState['cbAge18']) { showToast('⚠️', 'Подтверди свой возраст'); return; }
+
+      const btn = document.getElementById('registerBtn');
+      btn.classList.add('loading');
+
+      setTimeout(() => {
+        btn.classList.remove('loading');
+        showToast('🎉', 'Аккаунт создан! Welcome в KOL STUDIO!');
+        setTimeout(() => { window.location.href = 'onboarding.html'; }, 1400);
+      }, 2000);
+    }
+
+    /* ══════════════════════════════════
+       TOAST
+    ══════════════════════════════════ */
+    let toastTimer = null;
+    function showToast(icon, msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastIcon').textContent = icon;
+      document.getElementById('toastMsg').textContent  = msg;
+      toast.classList.add('show');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+    }
+
+    /* ══════════════════════════════════
+       LOGIN EMAIL real-time validate
+    ══════════════════════════════════ */
+    document.getElementById('loginEmail').addEventListener('input', function() {
+      const v = this.value.trim();
+      if (!v) { setStatus('loginEmailStatus', false, false); return; }
+      setStatus('loginEmailStatus', isValidEmail(v), true);
+    });
+
+    /* ══════════════════════════════════
+       DRAG & DROP on upload area
+    ══════════════════════════════════ */
+    const uploadArea = document.querySelector('.upload-area');
+    if (uploadArea) {
+      uploadArea.addEventListener('dragover', e => {
+        e.preventDefault();
+        uploadArea.style.borderColor = 'var(--accent)';
+        uploadArea.style.background  = 'rgba(212,43,106,0.08)';
+      });
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.borderColor = '';
+        uploadArea.style.background  = '';
+      });
+      uploadArea.addEventListener('drop', e => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '';
+        uploadArea.style.background  = '';
+        const file = e.dataTransfer.files[0];
+        if (file) {
+          uploadArea.querySelector('.upload-title').textContent = file.name;
+          uploadArea.querySelector('.upload-sub').textContent   = 'Файл выбран';
+          uploadArea.querySelector('.upload-icon').textContent  = '✅';
+        }
+      });
+    }
+  </script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>console.log("[PWA] SW ok",r.scope)).catch(e=>console.warn("[PWA] SW fail",e));});}</script>
+
+<script id="page-nav-transitions">
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../auth.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="auth.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
+<style>
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline}
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A}
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+</style>
+<div id="kol-cookie-banner">
+  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
+  </div>
+</div>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div style="flex:1;min-width:0"><strong style="font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:#E8E8F0">Install KOL Studio</strong><span style="font-size:12px;color:#A0A0C0">Works offline • Faster than browser</span></div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="document.getElementById('kol-pwa-prompt').classList.remove('show')">×</button>
+</div>
+<script>
+(function(){
+  var CONSENT_KEY='kol_consent_v2',THEME_KEY='kol_theme';
+  window.kolAcceptCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:true,marketing:true,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  window.kolRejectCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:false,marketing:false,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  var btn=document.getElementById('kol-theme-btn');
+  window.kolToggleTheme=function(){var c=localStorage.getItem(THEME_KEY)||'dark';var n=c==='dark'?'light':'dark';localStorage.setItem(THEME_KEY,n);if(n==='light'){document.body.classList.add('kol-light');btn.textContent='☀️'}else{document.body.classList.remove('kol-light');btn.textContent='🌙'}};
+  var st=localStorage.getItem(THEME_KEY);if(st==='light'){document.body.classList.add('kol-light');if(btn)btn.textContent='☀️'}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!sessionStorage.getItem('kol_pwa_dismissed')&&!localStorage.getItem('kol_pwa_installed'))setTimeout(function(){document.getElementById('kol-pwa-prompt').classList.add('show')},4000)});
+  var ib=document.getElementById('kol-pwa-install-btn');if(ib)ib.addEventListener('click',function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')localStorage.setItem('kol_pwa_installed','1');document.getElementById('kol-pwa-prompt').classList.remove('show');deferredPrompt=null})});
+  document.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem(CONSENT_KEY))setTimeout(function(){document.getElementById('kol-cookie-banner').classList.add('show')},1500)});
+})();
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

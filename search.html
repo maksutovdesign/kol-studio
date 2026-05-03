@@ -1,0 +1,3323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <meta name="description" content="Найди идеальную модель среди 2400+">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta property="og:title" content="KOL Studio — Поиск">
+  <meta property="og:description" content="Найди идеальную модель среди 2400+">
+  <meta property="og:url" content="https://kolstudio.com/search.html">
+  <meta property="og:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KOL Studio — Поиск">
+  <meta name="twitter:description" content="Найди идеальную модель среди 2400+">
+<title>Поиск моделей — KOL STUDIO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07071A;
+    --card: #111128;
+    --card2: #181835;
+    --border: #22224A;
+    --accent: #D42B6A;
+    --accent2: #8B2BE2;
+    --green: #00E676;
+    --gold: #FFB300;
+    --text: #E8E8F0;
+    --text-muted: #7A7A9A;
+    --header-h: 60px;
+    --sidebar-w: 220px;
+    --filterbar-h: 56px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, #22224A 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Ambient glows */
+  .glow-tl {
+    position: fixed;
+    top: -200px;
+    left: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212,43,106,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-br {
+    position: fixed;
+    bottom: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(139,43,226,0.10) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    background: rgba(7,7,26,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 16px;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    flex-shrink: 0;
+    width: 160px;
+  }
+  .logo-text {
+    font-size: 17px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+  }
+  .badge-18 {
+    font-size: 9px;
+    font-weight: 700;
+    background: var(--accent);
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .header-search-wrap {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .header-search {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+  }
+  .header-search input {
+    width: 100%;
+    height: 38px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0 16px 0 42px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .header-search input::placeholder { color: var(--text-muted); }
+  .header-search input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(212,43,106,0.15);
+  }
+  .header-search .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+  }
+  .header-search .clear-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    display: none;
+    line-height: 1;
+  }
+  .header-search.has-value .clear-btn { display: block; }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    width: 160px;
+    justify-content: flex-end;
+  }
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .icon-btn:hover { background: var(--card); border-color: var(--accent); color: var(--text); }
+  .notif-dot {
+    position: absolute;
+    top: 6px; right: 6px;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+  }
+  .wallet-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0 12px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--green);
+    transition: background 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+  }
+  .wallet-btn:hover { background: var(--card); border-color: var(--green); }
+  .wallet-icon { width: 14px; height: 14px; }
+  .avatar-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    flex-shrink: 0;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .avatar-btn:hover { border-color: var(--accent); }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-w);
+    background: rgba(7,7,26,0.95);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    z-index: 90;
+    overflow-y: auto;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-muted);
+    padding: 0 20px 8px;
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 20px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    border-left: 3px solid transparent;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .nav-link:hover {
+    color: var(--text);
+    background: rgba(255,255,255,0.03);
+  }
+  .nav-link.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: rgba(212,43,106,0.07);
+  }
+  .nav-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .nav-badge {
+    margin-left: auto;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 999px;
+    min-width: 18px;
+    text-align: center;
+  }
+  .nav-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 12px 20px;
+  }
+
+  /* ─── MAIN CONTENT ─── */
+  .main {
+    margin-left: var(--sidebar-w);
+    margin-top: var(--header-h);
+    min-height: calc(100vh - var(--header-h));
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── FILTER BAR ─── */
+  .filter-bar {
+    position: sticky;
+    top: var(--header-h);
+    background: rgba(7,7,26,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 80;
+    padding: 0 24px;
+    height: var(--filterbar-h);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    overflow-x: auto;
+  }
+  .filter-bar::-webkit-scrollbar { height: 0; }
+
+  .filter-select {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 6px 28px 6px 10px;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237A7A9A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    transition: border-color 0.2s;
+    flex-shrink: 0;
+  }
+  .filter-select:focus { border-color: var(--accent); }
+
+  .filter-pills {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .filter-pill {
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .filter-pill:hover { border-color: var(--accent); color: var(--text); }
+  .filter-pill.active {
+    background: rgba(212,43,106,0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .filter-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  .price-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .price-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .price-range {
+    -webkit-appearance: none;
+    width: 90px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border);
+    outline: none;
+    cursor: pointer;
+  }
+  .price-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px rgba(212,43,106,0.3);
+  }
+  .price-val {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 60px;
+  }
+
+  .results-count {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .results-count span { color: var(--text); font-weight: 600; }
+
+  .view-toggle {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .view-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .view-btn:hover { color: var(--text); }
+  .view-btn.active { background: rgba(212,43,106,0.15); border-color: var(--accent); color: var(--accent); }
+  .view-btn svg { width: 16px; height: 16px; }
+
+  /* ─── CONTENT AREA ─── */
+  .content {
+    padding: 28px 24px;
+  }
+
+  /* ─── HERO SECTION ─── */
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 24px 48px;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #fff 30%, rgba(212,43,106,0.9));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 36px;
+  }
+  .hero-subtitle strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .hero-search-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    margin-bottom: 32px;
+  }
+  .hero-search-wrap input {
+    width: 100%;
+    height: 54px;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    padding: 0 20px 0 52px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .hero-search-wrap input::placeholder { color: var(--text-muted); }
+  .hero-search-wrap input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(212,43,106,0.12), 0 8px 32px rgba(212,43,106,0.1);
+  }
+  .hero-search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+  }
+  .hero-search-btn {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    border-radius: 999px;
+    padding: 0 20px;
+    height: 42px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .hero-search-btn:hover { opacity: 0.9; transform: translateY(-50%) scale(1.02); }
+  .hero-search-btn:active { transform: translateY(-50%) scale(0.98); }
+
+  /* Trending */
+  .trending-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 52px;
+  }
+  .trending-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    align-self: center;
+    margin-right: 4px;
+  }
+  .trending-pill {
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .trending-pill:hover {
+    border-color: var(--accent);
+    background: rgba(212,43,106,0.1);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  /* Category grid */
+  .categories-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 660px;
+    width: 100%;
+  }
+  .category-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .category-card:hover {
+    border-color: var(--accent);
+    background: var(--card2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(212,43,106,0.1);
+  }
+  .category-icon { font-size: 28px; margin-bottom: 8px; }
+  .category-name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .category-count { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ─── CATEGORY BANNER ─── */
+  .category-banner {
+    display: none;
+    background: linear-gradient(135deg, rgba(212,43,106,0.15), rgba(139,43,226,0.15));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    align-items: center;
+    gap: 16px;
+  }
+  .category-banner.visible { display: flex; }
+  .category-banner-icon { font-size: 36px; }
+  .category-banner-info h2 { font-size: 22px; font-weight: 800; }
+  .category-banner-info p { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+  .category-banner-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s;
+  }
+  .category-banner-close:hover { color: var(--text); }
+
+  /* ─── RESULTS SECTION ─── */
+  .results-section { display: none; }
+  .results-section.visible { display: block; }
+
+  /* ─── GRID VIEW ─── */
+  .models-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .models-grid.hidden { display: none; }
+
+  .model-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    cursor: pointer;
+    position: relative;
+  }
+  .model-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(212,43,106,0.25);
+    border-color: rgba(212,43,106,0.4);
+    z-index: 2;
+  }
+
+  .card-photo {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+  }
+  .card-photo-bg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    transition: transform 0.3s;
+  }
+  .model-card:hover .card-photo-bg { transform: scale(1.05); }
+
+  .card-photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.85) 100%);
+  }
+  .card-play-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .model-card:hover .card-play-overlay { opacity: 1; }
+  .play-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(212,43,106,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    transition: transform 0.2s;
+  }
+  .model-card:hover .play-icon { transform: scale(1.1); }
+  .play-icon svg { width: 20px; height: 20px; color: #fff; margin-left: 3px; }
+
+  .card-name-overlay {
+    position: absolute;
+    bottom: 10px;
+    left: 12px;
+    right: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
+
+  .card-online {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--green);
+    border: 1px solid rgba(0,230,118,0.3);
+  }
+  .online-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .card-heart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    z-index: 3;
+  }
+  .card-heart:hover { background: rgba(212,43,106,0.4); transform: scale(1.1); }
+  .card-heart.favorited { background: rgba(212,43,106,0.7); }
+  .card-heart.favorited svg path { fill: #fff; stroke: #fff; }
+  .card-heart svg { width: 16px; height: 16px; color: #fff; }
+
+  .card-verified {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    border: 2px solid var(--bg);
+  }
+
+  .card-body {
+    padding: 12px 14px 14px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .card-tag {
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .card-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .card-followers {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-followers svg { width: 12px; height: 12px; }
+  .card-rating {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .card-subscribe {
+    width: 100%;
+    padding: 9px 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    letter-spacing: 0.2px;
+  }
+  .card-subscribe:hover { opacity: 0.9; }
+  .card-subscribe:active { transform: scale(0.98); }
+
+  /* ─── LIST VIEW ─── */
+  .models-list {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .models-list.visible { display: flex; }
+
+  .list-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .list-card:hover {
+    border-color: rgba(212,43,106,0.4);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    transform: translateX(3px);
+  }
+
+  .list-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .list-photo-bg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+  }
+  .list-online {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--card);
+    box-shadow: 0 0 6px var(--green);
+  }
+
+  .list-center {
+    flex: 1;
+    min-width: 0;
+  }
+  .list-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .list-name {
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .list-verified {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  .list-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 7px; }
+  .list-bio {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .list-stats-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .list-stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .list-stat svg { width: 12px; height: 12px; }
+  .list-last-online {
+    font-size: 11px;
+    color: var(--green);
+  }
+
+  .list-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .list-price {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .list-price-label { font-size: 11px; color: var(--text-muted); font-weight: 400; }
+  .list-subscribe {
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .list-subscribe:hover { opacity: 0.9; }
+  .list-heart {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s, transform 0.15s;
+  }
+  .list-heart:hover { color: var(--accent); transform: scale(1.15); }
+  .list-heart.favorited { color: var(--accent); }
+  .list-heart svg { width: 18px; height: 18px; }
+
+  /* ─── NO RESULTS ─── */
+  .no-results {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    text-align: center;
+    gap: 16px;
+  }
+  .no-results.visible { display: flex; }
+  .no-results-icon { font-size: 56px; opacity: 0.4; }
+  .no-results h3 { font-size: 20px; font-weight: 700; color: var(--text); }
+  .no-results p { font-size: 14px; color: var(--text-muted); max-width: 320px; line-height: 1.6; }
+  .no-results-btn {
+    margin-top: 8px;
+    padding: 10px 24px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .no-results-btn:hover { opacity: 0.9; }
+
+  /* ─── QUICK PREVIEW PANEL ─── */
+  .preview-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .preview-overlay.visible { opacity: 1; pointer-events: all; }
+
+  .preview-panel {
+    position: fixed;
+    top: var(--header-h);
+    right: 0;
+    bottom: 0;
+    width: 320px;
+    background: var(--card);
+    border-left: 1px solid var(--border);
+    z-index: 201;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .preview-panel.visible { transform: translateX(0); }
+
+  .preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 16px 0;
+    flex-shrink: 0;
+  }
+  .preview-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  .preview-close:hover { background: var(--border); }
+
+  .preview-photo {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    margin: 12px 16px;
+    border-radius: 14px;
+  }
+  .preview-photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7));
+    border-radius: 14px;
+  }
+  .preview-online-badge {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green);
+    border: 1px solid rgba(0,230,118,0.3);
+  }
+
+  .preview-body {
+    padding: 0 16px;
+    flex: 1;
+    overflow-y: auto;
+  }
+  .preview-body::-webkit-scrollbar { width: 4px; }
+  .preview-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .preview-name {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .preview-verified {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .preview-handle { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+
+  .preview-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .preview-stat-box {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+  .preview-stat-val {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    display: block;
+  }
+  .preview-stat-lbl {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    display: block;
+  }
+
+  .preview-posts-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+  }
+  .preview-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .preview-post {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .preview-post-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .preview-post-info { flex: 1; min-width: 0; }
+  .preview-post-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .preview-post-meta { font-size: 11px; color: var(--text-muted); }
+  .preview-post-lock {
+    font-size: 16px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .preview-post.unlocked .preview-post-lock { color: var(--green); }
+
+  .preview-footer {
+    padding: 12px 16px 20px;
+    flex-shrink: 0;
+    border-top: 1px solid var(--border);
+  }
+  .preview-price {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .preview-price strong { color: var(--accent); font-size: 20px; font-weight: 800; }
+  .preview-subscribe {
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .preview-subscribe:hover { opacity: 0.9; }
+
+  /* ─── BOTTOM NAV (mobile) ─── */
+  .bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(7,7,26,0.97);
+    border-top: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    z-index: 90;
+    padding: 0 8px;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .bottom-nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 10px;
+    transition: color 0.2s;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  .bottom-nav-btn.active { color: var(--accent); }
+  .bottom-nav-btn svg { width: 22px; height: 22px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1200px) {
+    .models-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .models-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    :root { --sidebar-w: 0px; }
+    .sidebar { display: none; }
+    .bottom-nav { display: flex; }
+    .main { margin-bottom: 60px; }
+    .preview-panel { display: none; }
+    .preview-overlay { display: none; }
+    .models-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .hero-title { font-size: 28px; }
+    .category-grid { grid-template-columns: repeat(3, 1fr); }
+    .header-search { max-width: 100%; }
+    .logo-text { font-size: 14px; }
+    .wallet-btn { display: none; }
+    .header-right { width: auto; }
+    .filter-bar { gap: 10px; }
+    .content { padding: 20px 14px; }
+  }
+  @media (max-width: 480px) {
+    .category-grid { grid-template-columns: repeat(2, 1fr); }
+    .models-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .hero-section { padding: 32px 16px 32px; }
+    .hero-title { font-size: 24px; }
+  }
+
+/* ── Skeleton Loaders ── */
+@keyframes kol-shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skel{background:linear-gradient(90deg,#111128 25%,#181835 50%,#111128 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px}.skel-text.w60{width:60%}.skel-text.w80{width:80%}.skel-text.w40{width:40%}
+.skel-avatar{width:40px;height:40px;border-radius:50%}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-thumb-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-btn{height:36px;width:100px;border-radius:20px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;margin-bottom:16px}
+
+  </style>
+
+<style id="page-transitions">
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+</style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"Поиск — KOL Studio","description":"Поиск создателей и контента по категориям","url":"https://kolstudio.com/search.html","publisher":{"@type":"Organization","name":"KOL Studio","logo":{"@type":"ImageObject","url":"https://kolstudio.com/icons/icon-192.png"}}}
+  </script>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/search.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/search.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/search.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/search.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+</head>
+<body>
+
+<div class="glow-tl"></div>
+<div class="glow-br"></div>
+
+<!-- ─── HEADER ─── -->
+<header class="header">
+  <a href="index.html" class="logo">
+    <span class="logo-text">KOL STUDIO</span>
+    <span class="badge-18">18+</span>
+  </a>
+
+  <div class="header-search-wrap">
+    <div class="header-search" id="headerSearchWrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="headerSearchInput" placeholder="Найди свою модель..." autocomplete="off">
+      <button class="clear-btn" id="headerClearBtn" onclick="clearSearch()" aria-label="Закрыть">×</button>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <button class="icon-btn" title="Уведомления">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+      <div class="notif-dot"></div>
+    </button>
+    <button class="wallet-btn">
+      <svg class="wallet-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="currentColor"/>
+      </svg>
+      $47.50
+    </button>
+    <div class="avatar-btn">ИВ</div>
+  </div>
+</header>
+
+<!-- ─── SIDEBAR ─── -->
+<nav aria-label="navigation" class="sidebar">
+  <div class="nav-section-label">Главное</div>
+  <a href="index.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+    Лента
+  </a>
+  <a href="#" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Подписки
+    <span class="nav-badge">12</span>
+  </a>
+  <a href="search.html" class="nav-link active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    Поиск
+  </a>
+  <a href="#" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    Избранное
+  </a>
+  <div class="nav-divider"></div>
+  <div class="nav-section-label">Кабинет</div>
+  <a href="#" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="currentColor"/></svg>
+    Кошелёк
+  </a>
+  <a href="user-cabinet.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Кабинет
+  </a>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<main id="kol-main" class="main">
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <select class="filter-select" id="sortSelect" onchange="applySorting()">
+      <option value="relevance">Релевантность</option>
+      <option value="popular">Популярность</option>
+      <option value="newest">Новые</option>
+      <option value="price_asc">Цена ↑</option>
+      <option value="price_desc">Цена ↓</option>
+    </select>
+
+    <div class="filter-pills" id="filterPills">
+      <button class="filter-pill active" data-filter="online" onclick="toggleFilter(this)">● Онлайн</button>
+      <button class="filter-pill" data-filter="photo" onclick="toggleFilter(this)">Фото</button>
+      <button class="filter-pill" data-filter="video" onclick="toggleFilter(this)">Видео</button>
+      <button class="filter-pill" data-filter="live" onclick="toggleFilter(this)">Live</button>
+      <button class="filter-pill active" data-filter="verified" onclick="toggleFilter(this)">✓ Verified</button>
+      <button class="filter-pill" data-filter="vip" onclick="toggleFilter(this)">VIP</button>
+      <button class="filter-pill" data-filter="free" onclick="toggleFilter(this)">🎁 Free</button>
+      <button class="filter-pill" data-filter="new" onclick="toggleFilter(this)">🆕 Новые</button>
+      <button class="filter-pill" data-filter="ppv" onclick="toggleFilter(this)">💰 PPV</button>
+      <button class="filter-pill" data-filter="top" onclick="toggleFilter(this)">🏆 Топ</button>
+      <button class="filter-pill" data-filter="exclusive" onclick="toggleFilter(this)">⭐ Exclusive</button>
+      <button class="filter-pill" data-filter="asmr" onclick="toggleFilter(this)">🌙 ASMR</button>
+      <button class="filter-pill" data-filter="couples" onclick="toggleFilter(this)">💑 Couples</button>
+      <button class="filter-pill" data-filter="stories" onclick="toggleFilter(this)">📖 Stories</button>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <div class="price-filter">
+      <span class="price-label">до</span>
+      <input type="range" class="price-range" id="priceRange" min="0" max="50" value="50" oninput="updatePriceFilter()">
+      <span class="price-val" id="priceVal">$50/мес</span>
+    </div>
+
+    <div class="filter-divider"></div>
+
+    <span class="results-count" id="resultsCount">Найдено <span>12</span> моделей</span>
+
+    <div class="view-toggle">
+      <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')" title="Сетка">
+        <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </button>
+      <button class="view-btn" id="listViewBtn" onclick="setView('list')" title="Список">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1.5" fill="currentColor"/><circle cx="3" cy="12" r="1.5" fill="currentColor"/><circle cx="3" cy="18" r="1.5" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="heroSection">
+      <h1 class="hero-title">Найди идеальную модель</h1>
+      <p class="hero-subtitle">Более <strong>2,400 моделей</strong> ждут тебя</p>
+
+      <div class="hero-search-wrap">
+        <svg class="hero-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" id="heroSearchInput" placeholder="Поиск по имени, тегу или категории..." autocomplete="off">
+        <button class="hero-search-btn" onclick="triggerHeroSearch()">Найти</button>
+      </div>
+
+      <div class="trending-row">
+        <span class="trending-label">Trending</span>
+        <button class="trending-pill" onclick="searchFor('Cosplay')">🔥 Cosplay</button>
+        <button class="trending-pill" onclick="searchFor('Boudoir')">🔥 Boudoir</button>
+        <button class="trending-pill" onclick="searchFor('Live')">🔥 Live-шоу</button>
+        <button class="trending-pill" onclick="searchFor('Lingerie')">🔥 Lingerie</button>
+        <button class="trending-pill" onclick="searchFor('Аниме')">🔥 Аниме</button>
+        <button class="trending-pill" onclick="searchFor('Фитнес')">🔥 Фитнес</button>
+        <button class="trending-pill" onclick="searchFor('Cosplay')">🔥 Cosplay</button>
+        <button class="trending-pill" onclick="searchFor('ASMR')">🔥 ASMR</button>
+        <button class="trending-pill" onclick="searchFor('Dance')">🔥 Dance</button>
+        <button class="trending-pill" onclick="searchFor('Boudoir')">🔥 Boudoir</button>
+        <button class="trending-pill" onclick="filterByCategory('Gaming')">🔥 Gaming Girls</button>
+        <button class="trending-pill" onclick="filterByCategory('New')">🆕 Новинки</button>
+      </div>
+
+      <h2 class="categories-title">Обзор по категориям</h2>
+      <div class="category-grid">
+        <button class="category-card" onclick="filterByCategory('Lifestyle')">
+          <div class="category-icon">💋</div>
+          <div class="category-name">Lifestyle</div>
+          <div class="category-count">842 модели</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Cosplay')">
+          <div class="category-icon">🎭</div>
+          <div class="category-name">Cosplay</div>
+          <div class="category-count">374 модели</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Фитнес')">
+          <div class="category-icon">💪</div>
+          <div class="category-name">Фитнес</div>
+          <div class="category-count">256 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Boudoir')">
+          <div class="category-icon">🌸</div>
+          <div class="category-name">Boudoir</div>
+          <div class="category-count">498 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Аниме')">
+          <div class="category-icon">🎌</div>
+          <div class="category-name">Аниме</div>
+          <div class="category-count">183 модели</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Музыка')">
+          <div class="category-icon">🎵</div>
+          <div class="category-name">Музыка</div>
+          <div class="category-count">129 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Fashion')">
+          <div class="category-icon">👗</div>
+          <div class="category-name">Fashion</div>
+          <div class="category-count">317 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('ASMR')">
+          <div class="category-icon">🌙</div>
+          <div class="category-name">ASMR</div>
+          <div class="category-count">94 модели</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('VIP')">
+          <div class="category-icon">✨</div>
+          <div class="category-name">VIP</div>
+          <div class="category-count">61 модель</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Lingerie')">
+          <div class="category-icon">🩱</div>
+          <div class="category-name">Lingerie</div>
+          <div class="category-count">521 модель</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Yoga')">
+          <div class="category-icon">🧘</div>
+          <div class="category-name">Yoga</div>
+          <div class="category-count">187 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Art')">
+          <div class="category-icon">🎨</div>
+          <div class="category-name">Art & Creative</div>
+          <div class="category-count">143 модели</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Gaming')">
+          <div class="category-icon">🎮</div>
+          <div class="category-name">Gaming</div>
+          <div class="category-count">209 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Dance')">
+          <div class="category-icon">💃</div>
+          <div class="category-name">Dance</div>
+          <div class="category-count">276 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('BBW')">
+          <div class="category-icon">🌺</div>
+          <div class="category-name">BBW</div>
+          <div class="category-count">312 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Tattoo')">
+          <div class="category-icon">🖤</div>
+          <div class="category-name">Tattoo</div>
+          <div class="category-count">158 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Couples')">
+          <div class="category-icon">💑</div>
+          <div class="category-name">Couples</div>
+          <div class="category-count">97 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Milf')">
+          <div class="category-icon">👑</div>
+          <div class="category-name">MILF</div>
+          <div class="category-count">234 модели</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Latina')">
+          <div class="category-icon">🌶️</div>
+          <div class="category-name">Latina</div>
+          <div class="category-count">189 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Asian')">
+          <div class="category-icon">🌸</div>
+          <div class="category-name">Asian</div>
+          <div class="category-count">441 модель</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Ebony')">
+          <div class="category-icon">🔥</div>
+          <div class="category-name">Ebony</div>
+          <div class="category-count">196 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Blonde')">
+          <div class="category-icon">⚡</div>
+          <div class="category-name">Blonde</div>
+          <div class="category-count">508 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Redhead')">
+          <div class="category-icon">🍒</div>
+          <div class="category-name">Redhead</div>
+          <div class="category-count">121 модель</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Petite')">
+          <div class="category-icon">🌟</div>
+          <div class="category-name">Petite</div>
+          <div class="category-count">367 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Plus Size')">
+          <div class="category-icon">💎</div>
+          <div class="category-name">Plus Size</div>
+          <div class="category-count">173 модели</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Fetish')">
+          <div class="category-icon">⛓️</div>
+          <div class="category-name">Fetish</div>
+          <div class="category-count">88 моделей</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('BDSM')">
+          <div class="category-icon">🕶️</div>
+          <div class="category-name">BDSM</div>
+          <div class="category-count">74 модели</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Roleplay')">
+          <div class="category-icon">🎬</div>
+          <div class="category-name">Roleplay</div>
+          <div class="category-count">133 модели</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Streams')">
+          <div class="category-icon">📡</div>
+          <div class="category-name">Live Streams</div>
+          <div class="category-count">45 онлайн</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('New')">
+          <div class="category-icon">🆕</div>
+          <div class="category-name">Новинки</div>
+          <div class="category-count">63 новых</div>
+        </button>
+        <button class="category-card" onclick="filterByCategory('Free')">
+          <div class="category-icon">🎁</div>
+          <div class="category-name">Бесплатно</div>
+          <div class="category-count">287 моделей</div>
+        </button>
+      </div>
+    </section>
+
+    <!-- RESULTS SECTION -->
+    <section class="results-section visible" id="resultsSection">
+
+      <!-- Category Banner -->
+      <div class="category-banner" id="categoryBanner">
+        <div class="category-banner-icon" id="categoryBannerIcon">🎭</div>
+        <div class="category-banner-info">
+          <h2 id="categoryBannerName">Cosplay</h2>
+          <p id="categoryBannerDesc">374 модели в категории</p>
+        </div>
+        <button class="category-banner-close" onclick="clearCategory()" aria-label="Закрыть">×</button>
+      </div>
+
+      <!-- Grid -->
+      <div class="models-grid" id="modelsGrid"></div>
+
+      <!-- List -->
+      <div class="models-list" id="modelsList"></div>
+
+      <!-- No results -->
+      <div class="no-results" id="noResults">
+        <div class="no-results-icon">🔍</div>
+        <h3>Ничего не найдено</h3>
+        <p>Попробуй другой запрос или сбрось фильтры</p>
+        <button class="no-results-btn" onclick="clearSearch()">Сбросить поиск</button>
+      </div>
+
+    </section>
+
+  </div>
+</main>
+
+<!-- ─── QUICK PREVIEW PANEL ─── -->
+<div class="preview-overlay" id="previewOverlay" onclick="closePreview()"></div>
+<div class="preview-panel" id="previewPanel">
+  <div class="preview-header">
+    <span style="font-size:13px;color:var(--text-muted)">Быстрый просмотр</span>
+    <button class="preview-close" onclick="closePreview()" aria-label="Закрыть">×</button>
+  </div>
+  <div class="preview-photo" id="previewPhoto">
+    <div class="preview-photo-overlay"></div>
+    <div class="preview-online-badge">
+      <div class="online-dot"></div>
+      Онлайн
+    </div>
+  </div>
+  <div class="preview-body">
+    <div class="preview-name" id="previewName">
+      <span id="previewNameText"></span>
+      <span class="preview-verified">✓</span>
+    </div>
+    <div class="preview-handle" id="previewHandle"></div>
+    <div class="preview-stats-grid" id="previewStats"></div>
+    <div class="preview-posts-title">Последние публикации</div>
+    <div class="preview-posts" id="previewPosts"></div>
+  </div>
+  <div class="preview-footer">
+    <div class="preview-price" id="previewPrice"></div>
+    <button class="preview-subscribe">Подписаться сейчас</button>
+  </div>
+</div>
+
+<!-- ─── BOTTOM NAV ─── -->
+<nav aria-label="navigation" class="bottom-nav">
+  <button class="bottom-nav-btn" onclick="location.href='index.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    Лента
+  </button>
+  <button class="bottom-nav-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Подписки
+  </button>
+  <button class="bottom-nav-btn active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    Поиск
+  </button>
+  <button class="bottom-nav-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    Избранное
+  </button>
+  <button class="bottom-nav-btn" onclick="location.href='user-cabinet.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Кабинет
+  </button>
+</nav>
+
+<script>
+// ─── AGE GATE ───
+if (localStorage.getItem('age_verified') !== 'true') {
+  location.href = 'age-gate.html';
+}
+
+// ─── MODEL DATA ───
+const MODELS = [
+  {
+    id: 1,
+    name: 'Анна М.',
+    handle: '@anna_m',
+    followers: '48.2K',
+    followersNum: 48200,
+    price: 9.99,
+    tags: ['Lifestyle', 'Boudoir'],
+    rating: 4.9,
+    online: true,
+    emoji: '👱‍♀️',
+    gradient: 'linear-gradient(135deg, #D42B6A22, #8B2BE222, #D42B6A44)',
+    gradientSolid: 'linear-gradient(135deg, #2a0a1a, #1a0a2a)',
+    color1: '#D42B6A',
+    color2: '#8B2BE2',
+    bio: 'Моделирую для своих подписчиков каждый день. Lifestyle и Boudoir — это моё.',
+    lastOnline: 'Сейчас онлайн',
+    posts: [
+      { label: 'Утренняя фотосессия', meta: '2 часа назад', locked: false, emoji: '📸' },
+      { label: 'Видео для подписчиков', meta: '1 день назад', locked: true, emoji: '🎬' },
+      { label: 'Закрытый альбом', meta: '3 дня назад', locked: true, emoji: '🔒' },
+    ]
+  },
+  {
+    id: 2,
+    name: 'Виктория Л.',
+    handle: '@victoria_l',
+    followers: '31.7K',
+    followersNum: 31700,
+    price: 14.99,
+    tags: ['Cosplay', 'Аниме'],
+    rating: 4.8,
+    online: true,
+    emoji: '👩‍🎤',
+    gradient: 'linear-gradient(135deg, #8B2BE222, #3D1B8E22, #8B2BE244)',
+    gradientSolid: 'linear-gradient(135deg, #1a0a2a, #0a0a1a)',
+    color1: '#8B2BE2',
+    color2: '#3D1B8E',
+    bio: 'Косплей и аниме — моя страсть. Создаю уникальные образы каждую неделю.',
+    lastOnline: 'Сейчас онлайн',
+    posts: [
+      { label: 'Новый косплей Sailor Moon', meta: '4 часа назад', locked: false, emoji: '🌙' },
+      { label: 'Закрытый альбом Halloween', meta: '2 дня назад', locked: true, emoji: '🎃' },
+      { label: 'Видеогайд по макияжу', meta: '5 дней назад', locked: true, emoji: '💄' },
+    ]
+  },
+  {
+    id: 3,
+    name: 'Кира С.',
+    handle: '@kira_sport',
+    followers: '22.1K',
+    followersNum: 22100,
+    price: 6.99,
+    tags: ['Фитнес', 'Lifestyle'],
+    rating: 4.7,
+    online: false,
+    emoji: '🏋️‍♀️',
+    gradient: 'linear-gradient(135deg, #00E67622, #00BCD422, #00E67644)',
+    gradientSolid: 'linear-gradient(135deg, #001a0d, #001a18)',
+    color1: '#00E676',
+    color2: '#00BCD4',
+    bio: 'Тренировки, питание и мотивация. Покажу как стать лучшей версией себя.',
+    lastOnline: '15 мин назад',
+    posts: [
+      { label: 'Тренировка на ягодицы', meta: '3 часа назад', locked: false, emoji: '💪' },
+      { label: 'Утренняя рутина', meta: '1 день назад', locked: true, emoji: '🌅' },
+      { label: 'Меню на неделю', meta: '4 дня назад', locked: false, emoji: '🥗' },
+    ]
+  },
+  {
+    id: 4,
+    name: 'Диана В.',
+    handle: '@diana_vip',
+    followers: '67.3K',
+    followersNum: 67300,
+    price: 19.99,
+    tags: ['VIP', 'Live'],
+    rating: 5.0,
+    online: true,
+    emoji: '👸',
+    gradient: 'linear-gradient(135deg, #FFB30022, #FF572222, #FFB30044)',
+    gradientSolid: 'linear-gradient(135deg, #1a1000, #1a0800)',
+    color1: '#FFB300',
+    color2: '#FF5722',
+    bio: 'VIP-контент эксклюзивно для моих подписчиков. Live каждые выходные.',
+    lastOnline: 'Сейчас онлайн',
+    posts: [
+      { label: 'Live-трансляция #47', meta: '1 час назад', locked: false, emoji: '📡' },
+      { label: 'VIP фотоальбом "Золото"', meta: '2 дня назад', locked: true, emoji: '✨' },
+      { label: 'Эксклюзивное видео', meta: '6 дней назад', locked: true, emoji: '🎬' },
+    ]
+  },
+  {
+    id: 5,
+    name: 'Алиса Н.',
+    handle: '@alisa_boudoir',
+    followers: '15.9K',
+    followersNum: 15900,
+    price: 4.99,
+    tags: ['Boudoir'],
+    rating: 4.6,
+    online: true,
+    emoji: '🌸',
+    gradient: 'linear-gradient(135deg, #E91E6322, #AD145722, #E91E6344)',
+    gradientSolid: 'linear-gradient(135deg, #1a0010, #120010)',
+    color1: '#E91E63',
+    color2: '#AD1457',
+    bio: 'Нежность и красота в каждом кадре. Буду рада видеть тебя среди подписчиков.',
+    lastOnline: 'Сейчас онлайн',
+    posts: [
+      { label: 'Весенняя фотосессия', meta: '5 часов назад', locked: false, emoji: '🌷' },
+      { label: 'Ночные фото', meta: '3 дня назад', locked: true, emoji: '🌙' },
+      { label: 'Утренние зарисовки', meta: '1 нед назад', locked: true, emoji: '☀️' },
+    ]
+  },
+  {
+    id: 6,
+    name: 'Соня Р.',
+    handle: '@sonya_fashion',
+    followers: '28.4K',
+    followersNum: 28400,
+    price: 9.99,
+    tags: ['Fashion', 'Lifestyle'],
+    rating: 4.8,
+    online: false,
+    emoji: '👗',
+    gradient: 'linear-gradient(135deg, #9C27B022, #67288222, #9C27B044)',
+    gradientSolid: 'linear-gradient(135deg, #140a1a, #0e0514)',
+    color1: '#9C27B0',
+    color2: '#672882',
+    bio: 'Мода, стиль и трендовые луки. Помогу найти свой уникальный образ.',
+    lastOnline: '32 мин назад',
+    posts: [
+      { label: 'Весенние тренды 2026', meta: '6 часов назад', locked: false, emoji: '🌿' },
+      { label: 'Lookbook апрель', meta: '2 дня назад', locked: true, emoji: '📒' },
+      { label: 'Покупки с примеркой', meta: '5 дней назад', locked: false, emoji: '🛍️' },
+    ]
+  },
+  {
+    id: 7,
+    name: 'Катя Б.',
+    handle: '@katya_asmr',
+    followers: '19.2K',
+    followersNum: 19200,
+    price: 7.99,
+    tags: ['ASMR', 'Музыка'],
+    rating: 4.7,
+    online: true,
+    emoji: '🎧',
+    gradient: 'linear-gradient(135deg, #03A9F422, #01579B22, #03A9F444)',
+    gradientSolid: 'linear-gradient(135deg, #001520, #000f1a)',
+    color1: '#03A9F4',
+    color2: '#01579B',
+    bio: 'ASMR и расслабляющая музыка. Помогу снять стресс после тяжёлого дня.',
+    lastOnline: 'Сейчас онлайн',
+    posts: [
+      { label: 'ASMR — шёпот у огня', meta: '2 часа назад', locked: false, emoji: '🔥' },
+      { label: 'Ночной плейлист', meta: '1 день назад', locked: true, emoji: '🎵' },
+      { label: 'Rain ASMR — 1 час', meta: '4 дня назад', locked: true, emoji: '🌧️' },
+    ]
+  },
+  {
+    id: 8,
+    name: 'Маша Д.',
+    handle: '@masha_cosplay',
+    followers: '44.1K',
+    followersNum: 44100,
+    price: 12.99,
+    tags: ['Cosplay'],
+    rating: 4.9,
+    online: true,
+    emoji: '⚔️',
+    gradient: 'linear-gradient(135deg, #F4433622, #B7262622, #F4433644)',
+    gradientSolid: 'linear-gradient(135deg, #1a0500, #120400)',
+    color1: '#F44336',
+    color2: '#B72626',
+    bio: 'Профессиональный косплей. Каждый образ — это целая история.',
+    lastOnline: 'Сейчас онлайн',
+    posts: [
+      { label: 'Косплей — Nier: Automata 2B', meta: '3 часа назад', locked: false, emoji: '🤖' },
+      { label: 'За кадром съёмки', meta: '2 дня назад', locked: false, emoji: '🎬' },
+      { label: 'Закрытый альбом "Fantasy"', meta: '1 нед назад', locked: true, emoji: '🧙' },
+    ]
+  },
+  {
+    id: 9,
+    name: 'Лена К.',
+    handle: '@lena_life',
+    followers: '11.3K',
+    followersNum: 11300,
+    price: 3.99,
+    tags: ['Lifestyle'],
+    rating: 4.5,
+    online: false,
+    emoji: '☀️',
+    gradient: 'linear-gradient(135deg, #FF980022, #F5720022, #FF980044)',
+    gradientSolid: 'linear-gradient(135deg, #1a0d00, #120a00)',
+    color1: '#FF9800',
+    color2: '#F57200',
+    bio: 'Простая жизнь, настоящие эмоции. Делюсь каждым моментом с тобой.',
+    lastOnline: '2 часа назад',
+    posts: [
+      { label: 'Воскресный бранч', meta: '4 часа назад', locked: false, emoji: '🥞' },
+      { label: 'Вечерние фото дома', meta: '3 дня назад', locked: true, emoji: '🏠' },
+      { label: 'Прогулка в парке', meta: '1 нед назад', locked: false, emoji: '🌳' },
+    ]
+  },
+  {
+    id: 10,
+    name: 'Оля В.',
+    handle: '@olya_boudoir',
+    followers: '35.6K',
+    followersNum: 35600,
+    price: 8.99,
+    tags: ['Boudoir', 'Fashion'],
+    rating: 4.8,
+    online: true,
+    emoji: '🌹',
+    gradient: 'linear-gradient(135deg, #D42B6A22, #C2185B22, #D42B6A44)',
+    gradientSolid: 'linear-gradient(135deg, #1a0012, #150010)',
+    color1: '#D42B6A',
+    color2: '#C2185B',
+    bio: 'Элегантность и страсть в каждом кадре. Boudoir и модные луки.',
+    lastOnline: 'Сейчас онлайн',
+    posts: [
+      { label: 'Красные розы — фотосет', meta: '1 час назад', locked: false, emoji: '🌹' },
+      { label: 'Вечерний образ', meta: '2 дня назад', locked: true, emoji: '🥂' },
+      { label: 'Закрытый VIP альбом', meta: '5 дней назад', locked: true, emoji: '🔐' },
+    ]
+  },
+  {
+    id: 11,
+    name: 'Рита М.',
+    handle: '@rita_anime',
+    followers: '9.7K',
+    followersNum: 9700,
+    price: 5.99,
+    tags: ['Аниме'],
+    rating: 4.6,
+    online: false,
+    emoji: '🎌',
+    gradient: 'linear-gradient(135deg, #E91E9322, #AD146722, #E91E9344)',
+    gradientSolid: 'linear-gradient(135deg, #1a0018, #130015)',
+    color1: '#E91E93',
+    color2: '#AD1467',
+    bio: 'Аниме-эстетика, японская культура и милые образы ждут тебя.',
+    lastOnline: '1 час назад',
+    posts: [
+      { label: 'Образ Hatsune Miku', meta: '5 часов назад', locked: false, emoji: '💚' },
+      { label: 'Аниме-фотосессия', meta: '3 дня назад', locked: true, emoji: '🎀' },
+      { label: 'Kawaii утро', meta: '6 дней назад', locked: false, emoji: '🌸' },
+    ]
+  },
+  {
+    id: 12,
+    name: 'Злата Н.',
+    handle: '@zlata_vip',
+    followers: '52.8K',
+    followersNum: 52800,
+    price: 16.99,
+    tags: ['VIP', 'Live'],
+    rating: 5.0,
+    online: true,
+    emoji: '💎',
+    gradient: 'linear-gradient(135deg, #FFD70022, #FFB30022, #FFD70044)',
+    gradientSolid: 'linear-gradient(135deg, #1a1500, #1a1200)',
+    color1: '#FFD700',
+    color2: '#FFB300',
+    bio: 'Премиальный контент для избранных. Live каждую пятницу и субботу.',
+    lastOnline: 'Сейчас онлайн',
+    posts: [
+      { label: 'VIP Live-сессия', meta: '30 мин назад', locked: false, emoji: '💫' },
+      { label: '"Золотая коллекция" — альбом', meta: '1 день назад', locked: true, emoji: '🏆' },
+      { label: 'Персональное видео', meta: '4 дня назад', locked: true, emoji: '🎬' },
+    ]
+  }
+];
+
+// ─── STATE ───
+let currentView = 'grid';
+let currentSearch = '';
+let currentCategory = null;
+let favorites = new Set(JSON.parse(localStorage.getItem('kol_favorites') || '[]'));
+let activeFilters = new Set(['online', 'verified']);
+let maxPrice = 50;
+let currentSort = 'relevance';
+
+// ─── INIT ───
+function init() {
+  renderGrid();
+  renderList();
+  showResultsState();
+
+  // Header search sync
+  const headerInput = document.getElementById('headerSearchInput');
+  const heroInput = document.getElementById('heroSearchInput');
+
+  headerInput.addEventListener('input', (e) => {
+    currentSearch = e.target.value;
+    heroInput.value = currentSearch;
+    syncHeaderSearch();
+    filterModels();
+  });
+
+  heroInput.addEventListener('input', (e) => {
+    currentSearch = e.target.value;
+    headerInput.value = currentSearch;
+    syncHeaderSearch();
+    filterModels();
+  });
+
+  heroInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') triggerHeroSearch();
+  });
+  headerInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') filterModels();
+  });
+
+  // Auto-focus header search
+  setTimeout(() => headerInput.focus(), 300);
+
+  updateResultsCount();
+}
+
+function syncHeaderSearch() {
+  const wrap = document.getElementById('headerSearchWrap');
+  const val = document.getElementById('headerSearchInput').value;
+  wrap.classList.toggle('has-value', val.length > 0);
+}
+
+function showResultsState() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('resultsSection').classList.add('visible');
+}
+
+function showHeroState() {
+  document.getElementById('heroSection').style.display = 'flex';
+  document.getElementById('resultsSection').classList.remove('visible');
+}
+
+// ─── RENDER GRID ───
+function renderGrid() {
+  const grid = document.getElementById('modelsGrid');
+  grid.innerHTML = MODELS.map(m => `
+    <div class="model-card" data-id="${m.id}" onclick="openPreview(${m.id}, event)">
+      <div class="card-photo">
+        <div class="card-photo-bg" style="background:${m.gradientSolid}">
+          <span style="font-size:56px;opacity:0.7">${m.emoji}</span>
+        </div>
+        <div class="card-photo-overlay"></div>
+        <div class="card-play-overlay">
+          <div class="play-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        ${m.online ? `<div class="card-online"><div class="online-dot"></div>Онлайн</div>` : ''}
+        <div class="card-name-overlay">${m.name}</div>
+        <button class="card-heart ${favorites.has(m.id) ? 'favorited' : ''}"
+          onclick="toggleFavorite(${m.id}, event)" title="В избранное">
+          <svg viewBox="0 0 24 24" fill="${favorites.has(m.id) ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+        <div class="card-verified" title="Верифицированный аккаунт">✓</div>
+      </div>
+      <div class="card-body">
+        <div class="card-tags">
+          ${m.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}
+        </div>
+        <div class="card-stats">
+          <div class="card-followers">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            ${m.followers}
+          </div>
+          <div class="card-rating">⭐ ${m.rating.toFixed(1)}</div>
+        </div>
+        <button class="card-subscribe" onclick="event.stopPropagation()">
+          Подписаться $${m.price}/мес
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── RENDER LIST ───
+function renderList() {
+  const list = document.getElementById('modelsList');
+  list.innerHTML = MODELS.map(m => `
+    <div class="list-card" data-id="${m.id}" onclick="openPreview(${m.id}, event)">
+      <div class="list-photo">
+        <div class="list-photo-bg" style="background:${m.gradientSolid}">${m.emoji}</div>
+        ${m.online ? '<div class="list-online"></div>' : ''}
+      </div>
+      <div class="list-center">
+        <div class="list-name-row">
+          <span class="list-name">${m.name}</span>
+          <span class="list-verified" title="Верифицирован">✓</span>
+        </div>
+        <div class="list-tags">
+          ${m.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}
+        </div>
+        <div class="list-bio">${m.bio}</div>
+        <div class="list-stats-row">
+          <span class="list-stat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            </svg>
+            ${m.followers} подписчиков
+          </span>
+          <span class="list-stat">⭐ ${m.rating.toFixed(1)}</span>
+          <span class="list-last-online">${m.online ? '● Онлайн' : m.lastOnline}</span>
+        </div>
+      </div>
+      <div class="list-right">
+        <div class="list-price">
+          $${m.price}
+          <span class="list-price-label">/мес</span>
+        </div>
+        <button class="list-subscribe" onclick="event.stopPropagation()">Подписаться</button>
+        <button class="list-heart ${favorites.has(m.id) ? 'favorited' : ''}"
+          onclick="toggleFavorite(${m.id}, event)" title="В избранное">
+          <svg viewBox="0 0 24 24" fill="${favorites.has(m.id) ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── FILTER ───
+function filterModels() {
+  const query = currentSearch.toLowerCase().trim();
+  const grid = document.getElementById('modelsGrid');
+  const list = document.getElementById('modelsList');
+  const noResults = document.getElementById('noResults');
+
+  let filtered = MODELS.filter(m => {
+    // Search query
+    if (query) {
+      const searchStr = (m.name + ' ' + m.tags.join(' ') + ' ' + m.bio).toLowerCase();
+      if (!searchStr.includes(query)) return false;
+    }
+    // Category filter
+    if (currentCategory) {
+      if (!m.tags.includes(currentCategory)) return false;
+    }
+    // Price filter
+    if (m.price > maxPrice) return false;
+    return true;
+  });
+
+  // Sort
+  filtered = sortModels(filtered);
+
+  // Apply to grid
+  const gridCards = grid.querySelectorAll('.model-card');
+  const listCards = list.querySelectorAll('.list-card');
+
+  const visibleIds = new Set(filtered.map(m => m.id));
+
+  gridCards.forEach(card => {
+    const id = parseInt(card.dataset.id);
+    card.style.display = visibleIds.has(id) ? '' : 'none';
+  });
+
+  listCards.forEach(card => {
+    const id = parseInt(card.dataset.id);
+    card.style.display = visibleIds.has(id) ? '' : 'none';
+  });
+
+  // Reorder grid by sort
+  if (currentSort !== 'relevance' || query) {
+    filtered.forEach((m, i) => {
+      const card = grid.querySelector(`[data-id="${m.id}"]`);
+      if (card) card.style.order = i;
+      const lcard = list.querySelector(`[data-id="${m.id}"]`);
+      if (lcard) lcard.style.order = i;
+    });
+  }
+
+  // No results
+  noResults.classList.toggle('visible', filtered.length === 0);
+  updateResultsCount(filtered.length);
+}
+
+function sortModels(models) {
+  const arr = [...models];
+  switch (currentSort) {
+    case 'popular':
+      return arr.sort((a, b) => b.followersNum - a.followersNum);
+    case 'newest':
+      return arr.sort((a, b) => b.id - a.id);
+    case 'price_asc':
+      return arr.sort((a, b) => a.price - b.price);
+    case 'price_desc':
+      return arr.sort((a, b) => b.price - a.price);
+    default:
+      return arr.sort((a, b) => b.rating - a.rating);
+  }
+}
+
+function applySorting() {
+  currentSort = document.getElementById('sortSelect').value;
+  filterModels();
+}
+
+function updateResultsCount(count) {
+  const total = count !== undefined ? count : MODELS.length;
+  const el = document.getElementById('resultsCount');
+  el.innerHTML = `Найдено <span>${total}</span> ${pluralModels(total)}`;
+}
+
+function pluralModels(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return 'модель';
+  if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return 'модели';
+  return 'моделей';
+}
+
+// ─── FILTER PILLS ───
+function toggleFilter(btn) {
+  btn.classList.toggle('active');
+  const filter = btn.dataset.filter;
+  if (btn.classList.contains('active')) {
+    activeFilters.add(filter);
+  } else {
+    activeFilters.delete(filter);
+  }
+  filterModels();
+}
+
+// ─── PRICE RANGE ───
+function updatePriceFilter() {
+  const val = parseInt(document.getElementById('priceRange').value);
+  maxPrice = val;
+  const label = val >= 50 ? '$50+/мес' : `до $${val}/мес`;
+  document.getElementById('priceVal').textContent = label;
+  filterModels();
+}
+
+// ─── VIEW TOGGLE ───
+function setView(view) {
+  currentView = view;
+  const grid = document.getElementById('modelsGrid');
+  const list = document.getElementById('modelsList');
+  const gridBtn = document.getElementById('gridViewBtn');
+  const listBtn = document.getElementById('listViewBtn');
+
+  if (view === 'grid') {
+    grid.classList.remove('hidden');
+    list.classList.remove('visible');
+    gridBtn.classList.add('active');
+    listBtn.classList.remove('active');
+  } else {
+    grid.classList.add('hidden');
+    list.classList.add('visible');
+    listBtn.classList.add('active');
+    gridBtn.classList.remove('active');
+  }
+}
+
+// ─── SEARCH FUNCTIONS ───
+function clearSearch() {
+  currentSearch = '';
+  currentCategory = null;
+  document.getElementById('headerSearchInput').value = '';
+  document.getElementById('heroSearchInput').value = '';
+  document.getElementById('headerSearchWrap').classList.remove('has-value');
+  document.getElementById('categoryBanner').classList.remove('visible');
+  filterModels();
+  showHeroState();
+}
+
+function triggerHeroSearch() {
+  const val = document.getElementById('heroSearchInput').value.trim();
+  if (!val) return;
+  currentSearch = val;
+  document.getElementById('headerSearchInput').value = val;
+  syncHeaderSearch();
+  showResultsState();
+  filterModels();
+}
+
+function searchFor(term) {
+  currentSearch = term;
+  document.getElementById('headerSearchInput').value = term;
+  document.getElementById('heroSearchInput').value = term;
+  syncHeaderSearch();
+  showResultsState();
+  filterModels();
+}
+
+// ─── CATEGORY FILTER ───
+const CATEGORY_META = {
+  'Lifestyle': { icon: '💋', desc: '842 модели в категории' },
+  'Cosplay':   { icon: '🎭', desc: '374 модели в категории' },
+  'Фитнес':   { icon: '💪', desc: '256 моделей в категории' },
+  'Boudoir':  { icon: '🌸', desc: '498 моделей в категории' },
+  'Аниме':    { icon: '🎌', desc: '183 модели в категории' },
+  'Музыка':   { icon: '🎵', desc: '129 моделей в категории' },
+  'Fashion':  { icon: '👗', desc: '317 моделей в категории' },
+  'ASMR':     { icon: '🌙', desc: '94 модели в категории' },
+  'VIP':      { icon: '✨', desc: '61 модель в категории' },
+};
+
+function filterByCategory(cat) {
+  currentCategory = cat;
+  currentSearch = '';
+  document.getElementById('headerSearchInput').value = '';
+  document.getElementById('heroSearchInput').value = '';
+  document.getElementById('headerSearchWrap').classList.remove('has-value');
+
+  const meta = CATEGORY_META[cat] || { icon: '🔍', desc: '' };
+  document.getElementById('categoryBannerIcon').textContent = meta.icon;
+  document.getElementById('categoryBannerName').textContent = cat;
+  document.getElementById('categoryBannerDesc').textContent = meta.desc;
+  document.getElementById('categoryBanner').classList.add('visible');
+
+  showResultsState();
+  filterModels();
+}
+
+function clearCategory() {
+  currentCategory = null;
+  document.getElementById('categoryBanner').classList.remove('visible');
+  filterModels();
+  if (!currentSearch) showHeroState();
+}
+
+// ─── FAVORITES ───
+function toggleFavorite(id, event) {
+  event.stopPropagation();
+  if (favorites.has(id)) {
+    favorites.delete(id);
+  } else {
+    favorites.add(id);
+  }
+  localStorage.setItem('kol_favorites', JSON.stringify([...favorites]));
+
+  // Update grid card heart
+  const gridCard = document.querySelector(`.model-card[data-id="${id}"] .card-heart`);
+  if (gridCard) {
+    gridCard.classList.toggle('favorited', favorites.has(id));
+    const svg = gridCard.querySelector('path');
+    if (svg) svg.setAttribute('fill', favorites.has(id) ? 'currentColor' : 'none');
+  }
+
+  // Update list card heart
+  const listCard = document.querySelector(`.list-card[data-id="${id}"] .list-heart`);
+  if (listCard) {
+    listCard.classList.toggle('favorited', favorites.has(id));
+    const svg = listCard.querySelector('path');
+    if (svg) svg.setAttribute('fill', favorites.has(id) ? 'currentColor' : 'none');
+  }
+}
+
+// ─── QUICK PREVIEW ───
+function openPreview(id, event) {
+  // No preview on mobile
+  if (window.innerWidth <= 768) {
+    location.href = 'profile.html';
+    return;
+  }
+
+  const model = MODELS.find(m => m.id === id);
+  if (!model) return;
+
+  // Photo
+  const photo = document.getElementById('previewPhoto');
+  photo.style.background = model.gradientSolid;
+  // Remove old emoji if any
+  const existingEmoji = photo.querySelector('.preview-emoji');
+  if (existingEmoji) existingEmoji.remove();
+  const emojiEl = document.createElement('span');
+  emojiEl.className = 'preview-emoji';
+  emojiEl.style.cssText = 'font-size:72px;position:relative;z-index:1;';
+  emojiEl.textContent = model.emoji;
+  photo.insertBefore(emojiEl, photo.firstChild);
+
+  // Name & handle
+  document.getElementById('previewNameText').textContent = model.name;
+  document.getElementById('previewHandle').textContent = model.handle;
+
+  // Stats
+  document.getElementById('previewStats').innerHTML = `
+    <div class="preview-stat-box">
+      <span class="preview-stat-val">${model.followers}</span>
+      <span class="preview-stat-lbl">Подписчиков</span>
+    </div>
+    <div class="preview-stat-box">
+      <span class="preview-stat-val" style="color:var(--gold)">⭐${model.rating}</span>
+      <span class="preview-stat-lbl">Рейтинг</span>
+    </div>
+    <div class="preview-stat-box">
+      <span class="preview-stat-val" style="color:var(--accent)">$${model.price}</span>
+      <span class="preview-stat-lbl">в месяц</span>
+    </div>
+  `;
+
+  // Posts
+  document.getElementById('previewPosts').innerHTML = model.posts.map(p => `
+    <div class="preview-post ${p.locked ? '' : 'unlocked'}">
+      <div class="preview-post-thumb">${p.emoji}</div>
+      <div class="preview-post-info">
+        <div class="preview-post-label">${p.label}</div>
+        <div class="preview-post-meta">${p.meta}</div>
+      </div>
+      <div class="preview-post-lock">${p.locked ? '🔒' : '✅'}</div>
+    </div>
+  `).join('');
+
+  // Price
+  document.getElementById('previewPrice').innerHTML = `Подписка <strong>$${model.price}/мес</strong>`;
+
+  // Show panel
+  document.getElementById('previewOverlay').classList.add('visible');
+  document.getElementById('previewPanel').classList.add('visible');
+}
+
+function closePreview() {
+  document.getElementById('previewOverlay').classList.remove('visible');
+  document.getElementById('previewPanel').classList.remove('visible');
+}
+
+// Close on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closePreview();
+});
+
+// ─── START ───
+init();
+</script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>console.log("[PWA] SW ok",r.scope)).catch(e=>console.warn("[PWA] SW fail",e));});}</script>
+
+<script id="page-nav-transitions">
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+</script>
+
+<!-- GLOBAL FOOTER -->
+<footer style="border-top:1px solid #22224A;padding:24px;text-align:center;font-size:12px;color:#505075;position:relative;z-index:1;margin-top:auto">
+  © 2026 KOL Studio &nbsp;·&nbsp;
+  <a href="privacy.html" style="color:#D42B6A;text-decoration:none">Конфиденциальность</a> &nbsp;·&nbsp;
+  <a href="terms.html" style="color:#D42B6A;text-decoration:none">Условия</a> &nbsp;·&nbsp;
+  <a href="help.html" style="color:#9090BB;text-decoration:none">Поддержка</a> &nbsp;·&nbsp;
+  <a href="creator-apply.html" style="color:#9090BB;text-decoration:none">Стать моделью</a> &nbsp;·&nbsp;
+  <span style="color:#3A3A70">18+</span>
+
+  <div style="text-align:center;padding:8px"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="search.html" class="active" style="color:#fff;font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="en/search.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇬🇧 EN</a></div></div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════
+     KOL Studio Global Components
+     1. GDPR Cookie Consent Banner
+     2. Dark / Light Theme Toggle
+     3. PWA Install Prompt
+═══════════════════════════════════════════════════════════ -->
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="cookie.html">Подробнее</a> · <a href="report.html">Пожаловаться</a> · <a href="api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+<!-- ── Unified Report Modal ── -->
+<style>
+#kol-report-modal{position:fixed;inset:0;z-index:10100;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-report-modal.show{display:flex}
+#kol-report-modal-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-report-modal-box{position:relative;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;z-index:1;animation:kol-modal-in 0.25s ease}
+@keyframes kol-modal-in{from{opacity:0;transform:scale(0.92) translateY(20px)}to{opacity:1;transform:none}}
+#kol-report-modal-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 6px}
+#kol-report-modal-box p{color:#A0A0C0;font-size:14px;margin:0 0 20px;line-height:1.6}
+.krm-types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.krm-type{background:#181835;border:1.5px solid #22224A;border-radius:12px;padding:12px;cursor:pointer;text-align:left;font-family:inherit;color:#E8E8F0;font-size:13px;transition:all 0.2s;display:flex;flex-direction:column;gap:4px}
+.krm-type:hover{border-color:#D42B6A;background:#1E1E3F}
+.krm-type.selected{border-color:#D42B6A;background:rgba(212,43,106,0.1);box-shadow:0 0 0 3px rgba(212,43,106,0.15)}
+.krm-type-icon{font-size:20px}
+.krm-type-label{font-weight:600;font-size:12px}
+.krm-desc{background:#181835;border:1.5px solid #22224A;border-radius:12px;width:100%;padding:12px 14px;font-family:inherit;font-size:14px;color:#E8E8F0;resize:vertical;min-height:100px;box-sizing:border-box;outline:none;transition:border-color 0.2s;margin-bottom:16px}
+.krm-desc:focus{border-color:#8B2BE2}
+.krm-footer{display:flex;gap:12px;justify-content:flex-end}
+.krm-cancel{background:none;border:1.5px solid #22224A;color:#A0A0C0;border-radius:10px;padding:10px 20px;font-size:14px;font-family:inherit;cursor:pointer;transition:all 0.2s}
+.krm-cancel:hover{border-color:#D42B6A;color:#E8E8F0}
+.krm-submit{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:10px 24px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:opacity 0.2s}
+.krm-submit:hover{opacity:0.9}
+.krm-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;line-height:1;padding:4px}
+.krm-close:hover{color:#E8E8F0}
+.krm-success{text-align:center;padding:20px 0}
+.krm-success-icon{font-size:48px;margin-bottom:12px}
+.krm-success h4{font-size:18px;font-weight:700;color:#00E676;margin:0 0 8px}
+.krm-success p{color:#A0A0C0;font-size:14px;margin:0}
+.krm-ticket{display:inline-block;background:#181835;border:1px solid #22224A;border-radius:8px;padding:6px 14px;font-size:12px;color:#FFB300;margin-top:12px;font-family:monospace}
+</style>
+<div id="kol-report-modal">
+  <div id="kol-report-modal-backdrop" onclick="kolCloseReport()"></div>
+  <div id="kol-report-modal-box">
+    <button class="krm-close" onclick="kolCloseReport()" aria-label="Закрыть">✕</button>
+    <div id="krm-form">
+      <h3>🚩 Пожаловаться</h3>
+      <p>Выберите причину жалобы. Мы рассмотрим её в течение 24–48 часов.</p>
+      <div class="krm-types">
+        <button class="krm-type" onclick="krmSelect(this,'illegal')">
+          <span class="krm-type-icon">🚫</span>
+          <span class="krm-type-label">Незаконный контент</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'fraud')">
+          <span class="krm-type-icon">💰</span>
+          <span class="krm-type-label">Мошенничество</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'dmca')">
+          <span class="krm-type-icon">📋</span>
+          <span class="krm-type-label">Авторские права</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'spam')">
+          <span class="krm-type-icon">🤖</span>
+          <span class="krm-type-label">Спам / Бот</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'harassment')">
+          <span class="krm-type-icon">😤</span>
+          <span class="krm-type-label">Харассмент</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'other')">
+          <span class="krm-type-icon">📌</span>
+          <span class="krm-type-label">Другое</span>
+        </button>
+      </div>
+      <textarea class="krm-desc" id="krm-desc" placeholder="Опишите проблему подробнее (необязательно)..." maxlength="1000"></textarea>
+      <div class="krm-footer">
+        <button class="krm-cancel" onclick="kolCloseReport()">Отмена</button>
+        <button class="krm-submit" onclick="krmSubmit()">Отправить</button>
+      </div>
+    </div>
+    <div id="krm-success" class="krm-success" style="display:none">
+      <div class="krm-success-icon">✅</div>
+      <h4>Жалоба отправлена</h4>
+      <p>Мы рассмотрим её в течение 24–48 часов</p>
+      <div class="krm-ticket" id="krm-ticket-id"></div>
+    </div>
+  </div>
+</div>
+<script>
+window._krmType = null;
+function kolOpenReport(targetId){
+  window._krmReportTarget = targetId||null;
+  document.getElementById('krm-form').style.display='';
+  document.getElementById('krm-success').style.display='none';
+  document.querySelectorAll('.krm-type').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('krm-desc').value='';
+  window._krmType=null;
+  document.getElementById('kol-report-modal').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function kolCloseReport(){
+  document.getElementById('kol-report-modal').classList.remove('show');
+  document.body.style.overflow='';
+}
+function krmSelect(btn,type){
+  document.querySelectorAll('.krm-type').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  window._krmType=type;
+}
+function krmSubmit(){
+  if(!window._krmType){
+    if(window.kolShowToast) kolShowToast('Выберите причину жалобы','error');
+    return;
+  }
+  document.getElementById('krm-form').style.display='none';
+  document.getElementById('krm-success').style.display='block';
+  const id='RPT-'+new Date().getFullYear()+'-'+Math.floor(1000+Math.random()*9000);
+  document.getElementById('krm-ticket-id').textContent='Номер: '+id;
+  setTimeout(kolCloseReport,4000);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')kolCloseReport();});
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href = 'search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href = 'upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

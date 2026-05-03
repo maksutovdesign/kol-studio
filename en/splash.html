@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="apple-touch-icon" href="../icons/icon.svg">
+  <meta name="description" content="Платформа эксклюзивного контента для взрослых 18+">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta property="og:title" content="KOL Studio — Запуск">
+  <meta property="og:description" content="Платформа эксклюзивного контента для взрослых 18+">
+  <meta property="og:url" content="https://kolstudio.com/en/splash.html">
+  <meta property="og:image" content="https://kolstudio.com/en/icons/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KOL Studio — Запуск">
+  <meta name="twitter:description" content="Платформа эксклюзивного контента для взрослых 18+">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="apple-touch-icon" href="../icons/icon.svg">
+  <meta name="description" content="Платформа эксклюзивного контента для взрослых 18+">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta property="og:title" content="KOL Studio — Запуск">
+  <meta property="og:description" content="Платформа эксклюзивного контента для взрослых 18+">
+  <meta property="og:url" content="https://kolstudio.com/en/splash.html">
+  <meta property="og:image" content="https://kolstudio.com/en/icons/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KOL Studio — Запуск">
+  <meta name="twitter:description" content="Платформа эксклюзивного контента для взрослых 18+">
+  <title>KOL Studio — Загрузка</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:      #07071A;
+      --card:    #111128;
+      --card2:   #181835;
+      --border:  #22224A;
+      --accent:  #D42B6A;
+      --accent2: #8B2BE2;
+      --muted:   rgba(255,255,255,0.40);
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, #22224A 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Ambient glow top-left */
+    .glow-tl {
+      position: fixed;
+      top: -220px;
+      left: -220px;
+      width: 640px;
+      height: 640px;
+      background: radial-gradient(circle, rgba(212,43,106,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Ambient glow bottom-right */
+    .glow-br {
+      position: fixed;
+      bottom: -220px;
+      right: -220px;
+      width: 640px;
+      height: 640px;
+      background: radial-gradient(circle, rgba(139,43,226,0.10) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Starfield canvas */
+    #stars {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Main centered layout */
+    .splash {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 24px;
+      text-align: center;
+    }
+
+    /* ── Ring ── */
+    .ring-wrap {
+      width: 120px;
+      height: 120px;
+      position: relative;
+      margin-bottom: 32px;
+
+      /* hidden until body.loaded */
+      opacity: 0;
+      transform: scale(0);
+      animation: none;
+    }
+
+    body.loaded .ring-wrap {
+      animation: ringIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0s forwards;
+    }
+
+    @keyframes ringIn {
+      from { opacity: 0; transform: scale(0); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      background:
+        linear-gradient(var(--bg), var(--bg)) padding-box,
+        linear-gradient(135deg, var(--accent), var(--accent2)) border-box;
+      box-shadow:
+        0 0 30px rgba(212,43,106,0.35),
+        0 0 60px rgba(139,43,226,0.20),
+        inset 0 0 20px rgba(212,43,106,0.08);
+      animation: ringPulse 2.8s ease-in-out infinite;
+      animation-delay: 0.6s;
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(212,43,106,0.35), 0 0 60px rgba(139,43,226,0.20); }
+      50%       { box-shadow: 0 0 50px rgba(212,43,106,0.55), 0 0 90px rgba(139,43,226,0.35); }
+    }
+
+    .ring-inner {
+      position: absolute;
+      inset: 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(212,43,106,0.15), rgba(139,43,226,0.15));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ring-k {
+      font-size: 32px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+    }
+
+    /* Spinning arc on top of ring */
+    .ring-spin {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: var(--accent);
+      border-right-color: rgba(139,43,226,0.5);
+      animation: spin 1.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── KOL text ── */
+    .kol-text {
+      font-size: 80px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -3px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    body.loaded .kol-text {
+      animation: fadeUp 0.5s ease 0.45s forwards;
+    }
+
+    /* ── STUDIO text ── */
+    .studio-text {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 8px;
+      color: rgba(255,255,255,0.90);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    body.loaded .studio-text {
+      animation: fadeUp 0.5s ease 0.75s forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── 18+ badge ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1.5px solid rgba(212,43,106,0.5);
+      background: rgba(212,43,106,0.10);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px;
+      margin-bottom: 48px;
+
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    body.loaded .badge {
+      animation: badgeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 1.05s forwards;
+    }
+
+    @keyframes badgeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── Loading bar ── */
+    .loader-wrap {
+      width: 280px;
+      margin-bottom: 32px;
+
+      opacity: 0;
+    }
+
+    body.loaded .loader-wrap {
+      animation: fadeIn 0.4s ease 1.2s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .loader-track {
+      width: 100%;
+      height: 3px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .loader-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 8px rgba(212,43,106,0.6);
+      animation: none;
+    }
+
+    body.loaded .loader-fill {
+      animation: loadBar 2s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
+    }
+
+    @keyframes loadBar {
+      0%   { width: 0%; }
+      30%  { width: 35%; }
+      60%  { width: 65%; }
+      85%  { width: 88%; }
+      100% { width: 100%; }
+    }
+
+    /* ── Tagline ── */
+    .tagline {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--muted);
+      margin-bottom: 12px;
+      letter-spacing: 0.2px;
+      line-height: 1.5;
+
+      opacity: 0;
+    }
+
+    body.loaded .tagline {
+      animation: fadeIn 0.6s ease 1.5s forwards;
+    }
+
+    /* ── Loading text ── */
+    .loading-text {
+      font-size: 12px;
+      color: rgba(255,255,255,0.22);
+      letter-spacing: 0.5px;
+
+      opacity: 0;
+    }
+
+    body.loaded .loading-text {
+      animation: fadeIn 0.5s ease 1.7s forwards;
+    }
+
+    /* Dot blinking */
+    .dot {
+      display: inline-block;
+      animation: blink 1.2s ease-in-out infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.2; }
+      50%       { opacity: 1; }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .kol-text {
+        font-size: 56px;
+        letter-spacing: -2px;
+      }
+
+      .studio-text {
+        font-size: 18px;
+        letter-spacing: 5px;
+      }
+
+      .ring-wrap {
+        width: 96px;
+        height: 96px;
+      }
+
+      .ring-k {
+        font-size: 26px;
+      }
+
+      .loader-wrap {
+        width: 220px;
+      }
+
+      .tagline {
+        font-size: 13px;
+        padding: 0 16px;
+      }
+    }
+  </style>
+
+<style id="page-transitions">
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+</style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/splash.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/splash.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/splash.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/splash.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+
+<style id="kol-skeleton-css">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skel-title{height:22px;width:60%;margin-bottom:12px;border-radius:6px}
+.skel-avatar{width:44px;height:44px;border-radius:50%}
+.skel-thumb{width:100%;height:180px;border-radius:12px}
+.skel-btn{height:38px;width:120px;border-radius:10px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px}
+.skel-row{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #22224A}
+.skel-body{display:flex;flex-direction:column;gap:8px;flex:1}
+</style>
+</head>
+<body>
+
+  <!-- Ambient glows -->
+  <div class="glow-tl"></div>
+  <div class="glow-br"></div>
+
+  <!-- Starfield -->
+  <canvas id="stars"></canvas>
+
+  <!-- Splash content -->
+  <div class="splash">
+
+    <!-- Ring / logo icon -->
+    <div class="ring-wrap">
+      <div class="ring"></div>
+      <div class="ring-spin"></div>
+      <div class="ring-inner">
+        <span class="ring-k">K</span>
+      </div>
+    </div>
+
+    <!-- KOL -->
+    <div class="kol-text">KOL</div>
+
+    <!-- STUDIO -->
+    <div class="studio-text">Studio</div>
+
+    <!-- 18+ badge -->
+    <div class="badge">18+</div>
+
+    <!-- Loading bar -->
+    <div class="loader-wrap">
+      <div class="loader-track">
+        <div class="loader-fill"></div>
+      </div>
+    </div>
+
+    <!-- Tagline -->
+    <p class="tagline">Эксклюзивный контент. Настоящие модели.</p>
+
+    <!-- Loading label -->
+    <p class="loading-text">
+      Загружаем платформу<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+    </p>
+
+  </div>
+
+  <script>
+    // ── Starfield ──────────────────────────────────────────────
+    (function () {
+      const canvas = document.getElementById('stars');
+      const ctx    = canvas.getContext('2d');
+      const STARS  = [];
+      const COUNT  = 28;
+
+      function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      function initStars() {
+        STARS.length = 0;
+        for (let i = 0; i < COUNT; i++) {
+          STARS.push({
+            x:     Math.random() * canvas.width,
+            y:     Math.random() * canvas.height,
+            r:     0.5 + Math.random() * 1.5,
+            phase: Math.random() * Math.PI * 2,
+            speed: 0.4 + Math.random() * 0.8,
+          });
+        }
+      }
+
+      function drawStars(ts) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (const s of STARS) {
+          const alpha = 0.15 + 0.55 * (0.5 + 0.5 * Math.sin(s.phase + ts * 0.001 * s.speed));
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
+          ctx.fill();
+        }
+        requestAnimationFrame(drawStars);
+      }
+
+      window.addEventListener('resize', () => { resize(); initStars(); });
+      resize();
+      initStars();
+      requestAnimationFrame(drawStars);
+    })();
+
+    // ── Redirect logic ─────────────────────────────────────────
+    const alreadyVerified = localStorage.getItem('age_verified') === 'true';
+
+    if (alreadyVerified) {
+      // Faster load for returning users
+      setTimeout(() => {
+        window.location.href = 'feed.html';
+      }, 1500);
+    } else {
+      setTimeout(() => {
+        window.location.href = 'age-gate.html';
+      }, 2500);
+    }
+
+    // ── Trigger animation sequence ─────────────────────────────
+    // Add 'loaded' class after 500ms so the CSS transitions sequence starts
+    setTimeout(() => {
+      document.body.classList.add('loaded');
+    }, 500);
+  </script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>console.log("[PWA] SW ok",r.scope)).catch(e=>console.warn("[PWA] SW fail",e));});}</script>
+
+<script id="page-nav-transitions">
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../splash.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="splash.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+</body>
+</html>

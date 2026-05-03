@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="../icons/icon.svg">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#D42B6A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KOL Studio">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KOL Studio">
+<meta property="og:title" content="KOL Studio — Notifications">
+<meta property="og:description" content="Центр уведомлений KOL Studio">
+<meta property="og:url" content="https://kolstudio.com/en/notifications.html">
+<meta property="og:locale" content="ru_RU">
+<meta name="description" content="Notifications: подписки, чаевые, сообщения и системные события">
+<title>KOL STUDIO — Notifications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07071A;
+  --card: #111128;
+  --card2: #181835;
+  --border: #22224A;
+  --accent: #D42B6A;
+  --accent2: #8B2BE2;
+  --green: #00E676;
+  --gold: #FFB300;
+  --danger: #FF4444;
+  --text: #E8E8F0;
+  --text-muted: #7070A0;
+  --text-dim: #4A4A70;
+  --header-h: 64px;
+  --filter-h: 56px;
+  --nav-h: 64px;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+  --gradient-accent: linear-gradient(135deg, var(--accent), var(--accent2));
+  --gradient-gold: linear-gradient(135deg, #FFB300, #FF6D00);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
+  --transition: 0.2s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: radial-gradient(circle, #22224A 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+
+@keyframes slide-in-right{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@keyframes slide-out-right{from{transform:translateX(0)}to{transform:translateX(100%)}}
+
+/* GLOWS */
+.glow-tl {
+  position: fixed; top: -200px; left: -200px;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,43,106,0.10) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+.glow-br {
+  position: fixed; bottom: -200px; right: -200px;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,43,226,0.08) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ===== STICKY TOP BAR ===== */
+.top-bar {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: rgba(7,7,26,0.96); backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 20px; gap: 16px;
+  z-index: 1000;
+}
+.logo {
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none; flex-shrink: 0;
+}
+.logo-text { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+.logo-kol {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.logo-studio { color: #fff; }
+.logo-badge {
+  background: #C0392B; color: #fff; font-size: 9px; font-weight: 700;
+  padding: 2px 6px; border-radius: 20px; letter-spacing: 0.5px;
+  -webkit-text-fill-color: #fff;
+}
+.top-bar-center { flex: 1; display: flex; align-items: center; justify-content: center; }
+.top-bar-title { font-size: 20px; font-weight: 800; }
+.top-bar-actions { display: flex; align-items: center; gap: 10px; margin-left: auto; flex-shrink: 0; }
+
+.mark-all-btn {
+  padding: 8px 14px; background: transparent; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text-muted); font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all var(--transition); white-space: nowrap;
+}
+.mark-all-btn:hover { border-color: var(--accent); color: var(--accent); }
+.icon-btn {
+  background: var(--card2); border: 1px solid var(--border); border-radius: 50%;
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-muted); font-size: 18px; transition: all var(--transition);
+}
+.icon-btn:hover { border-color: var(--accent); color: var(--text); }
+
+/* ===== FILTER BAR ===== */
+.filter-bar {
+  position: fixed; top: var(--header-h); left: 0; right: 0;
+  height: var(--filter-h); background: rgba(7,7,26,0.94); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border); z-index: 900;
+  display: flex; align-items: center; gap: 8px; padding: 0 20px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+.filter-pill {
+  padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); transition: all var(--transition); white-space: nowrap;
+  flex-shrink: 0;
+}
+.filter-pill.active {
+  background: var(--gradient-accent); border-color: transparent; color: #fff;
+}
+.filter-pill:hover:not(.active) { border-color: var(--accent); color: var(--text); }
+
+/* ===== MAIN CONTENT ===== */
+.content {
+  padding-top: calc(var(--header-h) + var(--filter-h));
+  padding-bottom: calc(var(--nav-h) + 20px);
+  max-width: 720px; margin: 0 auto; padding-left: 16px; padding-right: 16px;
+  padding-top: calc(var(--header-h) + var(--filter-h) + 16px);
+  position: relative; z-index: 1;
+}
+
+/* ===== SECTION HEADER ===== */
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  margin: 24px 0 12px; padding: 0 4px;
+}
+.section-title { font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; }
+.section-count {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 999px; padding: 2px 8px; font-size: 11px; color: var(--text-muted); font-weight: 600;
+}
+.section-line { flex: 1; height: 1px; background: var(--border); }
+
+/* ===== NOTIFICATION CARD ===== */
+.notif-card {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px 16px; margin-bottom: 8px; cursor: pointer;
+  transition: all var(--transition); position: relative; overflow: hidden;
+}
+.notif-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: transparent; border-radius: 3px 0 0 3px;
+  transition: background var(--transition);
+}
+.notif-card.unread::before { background: var(--accent); }
+.notif-card.unread { background: rgba(17,17,40,0.98); border-color: rgba(212,43,106,0.2); }
+.notif-card:hover { border-color: var(--border); background: var(--card2); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.notif-card.unread:hover { border-color: rgba(212,43,106,0.35); }
+
+/* Colored variants */
+.notif-card.green-card::before { background: var(--green); }
+.notif-card.green-card { border-color: rgba(0,230,118,0.15); }
+.notif-card.gold-card::before { background: var(--gold); }
+.notif-card.gold-card { border-color: rgba(255,179,0,0.15); }
+.notif-card.danger-card::before { background: var(--danger); }
+.notif-card.warning-card::before { background: var(--gold); }
+.notif-card.warning-card { border-color: rgba(255,179,0,0.15); }
+.notif-card.muted-card { opacity: 0.6; }
+.notif-card.muted-card:hover { opacity: 1; }
+
+.notif-avatar {
+  width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; position: relative;
+}
+.notif-avatar.gradient { background: var(--gradient-accent); color: #fff; font-size: 16px; }
+.notif-avatar.green { background: rgba(0,230,118,0.15); border: 1px solid rgba(0,230,118,0.3); }
+.notif-avatar.gold { background: rgba(255,179,0,0.15); border: 1px solid rgba(255,179,0,0.3); }
+.notif-avatar.purple { background: rgba(139,43,226,0.15); border: 1px solid rgba(139,43,226,0.3); }
+.notif-avatar.warn { background: rgba(255,179,0,0.1); border: 1px solid rgba(255,179,0,0.25); }
+.notif-avatar.info { background: rgba(100,100,255,0.1); border: 1px solid rgba(100,100,255,0.2); }
+.notif-avatar.muted-av { background: rgba(112,112,160,0.1); border: 1px solid rgba(112,112,160,0.2); }
+.avatar-type-badge {
+  position: absolute; bottom: -2px; right: -2px;
+  width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--card);
+  display: flex; align-items: center; justify-content: center; font-size: 9px;
+}
+.avatar-type-badge.sub { background: var(--accent2); }
+.avatar-type-badge.tip { background: var(--gold); }
+.avatar-type-badge.msg { background: var(--accent); }
+.avatar-type-badge.like { background: #ff6b6b; }
+
+.unread-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0;
+  margin-top: 6px; transition: opacity var(--transition);
+}
+.unread-dot.read { opacity: 0; }
+
+.notif-body { flex: 1; min-width: 0; }
+.notif-main-text { font-size: 14px; line-height: 1.5; margin-bottom: 4px; }
+.notif-main-text strong { color: var(--text); font-weight: 700; }
+.notif-main-text span { color: var(--text-muted); }
+.notif-quote {
+  background: var(--card2); border-left: 2px solid var(--border);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  padding: 6px 10px; font-size: 13px; color: var(--text-muted);
+  margin: 6px 0; font-style: italic;
+}
+.notif-meta { display: flex; align-items: center; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
+.notif-time { font-size: 12px; color: var(--text-dim); }
+.notif-amount { font-size: 14px; font-weight: 800; }
+.notif-amount.green { color: var(--green); }
+.notif-amount.gold { color: var(--gold); }
+.notif-tag {
+  padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
+  background: rgba(212,43,106,0.12); color: var(--accent); border: 1px solid rgba(212,43,106,0.25);
+}
+.notif-tag.gold { background: rgba(255,179,0,0.12); color: var(--gold); border-color: rgba(255,179,0,0.25); }
+.notif-tag.green { background: rgba(0,230,118,0.1); color: var(--green); border-color: rgba(0,230,118,0.25); }
+.notif-tag.purple { background: rgba(139,43,226,0.12); color: #b57cf5; border-color: rgba(139,43,226,0.25); }
+
+.notif-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+.notif-action-btn {
+  padding: 6px 14px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 700;
+  cursor: pointer; transition: all var(--transition); white-space: nowrap;
+  border: 1px solid var(--border); background: transparent; color: var(--text-muted);
+}
+.notif-action-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(212,43,106,0.08); }
+.notif-action-btn.gold { color: var(--gold); border-color: rgba(255,179,0,0.3); }
+.notif-action-btn.gold:hover { background: rgba(255,179,0,0.1); border-color: var(--gold); }
+.notif-action-btn.primary {
+  background: var(--gradient-accent); border-color: transparent; color: #fff;
+}
+.notif-action-btn.primary:hover { opacity: 0.85; }
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 80px 20px; text-align: center; display: none;
+}
+.empty-icon { font-size: 64px; margin-bottom: 16px; opacity: 0.5; }
+.empty-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.empty-sub { font-size: 14px; color: var(--text-muted); }
+
+/* ===== SETTINGS PANEL ===== */
+.settings-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px); z-index: 8000;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.settings-overlay.open { opacity: 1; pointer-events: all; }
+.settings-panel {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: min(360px, 100vw); background: var(--card);
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform 0.3s ease;
+}
+.settings-overlay.open .settings-panel { transform: translateX(0); }
+.settings-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.settings-title { font-size: 18px; font-weight: 800; }
+.settings-close {
+  background: none; border: none; color: var(--text-muted); font-size: 24px;
+  cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; transition: all var(--transition);
+}
+.settings-close:hover { background: var(--card2); color: var(--text); }
+.settings-body { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.settings-section-title {
+  font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.6px; margin: 16px 0 8px; padding: 0 4px;
+}
+.settings-section-title:first-child { margin-top: 0; }
+.toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--card2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 14px 16px; gap: 12px;
+}
+.toggle-info { flex: 1; }
+.toggle-label { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.toggle-sub { font-size: 12px; color: var(--text-muted); }
+.toggle-switch {
+  position: relative; width: 44px; height: 24px; flex-shrink: 0;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; inset: 0; background: var(--border); border-radius: 12px;
+  cursor: pointer; transition: background 0.2s;
+}
+.toggle-slider::before {
+  content: ''; position: absolute; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--text-muted); top: 3px; left: 3px; transition: transform 0.2s, background 0.2s;
+}
+.toggle-switch input:checked + .toggle-slider { background: rgba(212,43,106,0.3); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); background: var(--accent); }
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: var(--nav-h); background: rgba(7,7,26,0.96);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-around;
+  z-index: 1000; padding: 0 8px;
+}
+.nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 8px 12px; border-radius: var(--radius-sm);
+  cursor: pointer; text-decoration: none; color: var(--text-muted);
+  font-size: 10px; font-weight: 600; transition: all var(--transition);
+  position: relative; flex: 1; max-width: 80px;
+}
+.nav-item:hover { color: var(--text); }
+.nav-item.active { color: var(--accent); }
+.nav-icon { font-size: 22px; line-height: 1; }
+.nav-item .nav-badge {
+  position: absolute; top: 4px; right: calc(50% - 18px);
+  background: var(--accent); color: #fff; font-size: 9px; font-weight: 700;
+  width: 16px; height: 16px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg);
+}
+.nav-post-btn {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--gradient-accent); border: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; color: #fff; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(212,43,106,0.4); transition: all var(--transition);
+  text-decoration: none; flex-shrink: 0;
+}
+.nav-post-btn:hover { transform: scale(1.08); }
+
+/* ===== TOAST ===== */
+.toast-container {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+  z-index: 9999; display: flex; flex-direction: column; gap: 8px; align-items: center;
+}
+.toast {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 999px; padding: 10px 20px; font-size: 13px; font-weight: 600;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5); white-space: nowrap;
+  animation: kol-fade-in 0.25s ease forwards;
+  display: flex; align-items: center; gap: 8px;
+}
+.toast.success { border-color: rgba(0,230,118,0.4); color: var(--green); }
+.toast.gold { border-color: rgba(255,179,0,0.4); color: var(--gold); }
+.toast.accent { border-color: rgba(212,43,106,0.4); color: var(--accent); }
+
+/* ===== PULSE ANIMATION ===== */
+@keyframes pulse-dot {
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.5);opacity:0.6}
+}
+.live-dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent); margin-right: 4px; animation: pulse-dot 2s infinite;
+}
+</style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/notifications.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/notifications.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/notifications.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/notifications.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+
+<style id="kol-skeleton-css">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skel-title{height:22px;width:60%;margin-bottom:12px;border-radius:6px}
+.skel-avatar{width:44px;height:44px;border-radius:50%}
+.skel-thumb{width:100%;height:180px;border-radius:12px}
+.skel-btn{height:38px;width:120px;border-radius:10px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px}
+.skel-row{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #22224A}
+.skel-body{display:flex;flex-direction:column;gap:8px;flex:1}
+</style>
+</head>
+<body>
+<div class="glow-tl"></div>
+<div class="glow-br"></div>
+
+<!-- TOP BAR -->
+<header class="top-bar">
+  <a href="feed.html" class="logo">
+    <span class="logo-text"><span class="logo-kol">KOL</span><span class="logo-studio"> Studio</span></span>
+    <span class="logo-badge">18+</span>
+  </a>
+  <div class="top-bar-center">
+    <span class="top-bar-title">Notifications</span>
+  </div>
+  <div class="top-bar-actions">
+    <button class="mark-all-btn" onclick="markAllRead()">✓ Все прочитаны</button>
+    <button class="icon-btn" title="Settings уведомлений" onclick="openSettings()">⚙️</button>
+  </div>
+</header>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <button class="filter-pill active" onclick="setFilter('all', this)">Все <span id="allCount" style="opacity:0.7;margin-left:4px"></span></button>
+  <button class="filter-pill" onclick="setFilter('sub', this)">Subscriptions</button>
+  <button class="filter-pill" onclick="setFilter('tip', this)">Чаевые</button>
+  <button class="filter-pill" onclick="setFilter('msg', this)">Messages</button>
+  <button class="filter-pill" onclick="setFilter('like', this)">Активность</button>
+  <button class="filter-pill" onclick="setFilter('sys', this)">Системные</button>
+</div>
+
+<!-- CONTENT -->
+<div class="content" id="mainContent">
+
+  <!-- EMPTY STATE -->
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon">🔔</div>
+    <div class="empty-title">Нет уведомлений</div>
+    <div class="empty-sub">В этой категории пока нет уведомлений</div>
+  </div>
+
+  <!-- TODAY SECTION -->
+  <div class="section-header" id="todayHeader">
+    <span class="section-title">Today</span>
+    <span class="section-count" id="todayCount"></span>
+    <div class="section-line"></div>
+  </div>
+  <div id="todayList"></div>
+
+  <!-- THIS WEEK SECTION -->
+  <div class="section-header" id="weekHeader">
+    <span class="section-title">На этой неделе</span>
+    <span class="section-count" id="weekCount"></span>
+    <div class="section-line"></div>
+  </div>
+  <div id="weekList"></div>
+
+  <!-- EARLIER SECTION -->
+  <div class="section-header" id="earlierHeader">
+    <span class="section-title">Ранее</span>
+    <span class="section-count" id="earlierCount"></span>
+    <div class="section-line"></div>
+  </div>
+  <div id="earlierList"></div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="feed.html" class="nav-item">
+    <span class="nav-icon">🏠</span>
+    <span>Feed</span>
+  </a>
+  <a href="search.html" class="nav-item">
+    <span class="nav-icon">🔍</span>
+    <span>Search</span>
+  </a>
+  <a href="model-cabinet.html" class="nav-post-btn" title="Создать пост">＋</a>
+  <a href="messages.html" class="nav-item">
+    <span class="nav-icon">💬</span>
+    <span>Messages</span>
+    <span class="nav-badge">12</span>
+  </a>
+  <a href="model-cabinet.html" class="nav-item">
+    <span class="nav-icon">👤</span>
+    <span>Cabinet</span>
+  </a>
+</nav>
+
+<!-- SETTINGS PANEL -->
+<div class="settings-overlay" id="settingsOverlay" onclick="handleSettingsOverlayClick(event)">
+  <div class="settings-panel">
+    <div class="settings-header">
+      <span class="settings-title">⚙️ Settings</span>
+      <button class="settings-close" onclick="closeSettings()">×</button>
+    </div>
+    <div class="settings-body">
+      <div class="settings-section-title">Push-уведомления</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="toggle-label">Push уведомления</div>
+          <div class="toggle-sub">В браузере и на телефоне</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked onchange="saveToggle('push', this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="toggle-label">Email уведомления</div>
+          <div class="toggle-sub">Ежедневный дайджест</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked onchange="saveToggle('email', this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="settings-section-title">Typeы уведомлений</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="toggle-label">Новые subscriberи</div>
+          <div class="toggle-sub">Кто-то подписался на вас</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked onchange="saveToggle('subs', this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="toggle-label">Чаевые</div>
+          <div class="toggle-sub">Новые чаевые и PPV-платежи</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked onchange="saveToggle('tips', this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="toggle-label">Messages</div>
+          <div class="toggle-sub">New Messages от фанов</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked onchange="saveToggle('msgs', this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="toggle-label">Лайки и комментарии</div>
+          <div class="toggle-sub">Активность под вашими постами</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked onchange="saveToggle('likes', this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="toggle-label">Системные</div>
+          <div class="toggle-sub">Выплаты, верификация, обновления</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked onchange="saveToggle('sys', this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="settings-section-title">Тихие часы</div>
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="toggle-label">Тихий режим</div>
+          <div class="toggle-sub">Не беспокоить с 23:00 до 08:00</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" onchange="saveToggle('quiet', this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ===== NOTIFICATION DATA =====
+const notifications = [
+  // TODAY
+  {
+    id: 1, section: 'today', cat: 'sub', unread: true,
+    avatarEmoji: '😎', avatarClass: 'gradient', badgeClass: 'sub',
+    text: '<strong>@phantom_leo</strong> <span>оформил подписку</span> <strong>Premium на 3 месяца</strong>',
+    time: '2 min ago', tag: { text: 'Premium', cls: 'purple' },
+    action: { label: 'Write', cls: 'primary', fn: 'replyTo("phantom_leo")' }, cardCls: 'unread'
+  },
+  {
+    id: 2, section: 'today', cat: 'tip', unread: true,
+    avatarEmoji: '😎', avatarClass: 'gold', badgeClass: 'tip',
+    text: '<strong>@phantom_leo</strong> <span>отправил чаевые</span>',
+    amount: '+$25', amountCls: 'gold',
+    quote: 'Ты лучшая 🔥',
+    time: '5 min ago',
+    action: { label: '🙏 Thank', cls: 'gold', fn: 'thankFan("phantom_leo", 25)' }, cardCls: 'gold-card unread'
+  },
+  {
+    id: 3, section: 'today', cat: 'msg', unread: true,
+    avatarEmoji: '😎', avatarClass: 'gradient', badgeClass: 'msg',
+    text: '<strong>@phantom_leo</strong> <span>написал сообщение</span>',
+    quote: 'Hello! Когда следующий эфир?',
+    time: '8 min ago',
+    action: { label: '💬 Reply', cls: '', fn: 'replyMsg("phantom_leo")' }, cardCls: 'unread'
+  },
+  {
+    id: 4, section: 'today', cat: 'tip', unread: true,
+    avatarEmoji: '🌙', avatarClass: 'gold', badgeClass: 'tip',
+    text: '<strong>@night_rider</strong> <span>оставил</span> <strong>$50</strong> <span>за приватное шоу</span>',
+    amount: '+$50', amountCls: 'green',
+    time: '20 min ago',
+    action: { label: '🙏 Thank', cls: 'gold', fn: 'thankFan("night_rider", 50)' }, cardCls: 'gold-card unread'
+  },
+  {
+    id: 5, section: 'today', cat: 'sub', unread: false,
+    avatarEmoji: '🐺', avatarClass: 'gradient', badgeClass: 'sub',
+    text: '<strong>@dark_wolf_99</strong> <span>подписался на вас</span>',
+    time: '15 min ago',
+    action: { label: 'Write', cls: '', fn: 'replyTo("dark_wolf_99")' }, cardCls: ''
+  },
+  {
+    id: 6, section: 'today', cat: 'like', unread: false,
+    avatarEmoji: '⭐', avatarClass: 'gradient', badgeClass: 'like',
+    text: '<strong>@starfan</strong> <span>ваш пост набрал</span> <strong>500 лайков!</strong>',
+    tag: { text: '🔥 Вирусный', cls: 'gold' },
+    time: '30 min ago', cardCls: ''
+  },
+  {
+    id: 7, section: 'today', cat: 'sub', unread: false,
+    avatarEmoji: '💔', avatarClass: 'muted-av', badgeClass: '',
+    text: '<strong>@user_kate</strong> <span>отменила подписку</span>',
+    time: '1 hour ago', cardCls: 'muted-card'
+  },
+  {
+    id: 8, section: 'today', cat: 'like', unread: false,
+    avatarEmoji: '🌙', avatarClass: 'gradient', badgeClass: 'like',
+    text: '<strong>@night_rider</strong> <span>и ещё</span> <strong>23 человека</strong> <span>поставили лайк вашему фото</span>',
+    time: '1 hour ago', cardCls: ''
+  },
+  {
+    id: 9, section: 'today', cat: 'tip', unread: false,
+    avatarEmoji: '🚀', avatarClass: 'gold', badgeClass: 'tip',
+    text: '<strong>Получен PPV-платёж</strong> <span>от</span> <strong>@cosmos_fan</strong>',
+    amount: '+$12', amountCls: 'green',
+    time: '2 hours ago', cardCls: 'gold-card'
+  },
+  {
+    id: 10, section: 'today', cat: 'msg', unread: false,
+    avatarEmoji: '🐺', avatarClass: 'gradient', badgeClass: 'msg',
+    text: '<strong>3 новых сообщения</strong> <span>от</span> <strong>@dark_wolf_99</strong>',
+    time: '45 min ago',
+    action: { label: '💬 Reply', cls: '', fn: 'replyMsg("dark_wolf_99")' }, cardCls: ''
+  },
+  {
+    id: 11, section: 'today', cat: 'like', unread: false,
+    avatarEmoji: '🚀', avatarClass: 'gradient', badgeClass: 'like',
+    text: '<strong>@cosmos_fan</strong> <span>прокомментировал:</span>',
+    quote: 'Невероятно красиво 😍',
+    time: '2 hours ago', cardCls: ''
+  },
+  {
+    id: 12, section: 'today', cat: 'sub', unread: false,
+    avatarEmoji: '🔄', avatarClass: 'purple', badgeClass: 'sub',
+    text: '<strong>@cosmos_fan</strong> <span>продлил подписку на следующий месяц</span>',
+    tag: { text: '♻️ Продление', cls: '' },
+    time: '3 hours ago', cardCls: ''
+  },
+
+  // THIS WEEK
+  {
+    id: 13, section: 'week', cat: 'sub', unread: false,
+    avatarEmoji: '⭐', avatarClass: 'gradient', badgeClass: 'sub',
+    text: '<strong>@starfan</strong> <span>оформил</span> <strong>Базовую подписку</strong>',
+    time: 'Yesterday, 18:42', cardCls: ''
+  },
+  {
+    id: 14, section: 'week', cat: 'tip', unread: false,
+    avatarEmoji: '👑', avatarClass: 'gold', badgeClass: 'tip',
+    text: '<strong>@royal_fan</strong> <span>отправил чаевые</span>',
+    amount: '+$30', amountCls: 'gold',
+    quote: 'Лучшее шоу этого месяца! 👑',
+    time: 'Yesterday, 21:15', cardCls: 'gold-card'
+  },
+  {
+    id: 15, section: 'week', cat: 'msg', unread: false,
+    avatarEmoji: '🌀', avatarClass: 'gradient', badgeClass: 'msg',
+    text: '<strong>@vortex_44</strong> <span>написал сообщение</span>',
+    quote: 'Жду новый пост с нетерпением!',
+    time: 'Yesterday, 14:05',
+    action: { label: '💬 Reply', cls: '', fn: 'replyMsg("vortex_44")' }, cardCls: ''
+  },
+  {
+    id: 16, section: 'week', cat: 'like', unread: false,
+    avatarEmoji: '🛡️', avatarClass: 'gradient', badgeClass: 'like',
+    text: '<strong>@neo_knight</strong> <span>и</span> <strong>47 человек</strong> <span>поставили лайк вашему видео</span>',
+    tag: { text: '🔥 Популярно', cls: 'gold' },
+    time: '2 дня назад', cardCls: ''
+  },
+  {
+    id: 17, section: 'week', cat: 'tip', unread: false,
+    avatarEmoji: '❄️', avatarClass: 'gold', badgeClass: 'tip',
+    text: '<strong>Получен PPV-платёж</strong> <span>от</span> <strong>@arctic_storm</strong>',
+    amount: '+$8', amountCls: 'green',
+    time: '2 дня назад', cardCls: 'gold-card'
+  },
+  {
+    id: 18, section: 'week', cat: 'sub', unread: false,
+    avatarEmoji: '⚡', avatarClass: 'gradient', badgeClass: 'sub',
+    text: '<strong>@thunder77</strong> <span>подписался на вас</span>',
+    time: '3 дня назад',
+    action: { label: 'Write', cls: '', fn: 'replyTo("thunder77")' }, cardCls: ''
+  },
+  {
+    id: 19, section: 'week', cat: 'like', unread: false,
+    avatarEmoji: '🐉', avatarClass: 'gradient', badgeClass: 'like',
+    text: '<strong>@fire_dragon</strong> <span>прокомментировал:</span>',
+    quote: 'Просто нет слов! 🔥🔥🔥',
+    time: '3 дня назад', cardCls: ''
+  },
+  {
+    id: 20, section: 'week', cat: 'sys', unread: false,
+    avatarEmoji: '⚠️', avatarClass: 'warn', badgeClass: '',
+    text: '<span>⚠️</span> <strong>Ваша подписка истекает через 3 дня</strong>',
+    tag: { text: 'Внимание', cls: 'gold' },
+    time: '4 дня назад', cardCls: 'warning-card'
+  },
+
+  // EARLIER
+  {
+    id: 21, section: 'earlier', cat: 'sys', unread: false,
+    avatarEmoji: '✅', avatarClass: 'green', badgeClass: '',
+    text: '<strong>Верификация успешно пройдена</strong> <span>— аккаунт подтверждён</span>',
+    tag: { text: '✅ Подтверждено', cls: 'green' },
+    time: '2 дня назад', cardCls: 'green-card'
+  },
+  {
+    id: 22, section: 'earlier', cat: 'sys', unread: false,
+    avatarEmoji: '💳', avatarClass: 'green', badgeClass: '',
+    text: '<strong>Выплата отправлена на ваш счёт</strong>',
+    amount: '+$1,240', amountCls: 'green',
+    time: '3 дня назад', cardCls: 'green-card'
+  },
+  {
+    id: 23, section: 'earlier', cat: 'tip', unread: false,
+    avatarEmoji: '👁️', avatarClass: 'gold', badgeClass: 'tip',
+    text: '<strong>@golden_eye</strong> <span>купил эксклюзивный фото-сет</span>',
+    amount: '+$20', amountCls: 'gold',
+    time: '5 days ago', cardCls: 'gold-card'
+  },
+  {
+    id: 24, section: 'earlier', cat: 'sys', unread: false,
+    avatarEmoji: '🆕', avatarClass: 'info', badgeClass: '',
+    text: '<strong>Новая функция:</strong> <span>Scheduler постов теперь доступен</span>',
+    tag: { text: 'Новинка', cls: '' },
+    time: '5 days ago', cardCls: ''
+  },
+  {
+    id: 25, section: 'earlier', cat: 'sub', unread: false,
+    avatarEmoji: '🔱', avatarClass: 'gradient', badgeClass: 'sub',
+    text: '<strong>@omega_fan</strong> <span>оформил годовую подписку</span>',
+    tag: { text: '🏆 Годовая', cls: 'purple' },
+    time: '6 days ago',
+    action: { label: 'Write', cls: '', fn: 'replyTo("omega_fan")' }, cardCls: ''
+  },
+  {
+    id: 26, section: 'earlier', cat: 'tip', unread: false,
+    avatarEmoji: '🌑', avatarClass: 'gold', badgeClass: 'tip',
+    text: '<strong>@shadow_x99</strong> <span>отправил чаевые</span>',
+    amount: '+$10', amountCls: 'gold',
+    time: '1 нед. назад', cardCls: 'gold-card'
+  },
+  {
+    id: 27, section: 'earlier', cat: 'sys', unread: false,
+    avatarEmoji: '📊', avatarClass: 'info', badgeClass: '',
+    text: '<strong>Analytics per month готова</strong> <span>— ваш доход вырос на 34%</span>',
+    tag: { text: '📈 +34%', cls: 'green' },
+    time: '1 нед. назад', cardCls: 'green-card'
+  },
+];
+
+let activeFilter = 'all';
+let readSet = new Set();
+
+// ===== RENDER =====
+function buildCard(n) {
+  const isRead = readSet.has(n.id);
+  const dotHtml = `<div class="unread-dot${(!n.unread || isRead) ? ' read' : ''}"></div>`;
+  const badgeHtml = n.badgeClass ? `<div class="avatar-type-badge ${n.badgeClass}">
+    ${{sub:'★',tip:'$',msg:'✉',like:'♥'}[n.badgeClass] || ''}
+  </div>` : '';
+  const avatarHtml = `
+    <div class="notif-avatar ${n.avatarClass}">
+      ${n.avatarEmoji}
+      ${badgeHtml}
+    </div>`;
+  const quoteHtml = n.quote ? `<div class="notif-quote">"${n.quote}"</div>` : '';
+  const tagHtml = n.tag ? `<span class="notif-tag ${n.tag.cls}">${n.tag.text}</span>` : '';
+  const amountHtml = n.amount ? `<span class="notif-amount ${n.amountCls}">${n.amount}</span>` : '';
+  const actionHtml = n.action ? `<button class="notif-action-btn ${n.action.cls}" onclick="event.stopPropagation();${n.action.fn}">${n.action.label}</button>` : '';
+  return `
+    <div class="notif-card ${n.cardCls} ${isRead ? '' : ''}" data-id="${n.id}" data-cat="${n.cat}" onclick="markRead(${n.id}, '${n.cat}', event)">
+      ${dotHtml}
+      ${avatarHtml}
+      <div class="notif-body">
+        <div class="notif-main-text">${n.text}</div>
+        ${quoteHtml}
+        <div class="notif-meta">
+          ${amountHtml}
+          ${tagHtml}
+          <span class="notif-time">${n.time}</span>
+        </div>
+      </div>
+      <div class="notif-right">
+        <span class="notif-time" style="font-size:11px;color:var(--text-dim)">${n.time}</span>
+        ${actionHtml}
+      </div>
+    </div>`;
+}
+
+function renderSection(sectionId, headerId, countId, items) {
+  const list = document.getElementById(sectionId);
+  const header = document.getElementById(headerId);
+  const countEl = document.getElementById(countId);
+  if (!items.length) {
+    header.style.display = 'none';
+    list.innerHTML = '';
+    return;
+  }
+  header.style.display = 'flex';
+  countEl.textContent = items.length;
+  list.innerHTML = items.map(buildCard).join('');
+}
+
+function render() {
+  const filtered = activeFilter === 'all' ? notifications : notifications.filter(n => n.cat === activeFilter);
+  const today = filtered.filter(n => n.section === 'today');
+  const week = filtered.filter(n => n.section === 'week');
+  const earlier = filtered.filter(n => n.section === 'earlier');
+  renderSection('todayList', 'todayHeader', 'todayCount', today);
+  renderSection('weekList', 'weekHeader', 'weekCount', week);
+  renderSection('earlierList', 'earlierHeader', 'earlierCount', earlier);
+  const empty = !today.length && !week.length && !earlier.length;
+  document.getElementById('emptyState').style.display = empty ? 'flex' : 'none';
+  // update total
+  const unread = notifications.filter(n => n.unread && !readSet.has(n.id)).length;
+  document.getElementById('allCount').textContent = unread > 0 ? `(${unread})` : '';
+}
+
+function setFilter(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+// ===== MARK READ =====
+function markRead(id, cat, event) {
+  if (!readSet.has(id)) {
+    readSet.add(id);
+    const card = event.currentTarget;
+    const dot = card.querySelector('.unread-dot');
+    if (dot) dot.classList.add('read');
+    card.classList.remove('unread');
+    card.style.transition = 'background 0.4s ease';
+  }
+  // navigate based on cat
+  if (cat === 'msg') window.location.href = 'messages.html';
+}
+
+function markAllRead() {
+  notifications.forEach(n => readSet.add(n.id));
+  document.querySelectorAll('.unread-dot').forEach(d => d.classList.add('read'));
+  document.querySelectorAll('.notif-card.unread').forEach(c => c.classList.remove('unread'));
+  document.getElementById('allCount').textContent = '';
+  showToast('✓ All Notifications прочитаны', 'success');
+}
+
+// ===== ACTIONS =====
+function replyTo(username) {
+  showToast(`💬 Переход к переписке с @${username}`, 'accent');
+  setTimeout(() => { window.location.href = 'messages.html'; }, 700);
+}
+function replyMsg(username) {
+  showToast(`💬 Открываем чат с @${username}`, 'accent');
+  setTimeout(() => { window.location.href = 'messages.html'; }, 700);
+}
+function thankFan(username, amount) {
+  const phrases = [
+    `Thank you за $${amount}! Ты лучший 🥰`,
+    `Ты просто золото! Thank you за чаевые 💖`,
+    `Так приятно! Thank you за поддержку 🙏✨`
+  ];
+  const text = phrases[Math.floor(Math.random() * phrases.length)];
+  showToast(`✉️ Отправлено @${username}: "${text}"`, 'gold');
+}
+
+// ===== SETTINGS =====
+function openSettings() { document.getElementById('settingsOverlay').classList.add('open'); }
+function closeSettings() { document.getElementById('settingsOverlay').classList.remove('open'); }
+function handleSettingsOverlayClick(e) {
+  if (e.target === document.getElementById('settingsOverlay')) closeSettings();
+}
+function saveToggle(key, val) {
+  showToast(val ? `✅ Notifications "${key}" включены` : `🔕 Notifications "${key}" отключены`, val ? 'success' : '');
+}
+
+// ===== TOAST =====
+function showToast(text, type) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + (type || '');
+  toast.textContent = text;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = 'kol-fade-out 0.25s ease forwards';
+    setTimeout(() => toast.remove(), 300);
+  }, 3200);
+}
+
+// ===== INIT =====
+render();
+
+// Simulate new notification arriving
+setTimeout(() => {
+  showToast('🔔 @blade_x отправил чаевые $5', 'gold');
+}, 4000);
+</script>
+
+<script>
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../notifications.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="notifications.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
+<style>
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline}
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A}
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+</style>
+<div id="kol-cookie-banner">
+  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
+  </div>
+</div>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div style="flex:1;min-width:0"><strong style="font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:#E8E8F0">Install KOL Studio</strong><span style="font-size:12px;color:#A0A0C0">Works offline • Faster than browser</span></div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="document.getElementById('kol-pwa-prompt').classList.remove('show')">×</button>
+</div>
+<script>
+(function(){
+  var CONSENT_KEY='kol_consent_v2',THEME_KEY='kol_theme';
+  window.kolAcceptCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:true,marketing:true,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  window.kolRejectCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:false,marketing:false,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  var btn=document.getElementById('kol-theme-btn');
+  window.kolToggleTheme=function(){var c=localStorage.getItem(THEME_KEY)||'dark';var n=c==='dark'?'light':'dark';localStorage.setItem(THEME_KEY,n);if(n==='light'){document.body.classList.add('kol-light');btn.textContent='☀️'}else{document.body.classList.remove('kol-light');btn.textContent='🌙'}};
+  var st=localStorage.getItem(THEME_KEY);if(st==='light'){document.body.classList.add('kol-light');if(btn)btn.textContent='☀️'}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!sessionStorage.getItem('kol_pwa_dismissed')&&!localStorage.getItem('kol_pwa_installed'))setTimeout(function(){document.getElementById('kol-pwa-prompt').classList.add('show')},4000)});
+  var ib=document.getElementById('kol-pwa-install-btn');if(ib)ib.addEventListener('click',function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')localStorage.setItem('kol_pwa_installed','1');document.getElementById('kol-pwa-prompt').classList.remove('show');deferredPrompt=null})});
+  document.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem(CONSENT_KEY))setTimeout(function(){document.getElementById('kol-cookie-banner').classList.add('show')},1500)});
+})();
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

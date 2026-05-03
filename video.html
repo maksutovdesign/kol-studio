@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Видеоплеер — KOL Studio">
+  <meta property="og:description" content="Смотри эксклюзивные видео в HD и 4K. Настраивай качество, скорость и субтитры.">
+  <meta property="og:url" content="https://kolstudio.com/video.html">
+  <meta property="og:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Видеоплеер — KOL Studio">
+  <meta name="twitter:description" content="Смотри эксклюзивные видео в HD и 4K. Настраивай качество, скорость и субтитры.">
+  <meta name="twitter:image" content="https://kolstudio.com/icons/og-image.jpg">
+  <meta name="description" content="Смотри эксклюзивные видео в HD и 4K. Настраивай качество, скорость и субтитры.">
+  <title>Luna Vasiliev — Exclusive Studio Session Vol. 3 — KOL Studio</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#07071A;--card:#111128;--card2:#181835;--border:#22224A;--accent:#D42B6A;--accent2:#8B2BE2;--green:#00E676;--gold:#FFB300;--text:#E8E8F0;--text2:#A0A0C0;--text3:#6A6A8A}
+    @keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes kol-fade-out{from{opacity:1}to{opacity:0}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;animation:kol-fade-in 0.3s ease both}
+    a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+
+    /* HEADER */
+    header{background:rgba(7,7,26,0.95);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);position:sticky;top:0;z-index:200;padding:0 24px}
+    .header-inner{max-width:1300px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .logo{font-size:18px;font-weight:800;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+    .hdr-nav{display:flex;gap:16px;align-items:center}
+    .hdr-nav a{color:var(--text2);font-size:13px;font-weight:500;text-decoration:none;transition:color 0.2s}.hdr-nav a:hover{color:var(--text)}
+    .hdr-search{flex:1;max-width:320px;display:flex;background:var(--card2);border:1.5px solid var(--border);border-radius:10px;padding:7px 14px;gap:8px;align-items:center}
+    .hdr-search input{background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:inherit;width:100%}
+    .hdr-search input::placeholder{color:var(--text3)}
+
+    /* LAYOUT */
+    .page-layout{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 360px;gap:24px;padding:24px}
+    @media(max-width:1024px){.page-layout{grid-template-columns:1fr;padding:16px}}
+    @media(max-width:1024px){.sidebar{display:none}}
+
+    /* PLAYER */
+    .player-wrap{background:#000;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:16/9;max-height:72vh;cursor:pointer}
+    .player-bg{width:100%;height:100%;background:linear-gradient(145deg,#0a0a1e,#1a0a2e);display:flex;align-items:center;justify-content:center;position:relative}
+    .player-bg-text{color:rgba(255,255,255,0.06);font-size:80px;font-weight:900;user-select:none}
+    .player-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;opacity:1;transition:opacity 0.3s}
+    .player-wrap.controls-hidden .player-overlay{opacity:0}
+    .play-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(0,0,0,0.6);border:2px solid rgba(255,255,255,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;transition:all 0.2s}
+    .play-center:hover,.play-center.playing{background:rgba(212,43,106,0.8);border-color:var(--accent)}
+    .controls{background:linear-gradient(transparent,rgba(0,0,0,0.85));padding:20px 20px 16px}
+    .progress-area{margin-bottom:12px;position:relative;cursor:pointer}
+    .progress-bg{height:4px;background:rgba(255,255,255,0.2);border-radius:2px;position:relative}
+    .progress-buffered{position:absolute;left:0;top:0;height:100%;width:65%;background:rgba(255,255,255,0.35);border-radius:2px}
+    .progress-fill{position:absolute;left:0;top:0;height:100%;width:24%;background:var(--accent);border-radius:2px;transition:width 0.1s linear}
+    .progress-dot{position:absolute;top:50%;transform:translate(-50%,-50%);left:24%;width:12px;height:12px;background:#fff;border-radius:50%;box-shadow:0 0 6px rgba(0,0,0,0.5);cursor:grab}
+    .chapter-dot{position:absolute;top:50%;transform:translateY(-50%);width:8px;height:8px;background:var(--gold);border-radius:50%;cursor:pointer}
+    .chapter-dot::after{content:attr(data-label);position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.85);color:#fff;font-size:11px;white-space:nowrap;padding:3px 8px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity 0.2s}
+    .chapter-dot:hover::after{opacity:1}
+    .controls-row{display:flex;align-items:center;gap:12px}
+    .ctrl-btn{background:none;border:none;color:#fff;cursor:pointer;font-size:16px;padding:4px;transition:opacity 0.2s;flex-shrink:0}
+    .ctrl-btn:hover{opacity:0.7}
+    .time-display{color:#fff;font-size:13px;font-weight:500;white-space:nowrap}
+    .spacer{flex:1}
+    .volume-row{display:flex;align-items:center;gap:6px}
+    .volume-slider{-webkit-appearance:none;width:70px;height:3px;background:rgba(255,255,255,0.4);border-radius:2px;outline:none;cursor:pointer}
+    .volume-slider::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;background:#fff;border-radius:50%;cursor:pointer}
+    .quality-btn,.speed-btn{position:relative;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:600;color:#fff;cursor:pointer;transition:background 0.2s}
+    .quality-btn:hover,.speed-btn:hover{background:rgba(255,255,255,0.2)}
+    .dropdown-menu{position:absolute;bottom:130%;right:0;background:#1a1a3e;border:1px solid var(--border);border-radius:10px;padding:6px;min-width:100px;display:none;z-index:10}
+    .dropdown-menu.open{display:block}
+    .dropdown-item{padding:7px 12px;font-size:13px;color:var(--text2);cursor:pointer;border-radius:6px;white-space:nowrap}
+    .dropdown-item:hover,.dropdown-item.active{background:rgba(212,43,106,0.15);color:var(--accent)}
+    @media(max-width:600px){.volume-row{display:none}}
+
+    /* BANNER */
+    .sub-banner{background:linear-gradient(135deg,rgba(212,43,106,0.1),rgba(139,43,226,0.1));border:1px solid rgba(212,43,106,0.3);border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .sub-banner p{color:var(--text2);font-size:13px}
+    .sub-banner-cta{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+    .sub-banner-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:0 0 0 8px}
+
+    /* VIDEO INFO */
+    .video-title{font-size:20px;font-weight:700;margin:16px 0 8px;line-height:1.3}
+    .video-meta{color:var(--text3);font-size:13px;margin-bottom:14px}
+    .reactions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+    .react-btn{display:flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;color:var(--text);transition:all 0.2s}
+    .react-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .react-btn.liked{border-color:var(--accent);color:var(--accent);background:rgba(212,43,106,0.08)}
+
+    /* MODEL CARD */
+    .model-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;display:flex;gap:16px;align-items:flex-start}
+    .model-av{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0}
+    .model-info{flex:1;min-width:0}
+    .model-name{font-size:16px;font-weight:700;margin-bottom:2px}
+    .model-subs{color:var(--text3);font-size:13px;margin-bottom:12px}
+    .model-btns{display:flex;gap:8px;flex-wrap:wrap}
+    .sub-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:10px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+    .msg-btn{background:var(--card2);border:1.5px solid var(--border);color:var(--text);border-radius:10px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all 0.2s}
+    .msg-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* DESCRIPTION */
+    .desc-wrap{margin-bottom:20px}
+    .desc-text{color:var(--text2);font-size:14px;line-height:1.7}
+    .desc-text.collapsed{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .desc-toggle{color:var(--accent);font-size:13px;font-weight:500;cursor:pointer;margin-top:8px;display:inline-block}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .tag{background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--text2);cursor:pointer;transition:all 0.2s}
+    .tag:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* COMMENTS */
+    .comments-section{margin-bottom:40px}
+    .comments-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .comments-hdr h3{font-size:16px;font-weight:700}
+    .sort-select{background:var(--card2);border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text);font-size:12px;font-family:inherit;cursor:pointer;outline:none}
+    .comment-input-row{display:flex;gap:12px;margin-bottom:24px;align-items:flex-start}
+    .my-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff}
+    .comment-field{flex:1}
+    .comment-field textarea{width:100%;background:var(--card2);border:1.5px solid var(--border);border-radius:12px;padding:10px 14px;font-size:14px;color:var(--text);font-family:inherit;resize:none;min-height:44px;outline:none;transition:border-color 0.2s;line-height:1.5}
+    .comment-field textarea:focus{border-color:var(--accent)}
+    .comment-actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+    .emoji-btn{background:none;border:none;cursor:pointer;font-size:20px}
+    .submit-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+    .comment{display:flex;gap:12px;margin-bottom:20px}
+    .c-av{width:36px;height:36px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--text);flex-shrink:0}
+    .c-body{flex:1;min-width:0}
+    .c-head{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+    .c-name{font-size:13px;font-weight:600}
+    .c-time{font-size:12px;color:var(--text3)}
+    .c-text{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:6px}
+    .c-actions{display:flex;gap:16px;align-items:center}
+    .c-like{background:none;border:none;cursor:pointer;font-size:13px;color:var(--text3);font-family:inherit;transition:color 0.2s}
+    .c-like:hover,.c-like.liked{color:var(--accent)}
+    .c-reply{background:none;border:none;cursor:pointer;font-size:13px;color:var(--text3);font-family:inherit;transition:color 0.2s}
+    .c-reply:hover{color:var(--text)}
+    .replies{margin-top:12px;padding-left:48px}
+    .load-more{width:100%;background:var(--card2);border:1.5px solid var(--border);border-radius:12px;padding:11px;color:var(--text2);font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s;margin-top:8px}
+    .load-more:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* SIDEBAR */
+    .sidebar{min-width:0}
+    .sidebar h4{font-size:15px;font-weight:700;margin-bottom:16px}
+    .rel-card{display:flex;gap:12px;margin-bottom:16px;cursor:pointer;transition:opacity 0.2s}
+    .rel-card:hover{opacity:0.8}
+    .rel-thumb{width:100px;aspect-ratio:16/9;border-radius:10px;background:linear-gradient(135deg,var(--card2),#0d0d22);flex-shrink:0;position:relative;overflow:hidden}
+    .rel-thumb::after{content:'▶';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:16px;opacity:0.6}
+    .rel-dur{position:absolute;bottom:4px;right:4px;background:rgba(0,0,0,0.8);border-radius:4px;padding:1px 5px;font-size:10px;font-weight:600;color:#fff}
+    .rel-info .r-title{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .rel-info .r-meta{font-size:12px;color:var(--text3)}
+    .sub-cta{background:linear-gradient(135deg,rgba(212,43,106,0.15),rgba(139,43,226,0.15));border:1px solid rgba(212,43,106,0.3);border-radius:16px;padding:20px;text-align:center;margin-top:8px}
+    .sub-cta p{color:var(--text2);font-size:13px;margin-bottom:14px;line-height:1.5}
+    .sub-cta button{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+
+    /* TIP MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:500;display:none;align-items:center;justify-content:center;padding:24px}
+    .modal-overlay.open{display:flex}
+    .modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;width:100%;max-width:360px}
+    .modal h3{font-size:18px;font-weight:700;margin-bottom:8px;text-align:center}
+    .modal p{color:var(--text2);font-size:14px;text-align:center;margin-bottom:24px}
+    .tip-options{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px}
+    .tip-opt{background:var(--card2);border:2px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.2s}
+    .tip-opt:hover,.tip-opt.selected{border-color:var(--accent);background:rgba(212,43,106,0.1)}
+    .tip-opt .coins{font-size:20px;font-weight:800}
+    .tip-opt .usd{font-size:11px;color:var(--text3)}
+    .modal-btns{display:flex;gap:8px}
+    .modal-btns button{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;border:none}
+    .send-tip{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+    .cancel-tip{background:var(--card2);color:var(--text2)}
+
+    footer{border-top:1px solid var(--border);padding:32px 24px;margin-top:16px}
+    .footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+    .footer-links{display:flex;gap:16px;flex-wrap:wrap}
+    .footer-links a{color:var(--text3);font-size:13px;text-decoration:none}.footer-links a:hover{color:var(--text2)}
+    .footer-copy{color:var(--text3);font-size:13px}
+    .lang-switcher{display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:4px 12px}
+    .lang-switcher a{color:var(--text3);font-size:13px;text-decoration:none;padding:2px 6px;border-radius:12px;transition:all 0.2s}
+    .lang-switcher a.active{background:var(--accent);color:#fff}
+    .lang-switcher span{color:var(--border)}
+    .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid var(--border);border-radius:12px;padding:12px 24px;font-size:14px;color:var(--text);box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap}
+    .toast.show{opacity:1}.toast.success{border-color:var(--green);color:var(--green)}
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"VideoObject","name":"Видеоплеер — KOL Studio","description":"Смотри эксклюзивные видео в HD и 4K. Настраивай качество, скорость и субтитры.","url":"https://kolstudio.com/video.html","publisher":{"@type":"Organization","name":"KOL Studio","logo":{"@type":"ImageObject","url":"https://kolstudio.com/icons/icon-192.png"}}, "uploadDate":"2024-01-01","duration":"PT10M"}
+  </script>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/video.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/video.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/video.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/video.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+<style id="kol-skeleton-extra">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px;width:100%}
+.skel-text.w80{width:80%}.skel-text.w60{width:60%}.skel-text.w40{width:40%}.skel-text.w30{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px}
+.skel-row{display:flex;align-items:center;gap:12px}
+.skel-body{flex:1;display:flex;flex-direction:column;gap:8px}
+.skel-btn{height:36px;width:80px;border-radius:10px}
+.skel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+</style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">KOL Studio</a>
+      <div class="hdr-search">
+        <span style="color:var(--text3)">🔍</span>
+        <input type="text" placeholder="Поиск контента...">
+      </div>
+      <nav aria-label="navigation" class="hdr-nav">
+        <a href="feed.html">Лента</a>
+        <a href="messages.html">💬</a>
+        <a href="user-cabinet.html">Кабинет</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-layout">
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="index.html">🏠 Главная</a><span class="sep">›</span><a href="feed.html">Лента</a><span class="sep">›</span><span class="current">Видео</span></nav>
+
+    <!-- LEFT: Player + Info -->
+    <div>
+      <!-- PLAYER -->
+      <div class="player-wrap" id="playerWrap" onclick="togglePlay()" onmousemove="showControls()">
+        <div class="player-bg">
+          <div class="player-bg-text">KOL</div>
+        </div>
+        <div class="player-overlay" id="playerOverlay">
+          <div class="play-center" id="playBtn">▶</div>
+          <div class="controls" onclick="event.stopPropagation()">
+            <!-- Progress -->
+            <div class="progress-area" onclick="seek(event)">
+              <div class="progress-bg">
+                <div class="progress-buffered"></div>
+                <div class="progress-fill" id="progressFill"></div>
+                <div class="progress-dot" id="progressDot"></div>
+                <div class="chapter-dot" style="left:20%" data-label="Вступление"></div>
+                <div class="chapter-dot" style="left:45%" data-label="Основная часть"></div>
+                <div class="chapter-dot" style="left:78%" data-label="Финал"></div>
+              </div>
+            </div>
+            <!-- Controls Row -->
+            <div class="controls-row">
+              <button class="ctrl-btn" id="playBtnCtrl" onclick="togglePlay()">▶</button>
+              <button class="ctrl-btn" onclick="skip(-10)">⏮ 10</button>
+              <button class="ctrl-btn" onclick="skip(10)">10 ⏭</button>
+              <span class="time-display" id="timeDisplay">4:23 / 18:47</span>
+              <div class="spacer"></div>
+              <div class="volume-row">
+                <button class="ctrl-btn">🔊</button>
+                <input type="range" class="volume-slider" min="0" max="100" value="80">
+              </div>
+              <div style="position:relative">
+                <button class="quality-btn" onclick="toggleMenu('qualMenu')">1080p ▾</button>
+                <div class="dropdown-menu" id="qualMenu">
+                  <div class="dropdown-item" onclick="setQuality('4K')">4K Ultra HD</div>
+                  <div class="dropdown-item active" onclick="setQuality('1080p')">1080p Full HD</div>
+                  <div class="dropdown-item" onclick="setQuality('720p')">720p HD</div>
+                  <div class="dropdown-item" onclick="setQuality('480p')">480p SD</div>
+                </div>
+              </div>
+              <div style="position:relative">
+                <button class="speed-btn" onclick="toggleMenu('speedMenu')">1x ▾</button>
+                <div class="dropdown-menu" id="speedMenu">
+                  <div class="dropdown-item" onclick="setSpeed('0.5x')">0.5x Медленно</div>
+                  <div class="dropdown-item" onclick="setSpeed('0.75x')">0.75x</div>
+                  <div class="dropdown-item active" onclick="setSpeed('1x')">1x Норма</div>
+                  <div class="dropdown-item" onclick="setSpeed('1.25x')">1.25x</div>
+                  <div class="dropdown-item" onclick="setSpeed('1.5x')">1.5x</div>
+                  <div class="dropdown-item" onclick="setSpeed('2x')">2x Быстро</div>
+                </div>
+              </div>
+              <button class="ctrl-btn" title="Субтитры">CC</button>
+              <button class="ctrl-btn" onclick="togglePiP()" title="Картинка в картинке">⧉</button>
+              <button class="ctrl-btn" onclick="toggleFS()" title="Полный экран">⛶</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UNLOCK BANNER -->
+      <div class="sub-banner" id="subBanner">
+        <p>👁 Вы смотрите бесплатный фрагмент. Подпишитесь, чтобы разблокировать полное HD видео и 247+ эксклюзивных материалов.</p>
+        <button class="sub-banner-cta" onclick="location.href='checkout.html'">Подписаться за $14.99/мес</button>
+        <button class="sub-banner-close" onclick="document.getElementById('subBanner').remove()" aria-label="Закрыть">×</button>
+      </div>
+
+      <!-- VIDEO INFO -->
+      <h1 class="video-title">Exclusive Studio Session — Behind the Scenes Vol. 3</h1>
+      <p class="video-meta">124K просмотров • 2 дня назад • 1080p HD • 18:47</p>
+
+      <!-- REACTIONS -->
+      <div class="reactions">
+        <button class="react-btn liked" id="likeBtn" onclick="toggleLike()">👍 4,231</button>
+        <button class="react-btn" onclick="addLove()">❤️ <span id="loveCount">1,842</span></button>
+        <button class="react-btn" onclick="scrollToComments()">💬 342 комм.</button>
+        <button class="react-btn" onclick="shareVideo()">🔗 Поделиться</button>
+        <button class="react-btn" onclick="toggleBookmark()">🔖 Сохранить</button>
+        <button class="react-btn" onclick="document.getElementById('tipModal').classList.add('open')">⚡ Чаевые</button>
+      </div>
+
+      <!-- MODEL CARD -->
+      <div class="model-card">
+        <div class="model-av">L</div>
+        <div class="model-info">
+          <div class="model-name">Luna Vasiliev</div>
+          <div class="model-subs">147K подписчиков • Verified ✓</div>
+          <div class="model-btns">
+            <button class="sub-btn" onclick="location.href='checkout.html'">Подписаться $14.99/мес</button>
+            <button class="msg-btn" onclick="location.href='messages.html'">💬 Написать</button>
+            <button class="msg-btn" onclick="location.href='profile.html'">Профиль</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="desc-wrap">
+        <div class="desc-text collapsed" id="descText">
+          Эксклюзивная запись нашей студийной сессии — третий выпуск серии Behind the Scenes. В этом видео вы увидите всё, что происходит за кулисами профессиональной фотосессии в стиле boudoir: подготовку, работу с командой стилистов, особенности освещения и многое другое. Это видео создано для подписчиков уровня VIP, которые хотят узнать меня ближе и увидеть творческий процесс изнутри. Приятного просмотра! 💋
+        </div>
+        <span class="desc-toggle" id="descToggle" onclick="toggleDesc()">Показать ещё</span>
+        <div class="tags">
+          <span class="tag" onclick="location.href='search.html?q=BehindTheScenes'">#BehindTheScenes</span>
+          <span class="tag" onclick="location.href='search.html?q=Boudoir'">#Boudoir</span>
+          <span class="tag" onclick="location.href='search.html?q=Exclusive'">#Exclusive</span>
+          <span class="tag" onclick="location.href='search.html?q=Studio'">#Studio</span>
+          <span class="tag" onclick="location.href='search.html?q=VIP'">#VIP</span>
+        </div>
+      </div>
+
+      <!-- COMMENTS -->
+      <div class="comments-section" id="commentsSection">
+        <div class="comments-hdr">
+          <h3>💬 Комментарии <span style="color:var(--text3);font-weight:400">342</span></h3>
+          <select class="sort-select">
+            <option>Лучшие</option>
+            <option>Новые</option>
+          </select>
+        </div>
+
+        <div class="comment-input-row">
+          <div class="my-av">A</div>
+          <div class="comment-field">
+            <textarea id="newComment" placeholder="Оставьте комментарий..." rows="1" oninput="autoResize(this)"></textarea>
+            <div class="comment-actions">
+              <button class="emoji-btn">😊</button>
+              <button class="submit-btn" onclick="submitComment()">Отправить</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="commentsList">
+          <div class="comment" id="c1">
+            <div class="c-av" style="background:linear-gradient(135deg,#D42B6A,#8B2BE2)">M</div>
+            <div class="c-body">
+              <div class="c-head">
+                <span class="c-name">max_photo</span>
+                <span class="c-time">2 часа назад</span>
+              </div>
+              <p class="c-text">Потрясающая работа! Видно сколько труда вложено в каждый кадр. Ждём четвёртую часть! 🔥</p>
+              <div class="c-actions">
+                <button class="c-like" onclick="likeComment(this)">❤️ 48</button>
+                <button class="c-reply" onclick="replyTo('max_photo')">Ответить</button>
+              </div>
+              <div class="replies">
+                <div class="comment">
+                  <div class="c-av" style="font-size:10px;background:rgba(212,43,106,0.3)">L</div>
+                  <div class="c-body">
+                    <div class="c-head"><span class="c-name">luna_vasiliev</span><span style="font-size:11px;background:var(--accent);color:#fff;padding:1px 6px;border-radius:10px">Автор</span><span class="c-time">1 час назад</span></div>
+                    <p class="c-text">Спасибо, Max! Уже работаю над четвёртой частью 🎬💕</p>
+                    <div class="c-actions">
+                      <button class="c-like" onclick="likeComment(this)">❤️ 23</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="comment">
+            <div class="c-av" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">A</div>
+            <div class="c-body">
+              <div class="c-head"><span class="c-name">anna_kv</span><span class="c-time">5 часов назад</span></div>
+              <p class="c-text">Лучший контент на платформе! Подписка стоит каждой копейки 💎</p>
+              <div class="c-actions">
+                <button class="c-like" onclick="likeComment(this)">❤️ 31</button>
+                <button class="c-reply" onclick="replyTo('anna_kv')">Ответить</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="comment">
+            <div class="c-av">S</div>
+            <div class="c-body">
+              <div class="c-head"><span class="c-name">sigma_v</span><span class="c-time">7 часов назад</span></div>
+              <p class="c-text">Качество съёмки просто на высоте. Когда следующая live-сессия?</p>
+              <div class="c-actions">
+                <button class="c-like" onclick="likeComment(this)">❤️ 17</button>
+                <button class="c-reply" onclick="replyTo('sigma_v')">Ответить</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="comment">
+            <div class="c-av" style="background:rgba(0,230,118,0.3)">K</div>
+            <div class="c-body">
+              <div class="c-head"><span class="c-name">kira_fan</span><span class="c-time">1 день назад</span></div>
+              <p class="c-text">10/10 без вопросов! 🌟🌟🌟🌟🌟</p>
+              <div class="c-actions">
+                <button class="c-like" onclick="likeComment(this)">❤️ 12</button>
+                <button class="c-reply">Ответить</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="load-more" onclick="loadMoreComments()">Загрузить ещё комментарии (338)</button>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <h4>Ещё от Luna Vasiliev</h4>
+      <div id="relatedList"></div>
+      <div class="sub-cta">
+        <p>Подпишитесь и разблокируйте<br><strong style="color:var(--text)">247+ эксклюзивных видео</strong><br>и ежедневные обновления</p>
+        <button onclick="location.href='checkout.html'">Подписаться за $14.99/мес</button>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="terms.html">Условия</a>
+        <a href="privacy.html">Конфиденциальность</a>
+        <a href="cookie.html">Cookie</a>
+        <a href="dmca.html">DMCA</a>
+        <a href="2257.html">2257</a>
+        <a href="help.html">Помощь</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div class="lang-switcher">
+          <a href="video.html" class="active">🇷🇺 RU</a>
+          <span>|</span>
+          <a href="en/video.html">🇬🇧 EN</a>
+        </div>
+        <span class="footer-copy">© 2026 KOL Studio. 18+ only.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TIP MODAL -->
+  <div class="modal-overlay" id="tipModal" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="modal">
+      <h3>⚡ Отправить чаевые</h3>
+      <p>Поддержите Luna Vasiliev монетами</p>
+      <div class="tip-options">
+        <div class="tip-opt" onclick="selectTip(this,200)"><div class="coins">200</div><div class="usd">≈ $2</div></div>
+        <div class="tip-opt selected" onclick="selectTip(this,500)"><div class="coins">500</div><div class="usd">≈ $5</div></div>
+        <div class="tip-opt" onclick="selectTip(this,1000)"><div class="coins">1000</div><div class="usd">≈ $10</div></div>
+      </div>
+      <div class="modal-btns">
+        <button class="send-tip" onclick="sendTip()">Отправить ⚡</button>
+        <button class="cancel-tip" onclick="document.getElementById('tipModal').classList.remove('open')">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let playing=false, progress=24, controlsTimer=null, tipAmount=500;
+
+    function showToast(msg, type=''){
+      const t=document.getElementById('toast');
+      t.textContent=msg; t.className='toast show'+(type?' '+type:'');
+      setTimeout(()=>t.className='toast',3000);
+    }
+
+    function togglePlay(){
+      playing=!playing;
+      const pb=document.getElementById('playBtn');
+      const pc=document.getElementById('playBtnCtrl');
+      pb.textContent=playing?'⏸':'▶';
+      pc.textContent=playing?'⏸':'▶';
+      pb.classList.toggle('playing',playing);
+      if(playing) simProgress();
+    }
+
+    let simTimer=null;
+    function simProgress(){
+      clearInterval(simTimer);
+      if(!playing)return;
+      simTimer=setInterval(()=>{
+        if(!playing){clearInterval(simTimer);return}
+        progress=Math.min(100,progress+0.05);
+        document.getElementById('progressFill').style.width=progress+'%';
+        document.getElementById('progressDot').style.left=progress+'%';
+        const total=1127, cur=Math.round(total*progress/100);
+        const f=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+        document.getElementById('timeDisplay').textContent=f(cur)+' / '+f(total);
+        if(progress>=100) clearInterval(simTimer);
+      },200);
+    }
+
+    function skip(s){ progress=Math.max(0,Math.min(100,progress+s/11.27)); document.getElementById('progressFill').style.width=progress+'%'; document.getElementById('progressDot').style.left=progress+'%'; }
+    function seek(e){ const rect=e.currentTarget.getBoundingClientRect(); progress=Math.max(0,Math.min(100,(e.clientX-rect.left)/rect.width*100)); document.getElementById('progressFill').style.width=progress+'%'; document.getElementById('progressDot').style.left=progress+'%'; }
+
+    function showControls(){
+      document.getElementById('playerWrap').classList.remove('controls-hidden');
+      clearTimeout(controlsTimer);
+      if(playing) controlsTimer=setTimeout(()=>document.getElementById('playerWrap').classList.add('controls-hidden'),3000);
+    }
+
+    function toggleMenu(id){
+      document.querySelectorAll('.dropdown-menu').forEach(m=>{ if(m.id!==id) m.classList.remove('open'); });
+      document.getElementById(id).classList.toggle('open');
+    }
+
+    function setQuality(q){ document.querySelector('.quality-btn').textContent=q+' ▾'; document.querySelectorAll('#qualMenu .dropdown-item').forEach(i=>i.classList.toggle('active',i.textContent.includes(q))); document.getElementById('qualMenu').classList.remove('open'); showToast('Качество: '+q); }
+    function setSpeed(s){ document.querySelector('.speed-btn').textContent=s+' ▾'; document.querySelectorAll('#speedMenu .dropdown-item').forEach(i=>i.classList.toggle('active',i.textContent.includes(s))); document.getElementById('speedMenu').classList.remove('open'); showToast('Скорость: '+s); }
+
+    function toggleFS(){ if(!document.fullscreenElement) document.getElementById('playerWrap').requestFullscreen().catch(()=>{}); else document.exitFullscreen(); }
+    function togglePiP(){ showToast('PiP режим активирован'); }
+
+    let liked=true;
+    function toggleLike(){ liked=!liked; document.getElementById('likeBtn').classList.toggle('liked',liked); document.getElementById('likeBtn').textContent='👍 '+(liked?'4,231':'4,230'); }
+    function addLove(){ const el=document.getElementById('loveCount'); el.textContent=(parseInt(el.textContent.replace(',',''))+1).toLocaleString(); }
+    function scrollToComments(){ document.getElementById('commentsSection').scrollIntoView({behavior:'smooth'}); }
+    function toggleBookmark(){ showToast('Добавлено в сохранённое 🔖','success'); }
+
+    function shareVideo(){
+      if(navigator.share) navigator.share({title:'Luna Vasiliev — KOL Studio',url:location.href}).catch(()=>{});
+      else { navigator.clipboard.writeText(location.href).then(()=>showToast('Ссылка скопирована!','success')); }
+    }
+
+    function submitComment(){
+      const ta=document.getElementById('newComment');
+      const text=ta.value.trim();
+      if(!text)return;
+      const div=document.createElement('div');
+      div.className='comment';
+      div.innerHTML=`<div class="c-av" style="background:linear-gradient(135deg,var(--accent),var(--accent2))">A</div><div class="c-body"><div class="c-head"><span class="c-name">Вы</span><span class="c-time">Только что</span></div><p class="c-text">${text}</p><div class="c-actions"><button class="c-like" onclick="likeComment(this)">❤️ 0</button><button class="c-reply">Ответить</button></div></div>`;
+      document.getElementById('commentsList').prepend(div);
+      ta.value=''; ta.style.height='auto';
+      showToast('Комментарий опубликован!','success');
+    }
+
+    function likeComment(btn){ const n=parseInt(btn.textContent.replace(/[^\d]/g,''))||0; btn.classList.toggle('liked'); btn.textContent='❤️ '+(btn.classList.contains('liked')?n+1:n-1); }
+    function replyTo(name){ document.getElementById('newComment').value='@'+name+' '; document.getElementById('newComment').focus(); }
+    function autoResize(el){ el.style.height='auto'; el.style.height=(el.scrollHeight)+'px'; }
+    function loadMoreComments(){ showToast('Загрузка комментариев...'); }
+    function selectTip(el, amount){ document.querySelectorAll('.tip-opt').forEach(o=>o.classList.remove('selected')); el.classList.add('selected'); tipAmount=amount; }
+    function sendTip(){ document.getElementById('tipModal').classList.remove('open'); showToast('Чаевые '+tipAmount+' монет отправлены! ⚡','success'); }
+
+    // Related videos
+    const related=[
+      {title:'Boudoir Photoshoot — Spring Collection',views:'87K',dur:'12:34',grad:'rgba(212,43,106,0.2)'},
+      {title:'Morning Routine — Day in My Life',views:'54K',dur:'8:21',grad:'rgba(139,43,226,0.15)'},
+      {title:'Cosplay Session — Fantasy Edition',views:'112K',dur:'22:05',grad:'rgba(255,179,0,0.12)'},
+      {title:'Q&A — Your Questions Answered',views:'41K',dur:'31:18',grad:'rgba(0,230,118,0.08)'},
+      {title:'VIP Exclusive — Unboxing My New Outfits',views:'69K',dur:'15:47',grad:'rgba(212,43,106,0.15)'},
+      {title:'Behind the Camera — Vol. 2',views:'93K',dur:'19:02',grad:'rgba(139,43,226,0.2)'},
+    ];
+    document.getElementById('relatedList').innerHTML=related.map(r=>`
+      <div class="rel-card" onclick="location.href='video.html'">
+        <div class="rel-thumb" style="background:linear-gradient(145deg,var(--card2),${r.grad})">
+          <div class="rel-dur">${r.dur}</div>
+        </div>
+        <div class="rel-info">
+          <div class="r-title">${r.title}</div>
+          <div class="r-meta">Luna Vasiliev • ${r.views} просм.</div>
+        </div>
+      </div>
+    `).join('');
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      document.addEventListener('click',()=>document.querySelectorAll('.dropdown-menu').forEach(m=>m.classList.remove('open')));
+      document.querySelectorAll('a[href]').forEach(a=>{
+        const h=a.getAttribute('href');
+        if(!h||h.startsWith('#')||h.startsWith('http'))return;
+        a.addEventListener('click',e=>{
+          e.preventDefault();
+          document.body.style.animation='kol-fade-out 0.25s ease forwards';
+          setTimeout(()=>location.href=h,250);
+        });
+      });
+    });
+  </script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     KOL Studio Global Components
+     1. GDPR Cookie Consent Banner
+     2. Dark / Light Theme Toggle
+     3. PWA Install Prompt
+═══════════════════════════════════════════════════════════ -->
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="cookie.html">Подробнее</a> · <a href="report.html">Пожаловаться</a> · <a href="api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+<!-- ── Unified Report Modal ── -->
+<style>
+#kol-report-modal{position:fixed;inset:0;z-index:10100;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-report-modal.show{display:flex}
+#kol-report-modal-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-report-modal-box{position:relative;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;z-index:1;animation:kol-modal-in 0.25s ease}
+@keyframes kol-modal-in{from{opacity:0;transform:scale(0.92) translateY(20px)}to{opacity:1;transform:none}}
+#kol-report-modal-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 6px}
+#kol-report-modal-box p{color:#A0A0C0;font-size:14px;margin:0 0 20px;line-height:1.6}
+.krm-types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.krm-type{background:#181835;border:1.5px solid #22224A;border-radius:12px;padding:12px;cursor:pointer;text-align:left;font-family:inherit;color:#E8E8F0;font-size:13px;transition:all 0.2s;display:flex;flex-direction:column;gap:4px}
+.krm-type:hover{border-color:#D42B6A;background:#1E1E3F}
+.krm-type.selected{border-color:#D42B6A;background:rgba(212,43,106,0.1);box-shadow:0 0 0 3px rgba(212,43,106,0.15)}
+.krm-type-icon{font-size:20px}
+.krm-type-label{font-weight:600;font-size:12px}
+.krm-desc{background:#181835;border:1.5px solid #22224A;border-radius:12px;width:100%;padding:12px 14px;font-family:inherit;font-size:14px;color:#E8E8F0;resize:vertical;min-height:100px;box-sizing:border-box;outline:none;transition:border-color 0.2s;margin-bottom:16px}
+.krm-desc:focus{border-color:#8B2BE2}
+.krm-footer{display:flex;gap:12px;justify-content:flex-end}
+.krm-cancel{background:none;border:1.5px solid #22224A;color:#A0A0C0;border-radius:10px;padding:10px 20px;font-size:14px;font-family:inherit;cursor:pointer;transition:all 0.2s}
+.krm-cancel:hover{border-color:#D42B6A;color:#E8E8F0}
+.krm-submit{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:10px 24px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:opacity 0.2s}
+.krm-submit:hover{opacity:0.9}
+.krm-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;line-height:1;padding:4px}
+.krm-close:hover{color:#E8E8F0}
+.krm-success{text-align:center;padding:20px 0}
+.krm-success-icon{font-size:48px;margin-bottom:12px}
+.krm-success h4{font-size:18px;font-weight:700;color:#00E676;margin:0 0 8px}
+.krm-success p{color:#A0A0C0;font-size:14px;margin:0}
+.krm-ticket{display:inline-block;background:#181835;border:1px solid #22224A;border-radius:8px;padding:6px 14px;font-size:12px;color:#FFB300;margin-top:12px;font-family:monospace}
+</style>
+<div id="kol-report-modal">
+  <div id="kol-report-modal-backdrop" onclick="kolCloseReport()"></div>
+  <div id="kol-report-modal-box">
+    <button class="krm-close" onclick="kolCloseReport()" aria-label="Закрыть">✕</button>
+    <div id="krm-form">
+      <h3>🚩 Пожаловаться</h3>
+      <p>Выберите причину жалобы. Мы рассмотрим её в течение 24–48 часов.</p>
+      <div class="krm-types">
+        <button class="krm-type" onclick="krmSelect(this,'illegal')">
+          <span class="krm-type-icon">🚫</span>
+          <span class="krm-type-label">Незаконный контент</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'fraud')">
+          <span class="krm-type-icon">💰</span>
+          <span class="krm-type-label">Мошенничество</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'dmca')">
+          <span class="krm-type-icon">📋</span>
+          <span class="krm-type-label">Авторские права</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'spam')">
+          <span class="krm-type-icon">🤖</span>
+          <span class="krm-type-label">Спам / Бот</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'harassment')">
+          <span class="krm-type-icon">😤</span>
+          <span class="krm-type-label">Харассмент</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'other')">
+          <span class="krm-type-icon">📌</span>
+          <span class="krm-type-label">Другое</span>
+        </button>
+      </div>
+      <textarea class="krm-desc" id="krm-desc" placeholder="Опишите проблему подробнее (необязательно)..." maxlength="1000"></textarea>
+      <div class="krm-footer">
+        <button class="krm-cancel" onclick="kolCloseReport()">Отмена</button>
+        <button class="krm-submit" onclick="krmSubmit()">Отправить</button>
+      </div>
+    </div>
+    <div id="krm-success" class="krm-success" style="display:none">
+      <div class="krm-success-icon">✅</div>
+      <h4>Жалоба отправлена</h4>
+      <p>Мы рассмотрим её в течение 24–48 часов</p>
+      <div class="krm-ticket" id="krm-ticket-id"></div>
+    </div>
+  </div>
+</div>
+<script>
+window._krmType = null;
+function kolOpenReport(targetId){
+  window._krmReportTarget = targetId||null;
+  document.getElementById('krm-form').style.display='';
+  document.getElementById('krm-success').style.display='none';
+  document.querySelectorAll('.krm-type').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('krm-desc').value='';
+  window._krmType=null;
+  document.getElementById('kol-report-modal').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function kolCloseReport(){
+  document.getElementById('kol-report-modal').classList.remove('show');
+  document.body.style.overflow='';
+}
+function krmSelect(btn,type){
+  document.querySelectorAll('.krm-type').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  window._krmType=type;
+}
+function krmSubmit(){
+  if(!window._krmType){
+    if(window.kolShowToast) kolShowToast('Выберите причину жалобы','error');
+    return;
+  }
+  document.getElementById('krm-form').style.display='none';
+  document.getElementById('krm-success').style.display='block';
+  const id='RPT-'+new Date().getFullYear()+'-'+Math.floor(1000+Math.random()*9000);
+  document.getElementById('krm-ticket-id').textContent='Номер: '+id;
+  setTimeout(kolCloseReport,4000);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')kolCloseReport();});
+</script>
+
+<!-- ── Turbo Tips System ── -->
+<style>
+.kol-turbo-tip{position:fixed;pointer-events:none;z-index:10200;font-weight:900;text-shadow:0 0 20px currentColor;animation:kol-tip-fly 1.8s ease-out forwards}
+@keyframes kol-tip-fly{0%{opacity:1;transform:translateY(0) scale(1)}60%{opacity:1;transform:translateY(-80px) scale(1.3)}100%{opacity:0;transform:translateY(-160px) scale(0.8)}}
+.kol-tip-burst{position:fixed;pointer-events:none;z-index:10199;border-radius:50%;animation:kol-burst 0.6s ease-out forwards}
+@keyframes kol-burst{0%{transform:scale(0);opacity:0.8}100%{transform:scale(3);opacity:0}}
+#kol-tip-streak{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10300;pointer-events:none;text-align:center;display:none}
+#kol-tip-streak.show{display:block;animation:kol-streak-pop 2s ease-out forwards}
+@keyframes kol-streak-pop{0%{opacity:0;transform:translate(-50%,-50%) scale(0.5)}15%{opacity:1;transform:translate(-50%,-60%) scale(1.2)}30%{transform:translate(-50%,-60%) scale(1)}85%{opacity:1;transform:translate(-50%,-60%) scale(1)}100%{opacity:0;transform:translate(-50%,-80%) scale(0.9)}}
+#kol-tip-streak .streak-emoji{font-size:64px;display:block}
+#kol-tip-streak .streak-text{font-size:28px;font-weight:900;background:linear-gradient(135deg,#FFB300,#D42B6A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;margin-top:8px}
+#kol-tip-streak .streak-sub{font-size:14px;color:#A0A0C0;display:block;margin-top:4px}
+</style>
+<div id="kol-tip-streak">
+  <span class="streak-emoji" id="kol-streak-emoji">🔥</span>
+  <span class="streak-text" id="kol-streak-text">MEGA TIP!</span>
+  <span class="streak-sub" id="kol-streak-sub"></span>
+</div>
+<script>
+(function(){
+  const TIP_CONFIG = [
+    {min:0,max:99,emoji:'💰',color:'#FFB300',size:'24px',label:''},
+    {min:100,max:499,emoji:'💎',color:'#00E676',size:'32px',label:'Щедро!'},
+    {min:500,max:999,emoji:'🔥',color:'#FF6B35',size:'40px',label:'Огонь!'},
+    {min:1000,max:Infinity,emoji:'👑',color:'#D42B6A',size:'52px',label:'МЕГА ТИП!'}
+  ];
+
+  window.kolFireTip = function(amount, x, y){
+    const cfg = TIP_CONFIG.find(c => amount >= c.min && amount <= c.max) || TIP_CONFIG[0];
+    
+    // Floating emoji
+    const el = document.createElement('div');
+    el.className = 'kol-turbo-tip';
+    el.textContent = cfg.emoji + ' +' + amount;
+    el.style.cssText = 'left:'+(x||window.innerWidth/2)+'px;top:'+(y||window.innerHeight/2)+'px;font-size:'+cfg.size+';color:'+cfg.color;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', ()=>el.remove());
+    
+    // Burst ring for large tips
+    if(amount >= 100){
+      const burst = document.createElement('div');
+      burst.className = 'kol-tip-burst';
+      burst.style.cssText = 'left:'+(x||window.innerWidth/2)+'px;top:'+(y||window.innerHeight/2)+'px;width:60px;height:60px;background:'+cfg.color+';margin:-30px 0 0 -30px';
+      document.body.appendChild(burst);
+      burst.addEventListener('animationend', ()=>burst.remove());
+    }
+    
+    // Streak popup for mega tips
+    if(amount >= 500 && cfg.label){
+      const streak = document.getElementById('kol-tip-streak');
+      document.getElementById('kol-streak-emoji').textContent = cfg.emoji;
+      document.getElementById('kol-streak-text').textContent = cfg.label;
+      document.getElementById('kol-streak-sub').textContent = amount + ' монет отправлено!';
+      streak.classList.remove('show');
+      void streak.offsetWidth;
+      streak.classList.add('show');
+      streak.addEventListener('animationend',()=>streak.classList.remove('show'),{once:true});
+    }
+    
+    // Trigger toast
+    if(window.kolShowToast) kolShowToast(cfg.emoji + ' Чаевые ' + amount + ' монет отправлены!', 'success');
+  };
+  
+  // Auto-wire tip buttons
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-tip-amount]');
+    if(!btn) return;
+    const amt = parseInt(btn.dataset.tipAmount);
+    if(!isNaN(amt)) kolFireTip(amt, e.clientX, e.clientY);
+  });
+})();
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href = 'search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href = 'upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

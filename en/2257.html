@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>18 U.S.C. § 2257 — KOL Studio</title>
+  <meta name="description" content="Compliance Statement требованиям 18 U.S.C. § 2257 по хранению документации о возрасте исполнителей.">
+  <link rel="manifest" href="../manifest.json">
+  <link rel="icon" href="../icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#07071A;--card:#111128;--card2:#181835;--border:#22224A;--accent:#D42B6A;--accent2:#8B2BE2;--green:#00E676;--gold:#FFB300;--text:#E8E8F0;--text2:#A0A0C0;--text3:#6A6A8A}
+    @keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes kol-fade-out{from{opacity:1}to{opacity:0}}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;animation:kol-fade-in 0.3s ease both}
+    a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+    header{background:rgba(7,7,26,0.95);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;padding:0 24px}
+    .header-inner{max-width:1100px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-size:20px;font-weight:800;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+    .header-nav{display:flex;gap:24px}.header-nav a{color:var(--text2);font-size:14px;font-weight:500;text-decoration:none;transition:color 0.2s}.header-nav a:hover{color:var(--text)}
+    .page-wrap{max-width:860px;margin:0 auto;padding:48px 24px}
+    @media(max-width:600px){.page-wrap{padding:32px 16px}}
+    .page-hero{text-align:center;margin-bottom:48px}
+    .page-hero h1{font-size:32px;font-weight:800;margin-bottom:12px;line-height:1.2}
+    .page-hero .statute{font-size:14px;color:var(--text2);margin-bottom:16px}
+    .page-hero .badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .badge{background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.3);color:var(--green);padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600}
+    .badge.pink{background:rgba(212,43,106,0.15);border-color:rgba(212,43,106,0.3);color:var(--accent)}
+    .alert-red{background:rgba(220,53,69,0.1);border:2px solid rgba(220,53,69,0.5);border-radius:16px;padding:24px;margin-bottom:32px;display:flex;gap:16px}
+    .alert-red .icon{font-size:32px;flex-shrink:0}
+    .alert-red .body h3{font-size:16px;font-weight:700;color:#ff6b6b;margin-bottom:8px}
+    .alert-red .body p{color:#ff9999;line-height:1.7;font-size:14px}
+    .alert-red .body a{color:#ff6b6b;font-weight:700}
+    .section{margin-bottom:28px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px}
+    .section h2{font-size:17px;font-weight:700;margin-bottom:14px;color:var(--text);display:flex;align-items:center;gap:8px}
+    .section h2 .tag{font-size:11px;background:var(--card2);border:1px solid var(--border);color:var(--text3);padding:2px 8px;border-radius:10px;font-weight:500}
+    .section p{color:var(--text2);line-height:1.8;margin-bottom:12px;font-size:14px}
+    .section p:last-child{margin-bottom:0}
+    .section ul{color:var(--text2);line-height:1.8;padding-left:20px;font-size:14px}
+    .section li{margin-bottom:6px}
+    .custodian-box{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:20px;font-size:14px}
+    .custodian-box .row{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start}
+    .custodian-box .row:last-child{margin-bottom:0}
+    .custodian-box .label{color:var(--text3);font-weight:500;min-width:140px;flex-shrink:0}
+    .custodian-box .value{color:var(--text)}
+    .info-box{background:rgba(255,179,0,0.08);border:1px solid rgba(255,179,0,0.3);border-radius:12px;padding:16px;margin-top:12px}
+    .info-box p{color:var(--gold);margin:0;font-size:13px;line-height:1.7}
+    .verify-steps{list-style:none;padding:0}
+    .verify-steps li{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+    .verify-steps li .step-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+    .verify-steps li .step-text{color:var(--text2);line-height:1.7;font-size:14px;padding-top:6px}
+    footer{border-top:1px solid var(--border);padding:40px 24px;margin-top:60px}
+    .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+    .footer-links{display:flex;gap:20px;flex-wrap:wrap}
+    .footer-links a{color:var(--text3);font-size:13px;text-decoration:none;transition:color 0.2s}.footer-links a:hover{color:var(--text2)}
+    .footer-copy{color:var(--text3);font-size:13px}
+    .lang-switcher{display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:4px 12px}
+    .lang-switcher a{color:var(--text3);font-size:13px;font-weight:500;text-decoration:none;padding:2px 6px;border-radius:12px;transition:all 0.2s}
+    .lang-switcher a.active{background:var(--accent);color:#fff}
+    .lang-switcher span{color:var(--border)}
+  </style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/2257.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/2257.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/2257.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/2257.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+
+<style id="kol-skeleton-css">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skel-title{height:22px;width:60%;margin-bottom:12px;border-radius:6px}
+.skel-avatar{width:44px;height:44px;border-radius:50%}
+.skel-thumb{width:100%;height:180px;border-radius:12px}
+.skel-btn{height:38px;width:120px;border-radius:10px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px}
+.skel-row{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #22224A}
+.skel-body{display:flex;flex-direction:column;gap:8px;flex:1}
+</style>
+</head>
+<body>
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="../index.html">🏠 Главная</a><span class="sep">›</span><a href="../help.html">Помощь</a><span class="sep">›</span><span class="current">18 U.S.C. § 2257</span></nav>
+  <header>
+    <div class="header-inner">
+      <a href="../index.html" class="logo">KOL Studio</a>
+      <nav class="header-nav">
+        <a href="../terms.html">Terms</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="../dmca.html">DMCA</a>
+        <a href="../help.html">Help</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-wrap">
+    <div class="page-hero">
+      <h1>Compliance Statement<br>18 U.S.C. § 2257</h1>
+      <p class="statute">Требования к хранению документации (28 C.F.R. § 75)</p>
+      <div class="badges">
+        <span class="badge">✓ Records Kept</span>
+        <span class="badge">✓ 18+ Verified</span>
+        <span class="badge pink">Последнее обновление: 1 января 2026</span>
+      </div>
+    </div>
+
+    <div class="alert-red">
+      <div class="icon">⛔</div>
+      <div class="body">
+        <h3>Found content involving minors?</h3>
+        <p>Если вы считаете, что на платформе KOL Studio размещён контент с участием несовершеннолетних лиц, <strong>немедленно</strong> сообщите об этом по адресу <a href="mailto:compliance@kolstudio.com">compliance@kolstudio.com</a>. Мы обязуемся рассмотреть такие обращения в течение 24 часов и при необходимости передать информацию в правоохранительные органы.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Primary Statement</h2>
+      <p>All itemы, размещённые на платформе KOL Studio (kolstudio.com) и содержащие изображения сексуального характера, произведены лицами, являвшимися совершеннолетними (не моложе 18 лет) на момент создания таких items.</p>
+      <p>KOL Studio обеспечивает соблюдение требований 18 U.S.C. § 2257 и 28 C.F.R. § 75 в части хранения документации, подтверждающей возраст всех исполнителей, изображённых в itemах сексуального характера, производство которых осуществлялось при нашем участии.</p>
+    </div>
+
+    <div class="section">
+      <h2>Records Custodian <span class="tag">Records Custodian</span></h2>
+      <p>В соответствии с 18 U.S.C. § 2257 и 28 C.F.R. § 75.1, нами назначен официальный хранитель документации:</p>
+      <div class="custodian-box">
+        <div class="row"><span class="label">Организация:</span><span class="value">KOL Studio LLC</span></div>
+        <div class="row"><span class="label">Должность:</span><span class="value">Compliance Officer / Records Custodian</span></div>
+        <div class="row"><span class="label">Email:</span><span class="value"><a href="mailto:compliance@kolstudio.com">compliance@kolstudio.com</a></span></div>
+        <div class="row"><span class="label">Хранение записей:</span><span class="value">В соответствии с 28 C.F.R. § 75.2 — минимум 7 лет с момента производства</span></div>
+        <div class="row"><span class="label">Инспекция:</span><span class="value">Документация доступна уполномоченным органам по запросу в рабочие часы</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Age Verification</h2>
+      <p>Перед публикацией любого контента KOL Studio требует от всех авторов прохождения обязательной процедуры верификации:</p>
+      <ul class="verify-steps">
+        <li>
+          <div class="step-icon">🪪</div>
+          <div class="step-text"><strong>Удостоверение личности государственного образца.</strong> Паспорт, водительское удостоверение или иной документ, удостоверяющий личность с указанием даты рождения. Документ должен быть действующим на момент регистрации.</div>
+        </li>
+        <li>
+          <div class="step-icon">🤳</div>
+          <div class="step-text"><strong>Биометрическая верификация.</strong> Сравнение фотографии с удостоверением личности с помощью сертифицированного стороннего сервиса верификации для предотвращения мошенничества.</div>
+        </li>
+        <li>
+          <div class="step-icon">📋</div>
+          <div class="step-text"><strong>Подписание заявления.</strong> Каждый автор подписывает заявление о том, что является совершеннолетним и даёт согласие на публикацию своего контента на платформе.</div>
+        </li>
+        <li>
+          <div class="step-icon">🔒</div>
+          <div class="step-text"><strong>Безопасное хранение.</strong> All верификационные документы хранятся в зашифрованном виде с ограниченным доступом исключительно для уполномоченных сотрудников службы compliance.</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Exemption Statement <span class="tag">Secondary Producer</span></h2>
+      <p>В части items, загружаемых авторами самостоятельно, KOL Studio выступает в роли «вторичного производителя» (secondary producer) в значении 28 C.F.R. § 75.1(c)(2) и не является «первичным производителем» (primary producer) такого контента.</p>
+      <p>Вместе с тем, KOL Studio требует от всех авторов-первичных производителей предоставления документации в соответствии с § 2257 и хранит на своей платформе заявления о соответствии от каждого верифицированного автора.</p>
+      <div class="info-box">
+        <p>📌 Авторы несут личную ответственность за соблюдение требований 18 U.S.C. § 2257 в отношении самостоятельно произведённых items. KOL Studio осуществляет хранение документации о верификации возраста всех авторов платформы.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Records Inspection</h2>
+      <p>Документация, хранимая в соответствии с 18 U.S.C. § 2257 и 28 C.F.R. § 75, доступна для проверки уполномоченными представителями Министерства юстиции США и иными компетентными органами.</p>
+      <p>Запросы на инспекцию следует направлять хранителю документации заблаговременно по адресу <a href="mailto:compliance@kolstudio.com">compliance@kolstudio.com</a>. Инспекция проводится в рабочие часы по предварительному согласованию.</p>
+    </div>
+
+    <div class="section">
+      <h2>Content Removal</h2>
+      <p>Если у вас есть основания полагать, что какой-либо контент на KOL Studio нарушает требования § 2257 или изображает лиц моложе 18 лет, незамедлительно обратитесь к нам:</p>
+      <ul>
+        <li>Email: <a href="mailto:compliance@kolstudio.com">compliance@kolstudio.com</a></li>
+        <li>Тема письма: «Жалоба на нарушение § 2257» или «Underage Content Report»</li>
+        <li>Укажите точный URL контента и описание нарушения</li>
+        <li>Время реакции: не более 24 часов в рабочие дни</li>
+      </ul>
+      <p>Мы воспринимаем подобные сообщения с высшим приоритетом и принимаем немедленные меры, включая блокировку контента и аккаунта до завершения проверки.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="../terms.html">Terms</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="../cookie.html">Cookie</a>
+        <a href="../dmca.html">DMCA</a>
+        <a href="../2257.html">2257</a>
+        <a href="../help.html">Help</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div class="lang-switcher">
+          <a href="../2257.html" class="active">🇷🇺 RU</a>
+          <span>|</span>
+          <a href="../2257.html">🇬🇧 EN</a>
+        </div>
+        <span class="footer-copy">© 2026 KOL Studio. 18+ only.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      document.querySelectorAll('a[href]').forEach(a=>{
+        const h=a.getAttribute('href');
+        if(!h||h.startsWith('#')||h.startsWith('http')||h.startsWith('mailto')||h.startsWith('tel'))return;
+        a.addEventListener('click',e=>{
+          e.preventDefault();
+          document.body.style.animation='kol-fade-out 0.25s ease forwards';
+          setTimeout(()=>location.href=h,250);
+        });
+      });
+    });
+  </script>
+
+<!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
+<style>
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline}
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A}
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+</style>
+<div id="kol-cookie-banner">
+  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
+  </div>
+</div>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div style="flex:1;min-width:0"><strong style="font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:#E8E8F0">Install KOL Studio</strong><span style="font-size:12px;color:#A0A0C0">Works offline • Faster than browser</span></div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="document.getElementById('kol-pwa-prompt').classList.remove('show')">×</button>
+</div>
+<script>
+(function(){
+  var CONSENT_KEY='kol_consent_v2',THEME_KEY='kol_theme';
+  window.kolAcceptCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:true,marketing:true,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  window.kolRejectCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:false,marketing:false,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  var btn=document.getElementById('kol-theme-btn');
+  window.kolToggleTheme=function(){var c=localStorage.getItem(THEME_KEY)||'dark';var n=c==='dark'?'light':'dark';localStorage.setItem(THEME_KEY,n);if(n==='light'){document.body.classList.add('kol-light');btn.textContent='☀️'}else{document.body.classList.remove('kol-light');btn.textContent='🌙'}};
+  var st=localStorage.getItem(THEME_KEY);if(st==='light'){document.body.classList.add('kol-light');if(btn)btn.textContent='☀️'}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!sessionStorage.getItem('kol_pwa_dismissed')&&!localStorage.getItem('kol_pwa_installed'))setTimeout(function(){document.getElementById('kol-pwa-prompt').classList.add('show')},4000)});
+  var ib=document.getElementById('kol-pwa-install-btn');if(ib)ib.addEventListener('click',function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')localStorage.setItem('kol_pwa_installed','1');document.getElementById('kol-pwa-prompt').classList.remove('show');deferredPrompt=null})});
+  document.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem(CONSENT_KEY))setTimeout(function(){document.getElementById('kol-cookie-banner').classList.add('show')},1500)});
+})();
+</script>
+
+<!-- KOL System: FAB + Shortcuts + Analytics -->
+<style id="kol-system-css">
+:focus-visible{outline:2.5px solid #D42B6A!important;outline-offset:3px!important}
+#kol-fab{position:fixed;bottom:28px;right:28px;z-index:9900;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+#kol-fab-btn{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:22px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,.4);display:flex;align-items:center;justify-content:center;transition:transform .2s}
+#kol-fab-btn:hover{transform:scale(1.1)}
+#kol-fab-menu{display:none;flex-direction:column;gap:8px;align-items:flex-end}
+#kol-fab-menu.open{display:flex}
+.kol-fab-item{display:flex;align-items:center;gap:8px;background:#111128;border:1px solid #22224A;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:600;color:#E8E8F0;cursor:pointer;white-space:nowrap;font-family:Inter,sans-serif;transition:border-color .2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+#kol-shortcuts-hint{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:9800;background:#111128;border:1px solid #22224A;border-radius:20px;padding:6px 16px;font-size:12px;color:#6A6A8A;display:none}
+#kol-shortcuts-panel{position:fixed;inset:0;z-index:10500;background:rgba(7,7,26,.9);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center}
+#kol-shortcuts-panel.open{display:flex}
+.kol-sp-box{background:#111128;border:1px solid #22224A;border-radius:20px;padding:32px;max-width:480px;width:90%}
+.kol-sp-title{font-size:18px;font-weight:800;margin-bottom:20px;font-family:Inter,sans-serif}
+.kol-sp-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #22224A;font-size:13px;font-family:Inter,sans-serif}
+.kol-sp-key{background:#181835;border:1px solid #22224A;border-radius:6px;padding:2px 8px;font-family:monospace;font-size:12px;color:#D42B6A}
+</style>
+<div id="kol-fab" aria-label="Быстрые действия">
+  <div id="kol-fab-menu" role="menu">
+    <button class="kol-fab-item" onclick="location.href='upload.html'" role="menuitem">📤 Загрузить</button>
+    <button class="kol-fab-item" onclick="location.href='messages.html'" role="menuitem">💬 Сообщение</button>
+    <button class="kol-fab-item" onclick="location.href='search.html'" role="menuitem">🔍 Поиск</button>
+  </div>
+  <button id="kol-fab-btn" onclick="window.kolToggleFab()" aria-label="Меню действий" aria-expanded="false">＋</button>
+</div>
+<div id="kol-shortcuts-panel" role="dialog" aria-label="Горячие клавиши">
+  <div class="kol-sp-box">
+    <div class="kol-sp-title">⌨️ Горячие клавиши</div>
+    <div class="kol-sp-row"><span>Показать это меню</span><span class="kol-sp-key">?</span></div>
+    <div class="kol-sp-row"><span>Поиск</span><span class="kol-sp-key">/</span></div>
+    <div class="kol-sp-row"><span>Загрузить контент</span><span class="kol-sp-key">N</span></div>
+    <div class="kol-sp-row"><span>Переключить тему</span><span class="kol-sp-key">T</span></div>
+    <div class="kol-sp-row"><span>Пожаловаться</span><span class="kol-sp-key">Shift+R</span></div>
+    <div class="kol-sp-row"><span>Перейти: Лента</span><span class="kol-sp-key">G F</span></div>
+    <div class="kol-sp-row"><span>Перейти: Сообщения</span><span class="kol-sp-key">G M</span></div>
+    <div class="kol-sp-row"><span>Перейти: Уведомления</span><span class="kol-sp-key">G N</span></div>
+    <div class="kol-sp-row"><span>Перейти: Профиль</span><span class="kol-sp-key">G P</span></div>
+    <div class="kol-sp-row"><span>Перейти: Дашборд</span><span class="kol-sp-key">G D</span></div>
+    <div style="margin-top:20px;text-align:right"><button onclick="document.getElementById('kol-shortcuts-panel').classList.remove('open')" style="background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;border-radius:8px;padding:8px 20px;color:#fff;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">Закрыть</button></div>
+  </div>
+</div>
+<script>
+window.KOL_FLAGS={newCheckout:false,showFAB:true,showShortcutHint:true,newFeedAlgo:false,creatorDashboardV2:true,pricingAnnualToggle:true};
+window.kolTrack=function(e,p){try{var q=JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');q.push({event:e,props:p||{},ts:Date.now()});if(q.length>100)q=q.slice(-100);localStorage.setItem('kol_analytics_queue',JSON.stringify(q))}catch(ex){}};
+window.kolToggleFab=function(){var m=document.getElementById('kol-fab-menu');var b=document.getElementById('kol-fab-btn');if(!m)return;var open=m.classList.toggle('open');b.textContent=open?'✕':'＋';b.setAttribute('aria-expanded',open);kolTrack('fab_toggle',{open:open})};
+(function(){
+  var gBuf='',gTimer=null;
+  document.addEventListener('keydown',function(e){
+    if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;
+    var k=e.key;
+    if(k==='?'){document.getElementById('kol-shortcuts-panel')?.classList.add('open');return}
+    if(k==='Escape'){document.getElementById('kol-shortcuts-panel')?.classList.remove('open');document.getElementById('kol-fab-menu')?.classList.remove('open');return}
+    if(k==='/'){e.preventDefault();location.href='search.html';return}
+    if(k==='n'||k==='N'){location.href='upload.html';return}
+    if(k==='t'||k==='T'){if(window.kolToggleTheme)kolToggleTheme();return}
+    if(k==='R'&&e.shiftKey){if(window.kolOpenReport)kolOpenReport();return}
+    if(k==='g'||k==='G'){gBuf='g';clearTimeout(gTimer);gTimer=setTimeout(function(){gBuf=''},1000);return}
+    if(gBuf==='g'){
+      var map={f:'feed.html',F:'feed.html',m:'messages.html',M:'messages.html',n:'notifications.html',N:'notifications.html',p:'profile.html',P:'profile.html',d:'creator-dashboard.html',D:'creator-dashboard.html'};
+      if(map[k]){location.href=map[k];}
+      gBuf='';
+    }
+  });
+  setTimeout(function(){
+    if(window.KOL_FLAGS?.showShortcutHint){
+      var h=document.getElementById('kol-shortcuts-hint');
+      if(h){h.style.display='block';setTimeout(function(){h.style.display='none'},4000)}
+    }
+  },2000);
+})();
+</script>
+</body>
+</html>

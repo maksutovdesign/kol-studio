@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#D42B6A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KOL Studio">
+  <link rel="apple-touch-icon" href="../icons/icon.svg">
+  <meta name="description" content="Подпишись и получи доступ к эксклюзивному контенту">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KOL Studio">
+  <meta property="og:title" content="KOL Studio — Профиль модели">
+  <meta property="og:description" content="Подпишись и получи доступ к эксклюзивному контенту">
+  <meta property="og:url" content="https://kolstudio.com/en/profile.html">
+  <meta property="og:image" content="https://kolstudio.com/en/icons/og-image.jpg">
+  <meta property="og:locale" content="ru_RU">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KOL Studio — Профиль модели">
+  <meta name="twitter:description" content="Подпишись и получи доступ к эксклюзивному контенту">
+  <title>KOL Studio — Профиль модели</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07071A;
+      --card: #111128;
+      --card2: #181835;
+      --border: #22224A;
+      --border-hover: #3A3A70;
+      --accent: #D42B6A;
+      --accent2: #8B2BE2;
+      --text: #F0F0FF;
+      --text-sub: #9090BB;
+      --text-muted: #505075;
+      --green: #00E676;
+      --red: #FF1744;
+      --gold: #FFB300;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7,7,26,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-btn {
+      padding: 8px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .nav-btn-ghost {
+      background: transparent;
+      color: var(--text-sub);
+      border: 1px solid var(--border);
+    }
+    .nav-btn-ghost:hover { color: var(--text); border-color: var(--border-hover); }
+    .nav-btn-accent {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+    }
+    .nav-btn-accent:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* MAIN LAYOUT */
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: 440px 1fr 350px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* LEFT COLUMN */
+    .left-col {}
+
+    .profile-photo-wrap {
+      position: relative;
+      width: 440px;
+      height: 440px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .profile-photo-bg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .profile-photo-bg svg {
+      width: 260px;
+      height: 260px;
+      opacity: 0.7;
+    }
+    .photo-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .status-badge-wrap {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-dot.online { background: var(--green); box-shadow: 0 0 8px var(--green); }
+    .status-dot.live { background: var(--red); box-shadow: 0 0 8px var(--red); animation: pulse-live 1.2s ease-in-out infinite; }
+    .status-dot.offline { background: var(--text-muted); }
+    @keyframes pulse-live {
+      0%, 100% { box-shadow: 0 0 8px var(--red); }
+      50% { box-shadow: 0 0 18px var(--red); }
+    }
+    .status-label {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .status-label.online { color: var(--green); }
+    .status-label.live { color: var(--red); }
+    .status-label.offline { color: var(--text-muted); }
+    .viewer-count {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-left: auto;
+      background: rgba(255,255,255,0.06);
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .schedule-box {
+      margin-top: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .schedule-box span { color: var(--text); font-weight: 500; }
+
+    .thumb-strip {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .thumb-item {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .thumb-item:hover { border-color: var(--border-hover); transform: scale(1.03); }
+    .thumb-bg {
+      width: 100%;
+      height: 100%;
+      filter: blur(4px);
+    }
+    .thumb-lock {
+      position: absolute;
+      inset: 0;
+      background: rgba(7,7,26,0.6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .thumb-lock span { font-size: 16px; }
+    .thumb-lock small { font-size: 9px; color: var(--text-sub); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* CENTER COLUMN */
+    .center-col {}
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .model-name-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .model-name {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+    .nat-flag { font-size: 20px; }
+    .age-badge {
+      font-size: 13px;
+      color: var(--text-sub);
+      background: rgba(255,255,255,0.06);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 0;
+      margin: 20px 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .stat-item {
+      flex: 1;
+      padding: 18px 12px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-val {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--text), var(--text-sub));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .tag-pill {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: rgba(212,43,106,0.12);
+      color: var(--accent);
+      border: 1px solid rgba(212,43,106,0.25);
+    }
+
+    .bio-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-sub);
+      margin-bottom: 20px;
+    }
+
+    .pub-schedule-box {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pub-schedule-box strong { color: var(--text); }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    /* GALLERY TABS */
+    .gallery-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4px;
+      margin-left: auto;
+    }
+    .gtab {
+      padding: 7px 16px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: all 0.2s;
+    }
+    .gtab:hover { color: var(--text); }
+    .gtab.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+    }
+
+    /* CONTENT GRID */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .content-card {
+      aspect-ratio: 3/4;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .content-card:hover { border-color: var(--border-hover); transform: scale(1.02); }
+    .content-card-bg {
+      width: 100%;
+      height: 100%;
+    }
+    .content-card.unlocked .content-card-bg { filter: none; }
+    .content-card.locked .content-card-bg { filter: blur(6px); }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 10px;
+    }
+    .card-unlocked-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--green);
+      background: rgba(0,230,118,0.15);
+      padding: 3px 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(0,230,118,0.3);
+      align-self: flex-start;
+    }
+    .card-locked-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(7,7,26,0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .card-lock-icon { font-size: 22px; }
+    .card-lock-price {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      background: rgba(255,255,255,0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .card-play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 28px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+    }
+
+    /* PPV SECTION */
+    .ppv-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+    .ppv-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+    .ppv-card:hover { border-color: var(--border-hover); }
+    .ppv-icon { font-size: 24px; }
+    .ppv-label { font-size: 14px; font-weight: 600; }
+    .ppv-price {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--gold);
+    }
+    .ppv-price span { font-size: 13px; font-weight: 400; color: var(--text-sub); }
+    .ppv-btn {
+      padding: 10px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      text-align: center;
+    }
+    .ppv-btn:hover { opacity: 0.85; }
+
+    /* SIMILAR MODELS */
+    .similar-section {
+      margin-top: 48px;
+    }
+    .similar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .similar-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .similar-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+    .similar-card-photo {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .similar-card-photo svg { width: 80px; height: 80px; opacity: 0.6; }
+    .similar-card-info {
+      padding: 14px 16px;
+    }
+    .similar-card-name {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .similar-card-meta {
+      font-size: 12px;
+      color: var(--text-sub);
+      display: flex;
+      gap: 10px;
+    }
+
+    /* RIGHT COLUMN */
+    .right-col {
+      position: sticky;
+      top: 80px;
+    }
+
+    .sub-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+    .sub-section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .plan-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 10px;
+      position: relative;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+    .plan-card:last-child { margin-bottom: 0; }
+    .plan-card.popular {
+      border-color: var(--accent);
+      background: rgba(212,43,106,0.06);
+    }
+    .plan-card:hover:not(.popular) { border-color: var(--border-hover); }
+    .popular-badge {
+      position: absolute;
+      top: -10px;
+      right: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+    .plan-name {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .plan-price {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .plan-price span {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-sub);
+    }
+    .plan-perks {
+      list-style: none;
+      margin-bottom: 14px;
+    }
+    .plan-perks li {
+      font-size: 12px;
+      color: var(--text-sub);
+      padding: 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .plan-perks li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+    .sub-btn {
+      width: 100%;
+      padding: 11px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .sub-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .sub-btn.subscribed {
+      background: rgba(0,230,118,0.15);
+      color: var(--green);
+      border: 1px solid rgba(0,230,118,0.3);
+    }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 18px 0;
+    }
+
+    /* INTERACTION BTNS */
+    .interaction-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .interact-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+    .interact-btn:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.04); }
+    .interact-btn:last-child { margin-bottom: 0; }
+    .interact-btn-icon { font-size: 16px; }
+    .interact-btn-meta { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+
+    /* TIP SECTION */
+    .tip-section { margin-top: 18px; }
+    .tip-presets {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .tip-preset {
+      padding: 9px 6px;
+      border-radius: 10px;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .tip-preset:hover, .tip-preset.selected {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(255,179,0,0.08);
+    }
+    .tip-custom-row {
+      display: flex;
+      gap: 8px;
+    }
+    .tip-custom-input {
+      flex: 1;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      outline: none;
+      font-family: inherit;
+    }
+    .tip-custom-input:focus { border-color: var(--border-hover); }
+    .tip-custom-input::placeholder { color: var(--text-muted); }
+    .tip-send-btn {
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold), #FF8F00);
+      color: #1A0A00;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .tip-send-btn:hover { opacity: 0.9; }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(7,7,26,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      width: 420px;
+      max-width: 95vw;
+      position: relative;
+      animation: modal-in 0.2s ease-out;
+    }
+    @keyframes modal-in {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      border-radius: 8px;
+      color: var(--text-sub);
+      cursor: pointer;
+      font-size: 18px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+    .modal-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .modal-subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+    }
+    .modal-plan-preview {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .modal-plan-name {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .modal-plan-price {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .modal-plan-price span { font-size: 14px; font-weight: 400; color: var(--text-sub); }
+    .modal-plan-perks {
+      list-style: none;
+    }
+    .modal-plan-perks li {
+      font-size: 12px;
+      color: var(--text-sub);
+      padding: 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .modal-plan-perks li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+    }
+    .payment-methods {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .pay-method {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-sub);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .pay-method.selected {
+      border-color: var(--accent);
+      color: var(--text);
+      background: rgba(212,43,106,0.1);
+    }
+    .modal-submit-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .modal-submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--card);
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      z-index: 300;
+      opacity: 0;
+      transition: all 0.3s;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* AMBIENT GLOW */
+    .ambient-glow {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.12;
+    }
+    .glow-1 {
+      width: 600px;
+      height: 600px;
+      top: -200px;
+      left: -100px;
+    }
+    .glow-2 {
+      width: 500px;
+      height: 500px;
+      bottom: -150px;
+      right: -100px;
+    }
+
+    /* ===================== MOBILE RESPONSIVE ===================== */
+
+    /* Tablet */
+    @media (max-width: 1100px) {
+      .three-col { grid-template-columns: 360px 1fr; }
+      .right-col { grid-column: 1 / -1; }
+      .profile-photo-wrap { width: 360px; height: 360px; }
+    }
+
+    @media (max-width: 900px) {
+      .three-col { grid-template-columns: 1fr; }
+      .profile-photo-wrap { width: 100%; max-width: 400px; height: 320px; margin: 0 auto; }
+      .left-col { display: flex; flex-direction: column; align-items: center; }
+      .thumbnails-strip { width: 100%; }
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav { padding: 0 16px; }
+      .nav-logo span { display: none; }
+      .nav-right { gap: 8px; }
+      .nav-btn-ghost, .nav-btn { padding: 7px 12px; font-size: 13px; }
+      .page-wrap { padding: 16px 16px 80px; }
+      .three-col { gap: 20px; }
+      .profile-photo-wrap { max-width: 100%; height: 260px; }
+      .center-col { padding: 0; }
+      .content-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .right-col { padding: 0; }
+      .similar-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* Tags wrap */
+      .tags-row { flex-wrap: wrap; }
+
+      /* Mobile bottom nav */
+      .mobile-nav { display: flex !important; }
+    }
+
+    @media (max-width: 480px) {
+      .content-grid { grid-template-columns: repeat(2, 1fr); }
+      .similar-grid { grid-template-columns: 1fr 1fr; }
+      .stats-row { flex-wrap: wrap; gap: 12px; }
+      .stat-item { min-width: 60px; }
+    }
+
+    /* Bottom nav (hidden on desktop) */
+    .mobile-nav { display: none; }
+    .mobile-nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 4px 0;
+      transition: color 0.2s;
+    }
+    .mobile-nav-item.active { color: var(--accent); }
+    .mobile-nav-item svg { width: 22px; height: 22px; }
+    .mobile-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(7,7,26,0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--border); z-index: 500; padding: 8px 0 env(safe-area-inset-bottom, 8px); }
+  </style>
+
+<style id="page-transitions">
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+</style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/en/profile.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/profile.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/profile.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/profile.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+
+<style id="kol-skeleton-css">
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skel-title{height:22px;width:60%;margin-bottom:12px;border-radius:6px}
+.skel-avatar{width:44px;height:44px;border-radius:50%}
+.skel-thumb{width:100%;height:180px;border-radius:12px}
+.skel-btn{height:38px;width:120px;border-radius:10px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px}
+.skel-row{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #22224A}
+.skel-body{display:flex;flex-direction:column;gap:8px;flex:1}
+</style>
+</head>
+<body>
+
+<!-- AMBIENT GLOWS -->
+<div class="ambient-glow glow-1" id="ambientGlow1"></div>
+<div class="ambient-glow glow-2" id="ambientGlow2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">KOL Studio</div>
+  <div class="nav-right">
+    <button class="nav-btn nav-btn-ghost" onclick="window.location.href='index.html'">← Models</button>
+    <button class="nav-btn nav-btn-accent" onclick="location.href='auth.html'" aria-label="Sign In">Sign In</button>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title">Subscribe</div>
+    <div class="modal-subtitle" id="modalSubtitle">Select способ оплаты</div>
+    <div class="modal-plan-preview">
+      <div class="modal-plan-name" id="modalPlanName">—</div>
+      <div class="modal-plan-price" id="modalPlanPrice">—</div>
+      <ul class="modal-plan-perks" id="modalPlanPerks"></ul>
+    </div>
+    <div class="payment-methods">
+      <button class="pay-method selected" onclick="selectPayment(this, 'Карта')">💳 Карта</button>
+      <button class="pay-method" onclick="selectPayment(this, 'Crypto')">₿ Crypto</button>
+      <button class="pay-method" onclick="selectPayment(this, 'Balance')">💰 Balance</button>
+    </div>
+    <button class="modal-submit-btn" id="modalSubmitBtn" onclick="handleSubscribe()">Subscribe</button>
+  </div>
+</div>
+
+<!-- PAGE -->
+<div class="page-wrap">
+  <div class="three-col">
+
+    <!-- LEFT COLUMN -->
+    <div class="left-col">
+      <div class="profile-photo-wrap">
+        <div class="profile-photo-bg" id="profilePhotoBg">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="75" r="38" fill="rgba(255,255,255,0.18)"/>
+            <ellipse cx="100" cy="165" rx="60" ry="45" fill="rgba(255,255,255,0.12)"/>
+          </svg>
+        </div>
+        <div class="photo-glow" id="photoGlow"></div>
+      </div>
+
+      <div class="status-badge-wrap">
+        <div class="status-dot" id="statusDot"></div>
+        <div class="status-label" id="statusLabel"></div>
+        <div class="viewer-count" id="viewerCount"></div>
+      </div>
+
+      <div class="schedule-box">
+        📅 <span>Live каждую пятницу в 21:00 МСК</span>
+      </div>
+
+      <div class="thumb-strip" id="thumbStrip"></div>
+    </div>
+
+    <!-- CENTER COLUMN -->
+    <div class="center-col">
+      <div class="breadcrumb">
+        <a href="index.html">← Все модели</a>
+        <span>/</span>
+        <span id="bcName">Профиль</span>
+      </div>
+
+      <div class="model-name-row">
+        <div class="model-name" id="modelName">—</div>
+        <div class="verified-badge" id="verifiedBadge" style="display:none">✓ Verifiedа</div>
+        <div class="nat-flag" id="natFlag"></div>
+        <div class="age-badge" id="ageBadge"></div>
+      </div>
+
+      <div class="stats-row" id="statsRow"></div>
+
+      <div class="tags-row" id="tagsRow"></div>
+
+      <div class="bio-text" id="bioText"></div>
+
+      <div class="pub-schedule-box">
+        📅 <strong>Schedule публикаций:</strong>&nbsp;Новый контент: Пн, Ср, Пт
+      </div>
+
+      <!-- GALLERY -->
+      <div class="section-header">
+        <div class="section-title">Публикации</div>
+        <div class="gallery-tabs">
+          <button class="gtab active" onclick="switchTab(this,'all')">Все</button>
+          <button class="gtab" onclick="switchTab(this,'photo')">Photo</button>
+          <button class="gtab" onclick="switchTab(this,'video')">Video</button>
+          <button class="gtab" onclick="switchTab(this,'live')">Live</button>
+        </div>
+      </div>
+
+      <div class="content-grid" id="contentGrid"></div>
+
+      <!-- PPV -->
+      <div class="section-header">
+        <div class="section-title">💎 Эксклюзивный контент</div>
+      </div>
+      <div class="ppv-grid" id="ppvGrid"></div>
+
+      <!-- SIMILAR MODELS -->
+      <div class="similar-section">
+        <div class="section-title">Похожие модели</div>
+        <div class="similar-grid" id="similarGrid"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+      <div class="sub-section">
+        <div class="sub-section-title">Subscribe</div>
+        <div id="subPlansWrap"></div>
+      </div>
+
+      <div class="sub-section">
+        <div class="interaction-title">Взаимодействие</div>
+        <a class="interact-btn" id="chatBtn" href="#">
+          <span class="interact-btn-icon">💬</span>
+          <div>
+            <div>Write в чат</div>
+            <div class="interact-btn-meta" id="responseTimeLabel"></div>
+          </div>
+        </a>
+        <a class="interact-btn" id="liveBtn" href="#">
+          <span class="interact-btn-icon">📺</span>
+          <div>
+            <div>Private Show</div>
+            <div class="interact-btn-meta">от $2.99/мин</div>
+          </div>
+        </a>
+        <a class="interact-btn" id="specialBtn" href="#" style="display:none">
+          <span class="interact-btn-icon">✨</span>
+          <div>
+            <div>Особый запрос</div>
+            <div class="interact-btn-meta">Price по договорённости</div>
+          </div>
+        </a>
+
+        <hr class="divider">
+
+        <div class="interaction-title">💰 Send чаевые</div>
+        <div class="tip-presets">
+          <div class="tip-preset" onclick="selectTip(this, 5)">$5</div>
+          <div class="tip-preset" onclick="selectTip(this, 10)">$10</div>
+          <div class="tip-preset" onclick="selectTip(this, 25)">$25</div>
+          <div class="tip-preset" onclick="selectTip(this, 50)">$50</div>
+        </div>
+        <div class="tip-custom-row">
+          <input class="tip-custom-input" id="tipCustomInput" type="number" placeholder="Своя сумма..." min="1">
+          <button class="tip-send-btn" onclick="sendTip()">Send</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// =====================
+// MODEL DATA
+// =====================
+const MODELS = [
+  {id:1,name:'Анна Морозова',verified:true,age:24,status:'online',viewers:142,followers:'18.4K',likes:'142K',posts:312,videos:28,bio:'Эксклюзивный fashion и lingerie контент каждый день 💋 Принимаю особые запросы. Не стесняйся написать — всегда отвечу! Новые публикации пн/ср/пт.',tags:['Fashion','Lingerie','Boudoir','Tease'],services:['photo','video','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['Весь фото-контент','Личные сообщения']},{name:'Premium',price:14.99,perks:['Всё из базового','HD видео','Live эфиры']},{name:'VIP',price:29.99,perks:['Всё из премиум','Private Show 30 мин','Особый запрос /month']}],ppv:[{type:'photo',price:5,label:'Эксклюзивное фото'},{type:'video',price:15,label:'Приватное видео'},{type:'custom',price:null,label:'Особый запрос'}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~10 мин',g1:'#5C1A7A',g2:'#D42B6A',category:'Lingerie'},
+  {id:2,name:'Мария Козлова',verified:true,age:26,status:'live',viewers:318,followers:'9.2K',likes:'67K',posts:189,videos:41,bio:'Арт и лайфстайл контент. Нестандартный взгляд на эротику 🎨 Творческие коллаборации и особые запросы приветствуются.',tags:['Art','Lifestyle','Creative'],services:['photo','video','live'],subPlans:[{name:'Basic',price:7.99,perks:['Все фото']},{name:'Premium',price:9.99,perks:['Photo + видео','Live']}],ppv:[{type:'photo',price:8,label:'Арт-серия'},{type:'video',price:20,label:'Авторское видео'}],nat:'🇷🇺',langs:['RU','EN','DE'],responseTime:'~5 мин',g1:'#0D47A1',g2:'#7B1FA2',category:'Art'},
+  {id:3,name:'Дарья Петрова',verified:true,age:28,status:'offline',viewers:0,followers:'31.2K',likes:'289K',posts:547,videos:63,bio:'Топ-модель платформы ✨ Безупречный boudoir контент. Новый материал 3 раза в неделю. VIP-subscriberи получают эксклюзив.',tags:['Boudoir','Studio','Glamour'],services:['photo','video','special'],subPlans:[{name:'Стандарт',price:14.99,perks:['Весь контент','Приоритет в чате']},{name:'VIP',price:24.99,perks:['Всё','Ежемесячный особый запрос']}],ppv:[{type:'photo',price:12,label:'Premium фото'},{type:'video',price:30,label:'Эксклюзивное видео'}],nat:'🇷🇺',langs:['RU'],responseTime:'~2 ч',g1:'#AD1457',g2:'#E65100',category:'Boudoir'},
+  {id:4,name:'Елена Соколова',verified:false,age:22,status:'online',viewers:87,followers:'5.8K',likes:'34K',posts:98,videos:15,bio:'Фитнес и lifestyle 🏋️ Горячие фото с тренировок, пляжные фото, откровенный контент. Подписывайся — не пожалеешь!',tags:['Fitness','Bikini','Lifestyle'],services:['photo','video','chat'],subPlans:[{name:'Подписка',price:7.99,perks:['Весь контент','Messages']}],ppv:[{type:'photo',price:5,label:'Горячее фото'}],nat:'🇺🇦',langs:['RU','EN'],responseTime:'~8 мин',g1:'#00695C',g2:'#1565C0',category:'Fitness'},
+  {id:5,name:'Кристина Нова',verified:false,age:25,status:'live',viewers:204,followers:'7.1K',likes:'51K',posts:143,videos:22,bio:'Косплей и ролевые игры — моя специальность 🎭 Каждую неделю новый персонаж. Особые запросы — мой конёк!',tags:['Cosplay','Roleplay','Fetish'],services:['photo','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['Photo','Live эфиры']},{name:'Фан',price:12.99,perks:['Всё + приват-чат']}],ppv:[{type:'photo',price:7,label:'Косплей-сет'},{type:'custom',price:null,label:'Особый персонаж'}],nat:'🇧🇾',langs:['RU','EN'],responseTime:'~15 мин',g1:'#4E342E',g2:'#880E4F',category:'Cosplay'},
+  {id:6,name:'Виктория Лейн',verified:true,age:30,status:'offline',viewers:0,followers:'22.7K',likes:'198K',posts:421,videos:87,bio:'Доминантная модель 🖤 Латекс, кожа, откровенный контент без цензуры для subscribers. Чёткие границы, горячий контент.',tags:['Dominant','Latex','Boudoir'],services:['photo','video','special'],subPlans:[{name:'Стандарт',price:19.99,perks:['Полный доступ']},{name:'VIP',price:39.99,perks:['Всё + 1 особый запрос']}],ppv:[{type:'video',price:25,label:'Приватное видео'},{type:'custom',price:null,label:'Запрос под вас'}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~3 ч',g1:'#37474F',g2:'#1A0A2E',category:'Boudoir'},
+  {id:7,name:'Алина Серова',verified:true,age:23,status:'online',viewers:196,followers:'41.3K',likes:'412K',posts:689,videos:124,bio:'Самая популярная на платформе 🔥 Ежедневный контент. Live каждую пятницу. Отвечаю на все сообщения!',tags:['Fashion','Softcore','ASMR'],services:['photo','video','live','chat','special'],subPlans:[{name:'Basic',price:11.99,perks:['Photo + видео']},{name:'Premium',price:16.99,perks:['Всё + Live']},{name:'VIP',price:34.99,perks:['Всё + приват']}],ppv:[{type:'photo',price:8,label:'Эксклюзив'},{type:'video',price:20,label:'Приватное видео'}],nat:'🇰🇿',langs:['RU','EN'],responseTime:'~5 мин',g1:'#880E4F',g2:'#C2185B',category:'Lifestyle'},
+  {id:8,name:'Юлия Вих',verified:false,age:27,status:'online',viewers:63,followers:'3.2K',likes:'18K',posts:67,videos:8,bio:'Новенькая на платформе! 💪 Фитнес-модель с идеальными формами. Подписывайся первым — эксклюзивный ранний доступ!',tags:['Fitness','Sport','Bikini'],services:['photo','video','chat'],subPlans:[{name:'Подписка',price:6.99,perks:['Весь контент','Чат']}],ppv:[{type:'photo',price:4,label:'Спорт-сет'}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~12 мин',g1:'#1B5E20',g2:'#2E7D32',category:'Fitness'},
+  {id:9,name:'Наташа Рей',verified:true,age:24,status:'live',viewers:421,followers:'14.8K',likes:'127K',posts:278,videos:51,bio:'Чувственные boudoir и тизинг 💋 Всегда принимаю особые запросы — никогда не откажу. Ежедневные публикации.',tags:['Boudoir','Tease','Requests'],services:['photo','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['Всё фото']},{name:'Premium',price:12.99,perks:['Photo + Live + чат']}],ppv:[{type:'photo',price:6,label:'Чувственное фото'},{type:'custom',price:null,label:'Особый запрос'}],nat:'🇬🇪',langs:['RU','EN'],responseTime:'~8 мин',g1:'#4A148C',g2:'#6A1B9A',category:'Boudoir'},
+  {id:10,name:'Вика Морган',verified:false,age:21,status:'online',viewers:34,followers:'2.1K',likes:'9K',posts:34,videos:4,bio:'Совсем новенькая! 🌸 Милый и откровенный контент. Первые subscriberи получают скидку 50% на первый месяц!',tags:['Cute','Lifestyle','Teen18+'],services:['photo','video','chat'],subPlans:[{name:'Подписка',price:5.99,perks:['Весь контент']}],ppv:[{type:'photo',price:3,label:'Милое фото'}],nat:'🇺🇦',langs:['RU','EN'],responseTime:'~20 мин',g1:'#1A237E',g2:'#283593',category:'Lifestyle'},
+  {id:11,name:'Лина Сой',verified:true,age:25,status:'online',viewers:289,followers:'28.9K',likes:'267K',posts:456,videos:78,bio:'K-Beauty и Asian fashion 🌸 Нежный чувственный контент. Мировая аудитория. Пишу на русском и английском.',tags:['Asian','Korean','Fashion'],services:['photo','video','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['Photo + видео']},{name:'Premium',price:13.99,perks:['Всё + Live + чат']},{name:'VIP',price:27.99,perks:['Всё + особые запросы']}],ppv:[{type:'photo',price:8,label:'K-Beauty сет'},{type:'video',price:18,label:'Asian fashion видео'}],nat:'🇰🇷',langs:['KO','EN','RU'],responseTime:'~3 мин',g1:'#880E4F',g2:'#F06292',category:'Asian'},
+  {id:12,name:'Карина Лейс',verified:true,age:29,status:'offline',viewers:0,followers:'11.3K',likes:'89K',posts:198,videos:34,bio:'Латиноамериканская красотка 🔥 Танцы, флирт и горячий контент. Эксклюзивный доступ для subscribers. ¡Caliente!',tags:['Latina','Dance','Hot'],services:['photo','video','special'],subPlans:[{name:'Подписка',price:10.99,perks:['Весь контент']}],ppv:[{type:'video',price:15,label:'Танцевальное видео'}],nat:'🇲🇽',langs:['ES','EN','RU'],responseTime:'~1 ч',g1:'#00695C',g2:'#00838F',category:'Latina'}
+];
+
+// =====================
+// STATE
+// =====================
+let currentModel = null;
+let isSubscribed = false;
+let selectedPlanIndex = 0;
+let selectedTipAmount = null;
+let currentTab = 'all';
+
+// Content card types for tabs
+const CARD_TYPES = ['photo','photo','photo','photo','video','photo','photo','video','photo','live','photo','video'];
+
+// =====================
+// INIT
+// =====================
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('age_verified') !== 'true') {
+    window.location.href = 'age-gate.html';
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id')) || 1;
+  currentModel = MODELS.find(m => m.id === id) || MODELS[0];
+
+  renderPage();
+});
+
+// =====================
+// RENDER
+// =====================
+function renderPage() {
+  const m = currentModel;
+  document.title = `KOL Studio — ${m.name}`;
+
+  // Ambient glows
+  document.getElementById('ambientGlow1').style.background = m.g1;
+  document.getElementById('ambientGlow2').style.background = m.g2;
+
+  // Profile photo
+  const photoBg = document.getElementById('profilePhotoBg');
+  photoBg.style.background = `linear-gradient(135deg, ${m.g1}, ${m.g2})`;
+
+  // Photo glow
+  const glow = document.getElementById('photoGlow');
+  glow.style.background = `radial-gradient(ellipse at 50% 100%, ${m.g2}55, transparent 70%)`;
+
+  // Status
+  const dot = document.getElementById('statusDot');
+  const label = document.getElementById('statusLabel');
+  dot.className = `status-dot ${m.status}`;
+  label.className = `status-label ${m.status}`;
+  const statusMap = { online: '● Online', live: '● Live Now', offline: '● Offline' };
+  label.textContent = statusMap[m.status];
+
+  const vc = document.getElementById('viewerCount');
+  if (m.viewers > 0) {
+    vc.innerHTML = `👁 ${m.viewers} онлайн`;
+    vc.style.display = 'flex';
+  } else {
+    vc.style.display = 'none';
+  }
+
+  // Thumb strip
+  const strip = document.getElementById('thumbStrip');
+  strip.innerHTML = '';
+  const thumbColors = [
+    `linear-gradient(135deg, ${m.g1}, ${m.g2})`,
+    `linear-gradient(135deg, ${m.g2}, #111128)`,
+    `linear-gradient(135deg, #111128, ${m.g1})`,
+    `linear-gradient(135deg, ${m.g1}99, ${m.g2}99)`
+  ];
+  thumbColors.forEach((bg, i) => {
+    strip.innerHTML += `
+      <div class="thumb-item" onclick="openPayModal(0)">
+        <div class="thumb-bg" style="background:${bg}; width:100%; height:100%;"></div>
+        <div class="thumb-lock">
+          <span>🔒</span>
+          <small>PPV</small>
+        </div>
+      </div>`;
+  });
+
+  // Breadcrumb
+  document.getElementById('bcName').textContent = m.name;
+
+  // Name + badges
+  document.getElementById('modelName').textContent = m.name;
+  const vb = document.getElementById('verifiedBadge');
+  vb.style.display = m.verified ? 'inline-flex' : 'none';
+  document.getElementById('natFlag').textContent = m.nat;
+  document.getElementById('ageBadge').textContent = `${m.age} года`;
+
+  // Stats
+  const statsRow = document.getElementById('statsRow');
+  statsRow.innerHTML = `
+    <div class="stat-item"><div class="stat-val">${m.followers}</div><div class="stat-lbl">Подписчиков</div></div>
+    <div class="stat-item"><div class="stat-val">${m.posts}</div><div class="stat-lbl">Постов</div></div>
+    <div class="stat-item"><div class="stat-val">${m.likes}</div><div class="stat-lbl">Likes</div></div>
+    <div class="stat-item"><div class="stat-val">${m.videos}</div><div class="stat-lbl">Video</div></div>
+  `;
+
+  // Tags
+  const tagsRow = document.getElementById('tagsRow');
+  tagsRow.innerHTML = m.tags.map(t => `<div class="tag-pill">${t}</div>`).join('');
+
+  // Bio
+  document.getElementById('bioText').textContent = m.bio;
+
+  // Content grid
+  renderContentGrid(currentTab);
+
+  // PPV
+  renderPPV();
+
+  // Sub plans
+  renderSubPlans();
+
+  // Interaction buttons
+  document.getElementById('chatBtn').href = `session.html?id=${m.id}&mode=chat`;
+  document.getElementById('liveBtn').href = `session.html?id=${m.id}&mode=live`;
+  document.getElementById('responseTimeLabel').textContent = `Отвечает ${m.responseTime}`;
+
+  const specialBtn = document.getElementById('specialBtn');
+  if (m.services.includes('special')) {
+    specialBtn.style.display = 'flex';
+    specialBtn.href = `session.html?id=${m.id}&mode=special`;
+  }
+
+  // Similar models
+  renderSimilar();
+}
+
+function renderContentGrid(tab) {
+  const m = currentModel;
+  const grid = document.getElementById('contentGrid');
+  const cardColors = [
+    `linear-gradient(160deg, ${m.g1}, ${m.g2})`,
+    `linear-gradient(160deg, ${m.g2}, #181835)`,
+    `linear-gradient(160deg, #181835, ${m.g1})`,
+    `linear-gradient(160deg, ${m.g1}88, ${m.g2}88)`,
+    `linear-gradient(200deg, ${m.g2}, ${m.g1}99)`,
+    `linear-gradient(120deg, ${m.g1}, #111128)`,
+    `linear-gradient(200deg, #111128, ${m.g2})`,
+    `linear-gradient(150deg, ${m.g2}99, ${m.g1})`,
+    `linear-gradient(130deg, ${m.g1}, ${m.g2}CC)`,
+    `linear-gradient(170deg, ${m.g2}, #181835)`,
+    `linear-gradient(140deg, #111128, ${m.g1}BB)`,
+    `linear-gradient(190deg, ${m.g2}AA, ${m.g1}AA)`,
+  ];
+
+  let cards = [];
+  for (let i = 0; i < 12; i++) {
+    const type = CARD_TYPES[i];
+    if (tab !== 'all' && type !== tab) continue;
+    cards.push({ index: i, type, bg: cardColors[i] });
+  }
+
+  grid.innerHTML = cards.map(({ index, type, bg }) => {
+    const unlocked = isSubscribed || index < 4;
+    const ppvPrice = index < 4 ? null : (type === 'video' ? 15 : 5);
+    let lockHtml = '';
+    if (!unlocked) {
+      lockHtml = `<div class="card-locked-overlay">
+        <div class="card-lock-icon">🔒</div>
+        <div class="card-lock-price">${ppvPrice ? `$${ppvPrice} PPV` : '🔒 Подписка'}</div>
+      </div>`;
+    }
+    const playHtml = type === 'video' ? `<div class="card-play-icon">▶️</div>` : '';
+    return `
+      <div class="content-card ${unlocked ? 'unlocked' : 'locked'}" onclick="${unlocked ? '' : `openPayModal(0)`}">
+        <div class="content-card-bg" style="background:${bg}; width:100%; height:100%;"></div>
+        ${playHtml}
+        <div class="card-overlay">
+          ${unlocked ? `<div class="card-unlocked-label">✓ Доступно</div>` : ''}
+        </div>
+        ${lockHtml}
+      </div>`;
+  }).join('');
+}
+
+function renderPPV() {
+  const m = currentModel;
+  const ppvGrid = document.getElementById('ppvGrid');
+  const icons = { photo: '📸', video: '🎬', custom: '✨' };
+  ppvGrid.innerHTML = m.ppv.map((item, i) => `
+    <div class="ppv-card" onclick="openPayModal(0)">
+      <div class="ppv-icon">${icons[item.type] || '💎'}</div>
+      <div class="ppv-label">${item.label}</div>
+      <div class="ppv-price">${item.price ? `$${item.price}` : 'По запросу'} <span>${item.price ? 'разово' : ''}</span></div>
+      <button class="ppv-btn">Получить доступ</button>
+    </div>
+  `).join('');
+}
+
+function renderSubPlans() {
+  const m = currentModel;
+  const wrap = document.getElementById('subPlansWrap');
+  const midIdx = Math.floor(m.subPlans.length / 2);
+  wrap.innerHTML = m.subPlans.map((plan, i) => {
+    const isPopular = m.subPlans.length > 1 && i === midIdx;
+    return `
+      <div class="plan-card ${isPopular ? 'popular' : ''}">
+        ${isPopular ? `<div class="popular-badge">Популярный</div>` : ''}
+        <div class="plan-name">${plan.name}</div>
+        <div class="plan-price">$${plan.price} <span>/мес</span></div>
+        <ul class="plan-perks">
+          ${plan.perks.map(p => `<li>${p}</li>`).join('')}
+        </ul>
+        <button class="sub-btn ${isSubscribed ? 'subscribed' : ''}" onclick="openPayModal(${i})">
+          ${isSubscribed ? '✓ Подписка активна' : `Subscribe for $${plan.price}`}
+        </button>
+      </div>`;
+  }).join('');
+}
+
+function renderSimilar() {
+  const m = currentModel;
+  const similar = MODELS.filter(x => x.id !== m.id && x.category === m.category).slice(0, 3);
+  const fill = similar.length < 3
+    ? [...similar, ...MODELS.filter(x => x.id !== m.id && !similar.includes(x)).slice(0, 3 - similar.length)]
+    : similar;
+
+  const grid = document.getElementById('similarGrid');
+  grid.innerHTML = fill.map(s => `
+    <a class="similar-card" href="profile.html?id=${s.id}">
+      <div class="similar-card-photo" style="background: linear-gradient(135deg, ${s.g1}, ${s.g2})">
+        <svg viewBox="0 0 200 200" fill="none"><circle cx="100" cy="75" r="38" fill="rgba(255,255,255,0.2)"/><ellipse cx="100" cy="165" rx="60" ry="45" fill="rgba(255,255,255,0.12)"/></svg>
+      </div>
+      <div class="similar-card-info">
+        <div class="similar-card-name">${s.name} ${s.nat}</div>
+        <div class="similar-card-meta">
+          <span>👥 ${s.followers}</span>
+          <span>❤️ ${s.likes}</span>
+          <span class="${s.status === 'online' || s.status === 'live' ? 'status-label online' : ''}">${s.status === 'live' ? '🔴 Live' : s.status === 'online' ? '🟢 Online' : '⚫ Офлайн'}</span>
+        </div>
+      </div>
+    </a>`).join('');
+}
+
+// =====================
+// TAB SWITCHING
+// =====================
+function switchTab(btn, tab) {
+  document.querySelectorAll('.gtab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentTab = tab;
+  renderContentGrid(tab);
+}
+
+// =====================
+// MODAL
+// =====================
+function openPayModal(planIdx) {
+  if (isSubscribed) {
+    showToast('✓ У вас уже есть активная подписка!');
+    return;
+  }
+  selectedPlanIndex = planIdx;
+  const plan = currentModel.subPlans[planIdx] || currentModel.subPlans[0];
+  document.getElementById('modalPlanName').textContent = plan.name;
+  document.getElementById('modalPlanPrice').innerHTML = `$${plan.price} <span>/месяц</span>`;
+  document.getElementById('modalPlanPerks').innerHTML = plan.perks.map(p => `<li>${p}</li>`).join('');
+  document.getElementById('modalSubmitBtn').textContent = `Subscribe за $${plan.price}/мес`;
+  document.getElementById('modalSubtitle').textContent = `${currentModel.name} · ${plan.name}`;
+  document.getElementById('payModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('payModal').classList.remove('open');
+}
+
+function selectPayment(btn, method) {
+  document.querySelectorAll('.pay-method').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function handleSubscribe() {
+  // Redirect to checkout with plan info
+  const plan = currentModel.subPlans[selectedPlanIndex] || currentModel.subPlans[0];
+  sessionStorage.setItem('checkout_plan', JSON.stringify({
+    modelName: currentModel.name,
+    planName: plan.name,
+    price: plan.price,
+    returnUrl: window.location.href
+  }));
+  closeModal();
+  location.href = 'checkout.html';
+}
+
+// =====================
+// TIPS
+// =====================
+function selectTip(el, amount) {
+  document.querySelectorAll('.tip-preset').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTipAmount = amount;
+  document.getElementById('tipCustomInput').value = '';
+}
+
+function sendTip() {
+  const custom = document.getElementById('tipCustomInput').value;
+  const amount = custom ? parseFloat(custom) : selectedTipAmount;
+  if (!amount || amount <= 0) {
+    showToast('⚠️ Enter сумму чаевых');
+    return;
+  }
+  showToast(`💰 Чаевые $${amount} отправлены! Thank you!`);
+  selectedTipAmount = null;
+  document.querySelectorAll('.tip-preset').forEach(b => b.classList.remove('selected'));
+  document.getElementById('tipCustomInput').value = '';
+}
+
+// =====================
+// TOAST
+// =====================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Close modal on overlay click
+document.getElementById('payModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+
+<!-- MOBILE BOTTOM NAV -->
+
+<!-- GLOBAL FOOTER -->
+<footer style="border-top:1px solid #22224A;padding:24px;text-align:center;font-size:12px;color:#505075;position:relative;z-index:1;margin-top:auto">
+  © 2026 KOL Studio &nbsp;·&nbsp;
+  <a href="privacy.html" style="color:#D42B6A;text-decoration:none">Privacy</a> &nbsp;·&nbsp;
+  <a href="terms.html" style="color:#D42B6A;text-decoration:none">Terms</a> &nbsp;·&nbsp;
+  <a href="help.html" style="color:#9090BB;text-decoration:none">Support</a> &nbsp;·&nbsp;
+  <a href="creator-apply.html" style="color:#9090BB;text-decoration:none">Become a Model</a> &nbsp;·&nbsp;
+  <span style="color:#3A3A70">18+</span>
+
+  <div style="text-align:center;padding:8px"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../profile.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="profile.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+</footer>
+<nav class="mobile-nav">
+  <a href="feed.html" class="mobile-nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Feed</span>
+  </a>
+  <a href="search.html" class="mobile-nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <span>Search</span>
+  </a>
+  <a href="index.html" class="mobile-nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    <span>Catalog</span>
+  </a>
+  <a href="user-cabinet.html" class="mobile-nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>Cabinet</span>
+  </a>
+</nav>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").then(r=>console.log("[PWA] SW ok",r.scope)).catch(e=>console.warn("[PWA] SW fail",e));});}</script>
+
+<script id="page-nav-transitions">
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+</script>
+
+<!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
+<style>
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline}
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A}
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+</style>
+<div id="kol-cookie-banner">
+  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
+  </div>
+</div>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div style="flex:1;min-width:0"><strong style="font-size:14px;font-weight:700;display:block;margin-bottom:2px;color:#E8E8F0">Install KOL Studio</strong><span style="font-size:12px;color:#A0A0C0">Works offline • Faster than browser</span></div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="document.getElementById('kol-pwa-prompt').classList.remove('show')">×</button>
+</div>
+<script>
+(function(){
+  var CONSENT_KEY='kol_consent_v2',THEME_KEY='kol_theme';
+  window.kolAcceptCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:true,marketing:true,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  window.kolRejectCookies=function(){localStorage.setItem(CONSENT_KEY,JSON.stringify({necessary:true,analytics:false,marketing:false,preferences:true,date:new Date().toISOString()}));document.getElementById('kol-cookie-banner').classList.remove('show')};
+  var btn=document.getElementById('kol-theme-btn');
+  window.kolToggleTheme=function(){var c=localStorage.getItem(THEME_KEY)||'dark';var n=c==='dark'?'light':'dark';localStorage.setItem(THEME_KEY,n);if(n==='light'){document.body.classList.add('kol-light');btn.textContent='☀️'}else{document.body.classList.remove('kol-light');btn.textContent='🌙'}};
+  var st=localStorage.getItem(THEME_KEY);if(st==='light'){document.body.classList.add('kol-light');if(btn)btn.textContent='☀️'}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(!sessionStorage.getItem('kol_pwa_dismissed')&&!localStorage.getItem('kol_pwa_installed'))setTimeout(function(){document.getElementById('kol-pwa-prompt').classList.add('show')},4000)});
+  var ib=document.getElementById('kol-pwa-install-btn');if(ib)ib.addEventListener('click',function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')localStorage.setItem('kol_pwa_installed','1');document.getElementById('kol-pwa-prompt').classList.remove('show');deferredPrompt=null})});
+  document.addEventListener('DOMContentLoaded',function(){if(!localStorage.getItem(CONSENT_KEY))setTimeout(function(){document.getElementById('kol-cookie-banner').classList.add('show')},1500)});
+})();
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href='../upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>

@@ -1,0 +1,2248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#D42B6A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KOL Studio">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KOL Studio">
+<meta property="og:title" content="KOL Studio — Сообщения">
+<meta property="og:description" content="Общайтесь с фанатами и зарабатывайте на PPV-контенте">
+<meta property="og:url" content="https://kolstudio.com/messages.html">
+<meta property="og:locale" content="ru_RU">
+<meta name="description" content="Сообщения и PPV-контент для модели KOL Studio">
+<title>KOL STUDIO — Сообщения</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07071A;
+  --card: #111128;
+  --card2: #181835;
+  --border: #22224A;
+  --accent: #D42B6A;
+  --accent2: #8B2BE2;
+  --green: #00E676;
+  --gold: #FFB300;
+  --danger: #FF4444;
+  --text: #E8E8F0;
+  --text-muted: #7070A0;
+  --text-dim: #4A4A70;
+  --header-h: 60px;
+  --nav-h: 64px;
+  --left-w: 320px;
+  --right-w: 280px;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+  --gradient-accent: linear-gradient(135deg, var(--accent), var(--accent2));
+  --gradient-gold: linear-gradient(135deg, #FFB300, #FF6D00);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
+  --transition: 0.2s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; height: 100%; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+  background-image: radial-gradient(circle, #22224A 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+@keyframes kol-fade-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kol-fade-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+body.kol-entering{animation:kol-fade-in 0.28s ease forwards}
+body.kol-leaving{animation:kol-fade-out 0.22s ease forwards;pointer-events:none}
+
+/* ===== AMBIENT GLOWS ===== */
+.glow-tl {
+  position: fixed; top: -200px; left: -200px;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,43,106,0.10) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+.glow-br {
+  position: fixed; bottom: -200px; right: -200px;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,43,226,0.08) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ===== HEADER ===== */
+.header {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: rgba(7,7,26,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 20px; gap: 16px;
+  z-index: 1000;
+}
+.logo {
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none; flex-shrink: 0; width: 200px;
+}
+.logo-text { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+.logo-kol {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.logo-studio { color: #fff; }
+.logo-badge {
+  background: #C0392B; color: #fff; font-size: 9px; font-weight: 700;
+  padding: 2px 6px; border-radius: 20px; letter-spacing: 0.5px;
+  -webkit-text-fill-color: #fff;
+}
+.header-center { flex: 1; display: flex; align-items: center; justify-content: center; }
+.header-title { font-size: 18px; font-weight: 700; }
+.header-actions { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.icon-btn {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 50%; width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-muted); font-size: 18px;
+  transition: all var(--transition); text-decoration: none; position: relative;
+}
+.icon-btn:hover { border-color: var(--accent); color: var(--text); background: var(--card); }
+.icon-btn .badge {
+  position: absolute; top: -4px; right: -4px;
+  background: var(--accent); color: #fff; font-size: 10px; font-weight: 700;
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--bg);
+}
+.avatar-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 2px solid var(--accent); cursor: pointer;
+  background: var(--gradient-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: #fff; text-decoration: none;
+}
+
+/* ===== MAIN LAYOUT ===== */
+.app-container {
+  display: flex; height: 100vh;
+  padding-top: var(--header-h);
+  padding-bottom: var(--nav-h);
+}
+
+/* ===== LEFT PANEL ===== */
+.left-panel {
+  width: var(--left-w); min-width: var(--left-w);
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  height: 100%; overflow: hidden;
+  position: relative; z-index: 1;
+}
+.left-panel-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.left-panel-top {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+}
+.left-panel-top h2 { font-size: 20px; font-weight: 800; }
+.compose-btn {
+  background: var(--gradient-accent); border: none; border-radius: 50%;
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #fff; font-size: 18px; transition: all var(--transition);
+}
+.compose-btn:hover { opacity: 0.85; transform: scale(1.05); }
+.search-wrap { position: relative; margin-bottom: 12px; }
+.search-icon {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); font-size: 14px; pointer-events: none;
+}
+.conv-search {
+  width: 100%; background: var(--card2); border: 1px solid var(--border);
+  border-radius: 999px; padding: 9px 16px 9px 38px;
+  color: var(--text); font-family: inherit; font-size: 13px; outline: none;
+  transition: border-color var(--transition);
+}
+.conv-search::placeholder { color: var(--text-muted); }
+.conv-search:focus { border-color: var(--accent); }
+.filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-tab {
+  padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); transition: all var(--transition); white-space: nowrap;
+}
+.filter-tab.active {
+  background: var(--gradient-accent); border-color: transparent; color: #fff;
+}
+.filter-tab:hover:not(.active) { border-color: var(--accent); color: var(--text); }
+.mass-msg-btn {
+  width: 100%; margin-top: 10px; padding: 9px 16px;
+  background: rgba(212,43,106,0.1); border: 1px solid rgba(212,43,106,0.3);
+  border-radius: var(--radius-sm); color: var(--accent); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all var(--transition);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.mass-msg-btn:hover { background: rgba(212,43,106,0.2); border-color: var(--accent); }
+
+/* ===== CONVERSATION LIST ===== */
+.conv-list { flex: 1; overflow-y: auto; }
+.conv-list::-webkit-scrollbar { width: 4px; }
+.conv-list::-webkit-scrollbar-track { background: transparent; }
+.conv-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.conv-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; cursor: pointer; transition: background var(--transition);
+  border-bottom: 1px solid rgba(34,34,74,0.5); position: relative;
+}
+.conv-item:hover { background: var(--card2); }
+.conv-item.active { background: rgba(212,43,106,0.08); border-left: 3px solid var(--accent); padding-left: 13px; }
+.conv-item.unread { background: rgba(139,43,226,0.05); }
+.conv-avatar-wrap { position: relative; flex-shrink: 0; }
+.conv-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; color: #fff;
+  background: var(--gradient-accent); flex-shrink: 0;
+  font-size: 16px;
+}
+.conv-avatar img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+.online-dot {
+  position: absolute; bottom: 2px; right: 2px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--green); border: 2px solid var(--card);
+}
+.online-dot.offline { background: var(--text-dim); }
+.conv-info { flex: 1; min-width: 0; }
+.conv-name-row { display: flex; align-items: center; gap: 4px; margin-bottom: 2px; }
+.conv-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.verified-icon { color: var(--accent); font-size: 12px; flex-shrink: 0; }
+.ppv-badge {
+  background: rgba(255,179,0,0.15); color: var(--gold);
+  border: 1px solid rgba(255,179,0,0.3); border-radius: 4px;
+  font-size: 10px; font-weight: 700; padding: 1px 5px; flex-shrink: 0;
+}
+.conv-preview {
+  font-size: 12px; color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.conv-item.unread .conv-preview { color: var(--text); font-weight: 500; }
+.conv-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.conv-time { font-size: 11px; color: var(--text-dim); }
+.unread-badge {
+  background: var(--accent); color: #fff; font-size: 10px; font-weight: 700;
+  min-width: 18px; height: 18px; border-radius: 9px; padding: 0 5px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ===== MIDDLE PANEL (CHAT) ===== */
+.middle-panel {
+  flex: 1; display: flex; flex-direction: column;
+  height: 100%; overflow: hidden; position: relative; z-index: 1;
+}
+.chat-header {
+  padding: 12px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(17,17,40,0.95); backdrop-filter: blur(10px);
+  flex-shrink: 0;
+}
+.chat-header-avatar { position: relative; flex-shrink: 0; }
+.chat-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--gradient-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; color: #fff;
+}
+.chat-avatar-online {
+  position: absolute; bottom: 1px; right: 1px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--green); border: 2px solid var(--card);
+}
+.chat-header-info { flex: 1; }
+.chat-header-name { font-size: 16px; font-weight: 700; }
+.chat-header-status { font-size: 12px; color: var(--green); display: flex; align-items: center; gap: 4px; }
+.chat-header-status span { color: var(--text-muted); }
+.chat-header-actions { display: flex; gap: 8px; }
+.chat-action-btn {
+  background: var(--card2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-muted); font-size: 16px; transition: all var(--transition);
+  text-decoration: none;
+}
+.chat-action-btn:hover { border-color: var(--accent); color: var(--text); }
+.chat-action-btn.disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+
+/* ===== MESSAGES AREA ===== */
+.messages-area {
+  flex: 1; overflow-y: auto; padding: 20px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.messages-area::-webkit-scrollbar { width: 4px; }
+.messages-area::-webkit-scrollbar-track { background: transparent; }
+.messages-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.day-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 16px 0; color: var(--text-dim); font-size: 12px; font-weight: 600;
+}
+.day-divider::before, .day-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+.msg-row { display: flex; gap: 10px; margin: 2px 0; }
+.msg-row.from-me { flex-direction: row-reverse; }
+.msg-sender-avatar {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; align-self: flex-end;
+  background: var(--gradient-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #fff;
+}
+.msg-row.from-me .msg-sender-avatar { background: linear-gradient(135deg, #8B2BE2, #D42B6A); }
+.msg-content { max-width: 68%; display: flex; flex-direction: column; gap: 2px; }
+.msg-row.from-me .msg-content { align-items: flex-end; }
+.msg-bubble {
+  padding: 10px 14px; border-radius: 18px;
+  font-size: 14px; line-height: 1.5; word-break: break-word;
+  position: relative;
+}
+.msg-bubble.from-fan {
+  background: var(--card2); border: 1px solid var(--border);
+  border-bottom-left-radius: 4px; color: var(--text);
+}
+.msg-bubble.from-me {
+  background: var(--gradient-accent); color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.msg-meta {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--text-dim); padding: 0 4px;
+}
+.msg-row.from-me .msg-meta { flex-direction: row-reverse; }
+.seen-tick { font-size: 12px; }
+.seen-tick.seen { color: var(--accent); }
+.emoji-reaction {
+  position: absolute; bottom: -10px; right: 8px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 999px; padding: 2px 6px; font-size: 12px;
+}
+
+/* System / tip messages */
+.msg-system {
+  display: flex; justify-content: center; margin: 12px 0;
+}
+.msg-system-inner {
+  background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.2);
+  border-radius: 999px; padding: 6px 16px;
+  font-size: 13px; color: var(--green); font-weight: 600;
+}
+
+/* PPV message */
+.ppv-bubble {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; max-width: 280px;
+}
+.ppv-thumb {
+  position: relative; height: 160px; overflow: hidden;
+  background: linear-gradient(135deg, #1a1a3a, #2a1a4a);
+  display: flex; align-items: center; justify-content: center;
+}
+.ppv-thumb-blur {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: blur(20px) brightness(0.5); position: absolute; inset: 0;
+}
+.ppv-lock-icon { font-size: 32px; position: relative; z-index: 1; }
+.ppv-info { padding: 12px; }
+.ppv-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.ppv-price { font-size: 12px; color: var(--gold); margin-bottom: 10px; }
+.ppv-unlock-btn {
+  width: 100%; padding: 8px; background: var(--gradient-gold);
+  border: none; border-radius: var(--radius-sm); color: #1a1a00;
+  font-size: 13px; font-weight: 700; cursor: pointer; transition: opacity var(--transition);
+}
+.ppv-unlock-btn:hover { opacity: 0.85; }
+.ppv-unlocked-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.3);
+  border-radius: var(--radius-sm); padding: 7px 12px;
+  color: var(--green); font-size: 13px; font-weight: 600;
+}
+
+/* Voice note */
+.voice-bubble {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 999px; padding: 10px 16px;
+  display: flex; align-items: center; gap: 10px; min-width: 160px;
+}
+.voice-play-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--gradient-accent); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 12px; flex-shrink: 0;
+}
+.voice-waveform {
+  display: flex; align-items: center; gap: 2px; flex: 1;
+}
+.voice-bar {
+  width: 3px; border-radius: 2px; background: var(--text-muted);
+  transition: height 0.1s;
+}
+.voice-duration { font-size: 12px; color: var(--text-muted); flex-shrink: 0; }
+
+/* ===== CHAT INPUT ===== */
+.chat-input-area {
+  border-top: 1px solid var(--border);
+  background: rgba(17,17,40,0.98); flex-shrink: 0; padding: 12px 16px;
+}
+.quick-tips-row {
+  display: flex; gap: 6px; margin-bottom: 10px; align-items: center;
+}
+.quick-tip-label { font-size: 12px; color: var(--text-muted); margin-right: 2px; }
+.quick-tip-btn {
+  padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(255,179,0,0.3);
+  background: rgba(255,179,0,0.08); color: var(--gold); font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all var(--transition);
+}
+.quick-tip-btn:hover { background: rgba(255,179,0,0.18); border-color: var(--gold); }
+.input-row {
+  display: flex; align-items: flex-end; gap: 10px;
+}
+.attach-wrap { position: relative; }
+.attach-btn {
+  background: var(--card2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-muted); font-size: 18px; transition: all var(--transition);
+  flex-shrink: 0;
+}
+.attach-btn:hover { border-color: var(--accent); color: var(--text); }
+.attach-dropdown {
+  position: absolute; bottom: 48px; left: 0;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  min-width: 180px; overflow: hidden; display: none; z-index: 100;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.attach-dropdown.open { display: block; animation: kol-fade-in 0.2s ease forwards; }
+.attach-option {
+  display: flex; align-items: center; gap: 10px; padding: 11px 16px;
+  cursor: pointer; font-size: 14px; transition: background var(--transition);
+  border-bottom: 1px solid rgba(34,34,74,0.5);
+}
+.attach-option:last-child { border-bottom: none; }
+.attach-option:hover { background: var(--card2); }
+.attach-option-icon { font-size: 18px; width: 24px; text-align: center; }
+.msg-input-wrap { flex: 1; position: relative; }
+.msg-input {
+  width: 100%; background: var(--card2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 10px 44px 10px 16px;
+  color: var(--text); font-family: inherit; font-size: 14px; outline: none;
+  resize: none; line-height: 1.5; max-height: 120px; min-height: 42px;
+  transition: border-color var(--transition);
+}
+.msg-input::placeholder { color: var(--text-muted); }
+.msg-input:focus { border-color: var(--accent); }
+.emoji-btn {
+  position: absolute; right: 10px; bottom: 8px;
+  background: none; border: none; font-size: 20px; cursor: pointer;
+  color: var(--text-muted); transition: transform var(--transition);
+}
+.emoji-btn:hover { transform: scale(1.2); }
+.send-btn {
+  background: var(--gradient-accent); border: none; border-radius: var(--radius-sm);
+  width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #fff; font-size: 18px; transition: all var(--transition);
+  flex-shrink: 0;
+}
+.send-btn:hover { opacity: 0.85; transform: scale(1.05); }
+.ppv-link-btn {
+  margin-top: 10px; width: 100%; padding: 8px; text-align: center;
+  background: rgba(255,179,0,0.06); border: 1px dashed rgba(255,179,0,0.3);
+  border-radius: var(--radius-sm); color: var(--gold); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all var(--transition);
+}
+.ppv-link-btn:hover { background: rgba(255,179,0,0.12); border-color: var(--gold); }
+
+/* ===== RIGHT PANEL ===== */
+.right-panel {
+  width: var(--right-w); min-width: var(--right-w);
+  background: var(--card); border-left: 1px solid var(--border);
+  overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px;
+  position: relative; z-index: 1;
+}
+.right-panel::-webkit-scrollbar { width: 4px; }
+.right-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.fan-profile-card { text-align: center; }
+.fan-avatar-large {
+  width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 12px;
+  background: var(--gradient-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; font-weight: 700; color: #fff;
+  border: 3px solid rgba(212,43,106,0.4);
+}
+.fan-name { font-size: 17px; font-weight: 700; margin-bottom: 2px; }
+.fan-handle { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
+.fan-badge-row { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
+.fan-badge {
+  padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700;
+  background: rgba(255,179,0,0.15); color: var(--gold); border: 1px solid rgba(255,179,0,0.3);
+}
+.fan-badge.premium {
+  background: rgba(212,43,106,0.15); color: var(--accent); border-color: rgba(212,43,106,0.3);
+}
+
+.info-card {
+  background: var(--card2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px;
+}
+.info-card-title { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.stat-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.stat-row:last-child { margin-bottom: 0; }
+.stat-label { font-size: 13px; color: var(--text-muted); }
+.stat-value { font-size: 13px; font-weight: 700; }
+.stat-value.green { color: var(--green); }
+.stat-value.gold { color: var(--gold); }
+
+.sub-status {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(212,43,106,0.08); border: 1px solid rgba(212,43,106,0.2);
+  border-radius: var(--radius-sm); padding: 10px 12px;
+}
+.sub-status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.sub-status-text { font-size: 12px; }
+.sub-status-plan { font-weight: 700; color: var(--accent); }
+
+.quick-actions { display: flex; flex-direction: column; gap: 8px; }
+.qa-btn {
+  width: 100%; padding: 10px 14px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; cursor: pointer; transition: all var(--transition);
+  border: 1px solid var(--border); background: var(--card2); color: var(--text);
+  display: flex; align-items: center; gap: 8px;
+}
+.qa-btn:hover { border-color: var(--accent); color: var(--accent); }
+.qa-btn.danger { color: var(--danger); }
+.qa-btn.danger:hover { border-color: var(--danger); background: rgba(255,68,68,0.06); }
+.qa-btn.primary { background: var(--gradient-accent); border-color: transparent; color: #fff; }
+.qa-btn.primary:hover { opacity: 0.85; }
+
+.purchase-item {
+  display: flex; align-items: center; gap: 10px; padding: 8px 0;
+  border-bottom: 1px solid rgba(34,34,74,0.5);
+}
+.purchase-item:last-child { border-bottom: none; }
+.purchase-thumb {
+  width: 36px; height: 36px; border-radius: 6px;
+  background: linear-gradient(135deg, #1a1a3a, #2d1a4a);
+  display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
+}
+.purchase-info { flex: 1; min-width: 0; }
+.purchase-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.purchase-date { font-size: 11px; color: var(--text-muted); }
+.purchase-amount { font-size: 13px; font-weight: 700; color: var(--green); flex-shrink: 0; }
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: var(--nav-h); background: rgba(7,7,26,0.96);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-around; z-index: 1000;
+  padding: 0 8px;
+}
+.nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 8px 12px; border-radius: var(--radius-sm);
+  cursor: pointer; text-decoration: none; color: var(--text-muted);
+  font-size: 10px; font-weight: 600; transition: all var(--transition);
+  position: relative; flex: 1; max-width: 80px;
+}
+.nav-item:hover { color: var(--text); }
+.nav-item.active { color: var(--accent); }
+.nav-icon { font-size: 22px; line-height: 1; }
+.nav-item .nav-badge {
+  position: absolute; top: 4px; right: calc(50% - 18px);
+  background: var(--accent); color: #fff; font-size: 9px; font-weight: 700;
+  width: 16px; height: 16px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--bg);
+}
+.nav-post-btn {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--gradient-accent); border: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; color: #fff; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(212,43,106,0.4);
+  transition: all var(--transition); text-decoration: none;
+  flex-shrink: 0;
+}
+.nav-post-btn:hover { transform: scale(1.08); }
+
+/* ===== MODALS ===== */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px); z-index: 9000;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  width: 100%; max-width: 460px; max-height: 90vh; overflow-y: auto;
+  transform: scale(0.94) translateY(16px); transition: transform 0.25s ease;
+}
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
+.modal::-webkit-scrollbar { width: 4px; }
+.modal::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 20px 16px; border-bottom: 1px solid var(--border);
+}
+.modal-title { font-size: 18px; font-weight: 800; }
+.modal-close {
+  background: none; border: none; color: var(--text-muted); font-size: 22px;
+  cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; transition: all var(--transition);
+}
+.modal-close:hover { background: var(--card2); color: var(--text); }
+.modal-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.form-label { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: block; }
+.form-textarea {
+  width: 100%; background: var(--card2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 12px 14px; color: var(--text);
+  font-family: inherit; font-size: 14px; resize: vertical; outline: none;
+  min-height: 100px; transition: border-color var(--transition);
+}
+.form-textarea::placeholder { color: var(--text-muted); }
+.form-textarea:focus { border-color: var(--accent); }
+.upload-area {
+  border: 2px dashed var(--border); border-radius: var(--radius-sm);
+  padding: 30px 20px; text-align: center; cursor: pointer;
+  transition: all var(--transition);
+  background: rgba(34,34,74,0.3);
+}
+.upload-area:hover { border-color: var(--accent); background: rgba(212,43,106,0.05); }
+.upload-icon { font-size: 36px; margin-bottom: 8px; }
+.upload-text { font-size: 14px; color: var(--text-muted); }
+.upload-text strong { color: var(--accent); }
+.price-selector { display: flex; gap: 8px; flex-wrap: wrap; }
+.price-opt {
+  padding: 8px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+  background: var(--card2); color: var(--text); font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: all var(--transition);
+}
+.price-opt.selected { background: var(--gradient-gold); border-color: transparent; color: #1a1000; }
+.price-opt:hover:not(.selected) { border-color: var(--gold); color: var(--gold); }
+.price-custom {
+  padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+  background: var(--card2); color: var(--text); font-size: 14px; font-family: inherit;
+  outline: none; width: 100px; transition: border-color var(--transition);
+}
+.price-custom:focus { border-color: var(--gold); }
+.ppv-preview-note {
+  background: rgba(255,179,0,0.08); border: 1px solid rgba(255,179,0,0.2);
+  border-radius: var(--radius-sm); padding: 10px 14px;
+  font-size: 13px; color: var(--gold); display: flex; align-items: center; gap: 8px;
+}
+.checkbox-row {
+  display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px;
+}
+.checkbox-row input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--accent); }
+.modal-footer { padding: 0 20px 20px; display: flex; gap: 10px; }
+.btn-primary {
+  flex: 1; padding: 12px; background: var(--gradient-accent);
+  border: none; border-radius: var(--radius-sm); color: #fff;
+  font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity var(--transition);
+}
+.btn-primary:hover { opacity: 0.85; }
+.btn-ghost {
+  padding: 12px 20px; background: transparent; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); color: var(--text-muted);
+  font-size: 14px; font-weight: 600; cursor: pointer; transition: all var(--transition);
+}
+.btn-ghost:hover { border-color: var(--text); color: var(--text); }
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  .right-panel { display: none; }
+  .left-panel { width: 100%; min-width: unset; }
+  .middle-panel { display: none; }
+  .app-container.chat-open .left-panel { display: none; }
+  .app-container.chat-open .middle-panel { display: flex; width: 100%; }
+  .mobile-back-btn {
+    display: flex; align-items: center; gap: 8px;
+    background: none; border: none; color: var(--accent); font-size: 14px; font-weight: 600;
+    cursor: pointer; padding: 4px 8px; border-radius: var(--radius-xs);
+    margin-right: 4px;
+  }
+}
+@media (min-width: 901px) {
+  .mobile-back-btn { display: none; }
+}
+
+/* ===== TOAST ===== */
+.toast-container {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+  z-index: 9999; display: flex; flex-direction: column; gap: 8px; align-items: center;
+}
+.toast {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 999px; padding: 10px 20px; font-size: 13px; font-weight: 600;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5); white-space: nowrap;
+  animation: kol-fade-in 0.25s ease forwards;
+  display: flex; align-items: center; gap: 8px;
+}
+.toast.success { border-color: rgba(0,230,118,0.4); color: var(--green); }
+.toast.gold { border-color: rgba(255,179,0,0.4); color: var(--gold); }
+</style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"Сообщения — KOL Studio","description":"Личные сообщения с создателями","url":"https://kolstudio.com/messages.html","publisher":{"@type":"Organization","name":"KOL Studio","logo":{"@type":"ImageObject","url":"https://kolstudio.com/icons/icon-192.png"}}}
+  </script>
+<style>
+/* ── Skeleton Loaders ── */
+@keyframes kol-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel{background:linear-gradient(90deg,#181835 25%,#22224A 50%,#181835 75%);background-size:200% 100%;animation:kol-shimmer 1.5s infinite;border-radius:8px}
+.skel-text{height:14px;margin-bottom:8px;border-radius:4px}
+.skel-text.wide{width:80%}
+.skel-text.medium{width:55%}
+.skel-text.short{width:30%}
+.skel-avatar{width:44px;height:44px;border-radius:50%;flex-shrink:0}
+.skel-avatar-lg{width:72px;height:72px;border-radius:50%;flex-shrink:0}
+.skel-thumb{width:100%;aspect-ratio:16/9;border-radius:12px}
+.skel-thumb-sq{width:100%;aspect-ratio:1;border-radius:12px}
+.skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.skel-card-row{display:flex;align-items:center;gap:12px}
+.skel-card-body{flex:1;display:flex;flex-direction:column;gap:8px}
+</style>
+
+<style id="kol-light-theme">
+/* ── KOL Light Theme ────────────────────────── */
+body.kol-light {
+  background:#F2F2F8 !important;
+  color:#1A1A2E !important;
+}
+/* Backgrounds */
+body.kol-light nav,
+body.kol-light .nav,
+body.kol-light aside,
+body.kol-light .sidebar,
+body.kol-light header,
+body.kol-light .header,
+body.kol-light footer,
+body.kol-light .footer { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .card,
+body.kol-light .feed-card,
+body.kol-light .post-card,
+body.kol-light .creator-card,
+body.kol-light .profile-card,
+body.kol-light .stat-card,
+body.kol-light .tip-card,
+body.kol-light .plan-card,
+body.kol-light .form-card,
+body.kol-light .section-card,
+body.kol-light .info-card,
+body.kol-light .category-card,
+body.kol-light .modal-box,
+body.kol-light .modal,
+body.kol-light [class*="-card"],
+body.kol-light [class*="-box"],
+body.kol-light [class*="-panel"],
+body.kol-light [class*="-block"],
+body.kol-light [class*="-section"] { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+body.kol-light .feed-grid > *,
+body.kol-light .grid > * { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+
+/* Inputs */
+body.kol-light input,
+body.kol-light textarea,
+body.kol-light select,
+body.kol-light .input-field,
+body.kol-light .krm-desc {
+  background:#F8F8FC !important;
+  border-color:#C8C8E0 !important;
+  color:#1A1A2E !important;
+}
+body.kol-light input::placeholder,
+body.kol-light textarea::placeholder { color:#8A8AAA !important; }
+
+/* Text */
+body.kol-light h1, body.kol-light h2, body.kol-light h3,
+body.kol-light h4, body.kol-light h5, body.kol-light h6 { color:#0E0E1E !important; }
+body.kol-light p, body.kol-light span, body.kol-light li,
+body.kol-light td, body.kol-light th, body.kol-light label { color:#2A2A4A !important; }
+
+/* Muted text */
+body.kol-light .muted,
+body.kol-light [class*="muted"],
+body.kol-light [class*="-meta"],
+body.kol-light [class*="-sub"],
+body.kol-light [class*="-label"]:not([class*="btn"]) { color:#6A6A9A !important; }
+
+/* Keep accent colors */
+body.kol-light .accent,
+body.kol-light [style*="color:#D42B6A"],
+body.kol-light [style*="color:#8B2BE2"],
+body.kol-light [style*="color:#00E676"],
+body.kol-light [style*="color:#FFB300"] { color: inherit !important; }
+
+/* Borders */
+body.kol-light * { border-color:#E0E0ED; }
+body.kol-light [style*="border"] { border-color:#E0E0ED !important; }
+
+/* Tables */
+body.kol-light table,
+body.kol-light th,
+body.kol-light td { background:#FFFFFF !important; border-color:#E0E0ED !important; }
+body.kol-light tr:nth-child(even) td { background:#F8F8FC !important; }
+
+/* Code blocks */
+body.kol-light pre,
+body.kol-light code,
+body.kol-light .code-block { background:#EEEEF8 !important; color:#1A1A2E !important; border-color:#D0D0E8 !important; }
+
+/* Nav links */
+body.kol-light a:not([class*="btn"]):not([class*="cta"]):not([class*="tag"]):not([class*="badge"]) { color:#3A3A6A; }
+body.kol-light a:hover { color:#D42B6A; }
+
+/* Icon theme button update */
+body.kol-light #kol-theme-btn { background:#F2F2F8 !important; border:1.5px solid #C8C8E0 !important; color:#1A1A2E !important; }
+
+/* Page background */
+body.kol-light .page,
+body.kol-light .page-wrapper,
+body.kol-light main,
+body.kol-light .main,
+body.kol-light .container,
+body.kol-light .wrapper { background:#F2F2F8 !important; }
+
+/* GDPR Banner light */
+body.kol-light #kol-cookie-banner { background:#FFFFFF !important; border-top-color:#E0E0ED !important; }
+body.kol-light #kol-cookie-banner p { color:#2A2A4A !important; }
+
+/* Transition for smooth switch */
+body.kol-light * { transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease !important; }
+</style>
+  <link rel="canonical" href="https://kolstudio.com/messages.html">
+  <link rel="alternate" hreflang="ru" href="https://kolstudio.com/messages.html">
+  <link rel="alternate" hreflang="en" href="https://kolstudio.com/en/messages.html">
+  <link rel="alternate" hreflang="x-default" href="https://kolstudio.com/messages.html">
+<style id="kol-ux-globals">
+/* ── Skip to content (A11y) ── */
+.kol-skip-link{position:absolute;top:-60px;left:16px;background:#D42B6A;color:#fff;padding:10px 20px;border-radius:0 0 12px 12px;font-weight:700;font-size:14px;text-decoration:none;z-index:99999;transition:top 0.2s}
+.kol-skip-link:focus{top:0}
+
+/* ── Focus-visible (keyboard nav) ── */
+:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important;border-radius:4px}
+button:focus-visible,a:focus-visible{outline:2.5px solid #D42B6A !important;outline-offset:3px !important}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2.5px solid #8B2BE2 !important;outline-offset:0 !important}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#22224A;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D42B6A}
+* { scrollbar-width:thin; scrollbar-color:#22224A transparent }
+
+/* ── Breadcrumbs ── */
+.kol-breadcrumb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 0;margin-bottom:8px}
+.kol-breadcrumb a{color:#6A6A8A;font-size:13px;text-decoration:none;transition:color 0.2s}
+.kol-breadcrumb a:hover{color:#D42B6A}
+.kol-breadcrumb .sep{color:#3A3A5A;font-size:12px}
+.kol-breadcrumb .current{color:#A0A0C0;font-size:13px}
+
+/* ── Empty states ── */
+.kol-empty{text-align:center;padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.kol-empty-icon{font-size:56px;opacity:0.35;margin-bottom:4px}
+.kol-empty h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0}
+.kol-empty p{color:#6A6A8A;font-size:14px;margin:0;max-width:320px;line-height:1.6}
+.kol-empty .kol-empty-cta{margin-top:8px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+
+/* ── Improved touch targets ── */
+button,a,[role="button"]{min-height:36px}
+
+/* ── Print styles ── */
+@media print{
+  #kol-cookie-banner,#kol-theme-btn,#kol-pwa-prompt,.kol-skip-link{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  @page{margin:2cm}
+}
+
+/* ── Global responsive helpers ── */
+@media(max-width:480px){
+  h1{font-size:clamp(22px,6vw,36px)!important}
+  h2{font-size:clamp(18px,5vw,28px)!important}
+  .hide-mobile{display:none!important}
+  .full-mobile{width:100%!important;min-width:0!important}
+}
+@media(max-width:768px){
+  .hide-tablet{display:none!important}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+</style>
+<style id="kol-responsive">
+/* ── Enhanced mobile responsiveness ── */
+@media(max-width:768px){
+  /* Sidebar + main layouts → stack vertically */
+  .layout,.page-layout,.sidebar-layout{flex-direction:column!important}
+  .sidebar,.side-panel,.left-panel{width:100%!important;max-width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #22224A}
+  .main-content,.content-area,.right-panel{width:100%!important;max-width:100%!important;min-width:0!important}
+
+  /* Grids → single column */
+  .grid-3,.grid-4,.cards-grid{grid-template-columns:1fr!important}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}
+
+  /* Nav items smaller */
+  .nav-item{padding:10px 12px!important;font-size:14px!important}
+
+  /* Tables → horizontal scroll */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  /* Modals → full width */
+  .modal-box,[id*="modal"] .modal-box,[id*="-box"]{
+    width:100%!important;max-width:100%!important;
+    border-radius:20px 20px 0 0!important;
+    position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+    max-height:90vh!important;overflow-y:auto
+  }
+
+  /* Video player */
+  .video-player,.player-wrap{border-radius:0!important}
+
+  /* Stat cards row → 2 cols */
+  .stats-row,.stat-cards{grid-template-columns:repeat(2,1fr)!important}
+
+  /* Hide decorative elements */
+  .decoration,.blob,.bg-glow{display:none!important}
+
+  /* Padding adjustments */
+  .section{padding:16px!important}
+  .card,.feed-card{padding:16px!important;border-radius:16px!important}
+}
+
+@media(max-width:480px){
+  /* Stat cards → 1 col */
+  .stats-row,.stat-cards{grid-template-columns:1fr!important}
+
+  /* Pricing → stack */
+  .plans-grid,.pricing-grid{grid-template-columns:1fr!important}
+
+  /* Tabs → scroll */
+  .tabs,.filter-tabs,.tab-list{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    padding-bottom:4px
+  }
+  .tabs::-webkit-scrollbar{height:0}
+  .tab-btn,.filter-btn,.pill{flex-shrink:0!important}
+
+  /* Bottom nav bar for mobile */
+  .bottom-nav-mobile{
+    display:flex!important;
+    position:fixed;bottom:0;left:0;right:0;
+    background:#111128;border-top:1px solid #22224A;
+    padding:8px 0 max(8px,env(safe-area-inset-bottom));
+    z-index:1000
+  }
+  .bottom-nav-mobile a{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    gap:3px;font-size:10px;color:#6A6A8A;text-decoration:none;padding:4px
+  }
+  .bottom-nav-mobile a.active{color:#D42B6A}
+  .bottom-nav-mobile .nav-icon{font-size:20px}
+
+  /* Add bottom padding so content isn't behind mobile nav */
+  body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+</style>
+</head>
+<body>
+<div class="glow-tl"></div>
+<div class="glow-br"></div>
+
+<!-- HEADER -->
+<header class="header">
+  <a href="feed.html" class="logo">
+    <span class="logo-text"><span class="logo-kol">KOL</span><span class="logo-studio"> Studio</span></span>
+    <span class="logo-badge">18+</span>
+  </a>
+  <div class="header-center">
+    <span class="header-title">Сообщения</span>
+  </div>
+  <div class="header-actions">
+    <button class="icon-btn" title="Уведомления" onclick="window.location.href='notifications.html'">
+      🔔
+      <span class="badge">5</span>
+    </button>
+    <a href="model-cabinet.html" class="avatar-btn">А</a>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="app-container" id="appContainer">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel" id="leftPanel">
+    <div class="left-panel-header">
+      <div class="left-panel-top">
+        <h2>Сообщения</h2>
+        <button class="compose-btn" title="Новое сообщение" onclick="openComposeModal()">✏️</button>
+      </div>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="conv-search" placeholder="Поиск по переписке..." oninput="filterConversations(this.value)">
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="setFilter('all', this)">Все</button>
+        <button class="filter-tab" onclick="setFilter('unread', this)">Непрочитанные</button>
+        <button class="filter-tab" onclick="setFilter('ppv', this)">PPV</button>
+        <button class="filter-tab" onclick="setFilter('vip', this)">VIP-фаны</button>
+      </div>
+      <button class="mass-msg-btn" onclick="openMassModal()">
+        📢 Написать всем (847)
+      </button>
+    </div>
+    <div class="conv-list" id="convList">
+      <!-- Conversations injected by JS -->
+    </div>
+  </div>
+
+  <!-- MIDDLE PANEL -->
+  <div class="middle-panel" id="middlePanel">
+    <div class="chat-header">
+      <button class="mobile-back-btn" onclick="closeChat()">← Назад</button>
+      <div class="chat-header-avatar">
+        <div class="chat-avatar" id="chatAvatar">👤</div>
+        <div class="chat-avatar-online" id="chatOnlineDot"></div>
+      </div>
+      <div class="chat-header-info">
+        <div class="chat-header-name" id="chatName">phantom_leo</div>
+        <div class="chat-header-status">
+          <span>●</span> Онлайн <span id="chatStatusText">2 мин назад</span>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <button class="chat-action-btn disabled" title="Звонок (недоступно)">📞</button>
+        <a href="live.html" class="chat-action-btn" title="Видеозвонок">🎥</a>
+        <button class="chat-action-btn" title="Информация о фане" onclick="toggleRightPanel()">ℹ️</button>
+      </div>
+    </div>
+
+    <div class="messages-area" id="messagesArea">
+      <!-- Messages injected by JS -->
+    </div>
+
+    <div class="chat-input-area">
+      <div class="quick-tips-row">
+        <span class="quick-tip-label">💰 Чаевые:</span>
+        <button class="quick-tip-btn" onclick="sendTipRequest(2)">$2</button>
+        <button class="quick-tip-btn" onclick="sendTipRequest(5)">$5</button>
+        <button class="quick-tip-btn" onclick="sendTipRequest(10)">$10</button>
+        <button class="quick-tip-btn" onclick="sendTipRequest(25)">$25</button>
+      </div>
+      <div class="input-row">
+        <div class="attach-wrap">
+          <button class="attach-btn" onclick="toggleAttach()" title="Прикрепить">📎</button>
+          <div class="attach-dropdown" id="attachDropdown">
+            <div class="attach-option" onclick="handleAttach('photo')">
+              <span class="attach-option-icon">🖼️</span> Фото
+            </div>
+            <div class="attach-option" onclick="handleAttach('video')">
+              <span class="attach-option-icon">🎬</span> Видео
+            </div>
+            <div class="attach-option" onclick="openPPVModal(); toggleAttach()">
+              <span class="attach-option-icon">🔒</span> PPV-контент
+            </div>
+            <div class="attach-option" onclick="handleAttach('voice')">
+              <span class="attach-option-icon">🎙️</span> Голосовое
+            </div>
+          </div>
+        </div>
+        <div class="msg-input-wrap">
+          <textarea class="msg-input" id="msgInput" placeholder="Написать сообщение..." rows="1" onkeydown="handleMsgKey(event)" oninput="autoResizeInput(this)"></textarea>
+          <button class="emoji-btn" onclick="insertEmoji()">😊</button>
+        </div>
+        <button class="send-btn" onclick="sendMessage()">➤</button>
+      </div>
+      <div class="ppv-link-btn" onclick="openPPVModal()">🔒 PPV: Отправить платный контент</div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel" id="rightPanel">
+    <div class="fan-profile-card">
+      <div class="fan-avatar-large" id="fanAvatarLarge">👤</div>
+      <div class="fan-name" id="fanName">@phantom_leo</div>
+      <div class="fan-handle" id="fanHandle">Леонид К.</div>
+      <div class="fan-badge-row">
+        <span class="fan-badge">⭐ Топ-фан</span>
+        <span class="fan-badge premium">💎 Премиум</span>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">Статистика</div>
+      <div class="stat-row">
+        <span class="stat-label">Подписчик с</span>
+        <span class="stat-value">12 янв 2024</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Всего потрачено</span>
+        <span class="stat-value green">$247</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Чаевые</span>
+        <span class="stat-value gold">$92</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">PPV куплено</span>
+        <span class="stat-value">8 шт.</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Сообщений</span>
+        <span class="stat-value">234</span>
+      </div>
+    </div>
+
+    <div class="sub-status">
+      <div class="sub-status-dot"></div>
+      <div class="sub-status-text">
+        <span class="sub-status-plan">Премиум</span> • истекает 15 мая
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <div class="info-card-title" style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Действия</div>
+      <button class="qa-btn primary" onclick="openPPVModal()">🔒 Отправить PPV</button>
+      <button class="qa-btn" onclick="showToast('Переход к сообщению с подарком...', 'gold')">🎁 Отправить подарок</button>
+      <button class="qa-btn" onclick="showToast('Функция VIP-доступа открыта', 'success')">⭐ VIP-доступ</button>
+      <button class="qa-btn danger" onclick="confirmBlock()">🚫 Заблокировать</button>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">Последние покупки</div>
+      <div class="purchase-item">
+        <div class="purchase-thumb">🖼️</div>
+        <div class="purchase-info">
+          <div class="purchase-name">Фото-сет #12</div>
+          <div class="purchase-date">22 апр 2025</div>
+        </div>
+        <div class="purchase-amount">+$15</div>
+      </div>
+      <div class="purchase-item">
+        <div class="purchase-thumb">🎬</div>
+        <div class="purchase-info">
+          <div class="purchase-name">Видео эксклюзив</div>
+          <div class="purchase-date">18 апр 2025</div>
+        </div>
+        <div class="purchase-amount">+$25</div>
+      </div>
+      <div class="purchase-item">
+        <div class="purchase-thumb">📸</div>
+        <div class="purchase-info">
+          <div class="purchase-name">Приватные фото</div>
+          <div class="purchase-date">10 апр 2025</div>
+        </div>
+        <div class="purchase-amount">+$12</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav aria-label="navigation" class="bottom-nav">
+  <a href="feed.html" class="nav-item">
+    <span class="nav-icon">🏠</span>
+    <span>Лента</span>
+  </a>
+  <a href="search.html" class="nav-item">
+    <span class="nav-icon">🔍</span>
+    <span>Поиск</span>
+  </a>
+  <a href="model-cabinet.html" class="nav-post-btn" title="Создать пост">＋</a>
+  <a href="messages.html" class="nav-item active">
+    <span class="nav-icon">💬</span>
+    <span>Сообщения</span>
+    <span class="nav-badge">12</span>
+  </a>
+  <a href="model-cabinet.html" class="nav-item">
+    <span class="nav-icon">👤</span>
+    <span>Кабинет</span>
+  </a>
+</nav>
+
+<!-- PPV MODAL -->
+<div class="modal-overlay" id="ppvModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">🔒 Отправить платный контент</div>
+      <button class="modal-close" onclick="closePPVModal()" aria-label="Закрыть">×</button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <div class="form-label">Медиафайл</div>
+        <div class="upload-area" onclick="showToast('Выбор файла...', '')">
+          <div class="upload-icon">☁️</div>
+          <div class="upload-text">Перетащите файл или <strong>нажмите для выбора</strong></div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:6px;">Фото, видео до 2 ГБ</div>
+        </div>
+      </div>
+      <div>
+        <div class="form-label">Цена</div>
+        <div class="price-selector" id="priceSelector">
+          <button class="price-opt" onclick="selectPrice(this, 5)">$5</button>
+          <button class="price-opt selected" onclick="selectPrice(this, 10)">$10</button>
+          <button class="price-opt" onclick="selectPrice(this, 15)">$15</button>
+          <button class="price-opt" onclick="selectPrice(this, 25)">$25</button>
+          <input type="number" class="price-custom" placeholder="Своя" min="1" max="999">
+        </div>
+      </div>
+      <div>
+        <div class="form-label">Описание (необязательно)</div>
+        <textarea class="form-textarea" placeholder="Расскажите фанату что внутри... он увидит это до покупки"></textarea>
+      </div>
+      <div class="ppv-preview-note">
+        👁️ Фан увидит размытое превью до оплаты
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closePPVModal()">Отмена</button>
+      <button class="btn-primary" onclick="sendPPV()">🔒 Отправить PPV</button>
+    </div>
+  </div>
+</div>
+
+<!-- MASS MESSAGE MODAL -->
+<div class="modal-overlay" id="massModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📢 Рассылка</div>
+      <button class="modal-close" onclick="closeMassModal()" aria-label="Закрыть">×</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:rgba(139,43,226,0.08);border:1px solid rgba(139,43,226,0.2);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;">
+        📊 Рассылка всем подписчикам <strong>847 чел.</strong>
+      </div>
+      <div>
+        <div class="form-label">Сообщение</div>
+        <textarea class="form-textarea" placeholder="Напишите сообщение для всех подписчиков..." style="min-height:120px;"></textarea>
+      </div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="massIncludePPV" onchange="toggleMassPPV()">
+        <span>Добавить PPV-контент к рассылке</span>
+      </label>
+      <div id="massPPVSection" style="display:none;">
+        <div class="form-label">PPV-контент</div>
+        <div class="upload-area" onclick="showToast('Выбор PPV файла...', '')">
+          <div class="upload-icon">🔒</div>
+          <div class="upload-text"><strong>Выбрать файл</strong> для платной рассылки</div>
+        </div>
+        <div class="price-selector" style="margin-top:10px;">
+          <button class="price-opt selected">$10</button>
+          <button class="price-opt">$15</button>
+          <button class="price-opt">$25</button>
+          <input type="number" class="price-custom" placeholder="Своя" min="1">
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px;">
+        💡 Ожидаемый доход от PPV: <span style="color:var(--green);font-weight:700;">~$2,400</span> (при 30% конверсии)
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeMassModal()">Отмена</button>
+      <button class="btn-primary" onclick="sendMass()">📢 Отправить всем</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ===== DATA =====
+const conversations = [
+  { id: 1, name: 'phantom_leo', display: 'Леонид К.', emoji: '😎', online: true, unread: 3, time: '2 мин', preview: 'Привет! Когда следующий эфир?', ppv: false, vip: true },
+  { id: 2, name: 'dark_wolf_99', display: 'Алексей В.', emoji: '🐺', online: true, unread: 7, time: '8 мин', preview: 'Обожаю твои фото 🔥🔥🔥', ppv: true, vip: false },
+  { id: 3, name: 'night_rider', display: 'Максим С.', emoji: '🌙', online: false, unread: 0, time: '15 мин', preview: 'Спасибо за шоу, было супер!', ppv: true, vip: true },
+  { id: 4, name: 'cosmos_fan', display: 'Дмитрий Н.', emoji: '🚀', online: true, unread: 0, time: '1 ч', preview: '[PPV] Фото-сет куплено ✓', ppv: true, vip: false },
+  { id: 5, name: 'starfan_ru', display: 'Роман З.', emoji: '⭐', online: false, unread: 2, time: '2 ч', preview: 'Можно запросить персональное?', ppv: false, vip: false },
+  { id: 6, name: 'thunder77', display: 'Виктор П.', emoji: '⚡', online: false, unread: 0, time: '3 ч', preview: 'Ты просто 🔥', ppv: false, vip: false },
+  { id: 7, name: 'royal_fan', display: 'Игорь М.', emoji: '👑', online: true, unread: 0, time: '4 ч', preview: '[PPV] Жду новый контент!', ppv: true, vip: true },
+  { id: 8, name: 'velvet_sub', display: 'Сергей Т.', emoji: '🎩', online: false, unread: 0, time: '5 ч', preview: 'Привет, всё ок с эфиром?', ppv: false, vip: false },
+  { id: 9, name: 'blade_x', display: 'Павел К.', emoji: '🗡️', online: false, unread: 0, time: '6 ч', preview: 'Спасибо за ответ!', ppv: false, vip: false },
+  { id: 10, name: 'arctic_storm', display: 'Антон Л.', emoji: '❄️', online: true, unread: 0, time: '8 ч', preview: 'Когда следующий live?', ppv: false, vip: false },
+  { id: 11, name: 'neo_knight', display: 'Алексей Д.', emoji: '🛡️', online: false, unread: 0, time: 'Вчера', preview: '[Голосовое] 0:34', ppv: false, vip: false },
+  { id: 12, name: 'fire_dragon', display: 'Кирилл М.', emoji: '🐉', online: false, unread: 0, time: 'Вчера', preview: 'Отличный контент!', ppv: true, vip: false },
+  { id: 13, name: 'shadow_x99', display: 'Никита В.', emoji: '🌑', online: false, unread: 0, time: 'Вчера', preview: '💰 Чаевые $10 отправлены', ppv: false, vip: false },
+  { id: 14, name: 'golden_eye', display: 'Евгений С.', emoji: '👁️', online: false, unread: 0, time: 'Пн', preview: 'Ты самая лучшая 💖', ppv: true, vip: true },
+  { id: 15, name: 'omega_fan', display: 'Михаил К.', emoji: '🔱', online: false, unread: 0, time: 'Пн', preview: 'До следующего эфира!', ppv: false, vip: false },
+  { id: 16, name: 'vortex_44', display: 'Тимур Б.', emoji: '🌀', online: false, unread: 0, time: 'Вс', preview: 'Жду новый пост!', ppv: false, vip: false },
+];
+
+const seedMessages = [
+  { type: 'day', label: 'Понедельник' },
+  { type: 'fan', text: 'Привет Анна! Я только подписался и уже в восторге от твоего контента 🔥', time: '10:14' },
+  { type: 'me', text: 'Привет! Спасибо, рада видеть тебя 😊 Надеюсь тебе понравится эксклюзив!', time: '10:18', seen: true },
+  { type: 'fan', text: 'Очень жду нового контента! Ты лучшая на платформе без преувеличений', time: '10:25' },
+  { type: 'me', text: 'Ты такой добрый! 💖 Готовлю кое-что особенное для топ-фанов', time: '10:31', seen: true },
+  { type: 'fan', text: 'Это звучит невероятно 😍 Когда будет следующий эфир?', time: '10:44', reaction: '🔥' },
+  { type: 'me', text: 'Планирую на пятницу вечером, примерно в 21:00 по МСК. Напомню заранее!', time: '10:47', seen: true },
+  { type: 'day', label: 'Вчера' },
+  { type: 'system', text: '💰 Фан отправил чаевые $15' },
+  { type: 'fan', text: 'Держи чаевые! Ты заслуживаешь большего 💰', time: '14:02' },
+  { type: 'me', text: 'Ой, спасибо огромное! Ты просто золото 🥰✨', time: '14:05', seen: true },
+  { type: 'ppv-locked', thumb: '🖼️', title: '🔒 Фото • $8.00', desc: 'Эксклюзивный фото-сет, 8 фото' },
+  { type: 'fan', text: 'Хочу купить PPV! Это выглядит очень интригующе 🤤', time: '14:22' },
+  { type: 'me', text: 'Там очень горячий контент! 🔥 Думаю тебе понравится 😉', time: '14:24', seen: true },
+  { type: 'voice', duration: '0:34', time: '14:30' },
+  { type: 'fan', text: 'Услышал твоё голосовое, ты такая милая 🥺💕', time: '14:35', reaction: '💕' },
+  { type: 'day', label: 'Сегодня' },
+  { type: 'ppv-unlocked', thumb: '📸', title: '✓ Разблокировано', desc: 'Приватные фото • $12', amount: '$12' },
+  { type: 'fan', text: 'Я купил твой PPV — это просто огонь 🔥🔥🔥 Спасибо!', time: '09:11' },
+  { type: 'me', text: 'Так рада что понравилось! Скоро добавлю ещё эксклюзива 😘', time: '09:15', seen: true },
+  { type: 'fan', text: 'Ты лучшая создательница контента которую я видел. Честно!', time: '11:42' },
+  { type: 'me', text: 'Это так приятно слышать! 💖 Стараюсь для вас', time: '11:46', seen: false },
+  { type: 'fan', text: 'Привет! Когда следующий эфир? Буду ждать с нетерпением 🎥', time: '12:03' },
+];
+
+let currentConv = conversations[0];
+let activeFilter = 'all';
+
+// ===== RENDER CONVERSATIONS =====
+function renderConversations(list) {
+  const el = document.getElementById('convList');
+  if (!list.length) {
+    el.innerHTML = '<div style="text-align:center;padding:40px 16px;color:var(--text-muted);font-size:14px;">Нет переписок</div>';
+    return;
+  }
+  el.innerHTML = list.map((c, i) => `
+    <div class="conv-item${c.unread > 0 ? ' unread' : ''}${c.id === currentConv.id ? ' active' : ''}"
+         onclick="openConversation(${c.id})" data-id="${c.id}">
+      <div class="conv-avatar-wrap">
+        <div class="conv-avatar">${c.emoji}</div>
+        <div class="online-dot${c.online ? '' : ' offline'}"></div>
+      </div>
+      <div class="conv-info">
+        <div class="conv-name-row">
+          <span class="conv-name">@${c.name}</span>
+          ${c.vip ? '<span class="verified-icon">✓</span>' : ''}
+          ${c.ppv ? '<span class="ppv-badge">💎 PPV</span>' : ''}
+        </div>
+        <div class="conv-preview">${c.preview}</div>
+      </div>
+      <div class="conv-meta">
+        <span class="conv-time">${c.time}</span>
+        ${c.unread > 0 ? `<span class="unread-badge">${c.unread}</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterConversations(query) {
+  const q = query.toLowerCase();
+  const filtered = conversations.filter(c =>
+    c.name.includes(q) || c.display.includes(q) || c.preview.toLowerCase().includes(q)
+  );
+  renderConversations(filtered);
+}
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  let filtered = conversations;
+  if (f === 'unread') filtered = conversations.filter(c => c.unread > 0);
+  else if (f === 'ppv') filtered = conversations.filter(c => c.ppv);
+  else if (f === 'vip') filtered = conversations.filter(c => c.vip);
+  renderConversations(filtered);
+}
+
+function openConversation(id) {
+  currentConv = conversations.find(c => c.id === id) || conversations[0];
+  // update active state
+  document.querySelectorAll('.conv-item').forEach(el => el.classList.remove('active'));
+  const el = document.querySelector(`[data-id="${id}"]`);
+  if (el) el.classList.add('active');
+  // update chat header
+  document.getElementById('chatName').textContent = '@' + currentConv.name;
+  document.getElementById('chatAvatar').textContent = currentConv.emoji;
+  document.getElementById('chatStatusText').textContent = currentConv.online ? 'прямо сейчас' : '2 мин назад';
+  // update right panel
+  document.getElementById('fanName').textContent = '@' + currentConv.name;
+  document.getElementById('fanHandle').textContent = currentConv.display;
+  document.getElementById('fanAvatarLarge').textContent = currentConv.emoji;
+  // mobile: show chat
+  document.getElementById('appContainer').classList.add('chat-open');
+  // render messages (always same seed for demo)
+  renderMessages();
+  // scroll to bottom
+  setTimeout(() => {
+    const ma = document.getElementById('messagesArea');
+    ma.scrollTop = ma.scrollHeight;
+  }, 50);
+}
+
+function closeChat() {
+  document.getElementById('appContainer').classList.remove('chat-open');
+}
+
+// ===== RENDER MESSAGES =====
+function renderMessages() {
+  const area = document.getElementById('messagesArea');
+  area.innerHTML = seedMessages.map(msg => {
+    if (msg.type === 'day') return `<div class="day-divider">${msg.label}</div>`;
+    if (msg.type === 'system') return `
+      <div class="msg-system">
+        <div class="msg-system-inner">${msg.text}</div>
+      </div>`;
+    if (msg.type === 'voice') return `
+      <div class="msg-row from-fan">
+        <div class="msg-sender-avatar">${currentConv.emoji}</div>
+        <div class="msg-content">
+          <div class="voice-bubble">
+            <button class="voice-play-btn" onclick="playVoice(this)">▶</button>
+            <div class="voice-waveform">${generateWaveform()}</div>
+            <span class="voice-duration">🎙️ ${msg.duration}</span>
+          </div>
+          <div class="msg-meta">${msg.time}</div>
+        </div>
+      </div>`;
+    if (msg.type === 'ppv-locked') return `
+      <div class="msg-row from-me">
+        <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+        <div class="msg-content" style="align-items:flex-end">
+          <div class="ppv-bubble">
+            <div class="ppv-thumb">
+              <div style="font-size:48px;position:relative;z-index:1;filter:blur(4px) brightness(0.5)">${msg.thumb}</div>
+              <div class="ppv-lock-icon">🔒</div>
+            </div>
+            <div class="ppv-info">
+              <div class="ppv-title">${msg.title}</div>
+              <div class="ppv-price">${msg.desc}</div>
+              <button class="ppv-unlock-btn" onclick="unlockPPV(this)">💳 Разблокировать — $8.00</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    if (msg.type === 'ppv-unlocked') return `
+      <div class="msg-row from-me">
+        <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+        <div class="msg-content" style="align-items:flex-end">
+          <div class="ppv-bubble">
+            <div class="ppv-thumb" style="background:linear-gradient(135deg,#0a2a1a,#1a3a2a)">
+              <div style="font-size:48px;position:relative;z-index:1">${msg.thumb}</div>
+            </div>
+            <div class="ppv-info">
+              <div class="ppv-title">${msg.desc}</div>
+              <div class="ppv-unlocked-badge">✅ ${msg.title}</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    if (msg.type === 'fan') return `
+      <div class="msg-row from-fan">
+        <div class="msg-sender-avatar">${currentConv.emoji}</div>
+        <div class="msg-content">
+          <div class="msg-bubble from-fan">${msg.text}${msg.reaction ? `<div class="emoji-reaction">${msg.reaction}</div>` : ''}</div>
+          <div class="msg-meta">${msg.time}</div>
+        </div>
+      </div>`;
+    if (msg.type === 'me') return `
+      <div class="msg-row from-me">
+        <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+        <div class="msg-content">
+          <div class="msg-bubble from-me">${msg.text}</div>
+          <div class="msg-meta">
+            ${msg.time}
+            <span class="seen-tick${msg.seen ? ' seen' : ''}">✓✓</span>
+          </div>
+        </div>
+      </div>`;
+    return '';
+  }).join('');
+}
+
+function generateWaveform() {
+  const bars = [];
+  const heights = [6,10,14,8,18,12,6,20,16,10,8,14,18,12,6,10,16,8,14,10,6,8,12,18,14];
+  return heights.map(h => `<div class="voice-bar" style="height:${h}px"></div>`).join('');
+}
+
+// ===== SEND MESSAGE =====
+function sendMessage() {
+  const input = document.getElementById('msgInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const area = document.getElementById('messagesArea');
+  const msgHtml = `
+    <div class="msg-row from-me" style="animation:kol-fade-in 0.25s ease">
+      <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+      <div class="msg-content">
+        <div class="msg-bubble from-me">${escapeHtml(text)}</div>
+        <div class="msg-meta">${getTime()} <span class="seen-tick">✓✓</span></div>
+      </div>
+    </div>`;
+  area.insertAdjacentHTML('beforeend', msgHtml);
+  input.value = '';
+  input.style.height = 'auto';
+  area.scrollTop = area.scrollHeight;
+  // Update preview
+  const convEl = document.querySelector(`[data-id="${currentConv.id}"]`);
+  if (convEl) convEl.querySelector('.conv-preview').textContent = text;
+}
+
+function handleMsgKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+function autoResizeInput(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+function escapeHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function getTime() {
+  const n = new Date(); return n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
+}
+
+// ===== ATTACH DROPDOWN =====
+function toggleAttach() {
+  document.getElementById('attachDropdown').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.attach-wrap')) {
+    document.getElementById('attachDropdown').classList.remove('open');
+  }
+});
+function handleAttach(type) {
+  toggleAttach();
+  const map = { photo: 'Выбор фото...', video: 'Выбор видео...', voice: 'Запись голосового...' };
+  showToast(map[type] || 'Открытие...', '');
+}
+
+// ===== VOICE PLAYBACK =====
+function playVoice(btn) {
+  btn.textContent = btn.textContent === '▶' ? '⏸' : '▶';
+  if (btn.textContent === '⏸') {
+    setTimeout(() => { btn.textContent = '▶'; }, 3400);
+  }
+}
+
+// ===== PPV UNLOCK =====
+function unlockPPV(btn) {
+  const bubble = btn.closest('.ppv-bubble');
+  const info = bubble.querySelector('.ppv-info');
+  btn.textContent = '⏳ Обработка...';
+  setTimeout(() => {
+    info.innerHTML = `
+      <div class="ppv-title">🔓 Разблокировано!</div>
+      <div class="ppv-unlocked-badge">✅ Контент доступен</div>`;
+    bubble.querySelector('.ppv-thumb').style.background = 'linear-gradient(135deg,#0a2a1a,#1a3a2a)';
+    bubble.querySelector('.ppv-thumb').innerHTML = '<div style="font-size:48px;position:relative;z-index:1">🖼️</div>';
+    showToast('✅ PPV-контент разблокирован!', 'success');
+  }, 1200);
+}
+
+// ===== TIPS =====
+function sendTipRequest(amount) {
+  const area = document.getElementById('messagesArea');
+  const msgHtml = `
+    <div class="msg-row from-me" style="animation:kol-fade-in 0.25s ease">
+      <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+      <div class="msg-content">
+        <div class="msg-bubble from-me">💰 Запрос чаевых $${amount}</div>
+        <div class="msg-meta">${getTime()} <span class="seen-tick">✓✓</span></div>
+      </div>
+    </div>`;
+  area.insertAdjacentHTML('beforeend', msgHtml);
+  area.scrollTop = area.scrollHeight;
+  showToast(`💰 Запрос чаевых $${amount} отправлен`, 'gold');
+}
+
+// ===== EMOJI =====
+const emojis = ['😊','🔥','💖','😍','🥰','💕','✨','🎉','😘','💋','🌹','💎','👑','🦋','🌸'];
+let emojiIdx = 0;
+function insertEmoji() {
+  const input = document.getElementById('msgInput');
+  input.value += emojis[emojiIdx++ % emojis.length];
+  input.focus();
+}
+
+// ===== MODALS =====
+function openPPVModal() { document.getElementById('ppvModal').classList.add('open'); }
+function closePPVModal() { document.getElementById('ppvModal').classList.remove('open'); }
+function openMassModal() { document.getElementById('massModal').classList.add('open'); }
+function closeMassModal() { document.getElementById('massModal').classList.remove('open'); }
+function openComposeModal() { showToast('Выберите фана для нового диалога', ''); }
+
+function toggleMassPPV() {
+  const sec = document.getElementById('massPPVSection');
+  sec.style.display = document.getElementById('massIncludePPV').checked ? 'block' : 'none';
+}
+
+function selectPrice(btn, price) {
+  btn.closest('.price-selector').querySelectorAll('.price-opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function sendPPV() {
+  closePPVModal();
+  const area = document.getElementById('messagesArea');
+  const msgHtml = `
+    <div class="msg-row from-me" style="animation:kol-fade-in 0.25s ease">
+      <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+      <div class="msg-content" style="align-items:flex-end">
+        <div class="ppv-bubble">
+          <div class="ppv-thumb">
+            <div style="font-size:48px;position:relative;z-index:1;filter:blur(4px)brightness(0.5)">📸</div>
+            <div class="ppv-lock-icon">🔒</div>
+          </div>
+          <div class="ppv-info">
+            <div class="ppv-title">🔒 Эксклюзивный контент • $10.00</div>
+            <div class="ppv-price">Новый PPV от Анны</div>
+            <button class="ppv-unlock-btn" onclick="unlockPPV(this)">💳 Разблокировать — $10.00</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  area.insertAdjacentHTML('beforeend', msgHtml);
+  area.scrollTop = area.scrollHeight;
+  showToast('🔒 PPV-контент отправлен фану!', 'success');
+}
+
+function sendMass() {
+  closeMassModal();
+  showToast('📢 Рассылка отправлена 847 подписчикам!', 'success');
+}
+
+// ===== RIGHT PANEL TOGGLE (mobile) =====
+function toggleRightPanel() {
+  const rp = document.getElementById('rightPanel');
+  if (window.innerWidth <= 900) {
+    showToast('Информация о фане', '');
+  } else {
+    rp.style.display = rp.style.display === 'none' ? '' : rp.style.display;
+  }
+}
+
+// ===== BLOCK =====
+function confirmBlock() {
+  if (confirm(`Заблокировать @${currentConv.name}? Они потеряют доступ к вашему контенту.`)) {
+    showToast('🚫 Пользователь заблокирован', '');
+  }
+}
+
+// ===== TOAST =====
+function showToast(text, type) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + (type || '');
+  toast.textContent = text;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = 'kol-fade-out 0.25s ease forwards';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// ===== INIT =====
+renderConversations(conversations);
+openConversation(1);
+setTimeout(() => {
+  const ma = document.getElementById('messagesArea');
+  ma.scrollTop = ma.scrollHeight;
+}, 100);
+</script>
+
+<script>
+(function(){
+  document.body.classList.add('kol-entering');
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#')||href.startsWith('http')||href.startsWith('mailto')||href.startsWith('tel'))return;
+    if(a.target==="_blank")return;
+    e.preventDefault();
+    document.body.classList.remove('kol-entering');
+    document.body.classList.add('kol-leaving');
+    setTimeout(()=>{ window.location.href=href; }, 220);
+  });
+})();
+if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
+</script>
+
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="messages.html" class="active" style="color:#fff;font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="en/messages.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇬🇧 EN</a></div></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     KOL Studio Global Components
+     1. GDPR Cookie Consent Banner
+     2. Dark / Light Theme Toggle
+     3. PWA Install Prompt
+═══════════════════════════════════════════════════════════ -->
+<style>
+/* ── GDPR Banner ── */
+#kol-cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9990;background:#111128;border-top:1px solid #22224A;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.4s ease;box-shadow:0 -8px 32px rgba(0,0,0,0.4)}
+#kol-cookie-banner.show{transform:translateY(0)}
+#kol-cookie-banner p{flex:1;color:#A0A0C0;font-size:13px;line-height:1.6;margin:0;min-width:200px}
+#kol-cookie-banner p a{color:#D42B6A}
+.kol-cookie-btns{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.kol-cb-accept{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-cb-reject{background:transparent;border:1.5px solid #22224A;color:#A0A0C0;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:border-color 0.2s}
+.kol-cb-reject:hover{border-color:#D42B6A;color:#E8E8F0}
+.kol-cb-settings{background:none;border:none;color:#6A6A8A;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline;white-space:nowrap}
+
+/* ── Theme Toggle ── */
+#kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+#kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+
+/* ── PWA Install Prompt ── */
+#kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
+#kol-pwa-prompt.show{transform:translateX(-50%) translateY(0)}
+#kol-pwa-prompt .pwa-icon{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+#kol-pwa-prompt .pwa-text{flex:1;min-width:0}
+#kol-pwa-prompt .pwa-text strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px}
+#kol-pwa-prompt .pwa-text span{font-size:12px;color:#A0A0C0}
+.kol-pwa-install{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
+
+/* ── Cookie Settings Modal ── */
+#kol-cookie-modal{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:9995;display:none;align-items:center;justify-content:center;padding:24px}
+#kol-cookie-modal.open{display:flex}
+.kol-cm-card{background:#111128;border:1px solid #22224A;border-radius:20px;padding:28px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto}
+.kol-cm-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#E8E8F0}
+.kol-cm-card p{font-size:13px;color:#A0A0C0;line-height:1.6;margin-bottom:20px}
+.kol-cm-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #22224A}
+.kol-cm-row:last-of-type{border-bottom:none}
+.kol-cm-row .info strong{font-size:14px;color:#E8E8F0;display:block;margin-bottom:2px}
+.kol-cm-row .info span{font-size:12px;color:#6A6A8A}
+.kol-toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.kol-toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.kol-toggle-slider{position:absolute;inset:0;background:#22224A;border-radius:12px;cursor:pointer;transition:background 0.2s}
+.kol-toggle-slider::before{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform 0.2s}
+.kol-toggle-wrap input:checked + .kol-toggle-slider{background:#D42B6A}
+.kol-toggle-wrap input:checked + .kol-toggle-slider::before{transform:translateX(20px)}
+.kol-toggle-wrap input:disabled + .kol-toggle-slider{opacity:0.5;cursor:not-allowed}
+.kol-cm-btns{display:flex;gap:8px;margin-top:20px}
+.kol-cm-save{flex:1;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.kol-cm-all{flex:1;background:#181835;border:1.5px solid #22224A;color:#E8E8F0;border-radius:10px;padding:11px;font-size:14px;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.kol-cm-all:hover{border-color:#D42B6A}
+</style>
+
+<!-- GDPR Cookie Banner -->
+<div id="kol-cookie-banner">
+  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="cookie.html">Подробнее</a> · <a href="report.html">Пожаловаться</a> · <a href="api-docs.html">API</a></p>
+  <div class="kol-cookie-btns">
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+  </div>
+</div>
+
+<!-- Cookie Settings Modal -->
+<div id="kol-cookie-modal">
+  <div class="kol-cm-card">
+    <h3>🍪 Настройки Cookie</h3>
+    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-row">
+      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
+    </div>
+    <div class="kol-cm-btns">
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle Button -->
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+
+<!-- PWA Install Prompt -->
+<div id="kol-pwa-prompt">
+  <div class="pwa-icon">📱</div>
+  <div class="pwa-text">
+    <strong>Установить KOL Studio</strong>
+    <span>Работает офлайн • Быстрее браузера</span>
+  </div>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Cookie Consent ──────────────────────────────────────────
+  const CONSENT_KEY = 'kol_consent_v2';
+  
+  function kolShowBanner(){
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if(!consent){
+      setTimeout(()=>document.getElementById('kol-cookie-banner').classList.add('show'), 1500);
+    }
+  }
+
+  function kolHideBanner(){
+    document.getElementById('kol-cookie-banner').classList.remove('show');
+  }
+
+  window.kolAcceptCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:true, marketing:true, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolRejectCookies = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary:true, analytics:false, marketing:false, preferences:true,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    kolShowToast('Только необходимые cookie активированы');
+  };
+
+  window.kolSaveCookieSettings = function(){
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      necessary: true,
+      analytics: document.getElementById('kol-analytics-toggle').checked,
+      marketing: document.getElementById('kol-marketing-toggle').checked,
+      preferences: document.getElementById('kol-prefs-toggle').checked,
+      date: new Date().toISOString(), version:'2.0'
+    }));
+    kolHideBanner();
+    document.getElementById('kol-cookie-modal').classList.remove('open');
+    kolShowToast('Настройки cookie сохранены ✓');
+  };
+
+  window.kolOpenCookieSettings = function(){
+    document.getElementById('kol-cookie-modal').classList.add('open');
+  };
+
+  document.getElementById('kol-cookie-modal').addEventListener('click', function(e){
+    if(e.target === this) this.classList.remove('open');
+  });
+
+  // ── Theme Toggle ────────────────────────────────────────────
+  const THEME_KEY = 'kol_theme';
+  const btn = document.getElementById('kol-theme-btn');
+
+  function kolApplyTheme(theme){
+    if(theme === 'light'){
+      document.body.classList.add('kol-light');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('kol-light');
+      btn.textContent = '🌙';
+    }
+  }
+
+  window.kolToggleTheme = function(){
+    const current = localStorage.getItem(THEME_KEY) || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    kolApplyTheme(next);
+  };
+
+  // Apply saved theme immediately
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if(savedTheme) kolApplyTheme(savedTheme);
+
+  // ── PWA Install Prompt ──────────────────────────────────────
+  let deferredPrompt = null;
+  const pwaPrompt = document.getElementById('kol-pwa-prompt');
+  const pwaInstallBtn = document.getElementById('kol-pwa-install-btn');
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    const dismissed = sessionStorage.getItem('kol_pwa_dismissed');
+    const installed = localStorage.getItem('kol_pwa_installed');
+    if(!dismissed && !installed){
+      setTimeout(()=>pwaPrompt.classList.add('show'), 4000);
+    }
+  });
+
+  if(pwaInstallBtn){
+    pwaInstallBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        if(result.outcome === 'accepted'){
+          localStorage.setItem('kol_pwa_installed', '1');
+          kolShowToast('KOL Studio установлена! 🎉');
+        }
+        pwaPrompt.classList.remove('show');
+        deferredPrompt = null;
+      });
+    });
+  }
+
+  window.kolDismissPWA = function(){
+    pwaPrompt.classList.remove('show');
+    sessionStorage.setItem('kol_pwa_dismissed', '1');
+  };
+
+  window.addEventListener('appinstalled', function(){
+    pwaPrompt.classList.remove('show');
+    localStorage.setItem('kol_pwa_installed', '1');
+  });
+
+  // ── Toast helper (global) ────────────────────────────────────
+  window.kolShowToast = function(msg, type){
+    let t = document.getElementById('kol-global-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'kol-global-toast';
+      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1a1a3e;border:1px solid #22224A;border-radius:12px;padding:12px 24px;font-size:14px;color:#E8E8F0;box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:Inter,sans-serif';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.borderColor = type === 'success' ? '#00E676' : '#22224A';
+    t.style.color = type === 'success' ? '#00E676' : '#E8E8F0';
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=>t.style.opacity='0', 3000);
+  };
+
+  // ── Service Worker Registration ─────────────────────────────
+  if('serviceWorker' in navigator){
+    const swPath = location.pathname.includes('/en/') ? '../sw.js' : 'sw.js';
+    navigator.serviceWorker.register(swPath, {scope: location.pathname.includes('/en/') ? '/en/' : '/'})
+      .catch(()=>{});
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', kolShowBanner);
+
+})();
+</script>
+
+
+<!-- ── Unified Report Modal ── -->
+<style>
+#kol-report-modal{position:fixed;inset:0;z-index:10100;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-report-modal.show{display:flex}
+#kol-report-modal-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-report-modal-box{position:relative;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;z-index:1;animation:kol-modal-in 0.25s ease}
+@keyframes kol-modal-in{from{opacity:0;transform:scale(0.92) translateY(20px)}to{opacity:1;transform:none}}
+#kol-report-modal-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 6px}
+#kol-report-modal-box p{color:#A0A0C0;font-size:14px;margin:0 0 20px;line-height:1.6}
+.krm-types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.krm-type{background:#181835;border:1.5px solid #22224A;border-radius:12px;padding:12px;cursor:pointer;text-align:left;font-family:inherit;color:#E8E8F0;font-size:13px;transition:all 0.2s;display:flex;flex-direction:column;gap:4px}
+.krm-type:hover{border-color:#D42B6A;background:#1E1E3F}
+.krm-type.selected{border-color:#D42B6A;background:rgba(212,43,106,0.1);box-shadow:0 0 0 3px rgba(212,43,106,0.15)}
+.krm-type-icon{font-size:20px}
+.krm-type-label{font-weight:600;font-size:12px}
+.krm-desc{background:#181835;border:1.5px solid #22224A;border-radius:12px;width:100%;padding:12px 14px;font-family:inherit;font-size:14px;color:#E8E8F0;resize:vertical;min-height:100px;box-sizing:border-box;outline:none;transition:border-color 0.2s;margin-bottom:16px}
+.krm-desc:focus{border-color:#8B2BE2}
+.krm-footer{display:flex;gap:12px;justify-content:flex-end}
+.krm-cancel{background:none;border:1.5px solid #22224A;color:#A0A0C0;border-radius:10px;padding:10px 20px;font-size:14px;font-family:inherit;cursor:pointer;transition:all 0.2s}
+.krm-cancel:hover{border-color:#D42B6A;color:#E8E8F0}
+.krm-submit{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:10px 24px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:opacity 0.2s}
+.krm-submit:hover{opacity:0.9}
+.krm-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;line-height:1;padding:4px}
+.krm-close:hover{color:#E8E8F0}
+.krm-success{text-align:center;padding:20px 0}
+.krm-success-icon{font-size:48px;margin-bottom:12px}
+.krm-success h4{font-size:18px;font-weight:700;color:#00E676;margin:0 0 8px}
+.krm-success p{color:#A0A0C0;font-size:14px;margin:0}
+.krm-ticket{display:inline-block;background:#181835;border:1px solid #22224A;border-radius:8px;padding:6px 14px;font-size:12px;color:#FFB300;margin-top:12px;font-family:monospace}
+</style>
+<div id="kol-report-modal">
+  <div id="kol-report-modal-backdrop" onclick="kolCloseReport()"></div>
+  <div id="kol-report-modal-box">
+    <button class="krm-close" onclick="kolCloseReport()" aria-label="Закрыть">✕</button>
+    <div id="krm-form">
+      <h3>🚩 Пожаловаться</h3>
+      <p>Выберите причину жалобы. Мы рассмотрим её в течение 24–48 часов.</p>
+      <div class="krm-types">
+        <button class="krm-type" onclick="krmSelect(this,'illegal')">
+          <span class="krm-type-icon">🚫</span>
+          <span class="krm-type-label">Незаконный контент</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'fraud')">
+          <span class="krm-type-icon">💰</span>
+          <span class="krm-type-label">Мошенничество</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'dmca')">
+          <span class="krm-type-icon">📋</span>
+          <span class="krm-type-label">Авторские права</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'spam')">
+          <span class="krm-type-icon">🤖</span>
+          <span class="krm-type-label">Спам / Бот</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'harassment')">
+          <span class="krm-type-icon">😤</span>
+          <span class="krm-type-label">Харассмент</span>
+        </button>
+        <button class="krm-type" onclick="krmSelect(this,'other')">
+          <span class="krm-type-icon">📌</span>
+          <span class="krm-type-label">Другое</span>
+        </button>
+      </div>
+      <textarea class="krm-desc" id="krm-desc" placeholder="Опишите проблему подробнее (необязательно)..." maxlength="1000"></textarea>
+      <div class="krm-footer">
+        <button class="krm-cancel" onclick="kolCloseReport()">Отмена</button>
+        <button class="krm-submit" onclick="krmSubmit()">Отправить</button>
+      </div>
+    </div>
+    <div id="krm-success" class="krm-success" style="display:none">
+      <div class="krm-success-icon">✅</div>
+      <h4>Жалоба отправлена</h4>
+      <p>Мы рассмотрим её в течение 24–48 часов</p>
+      <div class="krm-ticket" id="krm-ticket-id"></div>
+    </div>
+  </div>
+</div>
+<script>
+window._krmType = null;
+function kolOpenReport(targetId){
+  window._krmReportTarget = targetId||null;
+  document.getElementById('krm-form').style.display='';
+  document.getElementById('krm-success').style.display='none';
+  document.querySelectorAll('.krm-type').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('krm-desc').value='';
+  window._krmType=null;
+  document.getElementById('kol-report-modal').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function kolCloseReport(){
+  document.getElementById('kol-report-modal').classList.remove('show');
+  document.body.style.overflow='';
+}
+function krmSelect(btn,type){
+  document.querySelectorAll('.krm-type').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  window._krmType=type;
+}
+function krmSubmit(){
+  if(!window._krmType){
+    if(window.kolShowToast) kolShowToast('Выберите причину жалобы','error');
+    return;
+  }
+  document.getElementById('krm-form').style.display='none';
+  document.getElementById('krm-success').style.display='block';
+  const id='RPT-'+new Date().getFullYear()+'-'+Math.floor(1000+Math.random()*9000);
+  document.getElementById('krm-ticket-id').textContent='Номер: '+id;
+  setTimeout(kolCloseReport,4000);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')kolCloseReport();});
+</script>
+
+<!-- ── KOL System Features ──────────────────────────── -->
+<style>
+/* Floating Action Button */
+#kol-fab{position:fixed;bottom:88px;right:20px;z-index:9900;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,43,106,0.4);transition:transform 0.2s,box-shadow 0.2s;display:flex;align-items:center;justify-content:center}
+#kol-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(212,43,106,0.5)}
+#kol-fab:active{transform:scale(0.95)}
+#kol-fab-menu{position:fixed;bottom:156px;right:20px;z-index:9899;display:flex;flex-direction:column;gap:10px;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;transform:translateY(12px)}
+#kol-fab-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.kol-fab-item{display:flex;align-items:center;gap:10px;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:8px 16px 8px 12px;color:#E8E8F0;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,0.3);transition:border-color 0.2s}
+.kol-fab-item:hover{border-color:#D42B6A}
+.kol-fab-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Keyboard shortcuts modal */
+#kol-shortcuts-modal{position:fixed;inset:0;z-index:10500;display:none;align-items:center;justify-content:center;padding:16px}
+#kol-shortcuts-modal.show{display:flex}
+#kol-shortcuts-backdrop{position:absolute;inset:0;background:rgba(7,7,26,0.85);backdrop-filter:blur(4px)}
+#kol-shortcuts-box{position:relative;z-index:1;background:#111128;border:1.5px solid #22224A;border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+#kol-shortcuts-box h3{font-size:20px;font-weight:700;color:#E8E8F0;margin:0 0 20px;display:flex;align-items:center;gap:10px}
+.kol-sc-group{margin-bottom:20px}
+.kol-sc-group h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6A6A8A;margin-bottom:12px}
+.kol-sc-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #181835}
+.kol-sc-row:last-child{border-bottom:none}
+.kol-sc-desc{font-size:14px;color:#A0A0C0}
+.kol-sc-keys{display:flex;gap:4px}
+.kol-key{background:#181835;border:1.5px solid #22224A;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:600;color:#E8E8F0;font-family:'Fira Code',monospace;min-width:26px;text-align:center}
+#kol-shortcuts-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6A6A8A;font-size:20px;cursor:pointer;padding:4px}
+#kol-shortcuts-close:hover{color:#E8E8F0}
+
+/* Hint pill (? key) */
+#kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+#kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+</style>
+
+<!-- FAB -->
+<div id="kol-fab-menu">
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+</div>
+<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+
+<!-- Keyboard shortcuts hint -->
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+
+<!-- Keyboard shortcuts modal -->
+<div id="kol-shortcuts-modal">
+  <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
+  <div id="kol-shortcuts-box">
+    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Горячие клавиши</h3>
+    <div class="kol-sc-group">
+      <h4>Навигация</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Действия</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+    </div>
+    <div class="kol-sc-group">
+      <h4>Интерфейс</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── FAB ── */
+var _fabOpen = false;
+function kolToggleFab(){
+  _fabOpen = !_fabOpen;
+  document.getElementById('kol-fab').textContent = _fabOpen ? '✕' : '＋';
+  document.getElementById('kol-fab-menu').classList.toggle('open', _fabOpen);
+}
+document.addEventListener('click', function(e){
+  if(_fabOpen && !e.target.closest('#kol-fab') && !e.target.closest('#kol-fab-menu')){
+    _fabOpen = false;
+    document.getElementById('kol-fab').textContent = '＋';
+    document.getElementById('kol-fab-menu').classList.remove('open');
+  }
+});
+
+/* ── Keyboard Shortcuts ── */
+function kolShowShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function kolCloseShortcuts(){
+  document.getElementById('kol-shortcuts-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── Analytics stub ── */
+window.kolTrack = function(event, props){
+  // Stub: replace with your analytics provider
+  var payload = Object.assign({event: event, ts: Date.now(), path: location.pathname}, props||{});
+  try {
+    var q = JSON.parse(localStorage.getItem('kol_analytics_queue')||'[]');
+    q.push(payload);
+    if(q.length > 100) q = q.slice(-100);
+    localStorage.setItem('kol_analytics_queue', JSON.stringify(q));
+  } catch(e){}
+  // console.log('[KOL Analytics]', payload);
+};
+
+/* ── A/B Test flags ── */
+window.KOL_FLAGS = (function(){
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('kol_flags')||'{}'); } catch(e){}
+  var defaults = {
+    newCheckout: false,
+    showFAB: true,
+    showShortcutHint: true,
+    newFeedAlgo: false,
+    creatorDashboardV2: true,
+    pricingAnnualToggle: true
+  };
+  return Object.assign({}, defaults, stored);
+})();
+
+/* ── Apply flags ── */
+if(!window.KOL_FLAGS.showFAB){
+  var fab = document.getElementById('kol-fab');
+  var fabMenu = document.getElementById('kol-fab-menu');
+  if(fab) fab.style.display = 'none';
+  if(fabMenu) fabMenu.style.display = 'none';
+}
+if(!window.KOL_FLAGS.showShortcutHint){
+  var hint = document.getElementById('kol-shortcut-hint');
+  if(hint) hint.style.display = 'none';
+}
+
+/* ── Global keyboard handler ── */
+var _gKeySeq = [];
+var _gKeyTimer = null;
+document.addEventListener('keydown', function(e){
+  var tag = (e.target||{}).tagName||'';
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Single keys
+  switch(e.key){
+    case '?': kolShowShortcuts(); return;
+    case 'Escape':
+      kolCloseShortcuts();
+      if(window.kolCloseReport) kolCloseReport();
+      return;
+    case '/':
+      e.preventDefault();
+      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      if(si){ si.focus(); si.select(); } else { location.href = 'search.html'; }
+      return;
+    case 'n': case 'N':
+      location.href = 'upload.html'; return;
+    case 't': case 'T':
+      if(window.kolToggleTheme) kolToggleTheme(); return;
+  }
+
+  // G+key sequences
+  if(e.key === 'g' || e.key === 'G'){
+    _gKeySeq = ['g'];
+    clearTimeout(_gKeyTimer);
+    _gKeyTimer = setTimeout(function(){ _gKeySeq = []; }, 1500);
+    return;
+  }
+  if(_gKeySeq.length === 1 && _gKeySeq[0] === 'g'){
+    _gKeySeq = [];
+    clearTimeout(_gKeyTimer);
+    var dest = {f:'feed.html',m:'messages.html',n:'notifications.html',p:'profile.html',d:'creator-dashboard.html',s:'search.html'}[e.key.toLowerCase()];
+    if(dest) location.href = dest;
+    return;
+  }
+
+  // Shift+R = report
+  if(e.key === 'R' && e.shiftKey){
+    if(window.kolOpenReport) kolOpenReport();
+    return;
+  }
+});
+
+/* ── Track page view ── */
+kolTrack('page_view', {title: document.title});
+</script>
+</body>
+</html>
