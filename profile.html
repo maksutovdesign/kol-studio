@@ -990,6 +990,68 @@
     .mobile-nav-item.active { color: var(--accent); }
     .mobile-nav-item svg { width: 22px; height: 22px; }
     .mobile-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(7,7,26,0.97); backdrop-filter: blur(20px); border-top: 1px solid var(--border); z-index: 500; padding: 8px 0 env(safe-area-inset-bottom, 8px); }
+  /* ─── GOAL WIDGET ─── */
+  .profile-goal {
+    background: rgba(212,43,106,.06); border: 1px solid rgba(212,43,106,.2);
+    border-radius: 14px; padding: 16px; margin-bottom: 16px;
+  }
+  .profile-goal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .profile-goal-title { font-size:13px; font-weight:700; }
+  .profile-goal-pct { font-size:13px; font-weight:800; color:#D42B6A; }
+  .profile-goal-track { height:8px; background:rgba(255,255,255,.08); border-radius:4px; overflow:hidden; margin-bottom:8px; }
+  .profile-goal-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,#D42B6A,#8B2BE2); transition:width .5s ease; }
+  .profile-goal-footer { display:flex; justify-content:space-between; font-size:11px; color:var(--text-sub); }
+  .profile-goal-btn {
+    width:100%; margin-top:12px; padding:10px; border-radius:10px; border:none;
+    background:linear-gradient(135deg,#D42B6A,#8B2BE2); color:#fff;
+    font-size:13px; font-weight:700; cursor:pointer; font-family:inherit; transition:opacity .2s;
+  }
+  .profile-goal-btn:hover { opacity:.85; }
+
+  /* ─── TIP MENU ─── */
+  .tip-menu-section { margin-bottom: 16px; }
+  .tip-menu-title {
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+    color:var(--text-sub); margin-bottom:10px; display:flex; align-items:center; gap:6px;
+  }
+  .tip-menu-title::before { content:'💰'; }
+  .tip-menu-items { display:flex; flex-direction:column; gap:6px; }
+  .tip-menu-item {
+    display:flex; align-items:center; justify-content:space-between;
+    background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07);
+    border-radius:10px; padding:9px 12px; cursor:pointer;
+    transition:border-color .2s, background .2s;
+  }
+  .tip-menu-item:hover { border-color:rgba(212,43,106,.4); background:rgba(212,43,106,.05); }
+  .tip-menu-action { font-size:13px; font-weight:600; }
+  .tip-menu-price {
+    font-size:12px; font-weight:800; color:#D42B6A;
+    background:rgba(212,43,106,.1); border:1px solid rgba(212,43,106,.25);
+    padding:3px 10px; border-radius:20px;
+  }
+
+  /* ─── SESSION BUNDLES ─── */
+  .session-bundles { margin-bottom:16px; }
+  .session-bundle-title {
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+    color:var(--text-sub); margin-bottom:10px;
+  }
+  .bundle-tabs { display:flex; gap:6px; }
+  .bundle-tab {
+    flex:1; padding:8px 6px; border-radius:10px; border:1.5px solid rgba(255,255,255,.1);
+    background:transparent; color:var(--text-sub); font-size:12px; font-weight:700;
+    cursor:pointer; text-align:center; font-family:inherit; transition:all .2s; position:relative;
+  }
+  .bundle-tab.active { border-color:#D42B6A; background:rgba(212,43,106,.1); color:var(--text-main); }
+  .bundle-tab .bundle-save {
+    display:block; font-size:9px; font-weight:800; color:#00E676; margin-top:2px;
+  }
+  .bundle-tab .bundle-price { display:block; font-size:14px; font-weight:900; margin-top:3px; }
+  .bundle-tab.popular::after {
+    content:'Хит'; position:absolute; top:-8px; left:50%; transform:translateX(-50%);
+    background:#FFB300; color:#07071A; font-size:8px; font-weight:900;
+    padding:2px 7px; border-radius:5px; white-space:nowrap;
+  }
   </style>
 
 <style id="page-transitions">
@@ -1383,6 +1445,45 @@ button,a,[role="button"]{min-height:36px}
 
     <!-- RIGHT COLUMN -->
     <div class="right-col">
+
+      <!-- GOAL WIDGET -->
+      <div class="profile-goal" id="profileGoalWrap" style="display:none">
+        <div class="profile-goal-header">
+          <span class="profile-goal-title" id="profileGoalLabel">🎯 Цель</span>
+          <span class="profile-goal-pct" id="profileGoalPct">0%</span>
+        </div>
+        <div class="profile-goal-track">
+          <div class="profile-goal-fill" id="profileGoalFill" style="width:0%"></div>
+        </div>
+        <div class="profile-goal-footer">
+          <span>Собрано: <strong id="profileGoalCur">0</strong> / <strong id="profileGoalMax">0</strong> 🔥</span>
+          <span id="profileGoalLeft"></span>
+        </div>
+        <button class="profile-goal-btn" onclick="profileSendGoalTip()">⚡ Поддержать цель</button>
+      </div>
+
+      <!-- TIP MENU -->
+      <div class="tip-menu-section" id="tipMenuWrap" style="display:none">
+        <div class="tip-menu-title">Tip Menu</div>
+        <div class="tip-menu-items" id="tipMenuItems"></div>
+      </div>
+
+      <!-- SESSION BUNDLES -->
+      <div class="session-bundles" id="sessionBundlesWrap">
+        <div class="session-bundle-title">Выбери период</div>
+        <div class="bundle-tabs" id="bundleTabs">
+          <button class="bundle-tab active" data-months="1" onclick="selectBundle(this)">
+            1 мес<span class="bundle-save"> </span><span class="bundle-price" id="bundlePrice1">—</span>
+          </button>
+          <button class="bundle-tab popular" data-months="3" onclick="selectBundle(this)">
+            3 мес<span class="bundle-save">−15%</span><span class="bundle-price" id="bundlePrice3">—</span>
+          </button>
+          <button class="bundle-tab" data-months="12" onclick="selectBundle(this)">
+            12 мес<span class="bundle-save">−30%</span><span class="bundle-price" id="bundlePrice12">—</span>
+          </button>
+        </div>
+      </div>
+
       <div class="sub-section">
         <div class="sub-section-title">Подписаться</div>
         <div id="subPlansWrap"></div>
@@ -1436,11 +1537,11 @@ button,a,[role="button"]{min-height:36px}
 // MODEL DATA
 // =====================
 const MODELS = [
-  {id:1,name:'Анна Морозова',verified:true,age:24,status:'online',viewers:142,followers:'18.4K',likes:'142K',posts:312,videos:28,bio:'Эксклюзивный fashion и lingerie контент каждый день 💋 Принимаю особые запросы. Не стесняйся написать — всегда отвечу! Новые публикации пн/ср/пт.',tags:['Fashion','Lingerie','Boudoir','Tease'],services:['photo','video','live','chat','special'],subPlans:[{name:'Базовый',price:9.99,perks:['Весь фото-контент','Личные сообщения']},{name:'Премиум',price:14.99,perks:['Всё из базового','HD видео','Live эфиры']},{name:'VIP',price:29.99,perks:['Всё из премиум','Приватное шоу 30 мин','Особый запрос в месяц']}],ppv:[{type:'photo',price:5,label:'Эксклюзивное фото'},{type:'video',price:15,label:'Приватное видео'},{type:'custom',price:null,label:'Особый запрос'}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~10 мин',g1:'#5C1A7A',g2:'#D42B6A',category:'Lingerie'},
+  {id:1,name:'Анна Морозова',verified:true,age:24,status:'online',viewers:142,followers:'18.4K',likes:'142K',posts:312,videos:28,bio:'Эксклюзивный fashion и lingerie контент каждый день 💋 Принимаю особые запросы. Не стесняйся написать — всегда отвечу! Новые публикации пн/ср/пт.',tags:['Fashion','Lingerie','Boudoir','Tease'],services:['photo','video','live','chat','special'],subPlans:[{name:'Базовый',price:9.99,perks:['Весь фото-контент','Личные сообщения']},{name:'Премиум',price:14.99,perks:['Всё из базового','HD видео','Live эфиры']},{name:'VIP',price:29.99,perks:['Всё из премиум','Приватное шоу 30 мин','Особый запрос в месяц']}],ppv:[{type:'photo',price:5,label:'Эксклюзивное фото'},{type:'video',price:15,label:'Приватное видео'},{type:'custom',price:null,label:'Особый запрос'}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~10 мин',g1:'#5C1A7A',g2:'#D42B6A',category:'Lingerie',goal:{label:'Ночное Live-шоу 🌙',cur:720,max:1000},tipMenu:[{action:'😘 Поцелуй в камеру',price:5},{action:'💃 Танец для тебя',price:15},{action:'📸 Личное фото',price:25},{action:'🎬 Видео-сообщение',price:50},{action:'🔥 Особый запрос',price:100}]},
   {id:2,name:'Мария Козлова',verified:true,age:26,status:'live',viewers:318,followers:'9.2K',likes:'67K',posts:189,videos:41,bio:'Арт и лайфстайл контент. Нестандартный взгляд на эротику 🎨 Творческие коллаборации и особые запросы приветствуются.',tags:['Art','Lifestyle','Creative'],services:['photo','video','live'],subPlans:[{name:'Базовый',price:7.99,perks:['Все фото']},{name:'Премиум',price:9.99,perks:['Фото + видео','Live']}],ppv:[{type:'photo',price:8,label:'Арт-серия'},{type:'video',price:20,label:'Авторское видео'}],nat:'🇷🇺',langs:['RU','EN','DE'],responseTime:'~5 мин',g1:'#0D47A1',g2:'#7B1FA2',category:'Art'},
   {id:3,name:'Дарья Петрова',verified:true,age:28,status:'offline',viewers:0,followers:'31.2K',likes:'289K',posts:547,videos:63,bio:'Топ-модель платформы ✨ Безупречный boudoir контент. Новый материал 3 раза в неделю. VIP-подписчики получают эксклюзив.',tags:['Boudoir','Studio','Glamour'],services:['photo','video','special'],subPlans:[{name:'Стандарт',price:14.99,perks:['Весь контент','Приоритет в чате']},{name:'VIP',price:24.99,perks:['Всё','Ежемесячный особый запрос']}],ppv:[{type:'photo',price:12,label:'Премиум фото'},{type:'video',price:30,label:'Эксклюзивное видео'}],nat:'🇷🇺',langs:['RU'],responseTime:'~2 ч',g1:'#AD1457',g2:'#E65100',category:'Boudoir'},
   {id:4,name:'Елена Соколова',verified:false,age:22,status:'online',viewers:87,followers:'5.8K',likes:'34K',posts:98,videos:15,bio:'Фитнес и lifestyle 🏋️ Горячие фото с тренировок, пляжные фото, откровенный контент. Подписывайся — не пожалеешь!',tags:['Fitness','Bikini','Lifestyle'],services:['photo','video','chat'],subPlans:[{name:'Подписка',price:7.99,perks:['Весь контент','Сообщения']}],ppv:[{type:'photo',price:5,label:'Горячее фото'}],nat:'🇺🇦',langs:['RU','EN'],responseTime:'~8 мин',g1:'#00695C',g2:'#1565C0',category:'Fitness'},
-  {id:5,name:'Кристина Нова',verified:false,age:25,status:'live',viewers:204,followers:'7.1K',likes:'51K',posts:143,videos:22,bio:'Косплей и ролевые игры — моя специальность 🎭 Каждую неделю новый персонаж. Особые запросы — мой конёк!',tags:['Cosplay','Roleplay','Fetish'],services:['photo','live','chat','special'],subPlans:[{name:'Базовый',price:9.99,perks:['Фото','Live эфиры']},{name:'Фан',price:12.99,perks:['Всё + приват-чат']}],ppv:[{type:'photo',price:7,label:'Косплей-сет'},{type:'custom',price:null,label:'Особый персонаж'}],nat:'🇧🇾',langs:['RU','EN'],responseTime:'~15 мин',g1:'#4E342E',g2:'#880E4F',category:'Cosplay'},
+  {id:5,name:'Кристина Нова',verified:false,age:25,status:'live',viewers:204,followers:'7.1K',likes:'51K',posts:143,videos:22,bio:'Косплей и ролевые игры — моя специальность 🎭 Каждую неделю новый персонаж. Особые запросы — мой конёк!',tags:['Cosplay','Roleplay','Fetish'],services:['photo','live','chat','special'],subPlans:[{name:'Базовый',price:9.99,perks:['Фото','Live эфиры']},{name:'Фан',price:12.99,perks:['Всё + приват-чат']}],ppv:[{type:'photo',price:7,label:'Косплей-сет'},{type:'custom',price:null,label:'Особый персонаж'}],nat:'🇧🇾',langs:['RU','EN'],responseTime:'~15 мин',g1:'#4E342E',g2:'#880E4F',category:'Cosplay',goal:{label:'Косплей Sailor Moon 🌙',cur:410,max:600},tipMenu:[{action:'🎭 Назови персонажа',price:10},{action:'📸 Фото в костюме',price:20},{action:'🎬 Видео в роли',price:40},{action:'✨ Особый персонаж (запрос)',price:80}]},
   {id:6,name:'Виктория Лейн',verified:true,age:30,status:'offline',viewers:0,followers:'22.7K',likes:'198K',posts:421,videos:87,bio:'Доминантная модель 🖤 Латекс, кожа, откровенный контент без цензуры для подписчиков. Чёткие границы, горячий контент.',tags:['Dominant','Latex','Boudoir'],services:['photo','video','special'],subPlans:[{name:'Стандарт',price:19.99,perks:['Полный доступ']},{name:'VIP',price:39.99,perks:['Всё + 1 особый запрос']}],ppv:[{type:'video',price:25,label:'Приватное видео'},{type:'custom',price:null,label:'Запрос под вас'}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~3 ч',g1:'#37474F',g2:'#1A0A2E',category:'Boudoir'},
   {id:7,name:'Алина Серова',verified:true,age:23,status:'online',viewers:196,followers:'41.3K',likes:'412K',posts:689,videos:124,bio:'Самая популярная на платформе 🔥 Ежедневный контент. Live каждую пятницу. Отвечаю на все сообщения!',tags:['Fashion','Softcore','ASMR'],services:['photo','video','live','chat','special'],subPlans:[{name:'Базовый',price:11.99,perks:['Фото + видео']},{name:'Премиум',price:16.99,perks:['Всё + Live']},{name:'VIP',price:34.99,perks:['Всё + приват']}],ppv:[{type:'photo',price:8,label:'Эксклюзив'},{type:'video',price:20,label:'Приватное видео'}],nat:'🇰🇿',langs:['RU','EN'],responseTime:'~5 мин',g1:'#880E4F',g2:'#C2185B',category:'Lifestyle'},
   {id:8,name:'Юлия Вих',verified:false,age:27,status:'online',viewers:63,followers:'3.2K',likes:'18K',posts:67,videos:8,bio:'Новенькая на платформе! 💪 Фитнес-модель с идеальными формами. Подписывайся первым — эксклюзивный ранний доступ!',tags:['Fitness','Sport','Bikini'],services:['photo','video','chat'],subPlans:[{name:'Подписка',price:6.99,perks:['Весь контент','Чат']}],ppv:[{type:'photo',price:4,label:'Спорт-сет'}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~12 мин',g1:'#1B5E20',g2:'#2E7D32',category:'Fitness'},
@@ -1567,6 +1668,9 @@ function renderPage() {
 
   // Sub plans
   renderSubPlans();
+  renderGoal();
+  renderTipMenu();
+  renderBundles();
 
   // Interaction buttons
   document.getElementById('chatBtn').href = `session.html?id=${m.id}&mode=chat`;
@@ -1666,6 +1770,60 @@ function renderSubPlans() {
   }).join('');
 }
 
+function renderGoal() {
+  const m = currentModel;
+  const wrap = document.getElementById('profileGoalWrap');
+  if (!m.goal) { if(wrap) wrap.style.display='none'; return; }
+  if(wrap) wrap.style.display='block';
+  const pct = Math.min(100, Math.round(m.goal.cur / m.goal.max * 100));
+  document.getElementById('profileGoalLabel').textContent = '🎯 ' + m.goal.label;
+  document.getElementById('profileGoalPct').textContent   = pct + '%';
+  document.getElementById('profileGoalFill').style.width  = pct + '%';
+  document.getElementById('profileGoalCur').textContent   = m.goal.cur;
+  document.getElementById('profileGoalMax').textContent   = m.goal.max;
+  document.getElementById('profileGoalLeft').textContent  = 'Осталось: ' + (m.goal.max - m.goal.cur);
+}
+
+function profileSendGoalTip() {
+  const m = currentModel;
+  if (!m || !m.goal) return;
+  const add = [50, 100, 200][Math.floor(Math.random()*2)];
+  m.goal.cur = Math.min(m.goal.max, m.goal.cur + add);
+  renderGoal();
+  if (m.goal.cur >= m.goal.max && window.kolShowToast) kolShowToast('🎉 Цель достигнута!', 'success');
+  else if (window.kolShowToast) kolShowToast(`+${add} токенов отправлено 🔥`);
+}
+
+function renderTipMenu() {
+  const m = currentModel;
+  const wrap  = document.getElementById('tipMenuWrap');
+  const items = document.getElementById('tipMenuItems');
+  if (!m.tipMenu || !m.tipMenu.length) { if(wrap) wrap.style.display='none'; return; }
+  if(wrap) wrap.style.display='block';
+  items.innerHTML = m.tipMenu.map(t => `
+    <div class="tip-menu-item" onclick="selectTip(this,${t.price})">
+      <span class="tip-menu-action">${t.action}</span>
+      <span class="tip-menu-price">$${t.price}</span>
+    </div>`).join('');
+}
+
+function renderBundles() {
+  const m = currentModel;
+  const base = m.subPlans[0]?.price || 9.99;
+  const p1  = base.toFixed(2);
+  const p3  = (base * 3 * 0.85).toFixed(2);
+  const p12 = (base * 12 * 0.70).toFixed(2);
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = '$'+val; };
+  set('bundlePrice1', p1);
+  set('bundlePrice3', p3);
+  set('bundlePrice12', p12);
+}
+
+function selectBundle(btn) {
+  document.querySelectorAll('.bundle-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
 function renderSimilar() {
   const m = currentModel;
   const similar = MODELS.filter(x => x.id !== m.id && x.category === m.category).slice(0, 3);
@@ -1718,8 +1876,10 @@ function openPayModal(planIdx) {
   document.getElementById('payModal').classList.add('open');
 }
 
-function closeModal() {
-  document.getElementById('payModal').classList.remove('open');
+function closeModal(id) {
+  const modalId = id || 'payModal';
+  const el = document.getElementById(modalId);
+  if (el) el.classList.remove('open');
 }
 
 function selectPayment(btn, method) {

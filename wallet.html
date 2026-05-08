@@ -991,6 +991,48 @@ button,a,[role="button"]{min-height:36px}
 
       <!-- PENDING PAYOUTS TABLE -->
       <div class="section-card">
+        <!-- PAYOUT SCHEDULE -->
+        <div class="payout-schedule-card">
+          <div class="payout-schedule-title">📅 Расписание выплат</div>
+
+          <div class="payout-next-info">
+            <div><div class="pni-label">Следующая выплата</div><div class="pni-value">7 мая 2026</div></div>
+            <div><div class="pni-label">Сумма</div><div class="pni-value">$3 847.20</div></div>
+            <div class="pni-badge">Автоматически</div>
+          </div>
+
+          <div style="font-size:11px;color:#A0A0C0;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:700">Частота выплат</div>
+          <div class="payout-freq-grid">
+            <button class="payout-freq-card" onclick="selectPayoutFreq(this)">
+              <div class="pf-icon">📅</div>
+              <div class="pf-label">Ежемесячно</div>
+              <div class="pf-sub">1-го числа</div>
+            </button>
+            <button class="payout-freq-card active" onclick="selectPayoutFreq(this)">
+              <div class="pf-icon">📆</div>
+              <div class="pf-label">Еженедельно</div>
+              <div class="pf-sub">Каждый понедельник</div>
+            </button>
+            <button class="payout-freq-card premium-only" onclick="selectPayoutFreq(this)">
+              <div class="pf-icon">⚡</div>
+              <div class="pf-label">Ежедневно</div>
+              <div class="pf-sub">Каждый день в 12:00</div>
+            </button>
+          </div>
+
+          <div class="payout-threshold-row">
+            <span class="payout-threshold-label">Мин. сумма для авто-вывода:</span>
+            <input class="payout-threshold-input" type="number" value="50" min="20" id="payoutThreshold">
+            <span style="font-size:14px;color:#A0A0C0">$</span>
+          </div>
+
+          <div style="background:rgba(139,43,226,.06);border:1px solid rgba(139,43,226,.2);border-radius:10px;padding:10px 14px;font-size:12px;color:#A0A0C0;margin-bottom:14px;line-height:1.5">
+            💎 <strong style="color:#CE93D8">Ежедневные выплаты</strong> доступны на уровне Gold ($2 000+/мес). Ты на уровне Silver — до Gold осталось <strong style="color:#E8E8F0">$1 715.50</strong>.
+          </div>
+
+          <button class="payout-save-btn" onclick="savePayoutSchedule()">Сохранить расписание</button>
+        </div>
+
         <div class="section-title">📋 Ожидающие выплаты</div>
         <div style="overflow-x:auto;">
           <table class="data-table">
@@ -1378,6 +1420,21 @@ button,a,[role="button"]{min-height:36px}
   }
 
   // ── TOAST ──
+  function selectPayoutFreq(btn) {
+    document.querySelectorAll('.payout-freq-card').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const isDaily = btn.querySelector('.pf-label')?.textContent?.includes('Ежедневно');
+    if (isDaily && window.kolShowToast) {
+      kolShowToast('💎 Ежедневные выплаты доступны на уровне Gold+');
+      btn.classList.remove('active');
+    }
+  }
+  function savePayoutSchedule() {
+    const active = document.querySelector('.payout-freq-card.active .pf-label')?.textContent || '';
+    const min    = document.getElementById('payoutThreshold')?.value || '50';
+    showToast(`✅ Расписание сохранено: ${active}, мин. $${min}`);
+  }
+
   function showToast(msg) {
     const t = document.getElementById('toastEl');
     t.textContent = msg;
@@ -1774,6 +1831,49 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
 /* Hint pill (? key) */
 #kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
 #kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+
+/* ─── PAYOUT SCHEDULE ─── */
+.payout-schedule-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px;margin-bottom:20px}
+.payout-schedule-title{font-size:15px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.payout-freq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.payout-freq-card{
+  padding:14px 10px;border-radius:12px;border:1.5px solid #22224A;
+  background:transparent;cursor:pointer;text-align:center;font-family:inherit;
+  transition:all .2s;position:relative;
+}
+.payout-freq-card:hover{border-color:rgba(212,43,106,.4)}
+.payout-freq-card.active{border-color:#D42B6A;background:rgba(212,43,106,.08)}
+.payout-freq-card .pf-icon{font-size:22px;margin-bottom:6px}
+.payout-freq-card .pf-label{font-size:13px;font-weight:700;color:#E8E8F0}
+.payout-freq-card .pf-sub{font-size:11px;color:#A0A0C0;margin-top:2px}
+.payout-freq-card.premium-only::after{
+  content:'GOLD+'; position:absolute; top:-6px; right:-6px;
+  background:linear-gradient(135deg,#FFB300,#FF8F00); color:#07071A;
+  font-size:8px; font-weight:900; padding:2px 6px; border-radius:5px;
+}
+.payout-threshold-row{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.payout-threshold-label{font-size:13px;color:#A0A0C0;flex-shrink:0}
+.payout-threshold-input{
+  background:#181835;border:1.5px solid #22224A;border-radius:10px;
+  padding:9px 14px;color:#E8E8F0;font-size:14px;font-weight:700;
+  font-family:inherit;outline:none;width:120px;transition:border-color .2s;
+}
+.payout-threshold-input:focus{border-color:#D42B6A}
+.payout-save-btn{
+  width:100%;padding:12px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+  color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;
+  transition:opacity .2s;
+}
+.payout-save-btn:hover{opacity:.85}
+.payout-next-info{
+  background:#181835;border:1px solid #22224A;border-radius:12px;
+  padding:14px 16px;display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;
+}
+.pni-label{font-size:12px;color:#A0A0C0}
+.pni-value{font-size:15px;font-weight:800;color:#E8E8F0}
+.pni-badge{font-size:11px;font-weight:700;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);color:#00E676;padding:3px 10px;border-radius:10px}
 </style>
 
 <!-- FAB -->
