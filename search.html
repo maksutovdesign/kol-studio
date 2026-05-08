@@ -853,6 +853,124 @@
   .card-subscribe:hover { opacity: 0.9; }
   .card-subscribe:active { transform: scale(0.98); }
 
+  /* ─── GOAL WIDGET ─── */
+  .card-goal {
+    margin: 8px 0 6px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 10px;
+    padding: 7px 10px;
+  }
+  .card-goal-label {
+    font-size: 11px; color: var(--text-muted);
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  .card-goal-label span { color: var(--text); font-weight: 700; }
+  .card-goal-track {
+    height: 5px; background: rgba(255,255,255,.08);
+    border-radius: 3px; overflow: hidden;
+  }
+  .card-goal-fill {
+    height: 100%; border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width .4s ease;
+  }
+  .card-goal-sub {
+    font-size: 10px; color: var(--text-muted);
+    margin-top: 4px; display: flex; justify-content: space-between;
+  }
+
+  /* ─── LOVENSE BADGE ─── */
+  .card-lovense {
+    position: absolute; bottom: 8px; left: 8px;
+    background: rgba(0,0,0,.75); border: 1px solid rgba(0,230,118,.4);
+    color: #00E676; font-size: 9px; font-weight: 800; letter-spacing: .5px;
+    padding: 3px 7px; border-radius: 6px;
+    display: flex; align-items: center; gap: 4px; backdrop-filter: blur(4px);
+  }
+  .card-lovense::before { content: '🎮'; font-size: 10px; }
+
+  /* ─── VR BADGE ─── */
+  .card-vr {
+    position: absolute; bottom: 8px; right: 44px;
+    background: rgba(0,0,0,.75); border: 1px solid rgba(139,43,226,.5);
+    color: #CE93D8; font-size: 9px; font-weight: 800; letter-spacing: .5px;
+    padding: 3px 7px; border-radius: 6px;
+    display: flex; align-items: center; gap: 4px; backdrop-filter: blur(4px);
+  }
+
+  /* ─── CREATOR SCORE ─── */
+  .card-score {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 12px; font-weight: 700; color: var(--text);
+  }
+  .card-score .score-star { color: #FFB300; font-size: 11px; }
+
+  /* ─── NEW MODEL SPOTLIGHT ─── */
+  .card-new-badge {
+    position: absolute; top: 8px; left: 8px;
+    background: #00E676; color: #07071A;
+    font-size: 9px; font-weight: 900; letter-spacing: 1px;
+    padding: 3px 8px; border-radius: 6px;
+    text-transform: uppercase;
+  }
+
+  /* ─── FLASH EVENT BANNER ─── */
+  .flash-event-banner {
+    background: linear-gradient(135deg, #1a0a12, #0d0a1a);
+    border: 1px solid rgba(212,43,106,.4);
+    border-radius: 16px; padding: 18px 20px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 16px;
+    position: relative; overflow: hidden;
+  }
+  .flash-event-banner::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(212,43,106,.06), rgba(139,43,226,.06));
+  }
+  .flash-event-pulse {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    animation: fe-pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes fe-pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(212,43,106,.4); }
+    50%      { box-shadow: 0 0 0 10px rgba(212,43,106,0); }
+  }
+  .flash-event-info { flex: 1; min-width: 0; position: relative; }
+  .flash-event-title { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
+  .flash-event-sub { font-size: 12px; color: var(--text-muted); }
+  .flash-event-timer {
+    font-size: 13px; font-weight: 800; color: var(--accent);
+    background: rgba(212,43,106,.1); border: 1px solid rgba(212,43,106,.3);
+    padding: 4px 12px; border-radius: 20px; white-space: nowrap; position: relative;
+  }
+  .flash-event-track {
+    height: 4px; background: rgba(255,255,255,.08); border-radius: 2px; margin-top: 8px; overflow: hidden;
+  }
+  .flash-event-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    width: 63%; transition: width 1s linear;
+  }
+
+  /* ─── NEW SPOTLIGHT SECTION ─── */
+  .spotlight-section { margin-bottom: 28px; }
+  .spotlight-label {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+    color: #00E676; margin-bottom: 12px;
+  }
+  .spotlight-label::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: #00E676;
+    box-shadow: 0 0 8px #00E676;
+    animation: ds-pulse 1.5s ease infinite;
+  }
+
   /* ─── LIST VIEW ─── */
   .models-list {
     display: none;
@@ -1324,6 +1442,182 @@
 .skel-btn{height:36px;width:100px;border-radius:20px}
 .skel-card{background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px;margin-bottom:16px}
 
+  /* ═══════════════════════════════════════
+     ADVANCED FILTER DRAWER
+  ═══════════════════════════════════════ */
+  .adv-filter-overlay {
+    position:fixed;inset:0;background:rgba(7,7,26,0.72);
+    backdrop-filter:blur(4px);z-index:900;
+    opacity:0;pointer-events:none;transition:opacity 0.28s;
+  }
+  .adv-filter-overlay.open{opacity:1;pointer-events:auto;}
+  .adv-filter-drawer {
+    position:fixed;top:0;right:0;bottom:0;
+    width:360px;max-width:100vw;
+    background:var(--card);border-left:1px solid var(--border);
+    z-index:901;transform:translateX(100%);
+    transition:transform 0.32s cubic-bezier(0.4,0,0.2,1);
+    display:flex;flex-direction:column;overflow:hidden;
+  }
+  .adv-filter-drawer.open{transform:translateX(0);}
+  .drawer-header{
+    padding:16px 20px;border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:10px;
+    flex-shrink:0;background:var(--card);
+  }
+  .drawer-title{font-size:16px;font-weight:700;color:var(--text);flex:1;}
+  .drawer-active-count{
+    background:var(--accent);color:#fff;
+    font-size:11px;font-weight:700;border-radius:999px;
+    padding:2px 8px;display:none;
+  }
+  .drawer-active-count.visible{display:inline-block;}
+  .drawer-close{
+    width:32px;height:32px;border-radius:8px;
+    background:var(--card2);border:1px solid var(--border);
+    color:var(--text-muted);font-size:20px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all 0.2s;line-height:1;
+  }
+  .drawer-close:hover{border-color:var(--accent);color:var(--text);}
+  .drawer-body{flex:1;overflow-y:auto;padding:0;}
+  .drawer-body::-webkit-scrollbar{width:4px;}
+  .drawer-body::-webkit-scrollbar-track{background:transparent;}
+  .drawer-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+  .drawer-footer{
+    padding:14px 20px;border-top:1px solid var(--border);
+    display:flex;gap:10px;flex-shrink:0;background:var(--card);
+  }
+  .drawer-apply-btn{
+    flex:1;background:linear-gradient(135deg,var(--accent),var(--accent2));
+    border:none;border-radius:10px;color:#fff;
+    font-family:'Inter',sans-serif;font-size:14px;font-weight:600;
+    padding:12px 0;cursor:pointer;transition:opacity 0.2s;
+  }
+  .drawer-apply-btn:hover{opacity:0.88;}
+  .drawer-reset-btn{
+    background:var(--card2);border:1px solid var(--border);border-radius:10px;
+    color:var(--text-muted);font-family:'Inter',sans-serif;
+    font-size:14px;font-weight:500;padding:12px 18px;
+    cursor:pointer;transition:all 0.2s;
+  }
+  .drawer-reset-btn:hover{border-color:var(--accent);color:var(--text);}
+
+  /* Accordion */
+  .acc-section{border-bottom:1px solid var(--border);}
+  .acc-header{
+    padding:13px 20px;display:flex;align-items:center;
+    cursor:pointer;user-select:none;gap:8px;transition:background 0.15s;
+  }
+  .acc-header:hover{background:rgba(255,255,255,0.025);}
+  .acc-label{
+    font-size:11px;font-weight:700;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--accent);flex:1;
+  }
+  .acc-sect-badge{
+    background:rgba(212,43,106,0.18);color:var(--accent);
+    font-size:10px;font-weight:700;border-radius:999px;
+    padding:2px 6px;display:none;
+  }
+  .acc-sect-badge.on{display:inline-block;}
+  .acc-chevron{width:15px;height:15px;color:var(--text-muted);transition:transform 0.2s;flex-shrink:0;}
+  .acc-section.open .acc-chevron{transform:rotate(180deg);}
+  .acc-body{overflow:hidden;max-height:0;transition:max-height 0.32s ease;padding:0 20px;}
+  .acc-section.open .acc-body{max-height:800px;padding:2px 20px 16px;}
+
+  /* Radio / Checkbox */
+  .radio-group,.check-group{display:flex;flex-direction:column;gap:9px;padding-top:4px;}
+  .radio-item,.check-item{display:flex;align-items:center;gap:10px;cursor:pointer;}
+  .radio-item input[type=radio],.check-item input[type=checkbox]{
+    accent-color:var(--accent);width:15px;height:15px;cursor:pointer;flex-shrink:0;
+  }
+  .radio-lbl,.check-lbl{font-size:13px;color:var(--text);flex:1;}
+  .radio-cnt,.check-cnt{font-size:11px;color:var(--text-muted);}
+
+  /* Dual range slider */
+  .range-wrap{padding-top:6px;}
+  .range-header{display:flex;justify-content:space-between;margin-bottom:14px;}
+  .range-header-lbl{font-size:12px;color:var(--text-muted);}
+  .range-val-display{font-size:13px;font-weight:600;color:var(--accent);}
+  .range-track-wrap{position:relative;height:16px;margin:0 0 6px;}
+  .range-track-bg{
+    position:absolute;top:6px;left:0;right:0;
+    height:4px;background:var(--border);border-radius:2px;
+  }
+  .range-track-fill{
+    position:absolute;top:6px;height:4px;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    border-radius:2px;pointer-events:none;left:0%;width:100%;
+  }
+  .range-input-abs{
+    -webkit-appearance:none;position:absolute;top:0;left:0;
+    width:100%;height:16px;background:transparent;outline:none;cursor:pointer;
+  }
+  .range-input-abs::-webkit-slider-thumb{
+    -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+    background:var(--accent);cursor:pointer;
+    border:2px solid var(--bg);box-shadow:0 0 0 2px rgba(212,43,106,0.3);
+  }
+  .range-labels{display:flex;justify-content:space-between;margin-top:4px;}
+  .range-lbl{font-size:10px;color:var(--text-muted);}
+
+  /* Sub-label inside accordion body */
+  .sub-sect-lbl{
+    font-size:11px;font-weight:600;color:var(--text-muted);
+    text-transform:uppercase;letter-spacing:0.06em;margin:14px 0 7px;
+  }
+  .sub-sect-lbl:first-child{margin-top:4px;}
+
+  /* Tag cloud pills */
+  .tag-cloud{display:flex;flex-wrap:wrap;gap:6px;padding-top:2px;}
+  .tag-pill{
+    padding:5px 10px;border-radius:999px;
+    background:var(--card2);border:1px solid var(--border);
+    color:var(--text-muted);font-size:11px;font-weight:500;
+    cursor:pointer;transition:all 0.18s;user-select:none;
+    font-family:'Inter',sans-serif;
+  }
+  .tag-pill:hover{border-color:var(--accent);color:var(--text);}
+  .tag-pill.active{background:rgba(212,43,106,0.15);border-color:var(--accent);color:var(--accent);}
+  .tag-pill .pro-badge{
+    background:linear-gradient(135deg,#7B2FF7,#3A89FF);color:#fff;
+    font-size:8px;font-weight:700;border-radius:3px;
+    padding:1px 4px;margin-left:3px;vertical-align:middle;
+  }
+  .tag-pill.is-new::after{
+    content:'NEW';background:var(--accent);color:#fff;
+    font-size:8px;font-weight:700;border-radius:3px;
+    padding:1px 4px;margin-left:3px;vertical-align:middle;
+  }
+
+  /* Фильтры button in filter bar */
+  .filter-adv-btn{
+    display:flex;align-items:center;gap:6px;
+    padding:6px 14px;border-radius:8px;
+    border:1px solid var(--border);background:var(--card2);
+    color:var(--text-muted);font-family:'Inter',sans-serif;
+    font-size:12px;font-weight:500;cursor:pointer;
+    transition:all 0.2s;flex-shrink:0;white-space:nowrap;
+  }
+  .filter-adv-btn:hover{border-color:var(--accent);color:var(--text);}
+  .filter-adv-btn.active{background:rgba(212,43,106,0.15);border-color:var(--accent);color:var(--accent);}
+  .filter-adv-btn svg{width:13px;height:13px;flex-shrink:0;}
+  .adv-active-dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);display:none;flex-shrink:0;
+  }
+  .filter-adv-btn.has-filters .adv-active-dot{display:block;}
+
+  /* Price grid in drawer */
+  .price-type-lbl{
+    font-size:12px;font-weight:600;color:var(--accent);
+    margin:12px 0 6px;
+  }
+  .price-type-lbl:first-child{margin-top:4px;}
+  .price-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+  @media(max-width:768px){.adv-filter-drawer{width:100vw;}}
+
   </style>
 
 <style id="page-transitions">
@@ -1657,29 +1951,49 @@ button,a,[role="button"]{min-height:36px}
 
   <!-- FILTER BAR -->
   <div class="filter-bar">
+
+    <!-- Сортировка -->
     <select class="filter-select" id="sortSelect" onchange="applySorting()">
-      <option value="relevance">Релевантность</option>
-      <option value="popular">Популярность</option>
-      <option value="newest">Новые</option>
-      <option value="price_asc">Цена ↑</option>
-      <option value="price_desc">Цена ↓</option>
+      <option value="relevance">&#128247; Рейтинг</option>
+      <option value="popular">&#128202; Популярные</option>
+      <option value="online_new">&#10145; Только что вошли</option>
+      <option value="newest">&#128197; Новые модели</option>
+      <option value="love">&#10084; Любовь подписчиков</option>
+      <option value="price_asc">&#128176; Цена ↑</option>
+      <option value="price_desc">&#128176; Цена ↓</option>
     </select>
 
+    <!-- Кнопка расширенных фильтров -->
+    <button class="filter-adv-btn" id="advFilterBtn" onclick="openAdvFilter()" aria-label="Расширенные фильтры">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <line x1="4" y1="6" x2="20" y2="6"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
+        <line x1="11" y1="18" x2="13" y2="18"/>
+      </svg>
+      Фильтры
+      <span class="adv-active-dot"></span>
+    </button>
+
+    <div class="filter-divider"></div>
+
+    <!-- Быстрые пилюли -->
     <div class="filter-pills" id="filterPills">
       <button class="filter-pill active" data-filter="online" onclick="toggleFilter(this)">● Онлайн</button>
-      <button class="filter-pill" data-filter="photo" onclick="toggleFilter(this)">Фото</button>
-      <button class="filter-pill" data-filter="video" onclick="toggleFilter(this)">Видео</button>
-      <button class="filter-pill" data-filter="live" onclick="toggleFilter(this)">Live</button>
+      <button class="filter-pill" data-filter="photo" onclick="toggleFilter(this)">📸 Фото</button>
+      <button class="filter-pill" data-filter="video" onclick="toggleFilter(this)">🎬 Видео</button>
+      <button class="filter-pill" data-filter="live" onclick="toggleFilter(this)">🔴 Live</button>
       <button class="filter-pill active" data-filter="verified" onclick="toggleFilter(this)">✓ Verified</button>
-      <button class="filter-pill" data-filter="vip" onclick="toggleFilter(this)">VIP</button>
+      <button class="filter-pill" data-filter="vip" onclick="toggleFilter(this)">👑 VIP</button>
       <button class="filter-pill" data-filter="free" onclick="toggleFilter(this)">🎁 Free</button>
       <button class="filter-pill" data-filter="new" onclick="toggleFilter(this)">🆕 Новые</button>
       <button class="filter-pill" data-filter="ppv" onclick="toggleFilter(this)">💰 PPV</button>
       <button class="filter-pill" data-filter="top" onclick="toggleFilter(this)">🏆 Топ</button>
       <button class="filter-pill" data-filter="exclusive" onclick="toggleFilter(this)">⭐ Exclusive</button>
-      <button class="filter-pill" data-filter="asmr" onclick="toggleFilter(this)">🌙 ASMR</button>
       <button class="filter-pill" data-filter="couples" onclick="toggleFilter(this)">💑 Couples</button>
+      <button class="filter-pill" data-filter="asmr" onclick="toggleFilter(this)">🌙 ASMR</button>
       <button class="filter-pill" data-filter="stories" onclick="toggleFilter(this)">📖 Stories</button>
+      <button class="filter-pill" data-filter="bdsm" onclick="toggleFilter(this)">⛓️ BDSM</button>
+      <button class="filter-pill" data-filter="cosplay" onclick="toggleFilter(this)">🎭 Cosplay</button>
     </div>
 
     <div class="filter-divider"></div>
@@ -1909,6 +2223,25 @@ button,a,[role="button"]{min-height:36px}
         <button class="category-banner-close" onclick="clearCategory()" aria-label="Закрыть">×</button>
       </div>
 
+      <!-- Flash Event Banner -->
+      <div class="flash-event-banner" id="flashEventBanner">
+        <div class="flash-event-pulse">⚡</div>
+        <div class="flash-event-info">
+          <div class="flash-event-title">Злата Н. запустила Flash Event — Золотое Live!</div>
+          <div class="flash-event-sub">Собрано 1 200 / 2 000 токенов · Осталось <span id="feTimerInline">14:22</span></div>
+          <div class="flash-event-track"><div class="flash-event-fill" id="feFlashFill" style="width:60%"></div></div>
+        </div>
+        <div class="flash-event-timer" id="feTimer">14:22</div>
+        <button onclick="document.getElementById('flashEventBanner').style.display='none'"
+          style="background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:4px;line-height:1;position:relative;z-index:1">✕</button>
+      </div>
+
+      <!-- New Creators Spotlight -->
+      <div class="spotlight-section" id="spotlightSection">
+        <div class="spotlight-label">Новые создатели</div>
+        <div class="models-grid" id="spotlightGrid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))"></div>
+      </div>
+
       <!-- Grid -->
       <div class="models-grid" id="modelsGrid"></div>
 
@@ -1955,6 +2288,321 @@ button,a,[role="button"]{min-height:36px}
   <div class="preview-footer">
     <div class="preview-price" id="previewPrice"></div>
     <button class="preview-subscribe">Подписаться сейчас</button>
+  </div>
+</div>
+
+<!-- ─── ADVANCED FILTER OVERLAY + DRAWER ─── -->
+<div class="adv-filter-overlay" id="advFilterOverlay" onclick="closeAdvFilter()"></div>
+
+<div class="adv-filter-drawer" id="advFilterDrawer" role="dialog" aria-modal="true" aria-label="Расширенные фильтры">
+  <div class="drawer-header">
+    <span class="drawer-title">Фильтры</span>
+    <span class="drawer-active-count" id="drawerActiveCnt">0</span>
+    <button class="drawer-close" onclick="closeAdvFilter()" aria-label="Закрыть">&#215;</button>
+  </div>
+
+  <div class="drawer-body">
+
+    <!-- ПОЛ -->
+    <div class="acc-section open" id="acc-gender">
+      <div class="acc-header" onclick="toggleAcc('acc-gender')">
+        <span class="acc-label">Пол</span>
+        <span class="acc-sect-badge" id="badge-gender"></span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="fg" value="all" checked onchange="onAdvChange()"><span class="radio-lbl">Все</span></label>
+          <label class="radio-item"><input type="radio" name="fg" value="female" onchange="onAdvChange()"><span class="radio-lbl">Женщины</span><span class="radio-cnt">1 857</span></label>
+          <label class="radio-item"><input type="radio" name="fg" value="male" onchange="onAdvChange()"><span class="radio-lbl">Мужчины</span><span class="radio-cnt">164</span></label>
+          <label class="radio-item"><input type="radio" name="fg" value="couples" onchange="onAdvChange()"><span class="radio-lbl">Пары</span><span class="radio-cnt">131</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ВОЗРАСТ -->
+    <div class="acc-section" id="acc-age">
+      <div class="acc-header" onclick="toggleAcc('acc-age')">
+        <span class="acc-label">Возраст</span>
+        <span class="acc-sect-badge" id="badge-age"></span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="range-wrap">
+          <div class="range-header">
+            <span class="range-header-lbl">Диапазон возраста</span>
+            <span class="range-val-display" id="ageValDisplay">18 – 50+</span>
+          </div>
+          <div class="range-track-wrap">
+            <div class="range-track-bg"></div>
+            <div class="range-track-fill" id="ageRangeFill"></div>
+            <input type="range" class="range-input-abs" id="ageMin" min="18" max="60" value="18" step="1" oninput="updateAgeSlider()">
+            <input type="range" class="range-input-abs" id="ageMax" min="18" max="60" value="60" step="1" oninput="updateAgeSlider()">
+          </div>
+          <div class="range-labels">
+            <span class="range-lbl">18</span>
+            <span class="range-lbl">25</span>
+            <span class="range-lbl">35</span>
+            <span class="range-lbl">45</span>
+            <span class="range-lbl">50+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- РЕГИОН -->
+    <div class="acc-section" id="acc-region">
+      <div class="acc-header" onclick="toggleAcc('acc-region')">
+        <span class="acc-label">Регион</span>
+        <span class="acc-sect-badge" id="badge-region"></span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox" name="fr" value="cis" onchange="onAdvChange()"><span class="check-lbl">Россия / СНГ</span><span class="check-cnt">433</span></label>
+          <label class="check-item"><input type="checkbox" name="fr" value="europe" onchange="onAdvChange()"><span class="check-lbl">Европа</span><span class="check-cnt">229</span></label>
+          <label class="check-item"><input type="checkbox" name="fr" value="latam" onchange="onAdvChange()"><span class="check-lbl">Латинская Америка</span><span class="check-cnt">977</span></label>
+          <label class="check-item"><input type="checkbox" name="fr" value="na" onchange="onAdvChange()"><span class="check-lbl">Северная Америка</span><span class="check-cnt">20</span></label>
+          <label class="check-item"><input type="checkbox" name="fr" value="asia" onchange="onAdvChange()"><span class="check-lbl">Азия</span><span class="check-cnt">22</span></label>
+          <label class="check-item"><input type="checkbox" name="fr" value="other" onchange="onAdvChange()"><span class="check-lbl">Другое</span><span class="check-cnt">176</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ЯЗЫК -->
+    <div class="acc-section" id="acc-lang">
+      <div class="acc-header" onclick="toggleAcc('acc-lang')">
+        <span class="acc-label">Язык</span>
+        <span class="acc-sect-badge" id="badge-lang"></span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox" name="fl" value="ru" onchange="onAdvChange()"><span class="check-lbl">Русский</span><span class="check-cnt">621</span></label>
+          <label class="check-item"><input type="checkbox" name="fl" value="en" onchange="onAdvChange()"><span class="check-lbl">English</span><span class="check-cnt">847</span></label>
+          <label class="check-item"><input type="checkbox" name="fl" value="es" onchange="onAdvChange()"><span class="check-lbl">Español</span><span class="check-cnt">391</span></label>
+          <label class="check-item"><input type="checkbox" name="fl" value="pt" onchange="onAdvChange()"><span class="check-lbl">Português</span><span class="check-cnt">234</span></label>
+          <label class="check-item"><input type="checkbox" name="fl" value="de" onchange="onAdvChange()"><span class="check-lbl">Deutsch</span><span class="check-cnt">87</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ВНЕШНИЙ ВИД -->
+    <div class="acc-section" id="acc-looks">
+      <div class="acc-header" onclick="toggleAcc('acc-looks')">
+        <span class="acc-label">Внешний вид</span>
+        <span class="acc-sect-badge" id="badge-looks"></span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="sub-sect-lbl">Телосложение</div>
+        <div class="tag-cloud">
+          <button class="tag-pill" data-lk="body_slim" onclick="toggleTagPill(this)">Худое<span style="font-size:10px;color:var(--text-muted);margin-left:4px">236</span></button>
+          <button class="tag-pill" data-lk="body_avg" onclick="toggleTagPill(this)">Среднее<span style="font-size:10px;color:var(--text-muted);margin-left:4px">1033</span></button>
+          <button class="tag-pill" data-lk="body_sport" onclick="toggleTagPill(this)">Спортивное<span style="font-size:10px;color:var(--text-muted);margin-left:4px">79</span></button>
+          <button class="tag-pill" data-lk="body_curvy" onclick="toggleTagPill(this)">Пышное<span style="font-size:10px;color:var(--text-muted);margin-left:4px">367</span></button>
+          <button class="tag-pill" data-lk="body_bbw" onclick="toggleTagPill(this)">BBW / БКЖ<span style="font-size:10px;color:var(--text-muted);margin-left:4px">139</span><span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="body_petite" onclick="toggleTagPill(this)">Крошки<span style="font-size:10px;color:var(--text-muted);margin-left:4px">771</span><span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="body_tall" onclick="toggleTagPill(this)">Высокие</button>
+          <button class="tag-pill" data-lk="body_muscular" onclick="toggleTagPill(this)">Мускулистые<span style="font-size:10px;color:var(--text-muted);margin-left:4px">77</span></button>
+        </div>
+        <div class="sub-sect-lbl">Грудь</div>
+        <div class="tag-cloud">
+          <button class="tag-pill" data-lk="breast_small" onclick="toggleTagPill(this)">Маленькая<span style="font-size:10px;color:var(--text-muted);margin-left:4px">379</span></button>
+          <button class="tag-pill" data-lk="breast_med" onclick="toggleTagPill(this)">Средняя<span style="font-size:10px;color:var(--text-muted);margin-left:4px">787</span></button>
+          <button class="tag-pill" data-lk="breast_big" onclick="toggleTagPill(this)">Большая<span style="font-size:10px;color:var(--text-muted);margin-left:4px">569</span></button>
+          <button class="tag-pill" data-lk="breast_huge" onclick="toggleTagPill(this)">Огромные<span style="font-size:10px;color:var(--text-muted);margin-left:4px">121</span><span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="breast_natural" onclick="toggleTagPill(this)">Натуральные<span class="pro-badge">PRO</span></button>
+        </div>
+        <div class="sub-sect-lbl">Ягодицы</div>
+        <div class="tag-cloud">
+          <button class="tag-pill" data-lk="ass_small" onclick="toggleTagPill(this)">Маленькие<span style="font-size:10px;color:var(--text-muted);margin-left:4px">99</span></button>
+          <button class="tag-pill" data-lk="ass_med" onclick="toggleTagPill(this)">Средние<span style="font-size:10px;color:var(--text-muted);margin-left:4px">955</span></button>
+          <button class="tag-pill" data-lk="ass_big" onclick="toggleTagPill(this)">Большие<span style="font-size:10px;color:var(--text-muted);margin-left:4px">802</span></button>
+          <button class="tag-pill" data-lk="ass_thick" onclick="toggleTagPill(this)">Пышные бёдра<span class="pro-badge">PRO</span></button>
+        </div>
+        <div class="sub-sect-lbl">Цвет волос</div>
+        <div class="tag-cloud">
+          <button class="tag-pill" data-lk="hair_blonde" onclick="toggleTagPill(this)">Блондинка<span style="font-size:10px;color:var(--text-muted);margin-left:4px">316</span></button>
+          <button class="tag-pill" data-lk="hair_brunette" onclick="toggleTagPill(this)">Брюнетка<span style="font-size:10px;color:var(--text-muted);margin-left:4px">1353</span></button>
+          <button class="tag-pill" data-lk="hair_red" onclick="toggleTagPill(this)">Рыжая<span style="font-size:10px;color:var(--text-muted);margin-left:4px">192</span><span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="hair_black" onclick="toggleTagPill(this)">Чёрные<span style="font-size:10px;color:var(--text-muted);margin-left:4px">412</span></button>
+          <button class="tag-pill" data-lk="hair_white" onclick="toggleTagPill(this)">Белые<span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="hair_pink" onclick="toggleTagPill(this)">Розовые<span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="hair_color" onclick="toggleTagPill(this)">Крашеные<span class="pro-badge">PRO</span></button>
+        </div>
+        <div class="sub-sect-lbl">Стиль волос</div>
+        <div class="tag-cloud">
+          <button class="tag-pill" data-lk="hs_long" onclick="toggleTagPill(this)">Длинные</button>
+          <button class="tag-pill" data-lk="hs_short" onclick="toggleTagPill(this)">Короткие</button>
+          <button class="tag-pill" data-lk="hs_ponytail" onclick="toggleTagPill(this)">Хвост<span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="hs_curly" onclick="toggleTagPill(this)">Кудри</button>
+          <button class="tag-pill" data-lk="hs_braids" onclick="toggleTagPill(this)">Косы</button>
+          <button class="tag-pill" data-lk="hs_bun" onclick="toggleTagPill(this)">Пучок</button>
+          <button class="tag-pill" data-lk="hs_pigtails" onclick="toggleTagPill(this)">Косички<span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="hs_afro" onclick="toggleTagPill(this)">Афро</button>
+        </div>
+        <div class="sub-sect-lbl">Этническое происхождение</div>
+        <div class="tag-cloud">
+          <button class="tag-pill" data-lk="eth_caucasian" onclick="toggleTagPill(this)">Европейское<span style="font-size:10px;color:var(--text-muted);margin-left:4px">686</span></button>
+          <button class="tag-pill" data-lk="eth_asian" onclick="toggleTagPill(this)">Азиатское<span style="font-size:10px;color:var(--text-muted);margin-left:4px">44</span></button>
+          <button class="tag-pill" data-lk="eth_latina" onclick="toggleTagPill(this)">Латинское<span style="font-size:10px;color:var(--text-muted);margin-left:4px">841</span></button>
+          <button class="tag-pill" data-lk="eth_black" onclick="toggleTagPill(this)">Темнокожие<span style="font-size:10px;color:var(--text-muted);margin-left:4px">249</span></button>
+          <button class="tag-pill" data-lk="eth_arab" onclick="toggleTagPill(this)">Восточное<span style="font-size:10px;color:var(--text-muted);margin-left:4px">22</span></button>
+          <button class="tag-pill" data-lk="eth_indian" onclick="toggleTagPill(this)">Индийское<span style="font-size:10px;color:var(--text-muted);margin-left:4px">18</span><span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="eth_mixed" onclick="toggleTagPill(this)">Смешанное<span class="pro-badge">PRO</span></button>
+        </div>
+        <div class="sub-sect-lbl">Особенности</div>
+        <div class="tag-cloud">
+          <button class="tag-pill" data-lk="feat_tattoo" onclick="toggleTagPill(this)">Тату</button>
+          <button class="tag-pill" data-lk="feat_piercing" onclick="toggleTagPill(this)">Пирсинг</button>
+          <button class="tag-pill" data-lk="feat_shaved" onclick="toggleTagPill(this)">Бритые<span style="font-size:10px;color:var(--text-muted);margin-left:4px">1257</span></button>
+          <button class="tag-pill" data-lk="feat_hairy" onclick="toggleTagPill(this)">Волосатые<span style="font-size:10px;color:var(--text-muted);margin-left:4px">197</span></button>
+          <button class="tag-pill" data-lk="feat_freckles" onclick="toggleTagPill(this)">Веснушки</button>
+          <button class="tag-pill" data-lk="feat_glasses" onclick="toggleTagPill(this)">Очки</button>
+          <button class="tag-pill" data-lk="feat_feet" onclick="toggleTagPill(this)">Ступни<span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="feat_nails" onclick="toggleTagPill(this)">Длинные ногти<span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="feat_oiled" onclick="toggleTagPill(this)">Масло / блеск<span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-lk="feat_choker" onclick="toggleTagPill(this)">Чокер<span class="pro-badge">PRO</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- КАТЕГОРИИ -->
+    <div class="acc-section" id="acc-cats">
+      <div class="acc-header" onclick="toggleAcc('acc-cats')">
+        <span class="acc-label">Категории</span>
+        <span class="acc-sect-badge" id="badge-cats"></span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="tag-cloud">
+          <button class="tag-pill is-new" data-cat="Лучшие для приватов" onclick="toggleTagPill(this)">Лучшие для приватов</button>
+          <button class="tag-pill" data-cat="BBW" onclick="toggleTagPill(this)">BBW <span style="font-size:10px;color:var(--text-muted)">(141)</span></button>
+          <button class="tag-pill" data-cat="Азиатки" onclick="toggleTagPill(this)">Азиатки <span style="font-size:10px;color:var(--text-muted)">(45)</span></button>
+          <button class="tag-pill" data-cat="Блондинки" onclick="toggleTagPill(this)">Блондинки <span style="font-size:10px;color:var(--text-muted)">(316)</span></button>
+          <button class="tag-pill" data-cat="Брюнетки" onclick="toggleTagPill(this)">Брюнетки <span style="font-size:10px;color:var(--text-muted)">(1353)</span></button>
+          <button class="tag-pill" data-cat="Рыжие" onclick="toggleTagPill(this)">Рыжие <span style="font-size:10px;color:var(--text-muted)">(192)</span></button>
+          <button class="tag-pill" data-cat="Большие сиськи" onclick="toggleTagPill(this)">Большие сиськи <span style="font-size:10px;color:var(--text-muted)">(571)</span></button>
+          <button class="tag-pill" data-cat="Маленькие сиськи" onclick="toggleTagPill(this)">Маленькие сиськи <span style="font-size:10px;color:var(--text-muted)">(379)</span></button>
+          <button class="tag-pill" data-cat="Огромные сиськи" onclick="toggleTagPill(this)">Огромные сиськи <span style="font-size:10px;color:var(--text-muted)">(120)</span></button>
+          <button class="tag-pill" data-cat="Средние сиськи" onclick="toggleTagPill(this)">Средние сиськи <span style="font-size:10px;color:var(--text-muted)">(789)</span></button>
+          <button class="tag-pill" data-cat="Большие попы" onclick="toggleTagPill(this)">Большие попы <span style="font-size:10px;color:var(--text-muted)">(801)</span></button>
+          <button class="tag-pill" data-cat="Пышечки" onclick="toggleTagPill(this)">Пышечки <span style="font-size:10px;color:var(--text-muted)">(366)</span></button>
+          <button class="tag-pill" data-cat="Бондаж" onclick="toggleTagPill(this)">Бондаж <span class="pro-badge">PRO</span> <span style="font-size:10px;color:var(--text-muted)">(447)</span></button>
+          <button class="tag-pill" data-cat="Бритые" onclick="toggleTagPill(this)">Бритые <span style="font-size:10px;color:var(--text-muted)">(1257)</span></button>
+          <button class="tag-pill" data-cat="Волосатые" onclick="toggleTagPill(this)">Волосатые <span style="font-size:10px;color:var(--text-muted)">(197)</span></button>
+          <button class="tag-pill" data-cat="Домохозяйки" onclick="toggleTagPill(this)">Домохозяйки <span style="font-size:10px;color:var(--text-muted)">(739)</span></button>
+          <button class="tag-pill" data-cat="Зрелые" onclick="toggleTagPill(this)">Зрелые <span style="font-size:10px;color:var(--text-muted)">(425)</span></button>
+          <button class="tag-pill" data-cat="Игрушки" onclick="toggleTagPill(this)">Игрушки <span style="font-size:10px;color:var(--text-muted)">(1363)</span></button>
+          <button class="tag-pill" data-cat="Крошки" onclick="toggleTagPill(this)">Крошки <span style="font-size:10px;color:var(--text-muted)">(771)</span></button>
+          <button class="tag-pill" data-cat="Латинки" onclick="toggleTagPill(this)">Латинки <span style="font-size:10px;color:var(--text-muted)">(841)</span></button>
+          <button class="tag-pill" data-cat="Лесби" onclick="toggleTagPill(this)">Лесби <span style="font-size:10px;color:var(--text-muted)">(11)</span></button>
+          <button class="tag-pill" data-cat="Молодые 18+" onclick="toggleTagPill(this)">Молодые 18+ <span style="font-size:10px;color:var(--text-muted)">(663)</span></button>
+          <button class="tag-pill" data-cat="Мускулы" onclick="toggleTagPill(this)">Мускулы <span style="font-size:10px;color:var(--text-muted)">(77)</span></button>
+          <button class="tag-pill" data-cat="Светлокожие" onclick="toggleTagPill(this)">Светлокожие <span style="font-size:10px;color:var(--text-muted)">(684)</span></button>
+          <button class="tag-pill" data-cat="Сквирт" onclick="toggleTagPill(this)">Сквирт <span class="pro-badge">PRO</span> <span style="font-size:10px;color:var(--text-muted)">(1046)</span></button>
+          <button class="tag-pill" data-cat="Студентки" onclick="toggleTagPill(this)">Студентки <span style="font-size:10px;color:var(--text-muted)">(663)</span></button>
+          <button class="tag-pill" data-cat="Темнокожие" onclick="toggleTagPill(this)">Темнокожие <span style="font-size:10px;color:var(--text-muted)">(249)</span></button>
+          <button class="tag-pill" data-cat="Фетиш" onclick="toggleTagPill(this)">🐰 Фетиш <span class="pro-badge">PRO</span> <span style="font-size:10px;color:var(--text-muted)">(1369)</span></button>
+          <button class="tag-pill" data-cat="Худые" onclick="toggleTagPill(this)">Худые <span style="font-size:10px;color:var(--text-muted)">(234)</span></button>
+          <button class="tag-pill" data-cat="Групповой" onclick="toggleTagPill(this)">Групповой <span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-cat="Курение" onclick="toggleTagPill(this)">Курение <span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-cat="Арабки" onclick="toggleTagPill(this)">Арабки<span style="font-size:10px;color:var(--text-muted);margin-left:3px">(22)</span></button>
+          <button class="tag-pill" data-cat="Индианки" onclick="toggleTagPill(this)">Индианки<span style="font-size:10px;color:var(--text-muted);margin-left:3px">(18)</span></button>
+          <button class="tag-pill" data-cat="Cosplay" onclick="toggleTagPill(this)">Cosplay <span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-cat="Аниме" onclick="toggleTagPill(this)">Аниме</button>
+          <button class="tag-pill" data-cat="ASMR" onclick="toggleTagPill(this)">ASMR</button>
+          <button class="tag-pill" data-cat="Live" onclick="toggleTagPill(this)">Live</button>
+          <button class="tag-pill" data-cat="Boudoir" onclick="toggleTagPill(this)">Boudoir</button>
+          <button class="tag-pill" data-cat="Фитнес" onclick="toggleTagPill(this)">Фитнес</button>
+          <button class="tag-pill" data-cat="Fashion" onclick="toggleTagPill(this)">Fashion</button>
+          <button class="tag-pill" data-cat="Gaming" onclick="toggleTagPill(this)">Gaming</button>
+          <button class="tag-pill" data-cat="Dance" onclick="toggleTagPill(this)">Dance</button>
+          <button class="tag-pill" data-cat="BDSM" onclick="toggleTagPill(this)">BDSM <span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-cat="Roleplay" onclick="toggleTagPill(this)">Roleplay <span class="pro-badge">PRO</span></button>
+          <button class="tag-pill" data-cat="Tattoo" onclick="toggleTagPill(this)">Tattoo</button>
+          <button class="tag-pill" data-cat="Milf" onclick="toggleTagPill(this)">MILF</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ЦЕНЫ ПРИВАТОВ -->
+    <div class="acc-section" id="acc-prices">
+      <div class="acc-header" onclick="toggleAcc('acc-prices')">
+        <span class="acc-label">Цена подписки</span>
+        <span class="acc-sect-badge" id="badge-prices"></span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox" name="fp" value="free" onchange="onAdvChange()"><span class="check-lbl">Бесплатно</span><span class="check-cnt">287</span></label>
+          <label class="check-item"><input type="checkbox" name="fp" value="low" onchange="onAdvChange()"><span class="check-lbl">До $5 / мес</span><span class="check-cnt">634</span></label>
+          <label class="check-item"><input type="checkbox" name="fp" value="mid" onchange="onAdvChange()"><span class="check-lbl">$5 – $15 / мес</span><span class="check-cnt">821</span></label>
+          <label class="check-item"><input type="checkbox" name="fp" value="high" onchange="onAdvChange()"><span class="check-lbl">$15+ / мес</span><span class="check-cnt">149</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ТИП КОНТЕНТА -->
+    <div class="acc-section" id="acc-ctype">
+      <div class="acc-header" onclick="toggleAcc('acc-ctype')">
+        <span class="acc-label">Тип контента</span>
+        <span class="acc-sect-badge" id="badge-ctype"></span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="fct" value="all" checked onchange="onAdvChange()"><span class="radio-lbl">Всё</span></label>
+          <label class="radio-item"><input type="radio" name="fct" value="photo" onchange="onAdvChange()"><span class="radio-lbl">📸 Фото</span></label>
+          <label class="radio-item"><input type="radio" name="fct" value="video" onchange="onAdvChange()"><span class="radio-lbl">🎬 Видео</span></label>
+          <label class="radio-item"><input type="radio" name="fct" value="live" onchange="onAdvChange()"><span class="radio-lbl">🔴 Live-стримы</span></label>
+          <label class="radio-item"><input type="radio" name="fct" value="stories" onchange="onAdvChange()"><span class="radio-lbl">📖 Stories</span></label>
+          <label class="radio-item"><input type="radio" name="fct" value="ppv" onchange="onAdvChange()"><span class="radio-lbl">💰 PPV</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ТИП ПРЕВЬЮ -->
+    <div class="acc-section" id="acc-ptype">
+      <div class="acc-header" onclick="toggleAcc('acc-ptype')">
+        <span class="acc-label">Тип превью</span>
+        <span class="acc-sect-badge" id="badge-ptype"></span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="fpt" value="all" checked onchange="onAdvChange()"><span class="radio-lbl">Всё</span></label>
+          <label class="radio-item"><input type="radio" name="fpt" value="camera" onchange="onAdvChange()"><span class="radio-lbl">📷 Камера</span></label>
+          <label class="radio-item"><input type="radio" name="fpt" value="profile" onchange="onAdvChange()"><span class="radio-lbl">🖼 Фото профиля</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOVENSE & SPECIAL -->
+    <div class="acc-section open" id="acc-special">
+      <div class="acc-header" onclick="toggleAcc('acc-special')">
+        <span class="acc-label">🎮 Функции</span>
+        <span class="acc-sect-badge" id="badge-special"></span>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox" name="fspec" value="lovense" onchange="onAdvChange()"><span class="check-lbl">🎮 Lovense / Интерактив</span></label>
+          <label class="check-item"><input type="checkbox" name="fspec" value="vr" onchange="onAdvChange()"><span class="check-lbl">🥽 VR-контент</span></label>
+          <label class="check-item"><input type="checkbox" name="fspec" value="geo" onchange="onAdvChange()"><span class="check-lbl">🔒 Геоблок (анонимно)</span></label>
+          <label class="check-item"><input type="checkbox" name="fspec" value="tipmenu" onchange="onAdvChange()"><span class="check-lbl">💰 Есть Tip Menu</span></label>
+          <label class="check-item"><input type="checkbox" name="fspec" value="goal" onchange="onAdvChange()"><span class="check-lbl">🎯 Активная цель/Goal</span></label>
+          <label class="check-item"><input type="checkbox" name="fspec" value="new" onchange="onAdvChange()"><span class="check-lbl">✨ Только новые модели</span></label>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /drawer-body -->
+
+  <div class="drawer-footer">
+    <button class="drawer-reset-btn" onclick="resetAdvFilters()">Сбросить</button>
+    <button class="drawer-apply-btn" onclick="applyAndClose()">Применить фильтры</button>
   </div>
 </div>
 
@@ -2268,6 +2916,24 @@ const MODELS = [
   }
 ];
 
+// ─── MODEL EXTENSIONS (Goal / Lovense / VR / New / Verified / PPV / Tier) ───
+const MODEL_EXT = {
+  1:  { goal: { label: 'Ночное Live-шоу 🌙', cur: 720, max: 1000 }, lovense: true,  vr: false, isNew: false, verified: true,  hasPPV: false, tier: 'premium' },
+  2:  { goal: { label: 'Косплей Sailor Moon', cur: 410, max: 600  }, lovense: true,  vr: false, isNew: false, verified: true,  hasPPV: true,  tier: 'vip'     },
+  3:  { goal: null,                                                   lovense: true,  vr: false, isNew: false, verified: true,  hasPPV: false, tier: 'free'    },
+  4:  { goal: { label: 'VR Private шоу',      cur: 290, max: 500  }, lovense: false, vr: true,  isNew: false, verified: true,  hasPPV: true,  tier: 'premium' },
+  5:  { goal: null,                                                   lovense: true,  vr: false, isNew: false, verified: false, hasPPV: false, tier: 'free'    },
+  6:  { goal: { label: 'Фотосессия в ванной', cur: 80,  max: 300  }, lovense: false, vr: false, isNew: false, verified: true,  hasPPV: false, tier: 'premium' },
+  7:  { goal: null,                                                   lovense: false, vr: true,  isNew: false, verified: false, hasPPV: true,  tier: 'vip'     },
+  8:  { goal: { label: 'Групповое шоу',       cur: 950, max: 1000 }, lovense: true,  vr: false, isNew: false, verified: true,  hasPPV: false, tier: 'premium' },
+  9:  { goal: null,                                                   lovense: false, vr: false, isNew: false, verified: false, hasPPV: false, tier: 'free'    },
+  10: { goal: { label: 'VIP Boudoir сессия',  cur: 180, max: 400  }, lovense: false, vr: true,  isNew: false, verified: true,  hasPPV: true,  tier: 'vip'     },
+  11: { goal: null,                                                   lovense: false, vr: false, isNew: true,  verified: false, hasPPV: false, tier: 'free'    },
+  12: { goal: { label: 'Золотое Live-шоу ✨',  cur: 1200,max: 2000 }, lovense: true,  vr: true,  isNew: false, verified: true,  hasPPV: true,  tier: 'vip'     },
+};
+const MODEL_EXT_DEFAULTS = { goal: null, lovense: false, vr: false, isNew: false, verified: false, hasPPV: false, tier: 'free' };
+MODELS.forEach(m => Object.assign(m, MODEL_EXT[m.id] || MODEL_EXT_DEFAULTS));
+
 // ─── STATE ───
 let currentView = 'grid';
 let currentSearch = '';
@@ -2277,11 +2943,33 @@ let activeFilters = new Set(['online', 'verified']);
 let maxPrice = 50;
 let currentSort = 'relevance';
 
+// ─── ADVANCED FILTER STATE ───
+let AF = {
+  gender: 'all',
+  ageMin: 18, ageMax: 60,
+  regions: new Set(),
+  langs: new Set(),
+  looks: new Set(),
+  cats: new Set(),
+  prices: new Set(),
+  contentType: 'all',
+  previewType: 'all',
+  special: new Set()
+};
+
 // ─── INIT ───
 function init() {
   renderGrid();
   renderList();
-  showResultsState();
+  // Only jump to results state if a search/filter is already active (e.g. URL param)
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlQuery = urlParams.get('q') || urlParams.get('category') || '';
+  if (urlQuery) {
+    currentSearch = urlQuery;
+    showResultsState();
+  } else {
+    showHeroState();
+  }
 
   // Header search sync
   const headerInput = document.getElementById('headerSearchInput');
@@ -2346,6 +3034,7 @@ function renderGrid() {
           </div>
         </div>
         ${m.online ? `<div class="card-online"><div class="online-dot"></div>Онлайн</div>` : ''}
+        ${m.isNew ? `<div class="card-new-badge">NEW</div>` : ''}
         <div class="card-name-overlay">${m.name}</div>
         <button class="card-heart ${favorites.has(m.id) ? 'favorited' : ''}"
           onclick="toggleFavorite(${m.id}, event)" title="В избранное">
@@ -2354,11 +3043,19 @@ function renderGrid() {
           </svg>
         </button>
         <div class="card-verified" title="Верифицированный аккаунт">✓</div>
+        ${m.lovense ? `<div class="card-lovense">Lovense</div>` : ''}
+        ${m.vr ? `<div class="card-vr">🥽 VR</div>` : ''}
       </div>
       <div class="card-body">
         <div class="card-tags">
           ${m.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}
         </div>
+        ${m.goal ? `
+        <div class="card-goal">
+          <div class="card-goal-label">${m.goal.label}<span>${m.goal.cur} / ${m.goal.max} 🔥</span></div>
+          <div class="card-goal-track"><div class="card-goal-fill" style="width:${Math.min(100,Math.round(m.goal.cur/m.goal.max*100))}%"></div></div>
+          <div class="card-goal-sub"><span>${Math.round(m.goal.cur/m.goal.max*100)}% собрано</span><span>${m.goal.max - m.goal.cur} осталось</span></div>
+        </div>` : ''}
         <div class="card-stats">
           <div class="card-followers">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2367,7 +3064,7 @@ function renderGrid() {
             </svg>
             ${m.followers}
           </div>
-          <div class="card-rating">⭐ ${m.rating.toFixed(1)}</div>
+          <div class="card-score"><span class="score-star">★</span>${m.rating.toFixed(1)}</div>
         </div>
         <button class="card-subscribe" onclick="event.stopPropagation()">
           Подписаться $${m.price}/мес
@@ -2436,45 +3133,71 @@ function filterModels() {
       const searchStr = (m.name + ' ' + m.tags.join(' ') + ' ' + m.bio).toLowerCase();
       if (!searchStr.includes(query)) return false;
     }
-    // Category filter
-    if (currentCategory) {
-      if (!m.tags.includes(currentCategory)) return false;
+    // Category (from banner click or hero grid)
+    if (currentCategory && !m.tags.includes(currentCategory)) return false;
+    // Advanced: categories from drawer tag cloud
+    if (AF.cats.size > 0) {
+      const match = [...AF.cats].some(c => m.tags.some(t => t.toLowerCase().includes(c.toLowerCase())));
+      if (!match) return false;
     }
-    // Price filter
+    // Advanced: price ranges
+    if (AF.prices.size > 0) {
+      let ok = false;
+      if (AF.prices.has('free') && m.price === 0) ok = true;
+      if (AF.prices.has('low')  && m.price > 0 && m.price <= 5) ok = true;
+      if (AF.prices.has('mid')  && m.price > 5 && m.price <= 15) ok = true;
+      if (AF.prices.has('high') && m.price > 15) ok = true;
+      if (!ok) return false;
+    }
+    // Price slider
     if (m.price > maxPrice) return false;
+    // Special filters (drawer accordion)
+    if (AF.special && AF.special.size > 0) {
+      if (AF.special.has('lovense') && !m.lovense) return false;
+      if (AF.special.has('vr')      && !m.vr)      return false;
+      if (AF.special.has('goal')    && !m.goal)    return false;
+      if (AF.special.has('new')     && !m.isNew)   return false;
+    }
+    // Quick-pill filters (header bar)
+    if (activeFilters.size > 0) {
+      if (activeFilters.has('online')    && !m.online)    return false;
+      if (activeFilters.has('verified')  && !m.verified)  return false;
+      if (activeFilters.has('new')       && !m.isNew)     return false;
+      if (activeFilters.has('vip')       && m.tier !== 'vip')    return false;
+      if (activeFilters.has('free')      && m.price !== 0)       return false;
+      if (activeFilters.has('ppv')       && !m.hasPPV)           return false;
+      if (activeFilters.has('live')      && !m.online)           return false;
+      if (activeFilters.has('top')       && m.followersNum < 20000) return false;
+      if (activeFilters.has('exclusive') && m.tier !== 'vip')    return false;
+      // Tag-based pills
+      const tagFilters = ['cosplay','asmr','bdsm','couples','stories','photo','video'];
+      for (const f of tagFilters) {
+        if (activeFilters.has(f) && !m.tags.some(t => t.toLowerCase().includes(f))) return false;
+      }
+    }
     return true;
   });
 
   // Sort
   filtered = sortModels(filtered);
 
-  // Apply to grid
-  const gridCards = grid.querySelectorAll('.model-card');
-  const listCards = list.querySelectorAll('.list-card');
-
+  // Apply visibility
   const visibleIds = new Set(filtered.map(m => m.id));
-
-  gridCards.forEach(card => {
-    const id = parseInt(card.dataset.id);
-    card.style.display = visibleIds.has(id) ? '' : 'none';
+  grid.querySelectorAll('.model-card').forEach(card => {
+    card.style.display = visibleIds.has(parseInt(card.dataset.id)) ? '' : 'none';
+  });
+  list.querySelectorAll('.list-card').forEach(card => {
+    card.style.display = visibleIds.has(parseInt(card.dataset.id)) ? '' : 'none';
   });
 
-  listCards.forEach(card => {
-    const id = parseInt(card.dataset.id);
-    card.style.display = visibleIds.has(id) ? '' : 'none';
+  // Reorder
+  filtered.forEach((m, i) => {
+    const gc = grid.querySelector(`[data-id="${m.id}"]`);
+    const lc = list.querySelector(`[data-id="${m.id}"]`);
+    if (gc) gc.style.order = i;
+    if (lc) lc.style.order = i;
   });
 
-  // Reorder grid by sort
-  if (currentSort !== 'relevance' || query) {
-    filtered.forEach((m, i) => {
-      const card = grid.querySelector(`[data-id="${m.id}"]`);
-      if (card) card.style.order = i;
-      const lcard = list.querySelector(`[data-id="${m.id}"]`);
-      if (lcard) lcard.style.order = i;
-    });
-  }
-
-  // No results
   noResults.classList.toggle('visible', filtered.length === 0);
   updateResultsCount(filtered.length);
 }
@@ -2482,16 +3205,13 @@ function filterModels() {
 function sortModels(models) {
   const arr = [...models];
   switch (currentSort) {
-    case 'popular':
-      return arr.sort((a, b) => b.followersNum - a.followersNum);
-    case 'newest':
-      return arr.sort((a, b) => b.id - a.id);
-    case 'price_asc':
-      return arr.sort((a, b) => a.price - b.price);
-    case 'price_desc':
-      return arr.sort((a, b) => b.price - a.price);
-    default:
-      return arr.sort((a, b) => b.rating - a.rating);
+    case 'popular':    return arr.sort((a,b) => b.followersNum - a.followersNum);
+    case 'online_new': return arr.sort((a,b) => (b.online?1:0)-(a.online?1:0) || b.id-a.id);
+    case 'newest':     return arr.sort((a,b) => b.id - a.id);
+    case 'love':       return arr.sort((a,b) => b.rating - a.rating);
+    case 'price_asc':  return arr.sort((a,b) => a.price - b.price);
+    case 'price_desc': return arr.sort((a,b) => b.price - a.price);
+    default:           return arr.sort((a,b) => b.rating - a.rating);
   }
 }
 
@@ -2499,6 +3219,129 @@ function applySorting() {
   currentSort = document.getElementById('sortSelect').value;
   filterModels();
 }
+
+// ═══════════════════════════════════════
+// ADVANCED FILTER DRAWER
+// ═══════════════════════════════════════
+
+function openAdvFilter() {
+  document.getElementById('advFilterOverlay').classList.add('open');
+  document.getElementById('advFilterDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('advFilterBtn').classList.add('active');
+}
+
+function closeAdvFilter() {
+  document.getElementById('advFilterOverlay').classList.remove('open');
+  document.getElementById('advFilterDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+  document.getElementById('advFilterBtn').classList.remove('active');
+}
+
+function applyAndClose() {
+  onAdvChange();
+  closeAdvFilter();
+  showResultsState();
+}
+
+function toggleAcc(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function toggleTagPill(btn) {
+  btn.classList.toggle('active');
+  onAdvChange();
+}
+
+function onAdvChange() {
+  AF.gender = document.querySelector('input[name="fg"]:checked')?.value || 'all';
+  AF.ageMin = parseInt(document.getElementById('ageMin')?.value || 18);
+  AF.ageMax = parseInt(document.getElementById('ageMax')?.value || 60);
+  AF.regions = new Set([...document.querySelectorAll('input[name="fr"]:checked')].map(x=>x.value));
+  AF.langs   = new Set([...document.querySelectorAll('input[name="fl"]:checked')].map(x=>x.value));
+  AF.prices  = new Set([...document.querySelectorAll('input[name="fp"]:checked')].map(x=>x.value));
+  AF.contentType  = document.querySelector('input[name="fct"]:checked')?.value || 'all';
+  AF.previewType  = document.querySelector('input[name="fpt"]:checked')?.value || 'all';
+  AF.looks = new Set([...document.querySelectorAll('.tag-pill.active[data-lk]')].map(b=>b.dataset.lk));
+  AF.cats  = new Set([...document.querySelectorAll('.tag-pill.active[data-cat]')].map(b=>b.dataset.cat));
+  AF.special = new Set([...document.querySelectorAll('input[name="fspec"]:checked')].map(i=>i.value));
+  _syncAdvBadges();
+  filterModels();
+}
+
+function _syncAdvBadges() {
+  let total = 0;
+  const setB = (id, n) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = n;
+    el.classList.toggle('on', n > 0);
+    total += n;
+  };
+  setB('badge-gender',  AF.gender !== 'all' ? 1 : 0);
+  setB('badge-age',     (AF.ageMin > 18 || AF.ageMax < 60) ? 1 : 0);
+  setB('badge-region',  AF.regions.size);
+  setB('badge-lang',    AF.langs.size);
+  setB('badge-looks',   AF.looks.size);
+  setB('badge-cats',    AF.cats.size);
+  setB('badge-prices',  AF.prices.size);
+  setB('badge-ctype',   AF.contentType !== 'all' ? 1 : 0);
+  setB('badge-ptype',   AF.previewType !== 'all' ? 1 : 0);
+  setB('badge-special', AF.special ? AF.special.size : 0);
+
+  const cnt = document.getElementById('drawerActiveCnt');
+  cnt.textContent = total;
+  cnt.classList.toggle('visible', total > 0);
+
+  const btn = document.getElementById('advFilterBtn');
+  btn.classList.toggle('has-filters', total > 0);
+}
+
+function resetAdvFilters() {
+  const r = document.querySelector('input[name="fg"][value="all"]');
+  if (r) r.checked = true;
+  const rct = document.querySelector('input[name="fct"][value="all"]');
+  if (rct) rct.checked = true;
+  const rpt = document.querySelector('input[name="fpt"][value="all"]');
+  if (rpt) rpt.checked = true;
+  document.querySelectorAll('input[name="fr"],input[name="fl"],input[name="fp"]')
+    .forEach(c => c.checked = false);
+  document.querySelectorAll('.tag-pill.active').forEach(p => p.classList.remove('active'));
+  const mn = document.getElementById('ageMin');
+  const mx = document.getElementById('ageMax');
+  if (mn) mn.value = 18;
+  if (mx) mx.value = 60;
+  updateAgeSlider();
+  document.querySelectorAll('input[name="fspec"]').forEach(i => i.checked = false);
+  AF = { gender:'all', ageMin:18, ageMax:60, regions:new Set(), langs:new Set(),
+         looks:new Set(), cats:new Set(), prices:new Set(), contentType:'all', previewType:'all', special:new Set() };
+  _syncAdvBadges();
+  filterModels();
+  if (window.kolShowToast) kolShowToast('Фильтры сброшены');
+}
+
+function updateAgeSlider() {
+  const mn = document.getElementById('ageMin');
+  const mx = document.getElementById('ageMax');
+  if (!mn || !mx) return;
+  let lo = parseInt(mn.value), hi = parseInt(mx.value);
+  if (lo > hi) { const t=lo; lo=hi; hi=t; mn.value=lo; mx.value=hi; }
+  const MIN=18, MAX=60;
+  const lp = ((lo-MIN)/(MAX-MIN))*100;
+  const rp = ((hi-MIN)/(MAX-MIN))*100;
+  const fill = document.getElementById('ageRangeFill');
+  if (fill) { fill.style.left=lp+'%'; fill.style.width=(rp-lp)+'%'; }
+  const disp = document.getElementById('ageValDisplay');
+  if (disp) disp.textContent = lo + ' – ' + (hi>=60?'50+':hi);
+  AF.ageMin = lo; AF.ageMax = hi;
+  _syncAdvBadges();
+  filterModels();
+}
+
+// Close drawer on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAdvFilter();
+});
 
 function updateResultsCount(count) {
   const total = count !== undefined ? count : MODELS.length;
@@ -3011,8 +3854,64 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
       .catch(()=>{});
   }
 
+  // ── Flash Event Timer ────────────────────────────────────────
+  function initFlashTimer() {
+    let secs = 14 * 60 + 22;
+    const timerEl   = document.getElementById('feTimer');
+    const inlineEl  = document.getElementById('feTimerInline');
+    const fillEl    = document.getElementById('feFlashFill');
+    if (!timerEl) return;
+    const total = secs;
+    setInterval(() => {
+      if (secs <= 0) { secs = 0; }
+      else secs--;
+      const m = String(Math.floor(secs/60)).padStart(2,'0');
+      const s = String(secs%60).padStart(2,'0');
+      const t = `${m}:${s}`;
+      timerEl.textContent = t;
+      if (inlineEl) inlineEl.textContent = t;
+      const pct = Math.min(100, Math.round((1 - secs/total)*100 * 0.4 + 60));
+      if (fillEl) fillEl.style.width = pct + '%';
+    }, 1000);
+  }
+
+  // ── New Creators Spotlight ───────────────────────────────────
+  function renderSpotlight() {
+    const grid = document.getElementById('spotlightGrid');
+    const section = document.getElementById('spotlightSection');
+    if (!grid) return;
+    const newModels = MODELS.filter(m => m.isNew);
+    if (!newModels.length) { if(section) section.style.display='none'; return; }
+    grid.innerHTML = newModels.map(m => `
+      <div class="model-card" data-id="${m.id}" onclick="openPreview(${m.id}, event)" style="outline:1.5px solid rgba(0,230,118,.25)">
+        <div class="card-photo">
+          <div class="card-photo-bg" style="background:${m.gradientSolid}">
+            <span style="font-size:56px;opacity:0.7">${m.emoji}</span>
+          </div>
+          <div class="card-photo-overlay"></div>
+          <div class="card-new-badge">NEW</div>
+          <div class="card-name-overlay">${m.name}</div>
+          <div class="card-verified" title="Верифицированный аккаунт">✓</div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">${m.tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
+          <div class="card-stats">
+            <div class="card-followers" style="font-size:11px;color:var(--text-muted)">Новинка · ${m.followers}</div>
+            <div class="card-score"><span class="score-star">★</span>${m.rating.toFixed(1)}</div>
+          </div>
+          <button class="card-subscribe" onclick="event.stopPropagation()" style="background:linear-gradient(135deg,#00C853,#00E676);color:#07071A">
+            Подписаться $${m.price}/мес
+          </button>
+        </div>
+      </div>`).join('');
+  }
+
   // ── Init ─────────────────────────────────────────────────────
-  document.addEventListener('DOMContentLoaded', kolShowBanner);
+  document.addEventListener('DOMContentLoaded', () => {
+    kolShowBanner();
+    initFlashTimer();
+    renderSpotlight();
+  });
 
 })();
 </script>

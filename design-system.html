@@ -471,6 +471,233 @@ code{font-family:'Fira Code','Cascadia Code',monospace;font-size:12px;
 .ds-hero-stat .num{font-size:28px;font-weight:900;background:linear-gradient(135deg,#D42B6A,#8B2BE2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .ds-hero-stat .lbl{font-size:12px;color:var(--text-muted)}
 
+/* ─── Filter Bar ─────────────────────────────────── */
+.filter-bar-demo{
+  display:flex;align-items:center;gap:10px;
+  background:var(--card-l2);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:10px 14px;flex-wrap:wrap;
+}
+.demo-sort-select{
+  appearance:none;-webkit-appearance:none;
+  background:var(--card-l1);border:1.5px solid var(--border);
+  color:var(--text-primary);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;
+  padding:7px 32px 7px 12px;border-radius:20px;cursor:pointer;outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%23A0A0C0' stroke-width='1.5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+  transition:border-color .2s;min-width:140px;
+}
+.demo-sort-select:hover{border-color:#D42B6A}
+.demo-feed-divider{width:1px;height:28px;background:var(--border);flex-shrink:0}
+.demo-filter-tabs{display:flex;gap:6px;overflow-x:auto;flex:1}
+.demo-tab-pill{
+  padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);
+  background:transparent;color:var(--text-secondary);font-size:12px;font-weight:600;
+  cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'Inter',sans-serif;flex-shrink:0;
+}
+.demo-tab-pill.active{background:rgba(212,43,106,.12);border-color:#D42B6A;color:#D42B6A}
+.demo-tab-pill:hover:not(.active){border-color:var(--text-muted);color:var(--text-primary)}
+
+/* ─── Tag Pills / Tag Cloud ──────────────────────── */
+.demo-tag-cloud{display:flex;flex-wrap:wrap;gap:8px}
+.demo-tag-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 13px;border-radius:20px;
+  border:1.5px solid var(--border);background:transparent;
+  color:var(--text-secondary);font-size:12px;font-weight:600;
+  cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;
+}
+.demo-tag-pill.active{background:rgba(212,43,106,.12);border-color:#D42B6A;color:#D42B6A}
+.demo-tag-pill:hover:not(.active){border-color:var(--text-muted);color:var(--text-primary)}
+.demo-tag-pill .is-new-dot{
+  width:6px;height:6px;border-radius:50%;background:#00E676;flex-shrink:0;
+}
+.demo-tag-pill .count{font-size:10px;color:var(--text-muted);font-weight:400}
+
+/* ─── PRO / NEW badges ───────────────────────────── */
+.demo-pro-badge{
+  display:inline-flex;align-items:center;
+  padding:2px 6px;border-radius:5px;
+  background:linear-gradient(135deg,#1565C0,#1E88E5);
+  color:#fff;font-size:9px;font-weight:800;letter-spacing:.5px;
+  vertical-align:middle;line-height:1;
+}
+.demo-new-pill{
+  position:relative;display:inline-flex;align-items:center;gap:5px;
+  padding:6px 13px 6px 13px;border-radius:20px;
+  border:1.5px solid var(--border);background:transparent;
+  color:var(--text-secondary);font-size:12px;font-weight:600;
+  cursor:pointer;
+}
+.demo-new-pill::after{
+  content:'NEW';position:absolute;top:-7px;right:-6px;
+  background:#00E676;color:#07071A;font-size:8px;font-weight:800;
+  padding:1px 5px;border-radius:4px;letter-spacing:.5px;
+}
+.badge-showcase{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.badge-showcase-item{display:flex;flex-direction:column;align-items:center;gap:8px}
+.badge-showcase-label{font-size:10px;color:var(--text-muted);text-align:center;font-family:'Fira Code',monospace}
+
+/* ─── Dual Range Slider ──────────────────────────── */
+.demo-range-wrap{padding:8px 0 4px;width:100%;max-width:320px}
+.demo-range-track{
+  position:relative;height:4px;background:var(--border);
+  border-radius:2px;margin:12px 0 6px;
+}
+.demo-range-fill{
+  position:absolute;top:0;height:100%;
+  background:linear-gradient(90deg,#D42B6A,#8B2BE2);border-radius:2px;
+}
+.demo-range-inputs{position:relative;height:0}
+.demo-range-inputs input[type=range]{
+  position:absolute;width:100%;top:-14px;
+  -webkit-appearance:none;appearance:none;
+  background:transparent;pointer-events:none;
+}
+.demo-range-inputs input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:18px;height:18px;border-radius:50%;
+  background:#fff;border:2px solid #D42B6A;
+  cursor:pointer;pointer-events:all;
+  box-shadow:0 2px 6px rgba(0,0,0,.4);
+}
+.demo-range-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);margin-top:4px}
+.demo-range-vals{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--text-primary)}
+
+/* ─── Accordion ──────────────────────────────────── */
+.demo-accordion{display:flex;flex-direction:column;gap:6px;max-width:400px;width:100%}
+.demo-acc-section{
+  background:var(--card-l1);border:1px solid var(--border);border-radius:var(--radius-md);
+  overflow:hidden;transition:border-color .2s;
+}
+.demo-acc-section.open{border-color:rgba(212,43,106,.3)}
+.demo-acc-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;cursor:pointer;user-select:none;
+  transition:background .15s;
+}
+.demo-acc-header:hover{background:rgba(255,255,255,.03)}
+.demo-acc-header-left{display:flex;align-items:center;gap:10px}
+.demo-acc-label{font-size:14px;font-weight:600;color:var(--text-primary)}
+.demo-acc-badge{
+  min-width:18px;height:18px;border-radius:9px;padding:0 5px;
+  background:#D42B6A;color:#fff;font-size:10px;font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .2s;
+}
+.demo-acc-badge.on{opacity:1}
+.demo-acc-chevron{
+  width:16px;height:16px;transition:transform .25s;flex-shrink:0;
+  stroke:var(--text-muted);
+}
+.demo-acc-section.open .demo-acc-chevron{transform:rotate(180deg)}
+.demo-acc-body{
+  max-height:0;overflow:hidden;transition:max-height .3s ease;
+  padding:0 16px;
+}
+.demo-acc-body.open{max-height:200px;padding:0 16px 14px}
+.demo-acc-body p{font-size:13px;color:var(--text-secondary);line-height:1.5}
+
+/* ─── Filter Drawer ──────────────────────────────── */
+.demo-drawer-container{
+  position:relative;overflow:hidden;border:1px solid var(--border);
+  border-radius:var(--radius-lg);height:400px;background:var(--bg);
+  display:flex;
+}
+.demo-drawer-bg{
+  flex:1;padding:24px;display:flex;flex-direction:column;gap:12px;
+}
+.demo-drawer-bg-row{height:48px;background:var(--card-l1);border:1px solid var(--border);border-radius:10px}
+.demo-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:1;
+}
+.demo-drawer-panel{
+  position:absolute;top:0;right:0;bottom:0;width:280px;
+  background:var(--card-l1);border-left:1px solid var(--border);
+  z-index:2;display:flex;flex-direction:column;
+}
+.demo-drawer-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px;border-bottom:1px solid var(--border);
+}
+.demo-drawer-title{font-size:15px;font-weight:800}
+.demo-drawer-close{
+  width:28px;height:28px;border-radius:50%;border:none;
+  background:var(--card-l2);color:var(--text-secondary);font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.demo-drawer-body{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:6px}
+.demo-drawer-footer{
+  padding:12px 16px;border-top:1px solid var(--border);
+  display:flex;gap:10px;
+}
+.demo-drawer-reset{
+  flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--border);
+  background:transparent;color:var(--text-secondary);font-size:13px;font-weight:600;
+  cursor:pointer;font-family:'Inter',sans-serif;
+}
+.demo-drawer-apply{
+  flex:2;padding:10px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+  color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;
+}
+.demo-filter-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 18px;border-radius:20px;border:1.5px solid var(--border);
+  background:transparent;color:var(--text-secondary);font-size:13px;font-weight:600;
+  cursor:pointer;font-family:'Inter',sans-serif;position:relative;transition:all .2s;
+}
+.demo-filter-btn .filter-dot{
+  position:absolute;top:2px;right:2px;
+  width:8px;height:8px;border-radius:50%;background:#D42B6A;border:2px solid var(--bg);
+}
+
+/* ─── GOAL WIDGET demo ─── */
+.demo-goal{background:rgba(212,43,106,.06);border:1px solid rgba(212,43,106,.2);border-radius:14px;padding:16px;max-width:380px}
+.demo-goal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.demo-goal-title{font-size:13px;font-weight:700}
+.demo-goal-pct{font-size:13px;font-weight:800;color:#D42B6A}
+.demo-goal-track{height:7px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:8px}
+.demo-goal-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#D42B6A,#8B2BE2)}
+.demo-goal-footer{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted)}
+.demo-goal-btn{width:100%;margin-top:12px;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif}
+
+/* ─── FLASH EVENT demo ─── */
+.demo-flash{background:linear-gradient(135deg,#1a0a12,#0d0a1a);border:1px solid rgba(212,43,106,.4);border-radius:14px;padding:14px 16px;max-width:380px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.demo-flash::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,43,106,.05),rgba(139,43,226,.05))}
+.demo-flash-pulse{width:40px;height:40px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#D42B6A,#8B2BE2);display:flex;align-items:center;justify-content:center;font-size:18px;position:relative}
+.demo-flash-info{flex:1;position:relative}
+.demo-flash-title{font-size:13px;font-weight:800;margin-bottom:3px}
+.demo-flash-sub{font-size:11px;color:var(--text-muted)}
+.demo-flash-track{height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:7px;overflow:hidden}
+.demo-flash-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#D42B6A,#8B2BE2)}
+.demo-flash-timer{font-size:13px;font-weight:800;color:#D42B6A;background:rgba(212,43,106,.1);border:1px solid rgba(212,43,106,.3);padding:5px 12px;border-radius:20px;white-space:nowrap;position:relative}
+
+/* ─── TIP MENU demo ─── */
+.demo-tip-menu{display:flex;flex-direction:column;gap:6px;max-width:320px}
+.demo-tip-item{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:9px 12px;cursor:pointer;transition:border-color .2s}
+.demo-tip-item:hover{border-color:rgba(212,43,106,.4)}
+.demo-tip-action{font-size:13px;font-weight:600}
+.demo-tip-price{font-size:12px;font-weight:800;color:#D42B6A;background:rgba(212,43,106,.1);border:1px solid rgba(212,43,106,.25);padding:3px 10px;border-radius:20px}
+
+/* ─── SESSION BUNDLES demo ─── */
+.demo-bundles{display:flex;gap:8px;max-width:340px}
+.demo-bundle{flex:1;padding:12px 8px;border-radius:12px;border:1.5px solid rgba(255,255,255,.1);background:transparent;cursor:pointer;text-align:center;font-family:'Inter',sans-serif;transition:all .2s;position:relative}
+.demo-bundle:hover{border-color:rgba(212,43,106,.4)}
+.demo-bundle.active{border-color:#D42B6A;background:rgba(212,43,106,.1)}
+.demo-bundle .db-period{font-size:12px;font-weight:700;color:var(--text-primary)}
+.demo-bundle .db-save{display:block;font-size:9px;font-weight:800;color:#00E676;margin-top:2px}
+.demo-bundle .db-price{display:block;font-size:15px;font-weight:900;margin-top:4px;color:var(--text-primary)}
+.demo-bundle.hit::after{content:'Хит';position:absolute;top:-7px;left:50%;transform:translateX(-50%);background:#FFB300;color:#07071A;font-size:8px;font-weight:900;padding:2px 7px;border-radius:5px}
+
+/* ─── TIERED COMMISSION demo ─── */
+.demo-tier-rows{display:flex;flex-direction:column;gap:8px;max-width:380px}
+.demo-tier-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:var(--card-l1);border:1px solid var(--border)}
+.demo-tier-row.current{border-color:rgba(212,43,106,.4);background:rgba(212,43,106,.06)}
+.demo-tier-name{flex:1;font-size:13px;font-weight:700}
+.demo-tier-range{font-size:11px;color:var(--text-muted)}
+.demo-tier-pct{font-size:15px;font-weight:900;color:#00E676}
+.demo-tier-row.current .demo-tier-pct{color:#D42B6A}
+
 /* Mobile */
 @media(max-width:900px){
   .ds-nav{display:none}
@@ -509,7 +736,20 @@ code{font-family:'Fira Code','Cascadia Code',monospace;font-size:12px;
     <li><a href="#toasts">🍞 Toasts</a></li>
     <li><a href="#skeleton">💀 Skeletons</a></li>
     <li><a href="#empty">📭 Empty States</a></li>
+    <li><a href="#filter-bar">🔀 Filter Bar</a></li>
+    <li><a href="#tag-pills">🏷 Tag Pills</a></li>
+    <li><a href="#range-slider">↔️ Range Slider</a></li>
+    <li><a href="#accordion">🪗 Accordion</a></li>
+    <li><a href="#filter-drawer">🗂 Filter Drawer</a></li>
+    <li><a href="#pro-badges">⭐ PRO / NEW Badges</a></li>
     <li class="section-label">Patterns</li>
+    <li><a href="#goal-widget">🎯 Goal Widget</a></li>
+    <li><a href="#flash-event">⚡ Flash Event</a></li>
+    <li><a href="#tip-menu">💰 Tip Menu</a></li>
+    <li><a href="#session-bundles">📦 Session Bundles</a></li>
+    <li><a href="#auto-responder">🤖 Auto-Responder</a></li>
+    <li><a href="#tiered-commission">💎 Tiered Commission</a></li>
+    <li><a href="#geo-blocking">🔒 Geo Blocking</a></li>
     <li><a href="#breadcrumb">🍞 Breadcrumbs</a></li>
     <li><a href="#stats">📊 Stats</a></li>
     <li><a href="#fab">➕ FAB</a></li>
@@ -531,7 +771,7 @@ code{font-family:'Fira Code','Cascadia Code',monospace;font-size:12px;
     <p class="ds-hero-sub">Полная документация токенов, компонентов и паттернов для всех 124 страниц платформы.</p>
     <div class="ds-hero-stats">
       <div class="ds-hero-stat"><div class="num">124</div><div class="lbl">HTML страниц</div></div>
-      <div class="ds-hero-stat"><div class="num">40+</div><div class="lbl">компонентов</div></div>
+      <div class="ds-hero-stat"><div class="num">55+</div><div class="lbl">компонентов</div></div>
       <div class="ds-hero-stat"><div class="num">8.8MB</div><div class="lbl">размер проекта</div></div>
       <div class="ds-hero-stat"><div class="num">2</div><div class="lbl">языка (RU/EN)</div></div>
     </div>
@@ -1360,6 +1600,597 @@ setTimeout(() => location.href = url, 250)
 
   <div class="ds-divider"></div>
 
+  <!-- ═══════════════ FILTER BAR ═══════════════ -->
+  <section class="ds-section" id="filter-bar">
+    <h2 class="ds-section-title">Filter Bar <span>Component</span></h2>
+    <p class="ds-section-desc">Панель фильтрации над сеткой контента. Состоит из сортировочного Select (pill-форм), разделителя и горизонтально прокручиваемых таб-пилюль категорий. Используется в <code>search.html</code> и <code>feed.html</code>.</p>
+
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">Live Preview</div>
+      <div class="filter-bar-demo">
+        <select class="demo-sort-select">
+          <option>🕐 Новые</option>
+          <option>🔥 Популярные</option>
+          <option>⭐ Топ рейтинг</option>
+          <option>💎 Подписки</option>
+        </select>
+        <div class="demo-feed-divider"></div>
+        <div class="demo-filter-tabs">
+          <button class="demo-tab-pill active">Все</button>
+          <button class="demo-tab-pill">Фото</button>
+          <button class="demo-tab-pill">Видео</button>
+          <button class="demo-tab-pill">Live</button>
+          <button class="demo-tab-pill">PPV</button>
+          <button class="demo-tab-pill">Stories</button>
+        </div>
+      </div>
+    </div>
+
+    <pre>&lt;!-- Pill-shaped sort select --&gt;
+&lt;select class="feed-sort-select" onchange="applyFeedSort()"&gt;
+  &lt;option value="new"&gt;🕐 Новые&lt;/option&gt;
+  &lt;option value="popular"&gt;🔥 Популярные&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;div class="feed-divider"&gt;&lt;/div&gt;
+
+&lt;!-- Scrollable tab pills --&gt;
+&lt;div class="filter-tabs"&gt;
+  &lt;button class="tab-pill active" onclick="setTab(this,'all')"&gt;Все&lt;/button&gt;
+  &lt;button class="tab-pill" onclick="setTab(this,'photo')"&gt;Фото&lt;/button&gt;
+&lt;/div&gt;</pre>
+
+    <table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:16px">
+      <thead><tr style="border-bottom:1px solid var(--border)">
+        <th style="text-align:left;padding:8px 12px;color:var(--text-muted);font-size:11px;letter-spacing:1px;text-transform:uppercase">Класс</th>
+        <th style="text-align:left;padding:8px 12px;color:var(--text-muted);font-size:11px;letter-spacing:1px;text-transform:uppercase">Описание</th>
+      </tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 12px"><code>.feed-sort-select</code></td><td style="padding:8px 12px;color:var(--text-secondary)">Pill-shaped &lt;select&gt;, кастомная стрелка через background-image SVG</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 12px"><code>.feed-divider</code></td><td style="padding:8px 12px;color:var(--text-secondary)">1px вертикальный разделитель, высота 28px</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px 12px"><code>.filter-tabs</code></td><td style="padding:8px 12px;color:var(--text-secondary)">flex, nowrap, overflow-x:auto, gap:6px</td></tr>
+        <tr><td style="padding:8px 12px"><code>.tab-pill.active</code></td><td style="padding:8px 12px;color:var(--text-secondary)">Розовый акцент: border #D42B6A, background rgba(212,43,106,.12)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ TAG PILLS ═══════════════ -->
+  <section class="ds-section" id="tag-pills">
+    <h2 class="ds-section-title">Tag Pills <span>Component</span></h2>
+    <p class="ds-section-desc">Кликабельные теги-пилюли для фильтрации по категориям и параметрам внешности. Поддерживают состояния: default, hover, active, с PRO-бейджем, с NEW-бейджем.</p>
+
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">States</div>
+      <div class="demo-tag-cloud">
+        <button class="demo-tag-pill">Блондинки <span class="count">(316)</span></button>
+        <button class="demo-tag-pill active">Брюнетки <span class="count">(1353)</span></button>
+        <button class="demo-tag-pill">Сквирт <span class="demo-pro-badge">PRO</span> <span class="count">(1046)</span></button>
+        <button class="demo-tag-pill">BDSM <span class="demo-pro-badge">PRO</span></button>
+        <button class="demo-tag-pill" style="position:relative">
+          <span class="demo-new-pill" style="position:static;border:none;padding:0">Лучшие для приватов</span>
+        </button>
+        <button class="demo-tag-pill">Латинки <span class="count">(841)</span></button>
+        <button class="demo-tag-pill">Фетиш 🐰 <span class="demo-pro-badge">PRO</span> <span class="count">(1369)</span></button>
+      </div>
+    </div>
+
+    <pre>.tag-pill {
+  padding: 6px 13px; border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: transparent; color: var(--text-secondary);
+  font-size: 12px; font-weight: 600; cursor: pointer;
+}
+.tag-pill.active {
+  background: rgba(212,43,106,.12);
+  border-color: #D42B6A; color: #D42B6A;
+}
+/* PRO badge inside pill */
+.pro-badge {
+  display: inline-flex; padding: 2px 6px; border-radius: 5px;
+  background: linear-gradient(135deg,#1565C0,#1E88E5);
+  color: #fff; font-size: 9px; font-weight: 800;
+}
+/* NEW badge via ::after pseudo-element */
+.tag-pill.is-new::after {
+  content: 'NEW'; position: absolute; top: -7px; right: -6px;
+  background: #00E676; color: #07071A;
+  font-size: 8px; font-weight: 800;
+  padding: 1px 5px; border-radius: 4px;
+}</pre>
+
+    <p style="font-size:13px;color:var(--text-secondary);margin-top:16px">JS: <code>toggleTagPill(btn)</code> — переключает <code>.active</code>, читает <code>data-cat</code> или <code>data-lk</code>, вызывает <code>onAdvChange()</code>.</p>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ RANGE SLIDER ═══════════════ -->
+  <section class="ds-section" id="range-slider">
+    <h2 class="ds-section-title">Dual Range Slider <span>Component</span></h2>
+    <p class="ds-section-desc">Двойной ползунок для выбора диапазона (возраст, цена). Два <code>&lt;input type=range&gt;</code> наложены на один трек. JS-функция <code>updateAgeSlider()</code> обновляет заливку трека через <code>left</code> и <code>width</code>.</p>
+
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">Live Preview — Age Range</div>
+      <div class="demo-range-wrap">
+        <div class="demo-range-vals">
+          <span id="dr-min-lbl">22</span>
+          <span id="dr-max-lbl">45</span>
+        </div>
+        <div class="demo-range-track">
+          <div class="demo-range-fill" id="dr-fill" style="left:9.5%;width:67.4%"></div>
+          <div class="demo-range-inputs">
+            <input type="range" min="18" max="60" value="22" id="dr-min"
+              oninput="drUpdate()" style="z-index:3">
+            <input type="range" min="18" max="60" value="45" id="dr-max"
+              oninput="drUpdate()" style="z-index:4">
+          </div>
+        </div>
+        <div class="demo-range-labels"><span>18</span><span>60</span></div>
+      </div>
+    </div>
+
+    <pre>&lt;div class="range-track"&gt;
+  &lt;div class="range-track-fill" id="age-fill"&gt;&lt;/div&gt;
+  &lt;input type="range" id="age-min" min="18" max="60" value="18"
+    oninput="updateAgeSlider()"&gt;
+  &lt;input type="range" id="age-max" min="18" max="60" value="60"
+    oninput="updateAgeSlider()"&gt;
+&lt;/div&gt;
+
+function updateAgeSlider() {
+  let mn = +ageMin.value, mx = +ageMax.value;
+  if (mn > mx - 1) { ageMin.value = mx - 1; mn = mx - 1; }
+  const pct = v => (v - 18) / (60 - 18) * 100;
+  ageFill.style.left  = pct(mn) + '%';
+  ageFill.style.width = (pct(mx) - pct(mn)) + '%';
+}</pre>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ ACCORDION ═══════════════ -->
+  <section class="ds-section" id="accordion">
+    <h2 class="ds-section-title">Accordion <span>Component</span></h2>
+    <p class="ds-section-desc">Сворачиваемые секции фильтров. Анимация через <code>max-height</code> переход. Шеврон вращается на 180° при открытии. Бейдж-счётчик активных выборов (.acc-sect-badge.on).</p>
+
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">Interactive Demo</div>
+      <div class="demo-accordion">
+        <div class="demo-acc-section open" id="dacc-1">
+          <div class="demo-acc-header" onclick="daccToggle('dacc-1')">
+            <div class="demo-acc-header-left">
+              <span class="demo-acc-label">Пол</span>
+              <span class="demo-acc-badge on" id="dacc-1-badge">1</span>
+            </div>
+            <svg class="demo-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="demo-acc-body open" id="dacc-1-body">
+            <p>Содержимое секции — радио-кнопки, чекбоксы, тег-клауд или ренж-слайдер.</p>
+          </div>
+        </div>
+        <div class="demo-acc-section" id="dacc-2">
+          <div class="demo-acc-header" onclick="daccToggle('dacc-2')">
+            <div class="demo-acc-header-left">
+              <span class="demo-acc-label">Категории</span>
+              <span class="demo-acc-badge" id="dacc-2-badge">3</span>
+            </div>
+            <svg class="demo-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="demo-acc-body" id="dacc-2-body">
+            <p>Тег-клауд с PRO и NEW бейджами на нишевых категориях.</p>
+          </div>
+        </div>
+        <div class="demo-acc-section" id="dacc-3">
+          <div class="demo-acc-header" onclick="daccToggle('dacc-3')">
+            <div class="demo-acc-header-left">
+              <span class="demo-acc-label">Возраст</span>
+              <span class="demo-acc-badge" id="dacc-3-badge">0</span>
+            </div>
+            <svg class="demo-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="demo-acc-body" id="dacc-3-body">
+            <p>Dual range slider для выбора возрастного диапазона 18–60.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <pre>function toggleAcc(id) {
+  const sec = document.getElementById(id);
+  const body = sec.querySelector('.acc-body');
+  const isOpen = sec.classList.contains('open');
+  sec.classList.toggle('open', !isOpen);
+  body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
+}
+
+/* CSS */
+.acc-body { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+.acc-chevron { transition: transform .25s; }
+.acc-section.open .acc-chevron { transform: rotate(180deg); }
+.acc-sect-badge { opacity: 0; transition: opacity .2s; }
+.acc-sect-badge.on { opacity: 1; }</pre>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ FILTER DRAWER ═══════════════ -->
+  <section class="ds-section" id="filter-drawer">
+    <h2 class="ds-section-title">Filter Drawer <span>Pattern</span></h2>
+    <p class="ds-section-desc">Правосторонняя панель расширенных фильтров (360px, z-index 901). Открывается кнопкой «Фильтры» с активным dot-индикатором. Содержит 9 accordion-секций: Пол, Возраст, Регион, Язык, Внешний вид, Категории, Цена, Тип контента, Тип превью.</p>
+
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">Anatomy</div>
+      <div class="demo-drawer-container">
+        <div class="demo-drawer-bg">
+          <div class="demo-drawer-bg-row"></div>
+          <div class="demo-drawer-bg-row"></div>
+          <div class="demo-drawer-bg-row"></div>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:4px">
+            <button class="demo-filter-btn">
+              🎚 Фильтры
+              <span class="filter-dot"></span>
+            </button>
+            <span style="font-size:12px;color:var(--text-muted)">← кнопка с активным dot</span>
+          </div>
+        </div>
+        <div class="demo-overlay"></div>
+        <div class="demo-drawer-panel">
+          <div class="demo-drawer-header">
+            <span class="demo-drawer-title">Фильтры</span>
+            <button class="demo-drawer-close">✕</button>
+          </div>
+          <div class="demo-drawer-body">
+            <div class="demo-acc-section open" style="background:var(--card-l2)">
+              <div class="demo-acc-header" style="padding:10px 12px">
+                <div class="demo-acc-header-left">
+                  <span class="demo-acc-label" style="font-size:13px">Пол</span>
+                </div>
+                <svg class="demo-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(180deg)"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+            <div class="demo-acc-section" style="background:var(--card-l2)">
+              <div class="demo-acc-header" style="padding:10px 12px">
+                <div class="demo-acc-header-left">
+                  <span class="demo-acc-label" style="font-size:13px">Категории</span>
+                  <span class="demo-acc-badge on" style="opacity:1">4</span>
+                </div>
+                <svg class="demo-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+            <div class="demo-acc-section" style="background:var(--card-l2)">
+              <div class="demo-acc-header" style="padding:10px 12px">
+                <div class="demo-acc-header-left">
+                  <span class="demo-acc-label" style="font-size:13px">Возраст</span>
+                </div>
+                <svg class="demo-acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="demo-drawer-footer">
+            <button class="demo-drawer-reset">Сбросить</button>
+            <button class="demo-drawer-apply">Применить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <pre>/* Drawer overlay + panel */
+.adv-filter-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  z-index: 900; opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.adv-filter-panel {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: 360px; z-index: 901;
+  background: var(--card); border-left: 1px solid var(--border);
+  transform: translateX(100%); transition: transform .3s cubic-bezier(.4,0,.2,1);
+  display: flex; flex-direction: column;
+}
+.adv-filter-overlay.open { opacity: 1; pointer-events: all; }
+.adv-filter-panel.open { transform: translateX(0); }
+
+/* Open/close functions */
+function openAdvFilter() {
+  document.getElementById('advFilterOverlay').classList.add('open');
+  document.getElementById('advFilterPanel').classList.add('open');
+}
+function closeAdvFilter() { /* reverse */ }
+function applyAndClose() { filterModels(); closeAdvFilter(); }</pre>
+
+    <div style="margin-top:20px;background:var(--card-l2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px">Filter State Object (AF)</div>
+      <pre style="margin:0">let AF = {
+  gender: 'all',            // 'all' | 'female' | 'male' | 'trans'
+  ageMin: 18, ageMax: 60,  // number
+  regions: new Set(),       // Set&lt;string&gt;
+  langs: new Set(),         // Set&lt;string&gt;
+  looks: new Set(),         // Set&lt;string&gt; — data-lk tags
+  cats: new Set(),          // Set&lt;string&gt; — data-cat tags
+  prices: new Set(),        // Set&lt;string&gt; — 'free','low','mid','high','vip'
+  contentType: 'all',       // 'all'|'photo'|'video'|'live'|'ppv'
+  previewType: 'all'        // 'all'|'open'|'blurred'|'teaser'
+};</pre>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ PRO / NEW BADGES ═══════════════ -->
+  <section class="ds-section" id="pro-badges">
+    <h2 class="ds-section-title">PRO &amp; NEW Badges <span>Component</span></h2>
+    <p class="ds-section-desc">Два типа специальных бейджей на тег-пилюлях. <strong>PRO</strong> — синий градиент, маркирует нишевые/премиум категории (BDSM, Фетиш, Сквирт, Бондаж и т.д.). <strong>NEW</strong> — зелёный, CSS <code>::after</code> псевдоэлемент на <code>.is-new</code>.</p>
+
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">Badge Variants</div>
+      <div class="badge-showcase">
+        <div class="badge-showcase-item">
+          <button class="demo-tag-pill">BDSM <span class="demo-pro-badge">PRO</span></button>
+          <span class="badge-showcase-label">.pro-badge<br>inside .tag-pill</span>
+        </div>
+        <div class="badge-showcase-item">
+          <button class="demo-tag-pill">Фетиш 🐰 <span class="demo-pro-badge">PRO</span></button>
+          <span class="badge-showcase-label">with emoji</span>
+        </div>
+        <div class="badge-showcase-item">
+          <button class="demo-tag-pill active">Сквирт <span class="demo-pro-badge">PRO</span></button>
+          <span class="badge-showcase-label">active state</span>
+        </div>
+        <div class="badge-showcase-item">
+          <div style="position:relative;display:inline-flex">
+            <button class="demo-tag-pill" style="position:relative">Лучшие для приватов<span style="position:absolute;top:-7px;right:-6px;background:#00E676;color:#07071A;font-size:8px;font-weight:800;padding:1px 5px;border-radius:4px;letter-spacing:.5px">NEW</span></button>
+          </div>
+          <span class="badge-showcase-label">.is-new<br>::after pseudo</span>
+        </div>
+        <div class="badge-showcase-item">
+          <span class="demo-pro-badge" style="font-size:11px;padding:3px 8px">PRO</span>
+          <span class="badge-showcase-label">standalone</span>
+        </div>
+      </div>
+    </div>
+
+    <pre>/* PRO badge — inline span inside button */
+.pro-badge {
+  display: inline-flex; align-items: center;
+  padding: 2px 6px; border-radius: 5px;
+  background: linear-gradient(135deg, #1565C0, #1E88E5);
+  color: #fff; font-size: 9px; font-weight: 800;
+  letter-spacing: 0.5px; vertical-align: middle; line-height: 1;
+}
+
+/* NEW badge — CSS ::after pseudo on .is-new */
+.tag-pill.is-new {
+  position: relative;
+}
+.tag-pill.is-new::after {
+  content: 'NEW';
+  position: absolute; top: -7px; right: -6px;
+  background: #00E676; color: #07071A;
+  font-size: 8px; font-weight: 800;
+  padding: 1px 5px; border-radius: 4px; letter-spacing: .5px;
+}
+
+/* Usage */
+&lt;button class="tag-pill" data-cat="BDSM" onclick="toggleTagPill(this)"&gt;
+  BDSM &lt;span class="pro-badge"&gt;PRO&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;button class="tag-pill is-new" data-cat="Лучшие для приватов" onclick="toggleTagPill(this)"&gt;
+  Лучшие для приватов
+&lt;/button&gt;</pre>
+
+    <div style="margin-top:20px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px">Категории с PRO-бейджем в search.html</div>
+      <div class="demo-tag-cloud">
+        <span class="demo-tag-pill">BDSM <span class="demo-pro-badge">PRO</span></span>
+        <span class="demo-tag-pill">Бондаж <span class="demo-pro-badge">PRO</span></span>
+        <span class="demo-tag-pill">Фетиш <span class="demo-pro-badge">PRO</span></span>
+        <span class="demo-tag-pill">Сквирт <span class="demo-pro-badge">PRO</span></span>
+        <span class="demo-tag-pill">Групповой <span class="demo-pro-badge">PRO</span></span>
+        <span class="demo-tag-pill">Курение <span class="demo-pro-badge">PRO</span></span>
+        <span class="demo-tag-pill">Roleplay <span class="demo-pro-badge">PRO</span></span>
+        <span class="demo-tag-pill">Cosplay <span class="demo-pro-badge">PRO</span></span>
+        <span class="demo-tag-pill">BBW/БКЖ <span class="demo-pro-badge">PRO</span></span>
+        <span class="demo-tag-pill">Огромные <span class="demo-pro-badge">PRO</span></span>
+        <span class="demo-tag-pill">Ступни <span class="demo-pro-badge">PRO</span></span>
+        <span class="demo-tag-pill">Масло/блеск <span class="demo-pro-badge">PRO</span></span>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ GOAL WIDGET ═══════════════ -->
+  <section class="ds-section" id="goal-widget">
+    <h2 class="ds-section-title">Goal Widget <span>Pattern</span></h2>
+    <p class="ds-section-desc">Прогресс-бар цели с токенами. Создатель задаёт название, сумму и время — фаны скидываются чаевыми. При достижении цели автоматически запускается событие (live, контент, etc). Используется в карточках search.html, постах feed.html, профиле.</p>
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">Variants</div>
+      <div style="display:flex;flex-wrap:wrap;gap:16px">
+        <div>
+          <div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">В профиле</div>
+          <div class="demo-goal">
+            <div class="demo-goal-header"><span class="demo-goal-title">🌙 Ночное Live-шоу</span><span class="demo-goal-pct">72%</span></div>
+            <div class="demo-goal-track"><div class="demo-goal-fill" style="width:72%"></div></div>
+            <div class="demo-goal-footer"><span>720 / 1 000 🔥</span><span>Осталось: 280</span></div>
+            <button class="demo-goal-btn">⚡ Поддержать цель</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Почти достигнута</div>
+          <div class="demo-goal" style="border-color:rgba(255,179,0,.3);background:rgba(255,179,0,.04)">
+            <div class="demo-goal-header"><span class="demo-goal-title">💎 Групповое шоу</span><span class="demo-goal-pct" style="color:#FFB300">95%</span></div>
+            <div class="demo-goal-track"><div class="demo-goal-fill" style="width:95%;background:linear-gradient(90deg,#FFB300,#FF8F00)"></div></div>
+            <div class="demo-goal-footer"><span>950 / 1 000 🔥</span><span>Осталось: 50</span></div>
+            <button class="demo-goal-btn" style="background:linear-gradient(135deg,#FFB300,#FF8F00)">⚡ Поддержать цель</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pre>/* Card micro-variant */
+&lt;div class="card-goal"&gt;
+  &lt;div class="card-goal-label"&gt;${label}&lt;span&gt;${cur}/${max}🔥&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="card-goal-track"&gt;
+    &lt;div class="card-goal-fill" style="width:${pct}%"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="card-goal-sub"&gt;&lt;span&gt;${pct}% собрано&lt;/span&gt;&lt;span&gt;${left} осталось&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+/* JS data shape */
+goal: { label: 'Ночное Live-шоу 🌙', cur: 720, max: 1000 }</pre>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ FLASH EVENT ═══════════════ -->
+  <section class="ds-section" id="flash-event">
+    <h2 class="ds-section-title">Flash Event <span>Pattern</span></h2>
+    <p class="ds-section-desc">Kickstarter-механика: ограниченное по времени событие «всё или ничего». Если за N минут набирается X токенов — шоу случается. Нет — токены возвращаются. Создаёт FOMO. Используется как sticky-баннер в search.html и feed.html.</p>
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">Live Preview</div>
+      <div class="demo-flash">
+        <div class="demo-flash-pulse">⚡</div>
+        <div class="demo-flash-info">
+          <div class="demo-flash-title">Злата Н. — Flash Event: Золотое Live!</div>
+          <div class="demo-flash-sub">Собрано 1 200 / 2 000 токенов</div>
+          <div class="demo-flash-track"><div class="demo-flash-fill" style="width:60%"></div></div>
+        </div>
+        <div class="demo-flash-timer">14:22</div>
+      </div>
+    </div>
+    <pre>/* Creator creates via dashboard */
+dashLaunchFlash() → POST /api/flash-events { title, goal, duration_min }
+
+/* Banner auto-shows in feed/search for all subscribers */
+/* If goal not reached when timer ends → tokens refunded */
+/* CSS: .flash-event-banner with @keyframes pulse animation */</pre>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ TIP MENU ═══════════════ -->
+  <section class="ds-section" id="tip-menu">
+    <h2 class="ds-section-title">Tip Menu <span>Pattern</span></h2>
+    <p class="ds-section-desc">Фиксированный прайс-лист действий в профиле создателя. Каждый пункт — кликабельная строка, автоматически инициирующая tip на нужную сумму. Снижает трение при отправке чаевых.</p>
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">Live Preview</div>
+      <div class="demo-tip-menu">
+        <div class="demo-tip-item"><span class="demo-tip-action">😘 Поцелуй в камеру</span><span class="demo-tip-price">$5</span></div>
+        <div class="demo-tip-item"><span class="demo-tip-action">💃 Танец для тебя</span><span class="demo-tip-price">$15</span></div>
+        <div class="demo-tip-item"><span class="demo-tip-action">📸 Личное фото</span><span class="demo-tip-price">$25</span></div>
+        <div class="demo-tip-item"><span class="demo-tip-action">🎬 Видео-сообщение</span><span class="demo-tip-price">$50</span></div>
+        <div class="demo-tip-item"><span class="demo-tip-action">🔥 Особый запрос</span><span class="demo-tip-price">$100</span></div>
+      </div>
+    </div>
+    <pre>/* Data shape in MODELS */
+tipMenu: [
+  { action: '😘 Поцелуй в камеру', price: 5 },
+  { action: '💃 Танец для тебя',   price: 15 },
+  { action: '📸 Личное фото',      price: 25 },
+]
+
+/* Render */
+items.innerHTML = m.tipMenu.map(t => `
+  &lt;div class="tip-menu-item" onclick="selectTip(null, ${t.price})"&gt;
+    &lt;span class="tip-menu-action"&gt;${t.action}&lt;/span&gt;
+    &lt;span class="tip-menu-price"&gt;$${t.price}&lt;/span&gt;
+  &lt;/div&gt;`).join('');</pre>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ SESSION BUNDLES ═══════════════ -->
+  <section class="ds-section" id="session-bundles">
+    <h2 class="ds-section-title">Session Bundles <span>Pattern</span></h2>
+    <p class="ds-section-desc">Выбор периода подписки с прогрессивной скидкой (−15% за 3 мес, −30% за 12 мес). Отображается перед планами подписки в профиле. Стимулирует долгосрочные подписки.</p>
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">Live Preview</div>
+      <div class="demo-bundles">
+        <button class="demo-bundle" onclick="this.parentNode.querySelectorAll('.demo-bundle').forEach(b=>b.classList.remove('active'));this.classList.add('active')">
+          <span class="db-period">1 мес</span><span class="db-save"> </span><span class="db-price">$9.99</span>
+        </button>
+        <button class="demo-bundle active hit" onclick="this.parentNode.querySelectorAll('.demo-bundle').forEach(b=>b.classList.remove('active'));this.classList.add('active')">
+          <span class="db-period">3 мес</span><span class="db-save">−15%</span><span class="db-price">$25.47</span>
+        </button>
+        <button class="demo-bundle" onclick="this.parentNode.querySelectorAll('.demo-bundle').forEach(b=>b.classList.remove('active'));this.classList.add('active')">
+          <span class="db-period">12 мес</span><span class="db-save">−30%</span><span class="db-price">$83.92</span>
+        </button>
+      </div>
+    </div>
+    <pre>/* Pricing formula */
+1 month:  base_price
+3 months: base_price × 3 × 0.85  (−15%)
+12 months: base_price × 12 × 0.70 (−30%)
+
+/* .popular class adds "Хит" badge via ::after pseudo-element */</pre>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ AUTO-RESPONDER ═══════════════ -->
+  <section class="ds-section" id="auto-responder">
+    <h2 class="ds-section-title">Auto-Responder <span>Pattern</span></h2>
+    <p class="ds-section-desc">Чат-бот с настраиваемыми правилами: триггер → текст → задержка. Поддерживает переменные <code>{имя}</code>, <code>{сумма}</code>, <code>{план}</code>. 9 типов триггеров. Настраивается в model-cabinet → Автоответы.</p>
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">Trigger Types</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${['👋 Новый подписчик','💰 Чаевой','💎 Чаевой $50+','🔄 Продление','🔑 Ключевое слово','🔒 Покупка PPV','😢 Отписка','🕐 Неактивен 7д','🎂 День рождения'].map(t=>`<span style="background:var(--card-l2);border:1px solid var(--border);border-radius:10px;padding:5px 12px;font-size:12px;font-weight:600">${t}</span>`).join('')}
+      </div>
+    </div>
+    <pre>/* Rule structure */
+{
+  trigger: 'new_sub' | 'tip' | 'tip_big' | 'renew' | 'keyword' | 'ppv' | 'unsub' | 'inactivity' | 'birthday',
+  text: 'Привет, {имя}! 👋 Добро пожаловать!',
+  delay_min: 0,        // delay before sending
+  keywords: ['цена'],  // only for 'keyword' trigger
+  enabled: true
+}
+
+/* Available variables */
+{имя} {сумма} {план} {месяцев} {дата} {ранг} {ссылка_профиля}</pre>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ TIERED COMMISSION ═══════════════ -->
+  <section class="ds-section" id="tiered-commission">
+    <h2 class="ds-section-title">Tiered Commission <span>Pattern</span></h2>
+    <p class="ds-section-desc">Комиссия платформы снижается по мере роста доходов создателя. Мотивирует топ-моделей не уходить. Отображается в creator-dashboard и wallet.Daily payouts открываются на уровне Gold+.</p>
+    <div class="comp-box" style="margin-bottom:24px">
+      <div class="comp-label">Commission Tiers</div>
+      <div class="demo-tier-rows">
+        <div class="demo-tier-row"><span style="font-size:18px">🥉</span><div style="flex:1"><div class="demo-tier-name">Standard</div><div class="demo-tier-range">до $500/мес</div></div><span class="demo-tier-pct">20%</span></div>
+        <div class="demo-tier-row current"><span style="font-size:18px">🥈</span><div style="flex:1"><div class="demo-tier-name">Silver <span style="font-size:9px;background:#D42B6A;color:#fff;padding:2px 7px;border-radius:5px;font-weight:800">ТЕКУЩИЙ</span></div><div class="demo-tier-range">$500–$2 000/мес</div></div><span class="demo-tier-pct">15%</span></div>
+        <div class="demo-tier-row"><span style="font-size:18px">🥇</span><div style="flex:1"><div class="demo-tier-name">Gold</div><div class="demo-tier-range">$2 000–$5 000/мес · Daily payouts</div></div><span class="demo-tier-pct">10%</span></div>
+        <div class="demo-tier-row"><span style="font-size:18px">💎</span><div style="flex:1"><div class="demo-tier-name">Platinum</div><div class="demo-tier-range">от $5 000/мес · Priority support</div></div><span class="demo-tier-pct">7%</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ═══════════════ GEO BLOCKING ═══════════════ -->
+  <section class="ds-section" id="geo-blocking">
+    <h2 class="ds-section-title">Geo Blocking <span>Pattern</span></h2>
+    <p class="ds-section-desc">Создатель выбирает страны, от которых скрыт его профиль и контент. Важно для приватности (скрыть от семьи, коллег). Настраивается в creator-dashboard. Карточка в search.html показывает иконку 🔒 если геоблок активен.</p>
+    <pre>/* Model-side setting stored in profile */
+blockedCountries: ['Россия', 'Беларусь']
+
+/* In search filter: checkbox "🔒 Геоблок (анонимно)" */
+/* Shows/hides content server-side based on viewer's IP */
+
+/* Creator UI: tag chips with × to remove, */
+/* searchable country list, Save button */</pre>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
+      <div style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:20px;background:rgba(212,43,106,.12);border:1px solid rgba(212,43,106,.3);font-size:12px;font-weight:600">🇷🇺 Россия <span style="color:var(--text-muted);cursor:pointer">×</span></div>
+      <div style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:20px;background:rgba(212,43,106,.12);border:1px solid rgba(212,43,106,.3);font-size:12px;font-weight:600">🇧🇾 Беларусь <span style="color:var(--text-muted);cursor:pointer">×</span></div>
+      <span style="color:var(--text-muted);font-size:12px;padding:5px 0">+ добавить страну...</span>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
   <!-- Global Systems Summary -->
   <section class="ds-section">
     <h2 class="ds-section-title">Global Systems Coverage</h2>
@@ -1393,11 +2224,46 @@ setTimeout(() => location.href = url, 250)
 
   <div style="text-align:center;padding:48px 0;color:var(--text-muted);font-size:13px">
     <div style="font-size:24px;margin-bottom:8px">✦</div>
-    KOL Studio Design System · v1.0 · 2025<br>
-    Pure HTML/CSS/JS · Inter · 124 pages · 8.8MB
+    KOL Studio Design System · v2.0 · 2026<br>
+    Pure HTML/CSS/JS · Inter · 64 pages · 55+ компонентов
   </div>
 
 </main>
 </div>
+
+<script>
+/* Demo Accordion */
+function daccToggle(id) {
+  const sec = document.getElementById(id);
+  const body = document.getElementById(id + '-body');
+  const isOpen = sec.classList.contains('open');
+  sec.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
+/* Demo Dual Range */
+function drUpdate() {
+  const mn = document.getElementById('dr-min');
+  const mx = document.getElementById('dr-max');
+  const fill = document.getElementById('dr-fill');
+  let minV = +mn.value, maxV = +mx.value;
+  if (minV > maxV - 1) { mn.value = maxV - 1; minV = maxV - 1; }
+  document.getElementById('dr-min-lbl').textContent = minV;
+  document.getElementById('dr-max-lbl').textContent = maxV;
+  const pct = v => (v - 18) / (60 - 18) * 100;
+  fill.style.left  = pct(minV) + '%';
+  fill.style.width = (pct(maxV) - pct(minV)) + '%';
+}
+
+/* Demo Tab Pills */
+document.querySelectorAll('.demo-tab-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const group = btn.closest('.demo-filter-tabs');
+    if (!group) return;
+    group.querySelectorAll('.demo-tab-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
 </body>
 </html>

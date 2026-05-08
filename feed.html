@@ -513,14 +513,54 @@
   .sg7 { background: linear-gradient(135deg, #D42B6A, #FFB300); }
 
   /* ===== FILTER TABS ===== */
+  .filter-tabs-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .filter-tabs-wrap::-webkit-scrollbar { height: 0; }
+
+  /* Sort select in feed */
+  .feed-sort-select {
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--card2);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237A7A9A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 30px 7px 14px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .feed-sort-select:focus { border-color: var(--accent); }
+
+  .feed-divider {
+    width: 1px; height: 20px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
   .filter-tabs {
     display: flex;
     gap: 8px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
   }
   .tab-pill {
-    padding: 8px 16px;
+    padding: 7px 15px;
     border-radius: 999px;
     font-size: 13px;
     font-weight: 600;
@@ -530,6 +570,7 @@
     color: var(--text-muted);
     transition: all var(--transition);
     white-space: nowrap;
+    flex-shrink: 0;
   }
   .tab-pill:hover { border-color: var(--accent); color: var(--text); }
   .tab-pill.active {
@@ -538,6 +579,59 @@
     color: #fff;
     box-shadow: 0 4px 16px rgba(212,43,106,0.35);
   }
+
+  /* ===== FLASH EVENT ===== */
+  .feed-flash-banner {
+    background: linear-gradient(135deg,#1a0a12,#0d0a1a);
+    border: 1px solid rgba(212,43,106,.45);
+    border-radius: 16px; padding: 16px 18px;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 14px;
+    position: relative; overflow: hidden; cursor: pointer;
+    transition: border-color .2s;
+  }
+  .feed-flash-banner:hover { border-color: rgba(212,43,106,.7); }
+  .feed-flash-banner::before {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg,rgba(212,43,106,.05),rgba(139,43,226,.05));
+  }
+  .ffb-pulse {
+    width:44px; height:44px; border-radius:50%; flex-shrink:0;
+    background:linear-gradient(135deg,#D42B6A,#8B2BE2);
+    display:flex; align-items:center; justify-content:center; font-size:20px;
+    animation:ffb-p 1.5s ease infinite; position:relative;
+  }
+  @keyframes ffb-p{0%,100%{box-shadow:0 0 0 0 rgba(212,43,106,.5)}50%{box-shadow:0 0 0 12px rgba(212,43,106,0)}}
+  .ffb-info { flex:1; min-width:0; position:relative; }
+  .ffb-title { font-size:14px; font-weight:800; margin-bottom:3px; }
+  .ffb-sub { font-size:12px; color:var(--text-muted); }
+  .ffb-track { height:4px; background:rgba(255,255,255,.08); border-radius:2px; margin-top:8px; overflow:hidden; }
+  .ffb-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,#D42B6A,#8B2BE2); }
+  .ffb-timer {
+    font-size:14px; font-weight:800; color:var(--accent);
+    background:rgba(212,43,106,.1); border:1px solid rgba(212,43,106,.3);
+    padding:5px 13px; border-radius:20px; white-space:nowrap; flex-shrink:0; position:relative;
+  }
+  /* ===== GOAL WIDGET in post ===== */
+  .post-goal {
+    margin: 12px 0 4px;
+    background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06);
+    border-radius:12px; padding:10px 14px;
+  }
+  .post-goal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+  .post-goal-label { font-size:12px; font-weight:700; }
+  .post-goal-pct { font-size:12px; color:var(--accent); font-weight:800; }
+  .post-goal-track { height:6px; background:rgba(255,255,255,.08); border-radius:3px; overflow:hidden; }
+  .post-goal-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,#D42B6A,#8B2BE2); }
+  .post-goal-footer { display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); margin-top:5px; }
+  .post-goal-btn {
+    width:100%; margin-top:10px; padding:9px;
+    border-radius:10px; border:none;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff; font-size:13px; font-weight:700; cursor:pointer;
+    font-family:'Inter',sans-serif; transition:opacity .2s;
+  }
+  .post-goal-btn:hover { opacity:.85; }
 
   /* ===== POSTS ===== */
   .post-card {
@@ -2069,25 +2163,59 @@ button,a,[role="button"]{min-height:36px}
       </div>
     </div>
 
-    <!-- Filter Tabs -->
-    <div class="filter-tabs">
-      <div class="tab-pill active" onclick="setTab(this)">Все</div>
-      <div class="tab-pill" onclick="setTab(this)">📸 Фото</div>
-      <div class="tab-pill" onclick="setTab(this)">🎬 Видео</div>
-      <div class="tab-pill" onclick="setTab(this)">🔴 Live</div>
-      <div class="tab-pill" onclick="setTab(this)">⭐ Лучшее</div>
+    <!-- Filter Tabs + Sort -->
+    <div class="filter-tabs-wrap">
+
+      <!-- Сортировка -->
+      <select class="feed-sort-select" id="feedSortSelect" onchange="applyFeedSort()" aria-label="Сортировка">
+        <option value="new">🕐 Новые</option>
+        <option value="popular">🔥 Популярные</option>
+        <option value="top">⭐ Топ</option>
+        <option value="subs">💎 Подписки</option>
+        <option value="tips">💰 По чаевым</option>
+      </select>
+
+      <div class="feed-divider"></div>
+
+      <!-- Быстрые вкладки -->
+      <div class="filter-tabs">
+        <div class="tab-pill active" onclick="setTab(this)" data-tab="all">Все</div>
+        <div class="tab-pill" onclick="setTab(this)" data-tab="photo">📸 Фото</div>
+        <div class="tab-pill" onclick="setTab(this)" data-tab="video">🎬 Видео</div>
+        <div class="tab-pill" onclick="setTab(this)" data-tab="live">🔴 Live</div>
+        <div class="tab-pill" onclick="setTab(this)" data-tab="best">⭐ Лучшее</div>
+        <div class="tab-pill" onclick="setTab(this)" data-tab="ppv">💰 PPV</div>
+        <div class="tab-pill" onclick="setTab(this)" data-tab="free">🎁 Бесплатно</div>
+        <div class="tab-pill" onclick="setTab(this)" data-tab="new">🆕 Новинки</div>
+        <div class="tab-pill" onclick="setTab(this)" data-tab="stories">📖 Stories</div>
+        <div class="tab-pill" onclick="setTab(this)" data-tab="asmr">🌙 ASMR</div>
+        <div class="tab-pill" onclick="setTab(this)" data-tab="vip">👑 VIP</div>
+      </div>
+    </div>
+
+    <!-- ===== FLASH EVENT BANNER ===== -->
+    <div class="feed-flash-banner" id="feedFlashBanner" onclick="location.href='profile.html'">
+      <div class="ffb-pulse">⚡</div>
+      <div class="ffb-info">
+        <div class="ffb-title">Злата Н. — Flash Event: Золотое Live-шоу ✨</div>
+        <div class="ffb-sub">Собрано 1 200 / 2 000 · Осталось <span id="feedFeTimer">14:22</span></div>
+        <div class="ffb-track"><div class="ffb-fill" id="feedFeFill" style="width:60%"></div></div>
+      </div>
+      <div class="ffb-timer" id="feedFeTimerBig">14:22</div>
+      <button onclick="event.stopPropagation();document.getElementById('feedFlashBanner').style.display='none'"
+        style="background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:4px;line-height:1;position:relative;z-index:1;flex-shrink:0">✕</button>
+    </div>
+
+    <!-- Empty Feed State (shown when no posts match filter) -->
+    <div id="kol-feed-empty" class="kol-empty" style="display:none">
+      <div class="kol-empty-icon">🔍</div>
+      <h3>Ничего не найдено</h3>
+      <p>Попробуй другой фильтр или подпишись на новых создателей</p>
+      <a href="search.html" class="kol-empty-cta">Найти создателей</a>
     </div>
 
     <!-- ===== POST 1: Free Photo Post — Анна М. ===== -->
-    <article 
-<!-- Empty Feed State (shown when no posts match filter) -->
-<div id="kol-feed-empty" class="kol-empty" style="display:none">
-  <div class="kol-empty-icon">🔍</div>
-  <h3>Ничего не найдено</h3>
-  <p>Попробуй другой фильтр или подпишись на новых создателей</p>
-  <a href="search.html" class="kol-empty-cta">Найти создателей</a>
-</div>
-class="post-card">
+    <article class="post-card" data-type="photo free" data-likes="1200" data-time="7200">
       <div class="post-header">
         <div class="post-avatar sg1">АМ<div class="post-avatar-online"></div></div>
         <div class="post-author-info">
@@ -2138,8 +2266,53 @@ class="post-card">
       </div>
     </article>
 
+    <!-- ===== GOAL WIDGET POST — Анна М. ===== -->
+    <article class="post-card" data-type="free" data-likes="312" data-time="7000" style="border-color:rgba(212,43,106,.2)">
+      <div class="post-header">
+        <div class="post-avatar sg1">АМ<div class="post-avatar-online"></div></div>
+        <div class="post-author-info">
+          <div class="post-author-row">
+            <span class="post-author-name">Анна М.</span>
+            <span class="verified-icon">✓</span>
+            <span class="tier-badge" style="background:rgba(212,43,106,.15);color:#D42B6A;border:1px solid rgba(212,43,106,.3)">🎯 ЦЕЛЬ</span>
+          </div>
+          <div class="post-time">Активная цель · 2 часа назад</div>
+        </div>
+        <button class="follow-btn following" onclick="toggleFollow(this)">Подписан</button>
+      </div>
+      <div class="post-body">
+        <p style="font-size:14px;margin-bottom:0">Помогите нам собрать токены на <strong>ночное Live-шоу в бикини</strong> 🌙 Как только достигнем цели — сразу стартую!</p>
+        <div class="post-goal">
+          <div class="post-goal-header">
+            <span class="post-goal-label">🌙 Ночное Live-шоу</span>
+            <span class="post-goal-pct" id="pgPct">72%</span>
+          </div>
+          <div class="post-goal-track">
+            <div class="post-goal-fill" id="pgFill" style="width:72%"></div>
+          </div>
+          <div class="post-goal-footer">
+            <span>Собрано: <strong id="pgCur">720</strong> / 1 000 🔥</span>
+            <span>Осталось: <strong id="pgLeft">280</strong></span>
+          </div>
+          <button class="post-goal-btn" onclick="sendGoalTip()">⚡ Поддержать — отправить токены</button>
+        </div>
+      </div>
+      <div class="post-footer">
+        <button class="action-btn like-btn" data-count="312" onclick="toggleLike(this)">
+          <span class="action-icon">🤍</span>
+          <span class="action-count">312</span>
+        </button>
+        <div class="action-sep"></div>
+        <button class="action-btn"><span class="action-icon">💬</span><span class="action-count">48</span></button>
+        <div class="action-sep"></div>
+        <button class="action-btn" onclick="if(navigator.share){navigator.share({title:'KOL Studio',url:window.location.href})}else{navigator.clipboard&&navigator.clipboard.writeText(window.location.href)}">
+          <span class="action-icon">🔗</span>
+        </button>
+      </div>
+    </article>
+
     <!-- ===== POST 2: Locked PPV Video — Виктория Л. ===== -->
-    <article class="post-card">
+    <article class="post-card" data-type="video ppv vip" data-likes="890" data-time="3600">
       <div class="post-header">
         <div class="post-avatar sg2">ВЛ</div>
         <div class="post-author-info">
@@ -2196,7 +2369,7 @@ class="post-card">
     </article>
 
     <!-- ===== POST 3: Free Text Post — Кира С. ===== -->
-    <article class="post-card">
+    <article class="post-card" data-type="stories free" data-likes="445" data-time="21600">
       <div class="post-header">
         <div class="post-avatar sg3">КС</div>
         <div class="post-author-info">
@@ -2240,7 +2413,7 @@ class="post-card">
     </article>
 
     <!-- ===== POST 4: LIVE NOW — Диана В. ===== -->
-    <article class="post-card live-card">
+    <article class="post-card live-card" data-type="live best" data-likes="2104" data-time="0">
       <div class="post-header">
         <div class="post-avatar sg4" style="position:relative; box-shadow: 0 0 0 3px var(--accent);">ДВ</div>
         <div class="post-author-info">
@@ -2289,7 +2462,7 @@ class="post-card">
     </article>
 
     <!-- ===== POST 5: Locked Photo Set — Алиса Н. ===== -->
-    <article class="post-card">
+    <article class="post-card" data-type="photo ppv vip" data-likes="932" data-time="28800">
       <div class="post-header">
         <div class="post-avatar sg5">АН</div>
         <div class="post-author-info">
@@ -2372,7 +2545,7 @@ class="post-card">
     </article>
 
     <!-- ===== POST 7: Free Video Preview — Соня Р. ===== -->
-    <article class="post-card">
+    <article class="post-card" data-type="video free" data-likes="678" data-time="43200">
       <div class="post-header">
         <div class="post-avatar sg6">СР</div>
         <div class="post-author-info">
@@ -2697,12 +2870,89 @@ class="post-card">
     e.stopPropagation();
     avatarDropdown.classList.toggle('open');
   });
-  document.addEventListener('click', () => avatarDropdown.classList.remove('open'));
+  document.addEventListener('click', (e) => {
+    if (!avatarBtn.contains(e.target) && !avatarDropdown.contains(e.target)) {
+      avatarDropdown.classList.remove('open');
+    }
+  });
 
   // ===== FILTER TABS =====
+  // ===== FLASH EVENT TIMER =====
+  (function initFeedFlash() {
+    let secs = 14*60+22;
+    const timerEls = [document.getElementById('feedFeTimer'), document.getElementById('feedFeTimerBig')];
+    const fill = document.getElementById('feedFeFill');
+    const total = secs;
+    setInterval(() => {
+      if (secs > 0) secs--;
+      const t = String(Math.floor(secs/60)).padStart(2,'0') + ':' + String(secs%60).padStart(2,'0');
+      timerEls.forEach(el => { if(el) el.textContent = t; });
+      if (fill) fill.style.width = Math.min(100, Math.round((1-secs/total)*40+60)) + '%';
+    }, 1000);
+  })();
+
+  // ===== GOAL TIP =====
+  function sendGoalTip() {
+    const amounts = [50, 100, 200, 500];
+    const amt = amounts[Math.floor(Math.random()*2)]; // 50 or 100
+    const cur = parseInt(document.getElementById('pgCur')?.textContent||'720') + amt;
+    const max = 1000;
+    const clamped = Math.min(cur, max);
+    const pct = Math.round(clamped/max*100);
+    if (document.getElementById('pgCur'))  document.getElementById('pgCur').textContent  = clamped;
+    if (document.getElementById('pgLeft')) document.getElementById('pgLeft').textContent = Math.max(0, max-clamped);
+    if (document.getElementById('pgPct'))  document.getElementById('pgPct').textContent  = pct+'%';
+    if (document.getElementById('pgFill')) document.getElementById('pgFill').style.width = pct+'%';
+    if (clamped >= max && window.kolShowToast) kolShowToast('🎉 Цель достигнута! Live скоро начнётся!', 'success');
+    else if (window.kolShowToast) kolShowToast(`+${amt} токенов отправлено 🔥`);
+  }
+
+  let currentFeedTab = 'all';
+
   function setTab(el) {
     document.querySelectorAll('.tab-pill').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
+    currentFeedTab = el.dataset.tab || 'all';
+    applyFeedFilter();
+  }
+
+  function applyFeedFilter() {
+    const posts = document.querySelectorAll('article.post-card');
+    posts.forEach(card => {
+      if (currentFeedTab === 'all') {
+        card.style.display = '';
+      } else {
+        const types = (card.dataset.type || '').split(' ');
+        card.style.display = types.includes(currentFeedTab) ? '' : 'none';
+      }
+    });
+    // Show empty state if nothing matches
+    const visible = [...posts].filter(p => p.style.display !== 'none');
+    const emptyEl = document.getElementById('kol-feed-empty');
+    if (emptyEl) emptyEl.style.display = visible.length === 0 ? '' : 'none';
+    applySortOrder();
+  }
+
+  // ===== FEED SORT =====
+  function applyFeedSort() {
+    applySortOrder();
+  }
+
+  function applySortOrder() {
+    const main = document.getElementById('kol-main');
+    if (!main) return;
+    const val = document.getElementById('feedSortSelect')?.value || 'new';
+    const posts = [...main.querySelectorAll('article.post-card')];
+    posts.sort((a, b) => {
+      if (val === 'new')     return parseInt(a.dataset.time||0) - parseInt(b.dataset.time||0);
+      if (val === 'popular') return parseInt(b.dataset.likes||0) - parseInt(a.dataset.likes||0);
+      if (val === 'top')     return parseInt(b.dataset.likes||0) - parseInt(a.dataset.likes||0);
+      return 0;
+    });
+    posts.forEach((p, i) => { p.style.order = i; });
+    main.style.display = 'flex';
+    main.style.flexDirection = 'column';
+    main.style.alignItems = 'stretch';
   }
 
   // ===== FOLLOW TOGGLE =====

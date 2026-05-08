@@ -1274,7 +1274,93 @@ button,a,[role="button"]{min-height:36px}
       </a>
     </div>
 
-    <!-- ── 7. TOP FANS ── -->
+    <!-- ── 7. GOAL CREATOR ── -->
+    <div class="section-title">🎯 Цель (Goal Widget)</div>
+    <div class="goal-widget">
+      <div class="goal-widget-header">
+        <div class="goal-widget-title">⚡ Активная цель <span class="goal-active-badge">Активна</span></div>
+        <span style="font-size:12px;color:#A0A0C0" id="goalTimer">08:14 осталось</span>
+      </div>
+      <div style="font-size:14px;font-weight:600;margin-bottom:4px">🌙 Ночное Live-шоу</div>
+      <div class="goal-track-wrap">
+        <div class="goal-track"><div class="goal-track-fill" id="dashGoalFill" style="width:72%"></div></div>
+        <div class="goal-stats"><span>Собрано: <strong>720</strong> / 1 000 токенов</span><span>72%</span></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button class="goal-end-btn" style="flex:1" onclick="dashEndGoal()">Завершить</button>
+        <button class="goal-launch-btn" style="flex:2" onclick="dashBoostGoal()">📣 Напомнить подписчикам</button>
+      </div>
+      <div class="goal-form">
+        <div style="font-size:12px;font-weight:700;color:#A0A0C0;text-transform:uppercase;letter-spacing:1px">Новая цель</div>
+        <input class="goal-input" id="goalLabelInput" type="text" placeholder="Название цели (напр. Live-шоу в пятницу)">
+        <div class="goal-input-row">
+          <input class="goal-input" id="goalAmountInput" type="number" placeholder="Сумма токенов" style="flex:1">
+          <select class="goal-input" id="goalDuration" style="flex:1;cursor:pointer">
+            <option value="60">1 час</option>
+            <option value="180">3 часа</option>
+            <option value="360" selected>6 часов</option>
+            <option value="1440">24 часа</option>
+          </select>
+        </div>
+        <button class="goal-launch-btn" onclick="dashLaunchGoal()">🚀 Запустить цель</button>
+      </div>
+    </div>
+
+    <!-- ── 8. FLASH EVENT CREATOR ── -->
+    <div class="section-title">⚡ Flash Event</div>
+    <div class="flash-creator">
+      <div class="flash-creator-header">
+        <div class="flash-creator-title">⚡ Создать Flash Event <span style="font-size:11px;color:#A0A0C0;font-weight:400">— Kickstarter-механика</span></div>
+      </div>
+      <div class="flash-form">
+        <input class="goal-input" id="flashTitle" type="text" placeholder="Название события (напр. Золотое Live-шоу ✨)">
+        <input class="goal-input" id="flashAmount" type="number" placeholder="Цель в токенах (напр. 2000)">
+        <div>
+          <div style="font-size:11px;color:#A0A0C0;margin-bottom:8px;font-weight:600">Длительность:</div>
+          <div class="flash-duration-tabs">
+            <button class="flash-dur-tab" onclick="selFlashDur(this)" data-val="10">10 мин</button>
+            <button class="flash-dur-tab active" onclick="selFlashDur(this)" data-val="15">15 мин</button>
+            <button class="flash-dur-tab" onclick="selFlashDur(this)" data-val="30">30 мин</button>
+            <button class="flash-dur-tab" onclick="selFlashDur(this)" data-val="60">1 час</button>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#A0A0C0;background:rgba(139,43,226,.06);border:1px solid rgba(139,43,226,.2);border-radius:10px;padding:10px 13px;line-height:1.5">
+          💡 Если цель не достигнута за время — токены автоматически возвращаются фанатам. Создаёт FOMO и срочность.
+        </div>
+        <button class="flash-launch-btn" onclick="dashLaunchFlash()">⚡ Запустить Flash Event</button>
+      </div>
+    </div>
+
+    <!-- ── 9. GEOBLOCKING ── -->
+    <div class="section-title">🔒 Геоблокировка</div>
+    <div class="geo-widget">
+      <div class="geo-widget-title">🔒 Скрыть контент от стран</div>
+      <div class="geo-chips" id="geoChips">
+        <div class="geo-chip">🇷🇺 Россия <button onclick="removeGeoBlock(this,'Россия')">×</button></div>
+        <div class="geo-chip">🇧🇾 Беларусь <button onclick="removeGeoBlock(this,'Беларусь')">×</button></div>
+      </div>
+      <input class="geo-search" id="geoSearch" type="text" placeholder="Поиск страны..." oninput="filterGeoCountries(this.value)">
+      <div class="geo-countries" id="geoCountries"></div>
+      <button class="geo-save" onclick="saveGeoSettings()">Сохранить настройки</button>
+    </div>
+
+    <!-- ── 10. TIERED COMMISSION ── -->
+    <div class="section-title">💎 Уровень комиссии</div>
+    <div class="tier-commission">
+      <div class="tier-commission-title">Комиссия платформы — снижается по мере роста</div>
+      <div class="tier-rows">
+        <div class="tier-row"><span class="tier-row-icon">🥉</span><div class="tier-row-info"><div class="tier-row-name">Standard</div><div class="tier-row-range">до $500/мес</div></div><span class="tier-row-pct">20%</span></div>
+        <div class="tier-row current"><span class="tier-row-icon">🥈</span><div class="tier-row-info"><div class="tier-row-name">Silver <span class="tier-current-tag">Вы здесь</span></div><div class="tier-row-range">$500 – $2 000/мес</div></div><span class="tier-row-pct">15%</span></div>
+        <div class="tier-row"><span class="tier-row-icon">🥇</span><div class="tier-row-info"><div class="tier-row-name">Gold</div><div class="tier-row-range">$2 000 – $5 000/мес</div></div><span class="tier-row-pct">10%</span></div>
+        <div class="tier-row"><span class="tier-row-icon">💎</span><div class="tier-row-info"><div class="tier-row-name">Platinum</div><div class="tier-row-range">от $5 000/мес</div></div><span class="tier-row-pct">7%</span></div>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:#A0A0C0;background:#181835;border-radius:10px;padding:10px 13px">
+        До следующего уровня <strong style="color:#E8E8F0">Gold</strong>: ещё <strong style="color:#D42B6A">$1 715.50</strong> в месяц
+        <div style="height:4px;background:#22224A;border-radius:2px;margin-top:8px;overflow:hidden"><div style="height:100%;width:42%;background:linear-gradient(90deg,#D42B6A,#8B2BE2);border-radius:2px"></div></div>
+      </div>
+    </div>
+
+    <!-- ── 11. TOP FANS ── -->
     <div class="fans-section">
       <div class="section-title">⭐ Топ-фанаты</div>
       <div class="fans-scroll" id="fansScroll"></div>
@@ -1916,6 +2002,78 @@ window.KOL_ACHIEVEMENTS = {
     });
   })();
 
+  /* ══ GOAL CREATOR ══ */
+  function dashLaunchGoal() {
+    const label  = document.getElementById('goalLabelInput')?.value?.trim();
+    const amount = document.getElementById('goalAmountInput')?.value;
+    if (!label || !amount) { if(window.kolShowToast) kolShowToast('Заполни название и сумму','error'); return; }
+    if(window.kolShowToast) kolShowToast(`🎯 Цель "${label}" запущена на ${amount} токенов!`,'success');
+    document.getElementById('goalLabelInput').value = '';
+    document.getElementById('goalAmountInput').value = '';
+  }
+  function dashBoostGoal() {
+    if(window.kolShowToast) kolShowToast('📣 Уведомление отправлено подписчикам!','success');
+  }
+  function dashEndGoal() {
+    if(window.kolShowToast) kolShowToast('Цель завершена');
+    document.querySelector('.goal-active-badge').textContent = 'Завершена';
+  }
+  /* ══ FLASH EVENT CREATOR ══ */
+  function selFlashDur(btn) {
+    document.querySelectorAll('.flash-dur-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  function dashLaunchFlash() {
+    const title  = document.getElementById('flashTitle')?.value?.trim();
+    const amount = document.getElementById('flashAmount')?.value;
+    const dur    = document.querySelector('.flash-dur-tab.active')?.dataset?.val || '15';
+    if (!title || !amount) { if(window.kolShowToast) kolShowToast('Заполни название и цель','error'); return; }
+    if(window.kolShowToast) kolShowToast(`⚡ Flash Event "${title}" запущен на ${dur} мин!`,'success');
+    document.getElementById('flashTitle').value  = '';
+    document.getElementById('flashAmount').value = '';
+  }
+  /* ══ GEOBLOCKING ══ */
+  const GEO_COUNTRIES = [
+    {flag:'🇺🇸',name:'США'},{flag:'🇩🇪',name:'Германия'},{flag:'🇫🇷',name:'Франция'},
+    {flag:'🇺🇦',name:'Украина'},{flag:'🇰🇿',name:'Казахстан'},{flag:'🇺🇿',name:'Узбекистан'},
+    {flag:'🇵🇱',name:'Польша'},{flag:'🇬🇧',name:'Великобритания'},{flag:'🇸🇪',name:'Швеция'},
+    {flag:'🇳🇱',name:'Нидерланды'},{flag:'🇹🇷',name:'Турция'},{flag:'🇮🇳',name:'Индия'},
+    {flag:'🇧🇷',name:'Бразилия'},{flag:'🇦🇺',name:'Австралия'},{flag:'🇨🇦',name:'Канада'},
+  ];
+  let blockedCountries = new Set(['Россия','Беларусь']);
+  function filterGeoCountries(q) {
+    const list = document.getElementById('geoCountries');
+    if (!list) return;
+    const filtered = q ? GEO_COUNTRIES.filter(c => c.name.toLowerCase().includes(q.toLowerCase())) : GEO_COUNTRIES;
+    list.innerHTML = filtered.map(c => `
+      <button class="geo-country ${blockedCountries.has(c.name)?'blocked':''}"
+        onclick="toggleGeoCountry('${c.name}','${c.flag}')">${c.flag} ${c.name}</button>`).join('');
+  }
+  function toggleGeoCountry(name, flag) {
+    if (blockedCountries.has(name)) { blockedCountries.delete(name); }
+    else { blockedCountries.add(name); }
+    renderGeoChips();
+    filterGeoCountries(document.getElementById('geoSearch')?.value||'');
+  }
+  function removeGeoBlock(btn, name) {
+    blockedCountries.delete(name);
+    btn.closest('.geo-chip')?.remove();
+    filterGeoCountries('');
+  }
+  function renderGeoChips() {
+    const chips = document.getElementById('geoChips');
+    if (!chips) return;
+    chips.innerHTML = [...blockedCountries].map(name => {
+      const c = GEO_COUNTRIES.find(x=>x.name===name)||{flag:''};
+      return `<div class="geo-chip">${c.flag} ${name} <button onclick="removeGeoBlock(this,'${name}')">×</button></div>`;
+    }).join('');
+  }
+  function saveGeoSettings() {
+    if(window.kolShowToast) kolShowToast(`🔒 Геоблок сохранён для ${blockedCountries.size} стран`,'success');
+  }
+  // Init geo countries list
+  (function(){ filterGeoCountries(''); })();
+
   /* ══════════════════════════════════════
      PAGE TRANSITIONS
   ══════════════════════════════════════ */
@@ -1973,6 +2131,63 @@ window.KOL_ACHIEVEMENTS = {
 /* Hint pill (? key) */
 #kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
 #kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+
+/* ─── GOAL CREATOR WIDGET ─── */
+.goal-widget{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px;margin-bottom:20px}
+.goal-widget-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.goal-widget-title{font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+.goal-active-badge{background:rgba(212,43,106,.15);border:1px solid rgba(212,43,106,.3);color:#D42B6A;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase}
+.goal-track-wrap{margin:10px 0}
+.goal-track{height:8px;background:#22224A;border-radius:4px;overflow:hidden}
+.goal-track-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#D42B6A,#8B2BE2);transition:width .5s}
+.goal-stats{display:flex;justify-content:space-between;font-size:12px;color:#A0A0C0;margin-top:6px}
+.goal-form{display:flex;flex-direction:column;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid #22224A}
+.goal-input{background:#181835;border:1.5px solid #22224A;border-radius:10px;padding:10px 14px;color:#E8E8F0;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s}
+.goal-input:focus{border-color:#D42B6A}
+.goal-input-row{display:flex;gap:8px}
+.goal-launch-btn{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .2s}
+.goal-launch-btn:hover{opacity:.85}
+.goal-end-btn{background:transparent;border:1.5px solid #22224A;border-radius:10px;padding:11px;font-size:14px;color:#A0A0C0;cursor:pointer;font-family:inherit;transition:border-color .2s}
+.goal-end-btn:hover{border-color:#D42B6A;color:#E8E8F0}
+
+/* ─── FLASH EVENT CREATOR ─── */
+.flash-creator{background:#111128;border:1px solid rgba(212,43,106,.25);border-radius:16px;padding:20px;margin-bottom:20px}
+.flash-creator-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.flash-creator-title{font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
+.flash-form{display:flex;flex-direction:column;gap:10px}
+.flash-duration-tabs{display:flex;gap:8px}
+.flash-dur-tab{flex:1;padding:8px;border-radius:10px;border:1.5px solid #22224A;background:transparent;color:#A0A0C0;font-size:12px;font-weight:700;cursor:pointer;text-align:center;font-family:inherit;transition:all .2s}
+.flash-dur-tab.active{border-color:#D42B6A;background:rgba(212,43,106,.1);color:#E8E8F0}
+.flash-launch-btn{background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.flash-launch-btn:hover{opacity:.85}
+
+/* ─── GEOBLOCKING ─── */
+.geo-widget{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px;margin-bottom:20px}
+.geo-widget-title{font-size:15px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.geo-search{background:#181835;border:1.5px solid #22224A;border-radius:10px;padding:9px 14px;color:#E8E8F0;font-size:13px;font-family:inherit;outline:none;width:100%;margin-bottom:10px;transition:border-color .2s}
+.geo-search:focus{border-color:#D42B6A}
+.geo-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.geo-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:20px;background:rgba(212,43,106,.12);border:1px solid rgba(212,43,106,.3);font-size:12px;font-weight:600;color:#E8E8F0}
+.geo-chip button{background:none;border:none;color:#A0A0C0;cursor:pointer;font-size:14px;padding:0;line-height:1}
+.geo-countries{display:flex;flex-wrap:wrap;gap:6px;max-height:120px;overflow-y:auto}
+.geo-country{padding:5px 11px;border-radius:20px;border:1.5px solid #22224A;background:transparent;color:#A0A0C0;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
+.geo-country:hover{border-color:#D42B6A;color:#E8E8F0}
+.geo-country.blocked{background:rgba(212,43,106,.12);border-color:rgba(212,43,106,.4);color:#D42B6A}
+.geo-save{margin-top:12px;width:100%;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+
+/* ─── TIERED COMMISSION ─── */
+.tier-commission{background:#111128;border:1px solid #22224A;border-radius:16px;padding:20px;margin-bottom:20px}
+.tier-commission-title{font-size:15px;font-weight:800;margin-bottom:14px}
+.tier-rows{display:flex;flex-direction:column;gap:8px}
+.tier-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:#181835;border:1px solid #22224A;position:relative;overflow:hidden}
+.tier-row.current{border-color:rgba(212,43,106,.4);background:rgba(212,43,106,.06)}
+.tier-row-icon{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.tier-row-info{flex:1}
+.tier-row-name{font-size:13px;font-weight:700}
+.tier-row-range{font-size:11px;color:#A0A0C0}
+.tier-row-pct{font-size:15px;font-weight:900;color:#00E676}
+.tier-row.current .tier-row-pct{color:#D42B6A}
+.tier-current-tag{font-size:9px;font-weight:800;background:#D42B6A;color:#fff;padding:2px 7px;border-radius:5px;text-transform:uppercase}
 </style>
 
 <!-- FAB -->

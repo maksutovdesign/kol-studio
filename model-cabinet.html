@@ -276,7 +276,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
   .sub-stats{grid-template-columns:repeat(2,1fr)}
   .earn-row{grid-template-columns:repeat(2,1fr)}
   .msg-layout{grid-template-columns:1fr;height:auto}
-  .msg-contacts{display:none}
+  .msg-list{display:none}
   .sub-th,.sub-tr{grid-template-columns:1fr 80px 60px;font-size:11px}
   .sub-th>*:nth-child(2),.sub-tr>*:nth-child(2),
   .sub-th>*:nth-child(3),.sub-tr>*:nth-child(3),
@@ -595,6 +595,7 @@ button,a,[role="button"]{min-height:36px}
     <div class="nav-item" onclick="showSection('live',this)"><span class="icon">📺</span> Live-студия</div>
     <div class="nav-item" onclick="showSection('schedule',this)"><span class="icon">📅</span> Расписание</div>
     <div class="nav-item" onclick="showSection('msgs',this)"><span class="icon">💬</span> Сообщения <span class="nav-badge">7</span></div>
+    <div class="nav-item" onclick="showSection('autobot',this)"><span class="icon">🤖</span> Автоответы</div>
     <div class="nav-item" onclick="showSection('settings',this)"><span class="icon">⚙️</span> Настройки</div>
   </nav>
   <nav aria-label="navigation" class="sb-nav" style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;">
@@ -895,6 +896,160 @@ button,a,[role="button"]{min-height:36px}
     </div>
 
     <!-- SETTINGS -->
+    <!-- ══ AUTO-RESPONDER SECTION ══ -->
+    <div class="section" id="sec-autobot">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <h2 style="font-size:18px;font-weight:800">🤖 Автоответы и Чат-бот</h2>
+        <div style="background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);color:#00E676;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px">Активен</div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Автоматически отвечай на сообщения, приветствуй новых подписчиков и реагируй на события.</p>
+
+      <!-- Stats -->
+      <div class="bot-stats-row">
+        <div class="bot-stat"><div class="bot-stat-num">247</div><div class="bot-stat-lbl">Ответов сегодня</div></div>
+        <div class="bot-stat"><div class="bot-stat-num">94%</div><div class="bot-stat-lbl">Покрытие</div></div>
+        <div class="bot-stat"><div class="bot-stat-num">1.2с</div><div class="bot-stat-lbl">Скорость ответа</div></div>
+      </div>
+
+      <div class="bot-section-title">Активные правила</div>
+
+      <!-- Rule 1: New subscriber -->
+      <div class="bot-card">
+        <div class="bot-card-header">
+          <div class="bot-card-title">👋 Новый подписчик <span class="bot-trigger-tag">при подписке</span></div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:12px;color:var(--muted)">задержка: сразу</span>
+            <div class="toggle on" onclick="this.classList.toggle('on')" title="Вкл/Выкл"></div>
+          </div>
+        </div>
+        <div class="bot-message-preview" id="bot-msg-1">
+          Привет, {имя}! 👋 Добро пожаловать! Я уже жду тебя здесь. Загляни в мою галерею — там много интересного 🔥 Напиши мне, если что-то хочешь особенное!
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="bot-edit-btn" onclick="botToggleEdit('1')">✏️ Редактировать</button>
+          <button class="bot-edit-btn" style="color:var(--accent);border-color:rgba(212,43,106,.3)" onclick="botTestRule('1')">▶ Тест</button>
+        </div>
+        <div id="bot-edit-1" style="display:none;margin-top:12px">
+          <textarea class="bot-textarea" id="bot-text-1">Привет, {имя}! 👋 Добро пожаловать! Я уже жду тебя здесь. Загляни в мою галерею — там много интересного 🔥 Напиши мне, если что-то хочешь особенное!</textarea>
+          <div class="bot-vars">
+            <span class="bot-var" onclick="botInsertVar(1,'{имя}')">{имя}</span>
+            <span class="bot-var" onclick="botInsertVar(1,'{план}')">{план}</span>
+            <span class="bot-var" onclick="botInsertVar(1,'{дата}')">{дата}</span>
+            <span class="bot-var" onclick="botInsertVar(1,'{ссылка_профиля}')">{ссылка_профиля}</span>
+          </div>
+          <button class="bot-save-btn" onclick="botSaveRule('1')">Сохранить</button>
+        </div>
+      </div>
+
+      <!-- Rule 2: Tip received -->
+      <div class="bot-card">
+        <div class="bot-card-header">
+          <div class="bot-card-title">💰 Получен чаевой <span class="bot-trigger-tag">при чаевых</span></div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:12px;color:var(--muted)">задержка: сразу</span>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+        </div>
+        <div class="bot-message-preview" id="bot-msg-2">
+          {имя}, огромное спасибо за {сумма} 🙏🔥 Ты лучший! Скоро пришлю что-то особенное специально для тебя 💋
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="bot-edit-btn" onclick="botToggleEdit('2')">✏️ Редактировать</button>
+          <button class="bot-edit-btn" style="color:var(--accent);border-color:rgba(212,43,106,.3)" onclick="botTestRule('2')">▶ Тест</button>
+        </div>
+        <div id="bot-edit-2" style="display:none;margin-top:12px">
+          <textarea class="bot-textarea" id="bot-text-2">{имя}, огромное спасибо за {сумма} 🙏🔥 Ты лучший! Скоро пришлю что-то особенное специально для тебя 💋</textarea>
+          <div class="bot-vars">
+            <span class="bot-var" onclick="botInsertVar(2,'{имя}')">{имя}</span>
+            <span class="bot-var" onclick="botInsertVar(2,'{сумма}')">{сумма}</span>
+            <span class="bot-var" onclick="botInsertVar(2,'{ранг}')">{ранг}</span>
+          </div>
+          <button class="bot-save-btn" onclick="botSaveRule('2')">Сохранить</button>
+        </div>
+      </div>
+
+      <!-- Rule 3: Renewal -->
+      <div class="bot-card">
+        <div class="bot-card-header">
+          <div class="bot-card-title">🔄 Продление подписки <span class="bot-trigger-tag">при продлении</span></div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:12px;color:var(--muted)">задержка: 1 мин</span>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+        </div>
+        <div class="bot-message-preview" id="bot-msg-3">
+          {имя}, спасибо что остаёшься со мной! 💕 Ты уже {месяцев} месяц(а) со мной — это очень важно для меня!
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="bot-edit-btn" onclick="botToggleEdit('3')">✏️ Редактировать</button>
+          <button class="bot-edit-btn" style="color:var(--accent);border-color:rgba(212,43,106,.3)" onclick="botTestRule('3')">▶ Тест</button>
+        </div>
+        <div id="bot-edit-3" style="display:none;margin-top:12px">
+          <textarea class="bot-textarea" id="bot-text-3">{имя}, спасибо что остаёшься со мной! 💕 Ты уже {месяцев} месяц(а) со мной — это очень важно для меня!</textarea>
+          <div class="bot-vars">
+            <span class="bot-var" onclick="botInsertVar(3,'{имя}')">{имя}</span>
+            <span class="bot-var" onclick="botInsertVar(3,'{месяцев}')">{месяцев}</span>
+            <span class="bot-var" onclick="botInsertVar(3,'{план}')">{план}</span>
+          </div>
+          <button class="bot-save-btn" onclick="botSaveRule('3')">Сохранить</button>
+        </div>
+      </div>
+
+      <!-- Rule 4: Keyword -->
+      <div class="bot-card">
+        <div class="bot-card-header">
+          <div class="bot-card-title">🔑 Ключевое слово <span class="bot-trigger-tag">по слову</span></div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:12px;color:var(--muted)">ключ: «цена», «сколько»</span>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+        </div>
+        <div class="bot-message-preview" id="bot-msg-4">
+          Мои планы: Базовый $9.99/мес, Премиум $14.99/мес, VIP $29.99/мес 💎 Подписывайся прямо сейчас!
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="bot-edit-btn" onclick="botToggleEdit('4')">✏️ Редактировать</button>
+          <button class="bot-edit-btn" style="color:var(--accent);border-color:rgba(212,43,106,.3)" onclick="botTestRule('4')">▶ Тест</button>
+        </div>
+        <div id="bot-edit-4" style="display:none;margin-top:12px">
+          <input class="bot-textarea" id="bot-keywords-4" value="цена, сколько, подписка, стоимость" style="margin-bottom:10px;resize:none;height:auto;padding:10px 13px">
+          <textarea class="bot-textarea" id="bot-text-4">Мои планы: Базовый $9.99/мес, Премиум $14.99/мес, VIP $29.99/мес 💎 Подписывайся прямо сейчас!</textarea>
+          <button class="bot-save-btn" onclick="botSaveRule('4')">Сохранить</button>
+        </div>
+      </div>
+
+      <!-- Add new rule -->
+      <div class="bot-section-title">Добавить правило</div>
+      <div class="bot-new-form">
+        <select class="bot-trigger-select" id="botNewTrigger">
+          <option value="">Выбери триггер...</option>
+          <option value="sub">👋 Новый подписчик</option>
+          <option value="tip">💰 Получен чаевой (любая сумма)</option>
+          <option value="tip_big">💎 Чаевой от $50</option>
+          <option value="renew">🔄 Продление подписки</option>
+          <option value="keyword">🔑 Ключевое слово в сообщении</option>
+          <option value="ppv">🔒 Покупка PPV контента</option>
+          <option value="unsub">😢 Отписка</option>
+          <option value="inactivity">🕐 Неактивен 7+ дней</option>
+          <option value="birthday">🎂 День рождения фана</option>
+        </select>
+        <textarea class="bot-textarea" id="botNewText" placeholder="Текст автоответа... Используй {имя}, {сумма} и другие переменные"></textarea>
+        <div class="bot-vars" style="margin-top:8px">
+          <span class="bot-var" onclick="botInsertNew('{имя}')">{имя}</span>
+          <span class="bot-var" onclick="botInsertNew('{сумма}')">{сумма}</span>
+          <span class="bot-var" onclick="botInsertNew('{план}')">{план}</span>
+          <span class="bot-var" onclick="botInsertNew('{месяцев}')">{месяцев}</span>
+          <span class="bot-var" onclick="botInsertNew('{дата}')">{дата}</span>
+        </div>
+        <div class="bot-delay-row" style="margin-top:12px">
+          <span style="font-size:12px;color:var(--muted)">Задержка:</span>
+          <input class="bot-delay-input" id="botNewDelay" type="number" value="0" min="0">
+          <span style="font-size:12px;color:var(--muted)">мин</span>
+        </div>
+        <button class="bot-save-btn" onclick="botAddRule()">+ Добавить правило</button>
+      </div>
+    </div>
+
     <div class="section" id="sec-settings">
       <div class="settings-tabs">
         <div class="stab active" onclick="switchStab(this,'prof')">Профиль</div>
@@ -954,7 +1109,45 @@ button,a,[role="button"]{min-height:36px}
 
 <script>
 if(localStorage.getItem('age_verified')!=='true') location.href='age-gate.html';
-const titles={dash:'Дашборд',content:'Контент',subs:'Подписчики',earn:'Заработок',live:'Live-студия',schedule:'Расписание',msgs:'Сообщения',settings:'Настройки'};
+const titles={dash:'Дашборд',content:'Контент',subs:'Подписчики',earn:'Заработок',live:'Live-студия',schedule:'Расписание',msgs:'Сообщения',autobot:'Автоответы',settings:'Настройки'};
+
+/* ── BOT JS ── */
+function botToggleEdit(id) {
+  const el = document.getElementById('bot-edit-'+id);
+  if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+function botSaveRule(id) {
+  const ta = document.getElementById('bot-text-'+id);
+  const preview = document.getElementById('bot-msg-'+id);
+  if (ta && preview) preview.textContent = ta.value;
+  botToggleEdit(id);
+  showToast('Правило сохранено ✓');
+}
+function botInsertVar(id, v) {
+  const ta = document.getElementById('bot-text-'+id);
+  if (!ta) return;
+  const pos = ta.selectionStart || ta.value.length;
+  ta.value = ta.value.slice(0, pos) + v + ta.value.slice(pos);
+  ta.focus();
+}
+function botInsertNew(v) {
+  const ta = document.getElementById('botNewText');
+  if (!ta) return;
+  const pos = ta.selectionStart || ta.value.length;
+  ta.value = ta.value.slice(0, pos) + v + ta.value.slice(pos);
+  ta.focus();
+}
+function botTestRule(id) {
+  showToast('✅ Тестовое сообщение отправлено тебе в чат');
+}
+function botAddRule() {
+  const trigger = document.getElementById('botNewTrigger')?.value;
+  const text    = document.getElementById('botNewText')?.value?.trim();
+  if (!trigger || !text) { showToast('Выбери триггер и напиши текст'); return; }
+  showToast('✅ Правило добавлено!');
+  document.getElementById('botNewTrigger').value = '';
+  document.getElementById('botNewText').value = '';
+}
 function showSection(id,navEl){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById('sec-'+id).classList.add('active');
@@ -1340,6 +1533,34 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
 /* Hint pill (? key) */
 #kol-shortcut-hint{position:fixed;bottom:88px;left:20px;z-index:9800;background:#181835;border:1px solid #22224A;border-radius:20px;padding:6px 14px;font-size:12px;color:#6A6A8A;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
 #kol-shortcut-hint:hover{border-color:#D42B6A;color:#E8E8F0}
+
+/* ─── AUTO-RESPONDER ─── */
+.bot-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:18px 0 10px}
+.bot-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.bot-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.bot-card-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.bot-trigger-tag{font-size:10px;font-weight:700;background:rgba(212,43,106,.12);border:1px solid rgba(212,43,106,.3);color:var(--accent);padding:2px 8px;border-radius:10px}
+.bot-message-preview{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 13px;font-size:13px;color:var(--text);line-height:1.5;margin-bottom:10px;position:relative}
+.bot-message-preview::before{content:'💬';position:absolute;top:-8px;left:12px;font-size:14px;background:var(--card);padding:0 4px}
+.bot-edit-btn{background:transparent;border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .2s}
+.bot-edit-btn:hover{border-color:var(--accent);color:var(--text)}
+.bot-textarea{width:100%;background:var(--card2);border:1.5px solid var(--border);border-radius:10px;padding:10px 13px;color:var(--text);font-size:13px;font-family:inherit;resize:vertical;min-height:80px;outline:none;transition:border-color .2s;box-sizing:border-box}
+.bot-textarea:focus{border-color:var(--accent)}
+.bot-vars{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.bot-var{background:rgba(139,43,226,.1);border:1px solid rgba(139,43,226,.3);color:#CE93D8;font-size:11px;font-weight:600;padding:3px 9px;border-radius:10px;cursor:pointer;transition:all .2s}
+.bot-var:hover{background:rgba(139,43,226,.2)}
+.bot-save-btn{background:linear-gradient(135deg,var(--accent),var(--accent2,#8B2BE2));color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px;transition:opacity .2s}
+.bot-save-btn:hover{opacity:.85}
+.bot-new-form{background:var(--card);border:1px dashed var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.bot-trigger-select{background:var(--card2);border:1.5px solid var(--border);border-radius:10px;padding:9px 13px;color:var(--text);font-size:13px;font-family:inherit;outline:none;width:100%;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
+.bot-trigger-select:focus{border-color:var(--accent)}
+.bot-delay-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.bot-delay-input{background:var(--card2);border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;color:var(--text);font-size:13px;font-family:inherit;outline:none;width:80px;transition:border-color .2s}
+.bot-delay-input:focus{border-color:var(--accent)}
+.bot-stats-row{display:flex;gap:12px;margin-top:12px}
+.bot-stat{flex:1;background:var(--card2);border-radius:10px;padding:10px;text-align:center}
+.bot-stat-num{font-size:20px;font-weight:900;color:var(--accent)}
+.bot-stat-lbl{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
 </style>
 
 <!-- FAB -->
