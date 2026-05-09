@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -425,24 +425,24 @@ button,a,[role="button"]{min-height:36px}
   <p class="subtitle">Проверь соединение и попробуй снова</p>
 
   <button class="btn-primary" onclick="window.location.reload()">Попробовать снова</button>
-  <a class="link-back" href="../index.html" onclick="fadeOut(event, 'index.html')">← Вернуться на главную</a>
+  <a class="link-back" href="index.html" onclick="fadeOut(event, 'index.html')">← Вернуться на главную</a>
 
   <!-- Cached pages -->
   <p class="cached-title">Доступно офлайн</p>
   <ul class="cached-list">
-    <li><a href="../feed.html" onclick="fadeOut(event,'feed.html')">
+    <li><a href="feed.html" onclick="fadeOut(event,'feed.html')">
       <span class="icon">🏠</span><span class="lbl">Лента</span><span class="arrow">›</span>
     </a></li>
-    <li><a href="../search.html" onclick="fadeOut(event,'search.html')">
-      <span class="icon">🔍</span><span class="lbl">Поиск</span><span class="arrow">›</span>
+    <li><a href="search.html" onclick="fadeOut(event,'search.html')">
+      <span class="icon">🔍</span><span class="lbl">Search</span><span class="arrow">›</span>
     </a></li>
-    <li><a href="../profile.html" onclick="fadeOut(event,'profile.html')">
+    <li><a href="profile.html" onclick="fadeOut(event,'profile.html')">
       <span class="icon">👤</span><span class="lbl">Профиль</span><span class="arrow">›</span>
     </a></li>
-    <li><a href="../messages.html" onclick="fadeOut(event,'messages.html')">
+    <li><a href="messages.html" onclick="fadeOut(event,'messages.html')">
       <span class="icon">💬</span><span class="lbl">Сообщения</span><span class="arrow">›</span>
     </a></li>
-    <li><a href="../bookmarks.html" onclick="fadeOut(event,'bookmarks.html')">
+    <li><a href="bookmarks.html" onclick="fadeOut(event,'bookmarks.html')">
       <span class="icon">🔖</span><span class="lbl">Закладки</span><span class="arrow">›</span>
     </a></li>
   </ul>
@@ -455,9 +455,9 @@ button,a,[role="button"]{min-height:36px}
 
 <!-- Lang switcher -->
 <div class="lang-footer">
-  <a href="../offline.html" class="active">🇷🇺 RU</a>
+  <a href="offline.html" class="active">🇷🇺 RU</a>
   <span>|</span>
-  <a href="../en/offline.html">🇬🇧 EN</a>
+  <a href="offline.html">🇬🇧 EN</a>
 </div>
 
 <style>
@@ -475,7 +475,7 @@ button,a,[role="button"]{min-height:36px}
 /* ── Theme Toggle ── */
 #kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
 #kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
-body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;--text-sub:#6060A0;--text-muted:#8080A8;background:#F5F5FA;color:#1A1A2E}
 
 /* ── PWA Install Prompt ── */
 #kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
@@ -512,7 +512,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
 
 <!-- GDPR Cookie Banner -->
 <div id="kol-cookie-banner">
-  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="../cookie.html">Подробнее</a> · <a href="../report.html">Пожаловаться</a> · <a href="../api-docs.html">API</a></p>
+  <p>🍪 We use cookies to improve your experience and analyze traffic. <a href="cookie.html">Learn more</a> · <a href="report.html">Пожаловаться</a> · <a href="api-docs.html">API</a></p>
   <div class="kol-cookie-btns">
     <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
     <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
@@ -587,7 +587,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
     }));
     kolHideBanner();
     document.getElementById('kol-cookie-modal').classList.remove('open');
-    kolShowToast('Настройки cookie сохранены ✓');
+    kolShowToast('Cookie settings saved ✓');
   };
 
   window.kolRejectCookies = function(){
@@ -596,7 +596,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
       date: new Date().toISOString(), version:'2.0'
     }));
     kolHideBanner();
-    kolShowToast('Только необходимые cookie активированы');
+    kolShowToast('Only necessary cookies activated');
   };
 
   window.kolSaveCookieSettings = function(){
@@ -609,7 +609,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
     }));
     kolHideBanner();
     document.getElementById('kol-cookie-modal').classList.remove('open');
-    kolShowToast('Настройки cookie сохранены ✓');
+    kolShowToast('Cookie settings saved ✓');
   };
 
   window.kolOpenCookieSettings = function(){
@@ -667,7 +667,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
       deferredPrompt.userChoice.then(function(result){
         if(result.outcome === 'accepted'){
           localStorage.setItem('kol_pwa_installed', '1');
-          kolShowToast('KOL Studio установлена! 🎉');
+          kolShowToast('KOL Studio installed! 🎉');
         }
         pwaPrompt.classList.remove('show');
         deferredPrompt = null;
@@ -816,7 +816,7 @@ function krmSelect(btn,type){
 }
 function krmSubmit(){
   if(!window._krmType){
-    if(window.kolShowToast) kolShowToast('Выберите причину жалобы','error');
+    if(window.kolShowToast) kolShowToast('Please select a reason for the report','error');
     return;
   }
   document.getElementById('krm-form').style.display='none';
@@ -1002,7 +1002,7 @@ window.KOL_ACHIEVEMENTS = {
       secs = 10;
       if (navigator.onLine) {
         clearInterval(timer);
-        showToast('Соединение восстановлено! Перенаправляем…');
+        showToast('Connection restored! Redirecting…');
         setTimeout(() => {
           document.body.classList.add('fade-out');
           setTimeout(() => { window.location.href = 'feed.html'; }, 320);
@@ -1015,7 +1015,7 @@ window.KOL_ACHIEVEMENTS = {
   /* Also listen to the online event */
   window.addEventListener('online', () => {
     clearInterval(timer);
-    showToast('Соединение восстановлено! Перенаправляем…');
+    showToast('Connection restored! Redirecting…');
     setTimeout(() => {
       document.body.classList.add('fade-out');
       setTimeout(() => { window.location.href = 'feed.html'; }, 320);

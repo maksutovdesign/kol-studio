@@ -9,8 +9,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="KOL Studio">
-<meta name="description" content="Истории от авторов KOL Studio">
-<title>KOL Studio — Истории</title>
+<meta name="description" content="Stories from KOL Studio creators">
+<title>KOL Studio — Stories</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -1031,9 +1031,9 @@ button,a,[role="button"]{min-height:36px}
         <div id="model-name"></div>
         <div id="model-time"></div>
       </div>
-      <button class="hud-btn" id="pause-btn" title="Пауза/Воспроизведение">⏸</button>
-      <button class="hud-btn" id="mute-btn" title="Звук">🔊</button>
-      <button class="hud-btn" id="close-btn" title="Закрыть">✕</button>
+      <button class="hud-btn" id="pause-btn" title="Pause/Play">⏸</button>
+      <button class="hud-btn" id="mute-btn" title="Sound">🔊</button>
+      <button class="hud-btn" id="close-btn" title="Close">✕</button>
     </div>
   </div>
 
@@ -1050,7 +1050,7 @@ button,a,[role="button"]{min-height:36px}
   <div id="bottom-bar">
     <button id="like-btn">❤️ <span id="like-count">4.2K</span></button>
     <div id="reply-field">Reply @anna_m…</div>
-    <button class="bottom-icon-btn" id="more-btn" title="Ещё">⋯</button>
+    <button class="bottom-icon-btn" id="more-btn" title="More">⋯</button>
     <button class="bottom-icon-btn" id="share-btn" title="Share">↗</button>
   </div>
 
@@ -1062,14 +1062,14 @@ button,a,[role="button"]{min-height:36px}
   <div id="end-card">
     <div id="end-card-avatar"></div>
     <div id="end-card-name"></div>
-    <div id="end-card-text">Все истории просмотрены</div>
-    <button id="end-card-profile-btn">Посмотреть профиль</button>
-    <button id="end-card-next-btn">Следующий автор →</button>
+    <div id="end-card-text">All stories viewed</div>
+    <button id="end-card-profile-btn">View profile</button>
+    <button id="end-card-next-btn">Next creator →</button>
   </div>
 
   <!-- Model strip -->
   <div id="model-strip">
-    <div id="model-strip-label">Другие авторы</div>
+    <div id="model-strip-label">Other creators</div>
     <div id="model-strip-row"></div>
   </div>
 
@@ -1090,7 +1090,7 @@ button,a,[role="button"]{min-height:36px}
       <button class="reaction-pill" data-emoji="👏">👏</button>
     </div>
     <div id="reply-input-row">
-      <input type="text" id="reply-text-input" placeholder="Write сообщение…" maxlength="200">
+      <input type="text" id="reply-text-input" placeholder="Write a message…" maxlength="200">
       <button id="reply-send-btn">Send</button>
     </div>
     <div id="reply-emoji-row">😊 😂 🥰 😘 💋 🤩 💌 🌸 ✨ 🎉</div>
@@ -1101,31 +1101,31 @@ button,a,[role="button"]{min-height:36px}
 <div id="more-popup">
   <div id="more-backdrop"></div>
   <div id="more-sheet">
-    <div class="more-option"><span class="more-option-icon">🚫</span> Пожаловаться</div>
-    <div class="more-option"><span class="more-option-icon">🙈</span> Скрыть истории</div>
-    <div class="more-option"><span class="more-option-icon">👤</span> Перейти в профиль</div>
-    <div class="more-option"><span class="more-option-icon">🔔</span> Notifications о публикациях</div>
-    <div class="more-option danger"><span class="more-option-icon">🚫</span> Заблокировать</div>
+    <div class="more-option"><span class="more-option-icon">🚫</span> Report</div>
+    <div class="more-option"><span class="more-option-icon">🙈</span> Hide stories</div>
+    <div class="more-option"><span class="more-option-icon">👤</span> Go to profile</div>
+    <div class="more-option"><span class="more-option-icon">🔔</span> Notifications about posts</div>
+    <div class="more-option danger"><span class="more-option-icon">🚫</span> Block</div>
     <div class="more-option" id="more-cancel" style="justify-content:center;font-weight:600;color:#E8E8F0;">Cancel</div>
   </div>
 </div>
 
 <!-- ===================== SHARE POPUP ===================== -->
 <div id="share-popup">
-  <h3>Share историей</h3>
+  <h3>Share this story</h3>
   <div id="share-options">
     <div class="share-option"><div class="share-option-icon">📋</div><span class="share-option-label">Copy</span></div>
-    <div class="share-option"><div class="share-option-icon">💬</div><span class="share-option-label">Сообщение</span></div>
-    <div class="share-option"><div class="share-option-icon">📷</div><span class="share-option-label">Инстаграм</span></div>
+    <div class="share-option"><div class="share-option-icon">💬</div><span class="share-option-label">Message</span></div>
+    <div class="share-option"><div class="share-option-icon">📷</div><span class="share-option-label">Instagram</span></div>
     <div class="share-option"><div class="share-option-icon">✈️</div><span class="share-option-label">Telegram</span></div>
   </div>
-  <button id="share-close">Закрыть</button>
+  <button id="share-close">Close</button>
 </div>
 
 <!-- ===================== REMIND BANNER ===================== -->
 <div id="remind-banner">
   <div id="remind-banner-icon">🔴</div>
-  <div id="remind-banner-text"><strong>Напоминание установлено!</strong><br>Today в 21:00 МСК — Live Stream</div>
+  <div id="remind-banner-text"><strong>Reminder set!</strong><br>Today at 21:00 — Live Stream</div>
   <button id="remind-banner-close">✕</button>
 </div>
 
@@ -1142,162 +1142,162 @@ const STORY_DURATION = 5000; // ms per story
 const MODELS = [
   {
     id: 'anna',
-    initials: 'АМ',
-    name: 'Анна Морозова',
+    initials: 'AM',
+    name: 'Anna Morozova',
     handle: 'anna_m',
-    time: '3 ч назад',
+    time: '3 h ago',
     gradient: 'linear-gradient(135deg, #5C1A7A, #D42B6A)',
     stories: [
       {
         gradient: 'linear-gradient(135deg, #5C1A7A, #D42B6A)',
         emoji: '📸',
-        text: 'Утренняя фотосессия 🤍 Новый контент уже загружен!',
-        sticker: { type: 'cta', label: 'Смотреть →', href: 'profile.html' }
+        text: 'Morning photo shoot 🤍 New content is already uploaded!',
+        sticker: { type: 'cta', label: 'View →', href: 'profile.html' }
       },
       {
         gradient: 'linear-gradient(135deg, #0D47A1, #8B2BE2)',
         emoji: '🎬',
-        text: 'Съёмка закончилась! Скоро будет что-то особенное для вас 💜'
+        text: 'Shoot is done! Something special for you is coming soon 💜'
       },
       {
         gradient: 'linear-gradient(135deg, #1A3A2A, #00E676)',
         emoji: '💰',
-        text: 'Специальное предложение только сегодня — скидка 30% на Premium подписку!',
-        sticker: { type: 'promo', label: '🎁 КОД: ANNA30' }
+        text: 'Special offer today only — 30% off a Premium subscription!',
+        sticker: { type: 'promo', label: '🎁 CODE: ANNA30' }
       },
       {
         gradient: 'linear-gradient(135deg, #7A1A1A, #FFB300)',
         emoji: '📺',
-        text: 'Today в 21:00 МСК — Live Stream! Не пропустите 🔴',
-        sticker: { type: 'remind', label: '🔔 Напомнить' }
+        text: 'Today at 21:00 — Live Stream! Don\'t miss it 🔴',
+        sticker: { type: 'remind', label: '🔔 Remind me' }
       },
       {
         gradient: 'linear-gradient(135deg, #2A1A5A, #D42B6A)',
         emoji: '🎁',
-        text: 'Thank you всем кто поддерживает меня! Вы лучшие 💜',
-        sticker: { type: 'reply-open', label: '💌 Write Анне' }
+        text: 'Thank you to everyone who supports me! You are the best 💜',
+        sticker: { type: 'reply-open', label: '💌 Write to Anna' }
       }
     ]
   },
   {
     id: 'vika',
-    initials: 'ВЛ',
-    name: 'Виктория Л.',
+    initials: 'VL',
+    name: 'Victoria L.',
     handle: 'vika_l',
-    time: '5 ч назад',
+    time: '5 h ago',
     gradient: 'linear-gradient(135deg, #0D1B6B, #2979FF)',
     stories: [
       {
         gradient: 'linear-gradient(135deg, #0D1B6B, #2979FF)',
         emoji: '🌊',
-        text: 'Путешествие продолжается! Мальдивы — это нечто невероятное 💙'
+        text: 'The journey continues! The Maldives are something incredible 💙'
       },
       {
         gradient: 'linear-gradient(135deg, #1565C0, #29B6F6)',
         emoji: '🤿',
-        text: 'Today дайвинг! Новые фото уже в коллекции 📸',
-        sticker: { type: 'cta', label: 'Смотреть коллекцию →', href: 'collection.html' }
+        text: 'Diving today! New photos are already in the collection 📸',
+        sticker: { type: 'cta', label: 'View collection →', href: 'collection.html' }
       },
       {
         gradient: 'linear-gradient(135deg, #0A2A5A, #1A6BC4)',
         emoji: '🌅',
-        text: 'Закат на острове. Такое не забывается ✨'
+        text: 'Sunset on the island. Something you never forget ✨'
       }
     ]
   },
   {
     id: 'kira',
-    initials: 'КС',
-    name: 'Кира С.',
+    initials: 'KS',
+    name: 'Kira S.',
     handle: 'kira_s',
-    time: '6 ч назад',
+    time: '6 h ago',
     gradient: 'linear-gradient(135deg, #1B5E20, #00E676)',
     stories: [
       {
         gradient: 'linear-gradient(135deg, #1B5E20, #00E676)',
         emoji: '🌿',
-        text: 'Утренняя медитация и йога. Начинаю каждый день с этого 🧘‍♀️'
+        text: 'Morning meditation and yoga. I start every day with this 🧘‍♀️'
       },
       {
         gradient: 'linear-gradient(135deg, #2E7D32, #4CAF50)',
         emoji: '🥗',
-        text: 'Healthy food prep для всей недели! Рецепты в профиле 💚',
-        sticker: { type: 'cta', label: 'Смотреть рецепты →', href: 'profile.html' }
+        text: 'Healthy food prep for the whole week! Recipes on my profile 💚',
+        sticker: { type: 'cta', label: 'View recipes →', href: 'profile.html' }
       },
       {
         gradient: 'linear-gradient(135deg, #1A4A20, #00C853)',
         emoji: '💪',
-        text: 'Тренировка завершена! 45 минут интенсива 🔥'
+        text: 'Workout done! 45 minutes of intensity 🔥'
       },
       {
         gradient: 'linear-gradient(135deg, #0A3A1A, #00E676)',
         emoji: '🌙',
-        text: 'Вечерний ритуал. Всем спокойной ночи 💚',
-        sticker: { type: 'promo', label: '🌿 КОД: KIRA20' }
+        text: 'Evening ritual. Goodnight everyone 💚',
+        sticker: { type: 'promo', label: '🌿 CODE: KIRA20' }
       }
     ]
   },
   {
     id: 'diana',
-    initials: 'ДВ',
-    name: 'Диана В.',
+    initials: 'DV',
+    name: 'Diana V.',
     handle: 'diana_v',
-    time: '8 ч назад',
+    time: '8 h ago',
     gradient: 'linear-gradient(135deg, #4A0E0E, #E53935)',
     stories: [
       {
         gradient: 'linear-gradient(135deg, #4A0E0E, #E53935)',
         emoji: '🔥',
-        text: 'Новая фотосессия в красном! Горячее лето 💋',
-        sticker: { type: 'cta', label: 'Смотреть →', href: 'profile.html' }
+        text: 'New photo shoot in red! Hot summer 💋',
+        sticker: { type: 'cta', label: 'View →', href: 'profile.html' }
       },
       {
         gradient: 'linear-gradient(135deg, #7A1A1A, #FF5252)',
         emoji: '💄',
-        text: 'За кулисами съёмки. Любите? ❤️‍🔥'
+        text: 'Behind the scenes of the shoot. Do you love it? ❤️‍🔥'
       }
     ]
   },
   {
     id: 'alisa',
-    initials: 'АН',
-    name: 'Алиса Н.',
+    initials: 'AN',
+    name: 'Alisa N.',
     handle: 'alisa_n',
-    time: '1 д назад',
+    time: '1 d ago',
     gradient: 'linear-gradient(135deg, #4A148C, #7B1FA2)',
     stories: [
       {
         gradient: 'linear-gradient(135deg, #4A148C, #7B1FA2)',
         emoji: '👑',
-        text: 'VIP-сет уже доступен для subscribers! Успейте 💜'
+        text: 'VIP set is now available for subscribers! Don\'t miss out 💜'
       },
       {
         gradient: 'linear-gradient(135deg, #6A1B9A, #AB47BC)',
         emoji: '✨',
-        text: 'Готовлюсь к съёмке. Как вам образ? 💜',
-        sticker: { type: 'reply-open', label: '💜 Write Алисе' }
+        text: 'Getting ready for the shoot. What do you think of the look? 💜',
+        sticker: { type: 'reply-open', label: '💜 Write to Alisa' }
       },
       {
         gradient: 'linear-gradient(135deg, #3A0A6A, #8B2BE2)',
         emoji: '🎭',
-        text: 'Backstage из последнего проекта. Скоро покажу результат! 🤫'
+        text: 'Backstage from the latest project. Showing the result soon! 🤫'
       },
       {
         gradient: 'linear-gradient(135deg, #5C1A7A, #CE93D8)',
         emoji: '🌸',
-        text: 'Весенний конкурс! Напиши "Весна" в личку и получи бонус 🌺',
-        sticker: { type: 'promo', label: '🌸 КОД: SPRING26' }
+        text: 'Spring contest! Write "Spring" in DMs and get a bonus 🌺',
+        sticker: { type: 'promo', label: '🌸 CODE: SPRING26' }
       },
       {
         gradient: 'linear-gradient(135deg, #4A148C, #D42B6A)',
         emoji: '💌',
-        text: 'Люблю вас всех! Thank you за поддержку 💜✨',
-        sticker: { type: 'cta', label: 'Смотреть профиль →', href: 'profile.html' }
+        text: 'I love you all! Thank you for the support 💜✨',
+        sticker: { type: 'cta', label: 'View profile →', href: 'profile.html' }
       },
       {
         gradient: 'linear-gradient(135deg, #2A0A4A, #7B1FA2)',
         emoji: '🎬',
-        text: 'Последний эфир собрал 2000 зрителей! 🔥 Thank you вам!'
+        text: 'The last stream had 2000 viewers! 🔥 Thank you all!'
       }
     ]
   }
@@ -1457,7 +1457,7 @@ function renderStory() {
     } else if (s.type === 'remind') {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        btn.textContent = '✅ Напоминание установлено';
+        btn.textContent = '✅ Reminder set';
         btn.disabled = true;
         remindBanner.classList.add('visible');
         setTimeout(() => remindBanner.classList.remove('visible'), 4000);
@@ -1470,7 +1470,7 @@ function renderStory() {
     } else {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        showToast('Промокод скопирован!');
+        showToast('Promo code copied!');
         navigator.clipboard?.writeText(s.label.split(': ')[1] || s.label).catch(() => {});
       });
     }
@@ -1484,7 +1484,7 @@ function renderStory() {
   modelTimeEl.textContent = model.time;
   replyField.textContent = `Reply @${model.handle}…`;
   document.getElementById('reply-title').textContent = `Reply @${model.handle}`;
-  replyTextInput.placeholder = `Write сообщение @${model.handle}…`;
+  replyTextInput.placeholder = `Write a message @${model.handle}…`;
 
   // Story counter
   storyCounter.textContent = `${currentStoryIdx + 1} / ${model.stories.length}`;
@@ -1692,7 +1692,7 @@ muteBtn.addEventListener('click', (e) => {
   e.stopPropagation();
   isMuted = !isMuted;
   muteBtn.textContent = isMuted ? '🔇' : '🔊';
-  showToast(isMuted ? 'Звук выключен' : 'Звук включён');
+  showToast(isMuted ? 'Sound off' : 'Sound on');
 });
 
 // Close button
@@ -1727,7 +1727,7 @@ replySendBtn.addEventListener('click', () => {
   const msg = replyTextInput.value.trim();
   if (msg) {
     closeReplyPopup();
-    showToast('Сообщение отправлено ✓');
+    showToast('Message sent ✓');
     replyTextInput.value = '';
   }
 });
@@ -1744,7 +1744,7 @@ document.querySelectorAll('.reaction-pill').forEach(btn => {
   btn.addEventListener('click', () => {
     const emoji = btn.dataset.emoji;
     closeReplyPopup();
-    showToast(`${emoji} реакция отправлена!`);
+    showToast(`${emoji} reaction sent!`);
   });
 });
 
@@ -1770,8 +1770,8 @@ document.querySelectorAll('#more-sheet .more-option:not(#more-cancel)').forEach(
     const label = opt.textContent.trim();
     morePopup.classList.remove('visible');
     resumeStory();
-    if (label.includes('профиль')) navigateTo('profile.html');
-    else showToast('Готово');
+    if (label.includes('profile')) navigateTo('profile.html');
+    else showToast('Done');
   });
 });
 
@@ -1791,7 +1791,7 @@ document.querySelectorAll('.share-option').forEach(opt => {
   opt.addEventListener('click', () => {
     sharePopup.classList.remove('visible');
     resumeStory();
-    showToast('Ссылка скопирована!');
+    showToast('Link copied!');
   });
 });
 
@@ -1871,7 +1871,7 @@ renderStory();
 if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
 </script>
 
-<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../stories.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="stories.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="stories.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="stories.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
 
 <!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
 <style>
@@ -1893,7 +1893,7 @@ if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.se
 .kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
 </style>
 <div id="kol-cookie-banner">
-  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <p>🍪 We use cookies to improve your experience. <a href="cookie.html">Learn more</a></p>
   <div class="kol-cookie-btns">
     <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
     <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
@@ -1957,40 +1957,40 @@ if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.se
 
 <!-- FAB -->
 <div id="kol-fab-menu">
-  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
-  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
-  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Upload</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Message</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Search</a>
 </div>
-<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+<button id="kol-fab" aria-label="Quick actions" onclick="kolToggleFab()">＋</button>
 
 <!-- Keyboard shortcuts hint -->
-<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — keyboard shortcuts</div>
 
 <!-- Keyboard shortcuts modal -->
 <div id="kol-shortcuts-modal">
   <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
   <div id="kol-shortcuts-box">
-    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
-    <h3>⌨️ Горячие клавиши</h3>
+    <button id="kol-shortcuts-close" aria-label="Close" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Keyboard Shortcuts</h3>
     <div class="kol-sc-group">
-      <h4>Навигация</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+      <h4>Navigation</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Feed</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Search</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Messages</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Notifications</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Profile</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Creator dashboard</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Действия</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+      <h4>Actions</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Upload content</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Toggle theme</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Report</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Интерфейс</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+      <h4>Interface</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">This panel</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Close modal</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
     </div>
   </div>
 </div>
@@ -2077,7 +2077,7 @@ document.addEventListener('keydown', function(e){
       return;
     case '/':
       e.preventDefault();
-      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      var si = document.querySelector('input[type="search"],input[placeholder*="earch"],#searchInput');
       if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
       return;
     case 'n': case 'N':

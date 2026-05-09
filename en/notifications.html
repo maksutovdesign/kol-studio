@@ -12,10 +12,10 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KOL Studio">
 <meta property="og:title" content="KOL Studio — Notifications">
-<meta property="og:description" content="Центр уведомлений KOL Studio">
+<meta property="og:description" content="KOL Studio Notification Center">
 <meta property="og:url" content="https://kolstudio.com/en/notifications.html">
-<meta property="og:locale" content="ru_RU">
-<meta name="description" content="Notifications: подписки, чаевые, сообщения и системные события">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Notifications: subscriptions, tips, messages and system events">
 <title>KOL STUDIO — Notifications</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -577,19 +577,19 @@ button,a,[role="button"]{min-height:36px}
     <span class="top-bar-title">Notifications</span>
   </div>
   <div class="top-bar-actions">
-    <button class="mark-all-btn" onclick="markAllRead()">✓ Все прочитаны</button>
-    <button class="icon-btn" title="Settings уведомлений" onclick="openSettings()">⚙️</button>
+    <button class="mark-all-btn" onclick="markAllRead()">✓ Mark all read</button>
+    <button class="icon-btn" title="Notification settings" onclick="openSettings()">⚙️</button>
   </div>
 </header>
 
 <!-- FILTER BAR -->
 <div class="filter-bar">
-  <button class="filter-pill active" onclick="setFilter('all', this)">Все <span id="allCount" style="opacity:0.7;margin-left:4px"></span></button>
+  <button class="filter-pill active" onclick="setFilter('all', this)">All <span id="allCount" style="opacity:0.7;margin-left:4px"></span></button>
   <button class="filter-pill" onclick="setFilter('sub', this)">Subscriptions</button>
-  <button class="filter-pill" onclick="setFilter('tip', this)">Чаевые</button>
+  <button class="filter-pill" onclick="setFilter('tip', this)">Tips</button>
   <button class="filter-pill" onclick="setFilter('msg', this)">Messages</button>
-  <button class="filter-pill" onclick="setFilter('like', this)">Активность</button>
-  <button class="filter-pill" onclick="setFilter('sys', this)">Системные</button>
+  <button class="filter-pill" onclick="setFilter('like', this)">Activity</button>
+  <button class="filter-pill" onclick="setFilter('sys', this)">System</button>
 </div>
 
 <!-- CONTENT -->
@@ -598,8 +598,8 @@ button,a,[role="button"]{min-height:36px}
   <!-- EMPTY STATE -->
   <div class="empty-state" id="emptyState">
     <div class="empty-icon">🔔</div>
-    <div class="empty-title">Нет уведомлений</div>
-    <div class="empty-sub">В этой категории пока нет уведомлений</div>
+    <div class="empty-title">No notifications</div>
+    <div class="empty-sub">There are no notifications in this category yet</div>
   </div>
 
   <!-- TODAY SECTION -->
@@ -612,7 +612,7 @@ button,a,[role="button"]{min-height:36px}
 
   <!-- THIS WEEK SECTION -->
   <div class="section-header" id="weekHeader">
-    <span class="section-title">На этой неделе</span>
+    <span class="section-title">This week</span>
     <span class="section-count" id="weekCount"></span>
     <div class="section-line"></div>
   </div>
@@ -620,7 +620,7 @@ button,a,[role="button"]{min-height:36px}
 
   <!-- EARLIER SECTION -->
   <div class="section-header" id="earlierHeader">
-    <span class="section-title">Ранее</span>
+    <span class="section-title">Earlier</span>
     <span class="section-count" id="earlierCount"></span>
     <div class="section-line"></div>
   </div>
@@ -638,7 +638,7 @@ button,a,[role="button"]{min-height:36px}
     <span class="nav-icon">🔍</span>
     <span>Search</span>
   </a>
-  <a href="model-cabinet.html" class="nav-post-btn" title="Создать пост">＋</a>
+  <a href="model-cabinet.html" class="nav-post-btn" title="Create post">＋</a>
   <a href="messages.html" class="nav-item">
     <span class="nav-icon">💬</span>
     <span>Messages</span>
@@ -658,11 +658,11 @@ button,a,[role="button"]{min-height:36px}
       <button class="settings-close" onclick="closeSettings()">×</button>
     </div>
     <div class="settings-body">
-      <div class="settings-section-title">Push-уведомления</div>
+      <div class="settings-section-title">Push notifications</div>
       <div class="toggle-row">
         <div class="toggle-info">
-          <div class="toggle-label">Push уведомления</div>
-          <div class="toggle-sub">В браузере и на телефоне</div>
+          <div class="toggle-label">Push notifications</div>
+          <div class="toggle-sub">In browser and on phone</div>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" checked onchange="saveToggle('push', this.checked)">
@@ -671,19 +671,19 @@ button,a,[role="button"]{min-height:36px}
       </div>
       <div class="toggle-row">
         <div class="toggle-info">
-          <div class="toggle-label">Email уведомления</div>
-          <div class="toggle-sub">Ежедневный дайджест</div>
+          <div class="toggle-label">Email notifications</div>
+          <div class="toggle-sub">Daily digest</div>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" checked onchange="saveToggle('email', this.checked)">
           <span class="toggle-slider"></span>
         </label>
       </div>
-      <div class="settings-section-title">Typeы уведомлений</div>
+      <div class="settings-section-title">Notification types</div>
       <div class="toggle-row">
         <div class="toggle-info">
-          <div class="toggle-label">Новые subscriberи</div>
-          <div class="toggle-sub">Кто-то подписался на вас</div>
+          <div class="toggle-label">New subscribers</div>
+          <div class="toggle-sub">Someone subscribed to you</div>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" checked onchange="saveToggle('subs', this.checked)">
@@ -692,8 +692,8 @@ button,a,[role="button"]{min-height:36px}
       </div>
       <div class="toggle-row">
         <div class="toggle-info">
-          <div class="toggle-label">Чаевые</div>
-          <div class="toggle-sub">Новые чаевые и PPV-платежи</div>
+          <div class="toggle-label">Tips</div>
+          <div class="toggle-sub">New tips and PPV payments</div>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" checked onchange="saveToggle('tips', this.checked)">
@@ -703,7 +703,7 @@ button,a,[role="button"]{min-height:36px}
       <div class="toggle-row">
         <div class="toggle-info">
           <div class="toggle-label">Messages</div>
-          <div class="toggle-sub">New Messages от фанов</div>
+          <div class="toggle-sub">New messages from fans</div>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" checked onchange="saveToggle('msgs', this.checked)">
@@ -712,8 +712,8 @@ button,a,[role="button"]{min-height:36px}
       </div>
       <div class="toggle-row">
         <div class="toggle-info">
-          <div class="toggle-label">Лайки и комментарии</div>
-          <div class="toggle-sub">Активность под вашими постами</div>
+          <div class="toggle-label">Likes and comments</div>
+          <div class="toggle-sub">Activity on your posts</div>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" checked onchange="saveToggle('likes', this.checked)">
@@ -722,19 +722,19 @@ button,a,[role="button"]{min-height:36px}
       </div>
       <div class="toggle-row">
         <div class="toggle-info">
-          <div class="toggle-label">Системные</div>
-          <div class="toggle-sub">Выплаты, верификация, обновления</div>
+          <div class="toggle-label">System</div>
+          <div class="toggle-sub">Payouts, verification, updates</div>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" checked onchange="saveToggle('sys', this.checked)">
           <span class="toggle-slider"></span>
         </label>
       </div>
-      <div class="settings-section-title">Тихие часы</div>
+      <div class="settings-section-title">Quiet hours</div>
       <div class="toggle-row">
         <div class="toggle-info">
-          <div class="toggle-label">Тихий режим</div>
-          <div class="toggle-sub">Не беспокоить с 23:00 до 08:00</div>
+          <div class="toggle-label">Do not disturb</div>
+          <div class="toggle-sub">No notifications from 23:00 to 08:00</div>
         </div>
         <label class="toggle-switch">
           <input type="checkbox" onchange="saveToggle('quiet', this.checked)">
@@ -755,31 +755,31 @@ const notifications = [
   {
     id: 1, section: 'today', cat: 'sub', unread: true,
     avatarEmoji: '😎', avatarClass: 'gradient', badgeClass: 'sub',
-    text: '<strong>@phantom_leo</strong> <span>оформил подписку</span> <strong>Premium на 3 месяца</strong>',
+    text: '<strong>@phantom_leo</strong> <span>subscribed to</span> <strong>Premium for 3 months</strong>',
     time: '2 min ago', tag: { text: 'Premium', cls: 'purple' },
     action: { label: 'Write', cls: 'primary', fn: 'replyTo("phantom_leo")' }, cardCls: 'unread'
   },
   {
     id: 2, section: 'today', cat: 'tip', unread: true,
     avatarEmoji: '😎', avatarClass: 'gold', badgeClass: 'tip',
-    text: '<strong>@phantom_leo</strong> <span>отправил чаевые</span>',
+    text: '<strong>@phantom_leo</strong> <span>sent a tip</span>',
     amount: '+$25', amountCls: 'gold',
-    quote: 'Ты лучшая 🔥',
+    quote: 'You\'re the best 🔥',
     time: '5 min ago',
     action: { label: '🙏 Thank', cls: 'gold', fn: 'thankFan("phantom_leo", 25)' }, cardCls: 'gold-card unread'
   },
   {
     id: 3, section: 'today', cat: 'msg', unread: true,
     avatarEmoji: '😎', avatarClass: 'gradient', badgeClass: 'msg',
-    text: '<strong>@phantom_leo</strong> <span>написал сообщение</span>',
-    quote: 'Hello! Когда следующий эфир?',
+    text: '<strong>@phantom_leo</strong> <span>sent a message</span>',
+    quote: 'Hello! When is the next stream?',
     time: '8 min ago',
     action: { label: '💬 Reply', cls: '', fn: 'replyMsg("phantom_leo")' }, cardCls: 'unread'
   },
   {
     id: 4, section: 'today', cat: 'tip', unread: true,
     avatarEmoji: '🌙', avatarClass: 'gold', badgeClass: 'tip',
-    text: '<strong>@night_rider</strong> <span>оставил</span> <strong>$50</strong> <span>за приватное шоу</span>',
+    text: '<strong>@night_rider</strong> <span>left</span> <strong>$50</strong> <span>for a private show</span>',
     amount: '+$50', amountCls: 'green',
     time: '20 min ago',
     action: { label: '🙏 Thank', cls: 'gold', fn: 'thankFan("night_rider", 50)' }, cardCls: 'gold-card unread'
@@ -787,55 +787,55 @@ const notifications = [
   {
     id: 5, section: 'today', cat: 'sub', unread: false,
     avatarEmoji: '🐺', avatarClass: 'gradient', badgeClass: 'sub',
-    text: '<strong>@dark_wolf_99</strong> <span>подписался на вас</span>',
+    text: '<strong>@dark_wolf_99</strong> <span>subscribed to you</span>',
     time: '15 min ago',
     action: { label: 'Write', cls: '', fn: 'replyTo("dark_wolf_99")' }, cardCls: ''
   },
   {
     id: 6, section: 'today', cat: 'like', unread: false,
     avatarEmoji: '⭐', avatarClass: 'gradient', badgeClass: 'like',
-    text: '<strong>@starfan</strong> <span>ваш пост набрал</span> <strong>500 лайков!</strong>',
-    tag: { text: '🔥 Вирусный', cls: 'gold' },
+    text: '<strong>@starfan</strong> <span>your post got</span> <strong>500 likes!</strong>',
+    tag: { text: '🔥 Viral', cls: 'gold' },
     time: '30 min ago', cardCls: ''
   },
   {
     id: 7, section: 'today', cat: 'sub', unread: false,
     avatarEmoji: '💔', avatarClass: 'muted-av', badgeClass: '',
-    text: '<strong>@user_kate</strong> <span>отменила подписку</span>',
+    text: '<strong>@user_kate</strong> <span>cancelled their subscription</span>',
     time: '1 hour ago', cardCls: 'muted-card'
   },
   {
     id: 8, section: 'today', cat: 'like', unread: false,
     avatarEmoji: '🌙', avatarClass: 'gradient', badgeClass: 'like',
-    text: '<strong>@night_rider</strong> <span>и ещё</span> <strong>23 человека</strong> <span>поставили лайк вашему фото</span>',
+    text: '<strong>@night_rider</strong> <span>and</span> <strong>23 others</strong> <span>liked your photo</span>',
     time: '1 hour ago', cardCls: ''
   },
   {
     id: 9, section: 'today', cat: 'tip', unread: false,
     avatarEmoji: '🚀', avatarClass: 'gold', badgeClass: 'tip',
-    text: '<strong>Получен PPV-платёж</strong> <span>от</span> <strong>@cosmos_fan</strong>',
+    text: '<strong>PPV payment received</strong> <span>from</span> <strong>@cosmos_fan</strong>',
     amount: '+$12', amountCls: 'green',
     time: '2 hours ago', cardCls: 'gold-card'
   },
   {
     id: 10, section: 'today', cat: 'msg', unread: false,
     avatarEmoji: '🐺', avatarClass: 'gradient', badgeClass: 'msg',
-    text: '<strong>3 новых сообщения</strong> <span>от</span> <strong>@dark_wolf_99</strong>',
+    text: '<strong>3 new messages</strong> <span>from</span> <strong>@dark_wolf_99</strong>',
     time: '45 min ago',
     action: { label: '💬 Reply', cls: '', fn: 'replyMsg("dark_wolf_99")' }, cardCls: ''
   },
   {
     id: 11, section: 'today', cat: 'like', unread: false,
     avatarEmoji: '🚀', avatarClass: 'gradient', badgeClass: 'like',
-    text: '<strong>@cosmos_fan</strong> <span>прокомментировал:</span>',
-    quote: 'Невероятно красиво 😍',
+    text: '<strong>@cosmos_fan</strong> <span>commented:</span>',
+    quote: 'Incredibly beautiful 😍',
     time: '2 hours ago', cardCls: ''
   },
   {
     id: 12, section: 'today', cat: 'sub', unread: false,
     avatarEmoji: '🔄', avatarClass: 'purple', badgeClass: 'sub',
-    text: '<strong>@cosmos_fan</strong> <span>продлил подписку на следующий месяц</span>',
-    tag: { text: '♻️ Продление', cls: '' },
+    text: '<strong>@cosmos_fan</strong> <span>renewed their subscription for next month</span>',
+    tag: { text: '♻️ Renewal', cls: '' },
     time: '3 hours ago', cardCls: ''
   },
 
@@ -843,111 +843,111 @@ const notifications = [
   {
     id: 13, section: 'week', cat: 'sub', unread: false,
     avatarEmoji: '⭐', avatarClass: 'gradient', badgeClass: 'sub',
-    text: '<strong>@starfan</strong> <span>оформил</span> <strong>Базовую подписку</strong>',
+    text: '<strong>@starfan</strong> <span>purchased a</span> <strong>Basic subscription</strong>',
     time: 'Yesterday, 18:42', cardCls: ''
   },
   {
     id: 14, section: 'week', cat: 'tip', unread: false,
     avatarEmoji: '👑', avatarClass: 'gold', badgeClass: 'tip',
-    text: '<strong>@royal_fan</strong> <span>отправил чаевые</span>',
+    text: '<strong>@royal_fan</strong> <span>sent a tip</span>',
     amount: '+$30', amountCls: 'gold',
-    quote: 'Лучшее шоу этого месяца! 👑',
+    quote: 'Best show of the month! 👑',
     time: 'Yesterday, 21:15', cardCls: 'gold-card'
   },
   {
     id: 15, section: 'week', cat: 'msg', unread: false,
     avatarEmoji: '🌀', avatarClass: 'gradient', badgeClass: 'msg',
-    text: '<strong>@vortex_44</strong> <span>написал сообщение</span>',
-    quote: 'Жду новый пост с нетерпением!',
+    text: '<strong>@vortex_44</strong> <span>sent a message</span>',
+    quote: 'Can\'t wait for the new post!',
     time: 'Yesterday, 14:05',
     action: { label: '💬 Reply', cls: '', fn: 'replyMsg("vortex_44")' }, cardCls: ''
   },
   {
     id: 16, section: 'week', cat: 'like', unread: false,
     avatarEmoji: '🛡️', avatarClass: 'gradient', badgeClass: 'like',
-    text: '<strong>@neo_knight</strong> <span>и</span> <strong>47 человек</strong> <span>поставили лайк вашему видео</span>',
-    tag: { text: '🔥 Популярно', cls: 'gold' },
-    time: '2 дня назад', cardCls: ''
+    text: '<strong>@neo_knight</strong> <span>and</span> <strong>47 others</strong> <span>liked your video</span>',
+    tag: { text: '🔥 Popular', cls: 'gold' },
+    time: '2 days ago', cardCls: ''
   },
   {
     id: 17, section: 'week', cat: 'tip', unread: false,
     avatarEmoji: '❄️', avatarClass: 'gold', badgeClass: 'tip',
-    text: '<strong>Получен PPV-платёж</strong> <span>от</span> <strong>@arctic_storm</strong>',
+    text: '<strong>PPV payment received</strong> <span>from</span> <strong>@arctic_storm</strong>',
     amount: '+$8', amountCls: 'green',
-    time: '2 дня назад', cardCls: 'gold-card'
+    time: '2 days ago', cardCls: 'gold-card'
   },
   {
     id: 18, section: 'week', cat: 'sub', unread: false,
     avatarEmoji: '⚡', avatarClass: 'gradient', badgeClass: 'sub',
-    text: '<strong>@thunder77</strong> <span>подписался на вас</span>',
-    time: '3 дня назад',
+    text: '<strong>@thunder77</strong> <span>subscribed to you</span>',
+    time: '3 days ago',
     action: { label: 'Write', cls: '', fn: 'replyTo("thunder77")' }, cardCls: ''
   },
   {
     id: 19, section: 'week', cat: 'like', unread: false,
     avatarEmoji: '🐉', avatarClass: 'gradient', badgeClass: 'like',
-    text: '<strong>@fire_dragon</strong> <span>прокомментировал:</span>',
-    quote: 'Просто нет слов! 🔥🔥🔥',
-    time: '3 дня назад', cardCls: ''
+    text: '<strong>@fire_dragon</strong> <span>commented:</span>',
+    quote: 'Simply speechless! 🔥🔥🔥',
+    time: '3 days ago', cardCls: ''
   },
   {
     id: 20, section: 'week', cat: 'sys', unread: false,
     avatarEmoji: '⚠️', avatarClass: 'warn', badgeClass: '',
-    text: '<span>⚠️</span> <strong>Ваша подписка истекает через 3 дня</strong>',
-    tag: { text: 'Внимание', cls: 'gold' },
-    time: '4 дня назад', cardCls: 'warning-card'
+    text: '<span>⚠️</span> <strong>Your subscription expires in 3 days</strong>',
+    tag: { text: 'Attention', cls: 'gold' },
+    time: '4 days ago', cardCls: 'warning-card'
   },
 
   // EARLIER
   {
     id: 21, section: 'earlier', cat: 'sys', unread: false,
     avatarEmoji: '✅', avatarClass: 'green', badgeClass: '',
-    text: '<strong>Верификация успешно пройдена</strong> <span>— аккаунт подтверждён</span>',
-    tag: { text: '✅ Подтверждено', cls: 'green' },
-    time: '2 дня назад', cardCls: 'green-card'
+    text: '<strong>Verification passed successfully</strong> <span>— account confirmed</span>',
+    tag: { text: '✅ Confirmed', cls: 'green' },
+    time: '2 days ago', cardCls: 'green-card'
   },
   {
     id: 22, section: 'earlier', cat: 'sys', unread: false,
     avatarEmoji: '💳', avatarClass: 'green', badgeClass: '',
-    text: '<strong>Выплата отправлена на ваш счёт</strong>',
+    text: '<strong>Payout sent to your account</strong>',
     amount: '+$1,240', amountCls: 'green',
-    time: '3 дня назад', cardCls: 'green-card'
+    time: '3 days ago', cardCls: 'green-card'
   },
   {
     id: 23, section: 'earlier', cat: 'tip', unread: false,
     avatarEmoji: '👁️', avatarClass: 'gold', badgeClass: 'tip',
-    text: '<strong>@golden_eye</strong> <span>купил эксклюзивный фото-сет</span>',
+    text: '<strong>@golden_eye</strong> <span>purchased an exclusive photo set</span>',
     amount: '+$20', amountCls: 'gold',
     time: '5 days ago', cardCls: 'gold-card'
   },
   {
     id: 24, section: 'earlier', cat: 'sys', unread: false,
     avatarEmoji: '🆕', avatarClass: 'info', badgeClass: '',
-    text: '<strong>Новая функция:</strong> <span>Scheduler постов теперь доступен</span>',
-    tag: { text: 'Новинка', cls: '' },
+    text: '<strong>New feature:</strong> <span>Post Scheduler is now available</span>',
+    tag: { text: 'New', cls: '' },
     time: '5 days ago', cardCls: ''
   },
   {
     id: 25, section: 'earlier', cat: 'sub', unread: false,
     avatarEmoji: '🔱', avatarClass: 'gradient', badgeClass: 'sub',
-    text: '<strong>@omega_fan</strong> <span>оформил годовую подписку</span>',
-    tag: { text: '🏆 Годовая', cls: 'purple' },
+    text: '<strong>@omega_fan</strong> <span>purchased an annual subscription</span>',
+    tag: { text: '🏆 Annual', cls: 'purple' },
     time: '6 days ago',
     action: { label: 'Write', cls: '', fn: 'replyTo("omega_fan")' }, cardCls: ''
   },
   {
     id: 26, section: 'earlier', cat: 'tip', unread: false,
     avatarEmoji: '🌑', avatarClass: 'gold', badgeClass: 'tip',
-    text: '<strong>@shadow_x99</strong> <span>отправил чаевые</span>',
+    text: '<strong>@shadow_x99</strong> <span>sent a tip</span>',
     amount: '+$10', amountCls: 'gold',
-    time: '1 нед. назад', cardCls: 'gold-card'
+    time: '1 week ago', cardCls: 'gold-card'
   },
   {
     id: 27, section: 'earlier', cat: 'sys', unread: false,
     avatarEmoji: '📊', avatarClass: 'info', badgeClass: '',
-    text: '<strong>Analytics per month готова</strong> <span>— ваш доход вырос на 34%</span>',
+    text: '<strong>Monthly analytics ready</strong> <span>— your income grew by 34%</span>',
     tag: { text: '📈 +34%', cls: 'green' },
-    time: '1 нед. назад', cardCls: 'green-card'
+    time: '1 week ago', cardCls: 'green-card'
   },
 ];
 
@@ -1045,26 +1045,26 @@ function markAllRead() {
   document.querySelectorAll('.unread-dot').forEach(d => d.classList.add('read'));
   document.querySelectorAll('.notif-card.unread').forEach(c => c.classList.remove('unread'));
   document.getElementById('allCount').textContent = '';
-  showToast('✓ All Notifications прочитаны', 'success');
+  showToast('✓ All notifications read', 'success');
 }
 
 // ===== ACTIONS =====
 function replyTo(username) {
-  showToast(`💬 Переход к переписке с @${username}`, 'accent');
+  showToast(`💬 Going to chat with @${username}`, 'accent');
   setTimeout(() => { window.location.href = 'messages.html'; }, 700);
 }
 function replyMsg(username) {
-  showToast(`💬 Открываем чат с @${username}`, 'accent');
+  showToast(`💬 Opening chat with @${username}`, 'accent');
   setTimeout(() => { window.location.href = 'messages.html'; }, 700);
 }
 function thankFan(username, amount) {
   const phrases = [
-    `Thank you за $${amount}! Ты лучший 🥰`,
-    `Ты просто золото! Thank you за чаевые 💖`,
-    `Так приятно! Thank you за поддержку 🙏✨`
+    `Thank you for $${amount}! You're the best 🥰`,
+    `You're pure gold! Thank you for the tip 💖`,
+    `So sweet! Thank you for your support 🙏✨`
   ];
   const text = phrases[Math.floor(Math.random() * phrases.length)];
-  showToast(`✉️ Отправлено @${username}: "${text}"`, 'gold');
+  showToast(`✉️ Sent to @${username}: "${text}"`, 'gold');
 }
 
 // ===== SETTINGS =====
@@ -1074,7 +1074,7 @@ function handleSettingsOverlayClick(e) {
   if (e.target === document.getElementById('settingsOverlay')) closeSettings();
 }
 function saveToggle(key, val) {
-  showToast(val ? `✅ Notifications "${key}" включены` : `🔕 Notifications "${key}" отключены`, val ? 'success' : '');
+  showToast(val ? `✅ Notifications "${key}" enabled` : `🔕 Notifications "${key}" disabled`, val ? 'success' : '');
 }
 
 // ===== TOAST =====
@@ -1095,7 +1095,7 @@ render();
 
 // Simulate new notification arriving
 setTimeout(() => {
-  showToast('🔔 @blade_x отправил чаевые $5', 'gold');
+  showToast('🔔 @blade_x sent a $5 tip', 'gold');
 }, 4000);
 </script>
 
@@ -1117,7 +1117,7 @@ setTimeout(() => {
 if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
 </script>
 
-<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../notifications.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="notifications.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="notifications.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="notifications.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
 
 <!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
 <style>
@@ -1139,7 +1139,7 @@ if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.se
 .kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
 </style>
 <div id="kol-cookie-banner">
-  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <p>🍪 We use cookies to improve your experience. <a href="cookie.html">Learn more</a></p>
   <div class="kol-cookie-btns">
     <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
     <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
@@ -1203,40 +1203,40 @@ if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.se
 
 <!-- FAB -->
 <div id="kol-fab-menu">
-  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
-  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
-  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Upload</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Message</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Search</a>
 </div>
-<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+<button id="kol-fab" aria-label="Quick actions" onclick="kolToggleFab()">＋</button>
 
 <!-- Keyboard shortcuts hint -->
-<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — keyboard shortcuts</div>
 
 <!-- Keyboard shortcuts modal -->
 <div id="kol-shortcuts-modal">
   <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
   <div id="kol-shortcuts-box">
-    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
-    <h3>⌨️ Горячие клавиши</h3>
+    <button id="kol-shortcuts-close" aria-label="Close" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Keyboard shortcuts</h3>
     <div class="kol-sc-group">
-      <h4>Навигация</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+      <h4>Navigation</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Feed</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Search</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Messages</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Notifications</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Profile</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Creator dashboard</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Действия</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+      <h4>Actions</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Upload content</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Toggle theme</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Report</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Интерфейс</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+      <h4>Interface</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">This panel</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Close modal</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
     </div>
   </div>
 </div>
@@ -1323,7 +1323,7 @@ document.addEventListener('keydown', function(e){
       return;
     case '/':
       e.preventDefault();
-      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      var si = document.querySelector('input[type="search"],input[placeholder*="earch"],#searchInput');
       if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
       return;
     case 'n': case 'N':

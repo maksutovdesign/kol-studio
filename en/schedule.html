@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-title" content="KOL Studio">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Content Scheduler — KOL Studio">
-<meta property="og:description" content="Планируйте публикации заранее, отслеживайте очередь, публикуйте в лучшее время">
+<meta property="og:description" content="Plan posts in advance, track your queue, publish at the best time">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -351,12 +351,12 @@ button,a,[role="button"]{min-height:36px}
 </style>
 </head>
 <body>
-<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="../index.html">🏠 Главная</a><span class="sep">›</span><a href="../model-cabinet.html">Кабинет модели</a><span class="sep">›</span><span class="current">Планировщик</span></nav>
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="index.html">🏠 Home</a><span class="sep">›</span><a href="model-cabinet.html">Creator Dashboard</a><span class="sep">›</span><span class="current">Scheduler</span></nav>
 
 <nav>
   <button class="nav-back" onclick="history.back()">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-    Назад
+    Back
   </button>
   <a href="index.html" class="nav-logo">KOL Studio</a>
   <button class="btn-new" onclick="openModal()">
@@ -371,18 +371,18 @@ button,a,[role="button"]{min-height:36px}
   <div class="stats-mini">
     <div class="stat-mini"><div class="stat-mini-val" style="color:var(--accent2)">8</div><div class="stat-mini-label">📅 Scheduled</div></div>
     <div class="stat-mini"><div class="stat-mini-val" style="color:var(--green)">2</div><div class="stat-mini-label">✅ Published</div></div>
-    <div class="stat-mini"><div class="stat-mini-val" style="color:var(--gold)">2</div><div class="stat-mini-label">📝 Draftов</div></div>
-    <div class="stat-mini"><div class="stat-mini-val">847</div><div class="stat-mini-label">❤️ Сред. лайков</div></div>
-    <div class="stat-mini"><div class="stat-mini-val" style="color:var(--gold)">Пятница</div><div class="stat-mini-label">🏆 Лучший день</div></div>
+    <div class="stat-mini"><div class="stat-mini-val" style="color:var(--gold)">2</div><div class="stat-mini-label">📝 Drafts</div></div>
+    <div class="stat-mini"><div class="stat-mini-val">847</div><div class="stat-mini-label">❤️ Avg. Likes</div></div>
+    <div class="stat-mini"><div class="stat-mini-val" style="color:var(--gold)">Friday</div><div class="stat-mini-label">🏆 Best Day</div></div>
   </div>
 
   <!-- VIEW TOGGLE -->
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px">
     <div class="view-tabs">
-      <div class="vtab active" onclick="switchView('calendar',this)">📅 Месяц</div>
-      <div class="vtab" onclick="switchView('list',this)">📋 Список</div>
+      <div class="vtab active" onclick="switchView('calendar',this)">📅 Month</div>
+      <div class="vtab" onclick="switchView('list',this)">📋 List</div>
     </div>
-    <div style="font-size:13px;color:var(--muted)">Часовой пояс: МСК (UTC+3)</div>
+    <div style="font-size:13px;color:var(--muted)">Timezone: UTC</div>
   </div>
 
   <div class="main-grid">
@@ -393,18 +393,18 @@ button,a,[role="button"]{min-height:36px}
         <div class="cal-header">
           <button class="cal-nav-btn" onclick="changeMonth(-1)">◀</button>
           <div>
-            <div class="cal-month" id="calMonthLabel">Май 2026</div>
+            <div class="cal-month" id="calMonthLabel">May 2026</div>
           </div>
           <button class="cal-nav-btn" onclick="changeMonth(1)">▶</button>
         </div>
         <div class="cal-days-header">
-          <div class="cal-day-name">Пн</div>
-          <div class="cal-day-name">Вт</div>
-          <div class="cal-day-name">Ср</div>
-          <div class="cal-day-name">Чт</div>
-          <div class="cal-day-name">Пт</div>
-          <div class="cal-day-name">Сб</div>
-          <div class="cal-day-name">Вс</div>
+          <div class="cal-day-name">Mon</div>
+          <div class="cal-day-name">Tue</div>
+          <div class="cal-day-name">Wed</div>
+          <div class="cal-day-name">Thu</div>
+          <div class="cal-day-name">Fri</div>
+          <div class="cal-day-name">Sat</div>
+          <div class="cal-day-name">Sun</div>
         </div>
         <div class="cal-grid" id="calGrid"></div>
       </div>
@@ -419,62 +419,62 @@ button,a,[role="button"]{min-height:36px}
     <div>
       <!-- DAY INFO -->
       <div class="day-panel" id="dayPanel" style="margin-bottom:16px">
-        <div class="day-panel-title" id="dayPanelTitle">Пятница, 7 мая 2026</div>
+        <div class="day-panel-title" id="dayPanelTitle">Friday, 7 May 2026</div>
         <div id="dayPanelPosts">
           <div class="day-post-item">
             <div class="day-post-icon">📸</div>
             <div class="day-post-info">
-              <div class="day-post-title">Белое кружево Vol.2</div>
+              <div class="day-post-title">White Lace Vol.2</div>
               <div class="day-post-time">19:00 · Subscribers Only</div>
             </div>
             <span class="status-badge status-scheduled">Scheduled</span>
           </div>
         </div>
-        <button class="add-day-btn" onclick="openModal()">+ Add публикацию</button>
+        <button class="add-day-btn" onclick="openModal()">+ Add post</button>
       </div>
 
       <!-- BEST TIME -->
       <div class="sidebar-box">
-        <div class="sidebar-title">Лучшее время</div>
+        <div class="sidebar-title">Best Time</div>
         <div class="heatmap" id="heatmap"></div>
         <div style="margin-top:14px;display:flex;flex-direction:column;gap:6px">
           <div class="time-tip">
             <div class="time-tip-dot" style="background:var(--accent)"></div>
-            <div class="time-tip-text"><strong>Пт–Вс 20:00–23:00</strong> — пиковая активность аудитории</div>
+            <div class="time-tip-text"><strong>Fri–Sun 20:00–23:00</strong> — peak audience activity</div>
           </div>
           <div class="time-tip">
             <div class="time-tip-dot" style="background:var(--accent2)"></div>
-            <div class="time-tip-text"><strong>Вт–Чт 19:00–21:00</strong> — хорошая активность</div>
+            <div class="time-tip-text"><strong>Tue–Thu 19:00–21:00</strong> — good activity</div>
           </div>
           <div class="time-tip">
             <div class="time-tip-dot" style="background:var(--border)"></div>
-            <div class="time-tip-text"><strong>Пн–Вт 8:00–14:00</strong> — низкая активность</div>
+            <div class="time-tip-text"><strong>Mon–Tue 8:00–14:00</strong> — low activity</div>
           </div>
         </div>
       </div>
 
       <!-- ANALYTICS MINI -->
       <div class="sidebar-box">
-        <div class="sidebar-title">Статистика мая</div>
+        <div class="sidebar-title">May Statistics</div>
         <div style="display:flex;flex-direction:column;gap:10px">
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:13px;color:var(--muted)">Публикаций</span>
+            <span style="font-size:13px;color:var(--muted)">Posts</span>
             <span style="font-size:14px;font-weight:700">12</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:13px;color:var(--muted)">Среднее лайков</span>
+            <span style="font-size:13px;color:var(--muted)">Avg. Likes</span>
             <span style="font-size:14px;font-weight:700;color:var(--accent)">847</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:13px;color:var(--muted)">Охват</span>
+            <span style="font-size:13px;color:var(--muted)">Reach</span>
             <span style="font-size:14px;font-weight:700">28.4K</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:13px;color:var(--muted)">Income от контента</span>
+            <span style="font-size:13px;color:var(--muted)">Content Income</span>
             <span style="font-size:14px;font-weight:700;color:var(--green)">$1,240</span>
           </div>
         </div>
-        <a href="analytics.html" style="display:block;text-align:center;margin-top:14px;padding:9px;background:var(--card2);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:var(--muted);text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">Полная аналитика →</a>
+        <a href="analytics.html" style="display:block;text-align:center;margin-top:14px;padding:9px;background:var(--card2);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:var(--muted);text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">Full Analytics →</a>
       </div>
     </div>
 
@@ -489,23 +489,23 @@ button,a,[role="button"]{min-height:36px}
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
 
-    <div class="upload-mini" onclick="showToast('Откроется загрузка файлов...')">
+    <div class="upload-mini" onclick="showToast('File upload will open...')">
       <div class="upload-mini-icon">📎</div>
-      <div class="upload-mini-text">Перетащите файлы сюда или нажмите чтобы выбрать</div>
+      <div class="upload-mini-text">Drag files here or click to select</div>
     </div>
 
     <div class="field">
-      <label>Заголовок (необязательно)</label>
-      <input type="text" id="postTitle" placeholder="Название публикации">
+      <label>Title (optional)</label>
+      <input type="text" id="postTitle" placeholder="Post title">
     </div>
 
     <div class="field">
       <label>Description</label>
-      <textarea id="postDesc" rows="3" placeholder="Расскажите subscriberам о контенте..." style="resize:vertical"></textarea>
+      <textarea id="postDesc" rows="3" placeholder="Tell your subscribers about the content..." style="resize:vertical"></textarea>
     </div>
 
     <div class="field">
-      <label>Type доступа</label>
+      <label>Access type</label>
       <div class="type-radios" id="typeRadios">
         <div class="type-radio" onclick="selType(this,'free')">🆓 Free</div>
         <div class="type-radio sel" onclick="selType(this,'subs')">🔒 Subscribers Only</div>
@@ -520,42 +520,42 @@ button,a,[role="button"]{min-height:36px}
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div class="field" style="margin-bottom:0">
-        <label>Date публикации</label>
+        <label>Publication date</label>
         <input type="date" id="postDate" value="2026-05-07">
       </div>
       <div class="field" style="margin-bottom:0">
-        <label>Time (МСК)</label>
+        <label>Time (UTC)</label>
         <input type="time" id="postTime" value="19:00">
       </div>
     </div>
 
     <div class="smart-time" id="smartTimeTip">
-      📌 Лучшее время: пятница 21:00 — ваша аудитория наиболее активна
+      📌 Best time: Friday 21:00 — your audience is most active
     </div>
 
     <div class="field" style="margin-top:14px">
-      <label>Теги</label>
+      <label>Tags</label>
       <input type="text" id="postTags" placeholder="#lingerie #exclusive #boudoir">
     </div>
 
     <div class="field">
-      <label>Add в коллекцию</label>
+      <label>Add to collection</label>
       <select>
-        <option>Без коллекции</option>
-        <option>Белое кружево</option>
+        <option>No collection</option>
+        <option>White Lace</option>
         <option>Behind the Scenes</option>
-        <option>Летняя серия</option>
-        <option>+ Создать новую...</option>
+        <option>Summer Series</option>
+        <option>+ Create new...</option>
       </select>
     </div>
 
     <div style="display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:14px">
       <input type="checkbox" id="remindMe" checked style="accent-color:var(--accent);width:16px;height:16px;cursor:pointer">
-      <label for="remindMe" style="font-size:13px;cursor:pointer">Уведомить меня за 30 минут до публикации</label>
+      <label for="remindMe" style="font-size:13px;cursor:pointer">Notify me 30 minutes before publishing</label>
     </div>
 
     <div class="modal-footer">
-      <button class="btn-draft" onclick="saveDraft()">📝 В черновик</button>
+      <button class="btn-draft" onclick="saveDraft()">📝 Save draft</button>
       <button class="btn-primary" onclick="schedulePost()">📅 Schedule</button>
     </div>
   </div>
@@ -566,23 +566,23 @@ button,a,[role="button"]{min-height:36px}
 <script>
 // ── DATA ──
 const POSTS = [
-  {day:1, title:'Утренние фото', type:'photo', access:'subs', status:'published', time:'10:00'},
+  {day:1, title:'Morning Photos', type:'photo', access:'subs', status:'published', time:'10:00'},
   {day:3, title:'Video BTS', type:'video', access:'subs', status:'published', time:'18:00'},
-  {day:7, title:'Белое кружево Vol.2', type:'photo', access:'subs', status:'scheduled', time:'19:00'},
+  {day:7, title:'White Lace Vol.2', type:'photo', access:'subs', status:'scheduled', time:'19:00'},
   {day:10, title:'PPV — Exclusive set', type:'photo', access:'ppv', status:'scheduled', time:'20:00', price:'$25'},
-  {day:12, title:'Анонс эфира', type:'text', access:'free', status:'scheduled', time:'18:00'},
-  {day:15, title:'Летняя серия', type:'photo', access:'subs', status:'draft', time:'15:00'},
-  {day:17, title:'Приватное видео', type:'video', access:'ppv', status:'scheduled', time:'21:00', price:'$15'},
-  {day:20, title:'За кулисами', type:'photo', access:'subs', status:'scheduled', time:'15:00'},
-  {day:23, title:'Live-анонс', type:'text', access:'free', status:'scheduled', time:'17:00'},
+  {day:12, title:'Stream announcement', type:'text', access:'free', status:'scheduled', time:'18:00'},
+  {day:15, title:'Summer Series', type:'photo', access:'subs', status:'draft', time:'15:00'},
+  {day:17, title:'Private video', type:'video', access:'ppv', status:'scheduled', time:'21:00', price:'$15'},
+  {day:20, title:'Behind the Scenes', type:'photo', access:'subs', status:'scheduled', time:'15:00'},
+  {day:23, title:'Live announcement', type:'text', access:'free', status:'scheduled', time:'17:00'},
   {day:25, title:'Lingerie Vol.3', type:'photo', access:'subs', status:'draft', time:'20:00'},
 ];
 
 const TYPE_ICONS = {photo:'📸', video:'🎬', text:'📝'};
 const STATUS_CLASS = {published:'status-published', scheduled:'status-scheduled', draft:'status-draft'};
 const STATUS_LABEL = {published:'Published', scheduled:'Scheduled', draft:'Draft'};
-const MONTHS_RU = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-const DAYS_RU = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS_EN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
 let currentYear = 2026, currentMonth = 4; // May = 4 (0-indexed)
 let currentView = 'calendar';
@@ -592,7 +592,7 @@ let selectedDay = 7;
 function renderCalendar() {
   const grid = document.getElementById('calGrid');
   grid.innerHTML = '';
-  document.getElementById('calMonthLabel').textContent = MONTHS_RU[currentMonth] + ' ' + currentYear;
+  document.getElementById('calMonthLabel').textContent = MONTHS_EN[currentMonth] + ' ' + currentYear;
 
   const firstDay = new Date(currentYear, currentMonth, 1);
   const lastDay = new Date(currentYear, currentMonth + 1, 0);
@@ -649,7 +649,7 @@ function makeCell(day, otherMonth, isToday, isSelected, posts) {
     if (posts.length > 2) {
       const more = document.createElement('div');
       more.className = 'cal-post more';
-      more.textContent = '+' + (posts.length - 2) + ' ещё';
+      more.textContent = '+' + (posts.length - 2) + ' more';
       cell.appendChild(more);
     }
   }
@@ -661,15 +661,15 @@ function selectDay(d) {
   renderCalendar();
 
   const date = new Date(currentYear, currentMonth, d);
-  const dayName = DAYS_RU[date.getDay()];
-  const monthName = MONTHS_RU[currentMonth];
+  const dayName = DAYS_EN[date.getDay()];
+  const monthName = MONTHS_EN[currentMonth];
   document.getElementById('dayPanelTitle').textContent = dayName + ', ' + d + ' ' + monthName + ' ' + currentYear;
 
   const posts = POSTS.filter(p => p.day === d);
   const container = document.getElementById('dayPanelPosts');
   container.innerHTML = '';
   if (posts.length === 0) {
-    container.innerHTML = '<div style="font-size:13px;color:var(--dim);text-align:center;padding:16px 0;">Нет публикаций в этот день</div>';
+    container.innerHTML = '<div style="font-size:13px;color:var(--dim);text-align:center;padding:16px 0;">No posts on this day</div>';
   } else {
     posts.forEach(p => {
       container.innerHTML += `
@@ -704,7 +704,7 @@ function renderList() {
     div.innerHTML = `
       <div class="list-date">
         <div class="list-date-day">${p.day}</div>
-        <div class="list-date-mon">МАЙ</div>
+        <div class="list-date-mon">MAY</div>
         <div class="list-time">${p.time}</div>
       </div>
       <div class="list-thumb" style="background:${p.status==='published'?'rgba(0,230,118,.1)':p.status==='draft'?'rgba(255,179,0,.1)':'rgba(139,43,226,.1)'}">
@@ -718,8 +718,8 @@ function renderList() {
         </div>
       </div>
       <div class="list-actions">
-        <div class="icon-btn" title="Edit" onclick="showToast('Редактирование...')">✏️</div>
-        <div class="icon-btn" title="Delete" onclick="this.closest('.list-item').remove();showToast('Удалено')">🗑️</div>
+        <div class="icon-btn" title="Edit" onclick="showToast('Editing...')">✏️</div>
+        <div class="icon-btn" title="Delete" onclick="this.closest('.list-item').remove();showToast('Deleted')">🗑️</div>
       </div>`;
     container.appendChild(div);
   });
@@ -738,7 +738,7 @@ function switchView(view, btn) {
 // ── HEATMAP ──
 function renderHeatmap() {
   const hm = document.getElementById('heatmap');
-  const days = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
   const hours = ['8','12','16','20'];
   // 4 time slots × 7 days matrix (intensity 0-1)
   const data = [
@@ -767,7 +767,7 @@ function renderHeatmap() {
       cell.className = 'hm-cell';
       const r = Math.round(212 * val), g = Math.round(43 * val), b = Math.round(106 * val);
       cell.style.background = val > 0.15 ? `rgba(${r+50},${g},${b+50},${val * 0.9})` : 'var(--border)';
-      cell.title = Math.round(val * 100) + '% активность';
+      cell.title = Math.round(val * 100) + '% activity';
       hm.appendChild(cell);
     });
   });
@@ -798,8 +798,8 @@ function updateSmartTime() {
   if (!date) return;
   const d = new Date(date);
   const dow = d.getDay();
-  const tips = ['вс 20:00', 'пн 19:00', 'вт 20:00', 'ср 20:00', 'чт 20:00', 'пт 21:00', 'сб 21:00'];
-  document.getElementById('smartTimeTip').innerHTML = '📌 Лучшее время: ' + tips[dow] + ' — ваша аудитория наиболее активна в этот день';
+  const tips = ['Sun 20:00', 'Mon 19:00', 'Tue 20:00', 'Wed 20:00', 'Thu 20:00', 'Fri 21:00', 'Sat 21:00'];
+  document.getElementById('smartTimeTip').innerHTML = '📌 Best Time: ' + tips[dow] + ' — your audience is most active on this day';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -810,14 +810,14 @@ function schedulePost() {
   const title = document.getElementById('postTitle').value || 'New Post';
   const date = document.getElementById('postDate').value;
   const time = document.getElementById('postTime').value;
-  if (!date) { showToast('Укажите дату!'); return; }
+  if (!date) { showToast('Please specify a date!'); return; }
 
   // Add to list
   const d = new Date(date);
   POSTS.push({ day: d.getDate(), title, type:'photo', access:'subs', status:'scheduled', time });
   closeModal();
   renderCalendar();
-  showToast('📅 Post запланирована на ' + d.getDate() + ' ' + MONTHS_RU[d.getMonth()] + ' ' + time);
+  showToast('📅 Post scheduled for ' + d.getDate() + ' ' + MONTHS_EN[d.getMonth()] + ' ' + time);
 }
 
 function saveDraft() {
@@ -825,7 +825,7 @@ function saveDraft() {
   POSTS.push({ day: new Date().getDate(), title, type:'photo', access:'subs', status:'draft', time:'—' });
   closeModal();
   renderCalendar();
-  showToast('📝 Сохранено в черновики');
+  showToast('📝 Saved to drafts');
 }
 
 // ── TOAST ──
@@ -859,7 +859,7 @@ selectDay(7);
 if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('../sw.js').catch(() => {}); }); }
 </script>
 
-<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../schedule.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="schedule.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="schedule.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="schedule.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
 
 <!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
 <style>
@@ -881,7 +881,7 @@ if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navi
 .kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
 </style>
 <div id="kol-cookie-banner">
-  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <p>🍪 We use cookies to improve your experience. <a href="cookie.html">Learn more</a></p>
   <div class="kol-cookie-btns">
     <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
     <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
@@ -945,40 +945,40 @@ if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navi
 
 <!-- FAB -->
 <div id="kol-fab-menu">
-  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
-  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
-  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Upload</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Message</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Search</a>
 </div>
-<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+<button id="kol-fab" aria-label="Quick actions" onclick="kolToggleFab()">＋</button>
 
 <!-- Keyboard shortcuts hint -->
-<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — keyboard shortcuts</div>
 
 <!-- Keyboard shortcuts modal -->
 <div id="kol-shortcuts-modal">
   <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
   <div id="kol-shortcuts-box">
-    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
-    <h3>⌨️ Горячие клавиши</h3>
+    <button id="kol-shortcuts-close" aria-label="Close" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Keyboard Shortcuts</h3>
     <div class="kol-sc-group">
-      <h4>Навигация</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+      <h4>Navigation</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Feed</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Search</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Messages</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Notifications</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Profile</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Creator dashboard</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Действия</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+      <h4>Actions</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Upload content</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Toggle theme</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Report</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Интерфейс</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+      <h4>Interface</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">This panel</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Close modal</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
     </div>
   </div>
 </div>
@@ -1065,7 +1065,7 @@ document.addEventListener('keydown', function(e){
       return;
     case '/':
       e.preventDefault();
-      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      var si = document.querySelector('input[type="search"],input[placeholder*="search"],#searchInput');
       if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
       return;
     case 'n': case 'N':

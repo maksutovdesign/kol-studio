@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Статус сервисов — KOL Studio</title>
+  <title>Service Status — KOL Studio</title>
   <link rel="manifest" href="../manifest.json"><link rel="icon" href="../icons/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -274,99 +274,99 @@ button,a,[role="button"]{min-height:36px}
 </style>
 </head>
 <body>
-<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="../index.html">🏠 Главная</a><span class="sep">›</span><span class="current">Статус сервисов</span></nav>
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="index.html">🏠 Home</a><span class="sep">›</span><span class="current">Service Status</span></nav>
   <header>
     <div class="hi">
-      <a href="../index.html" class="logo">KOL Studio</a>
-      <nav style="display:flex;gap:20px"><a href="../help.html" style="color:var(--text2);font-size:14px;text-decoration:none">Помощь</a><a href="../feed.html" style="color:var(--text2);font-size:14px;text-decoration:none">Лента</a></nav>
+      <a href="index.html" class="logo">KOL Studio</a>
+      <nav style="display:flex;gap:20px"><a href="help.html" style="color:var(--text2);font-size:14px;text-decoration:none">Help</a><a href="feed.html" style="color:var(--text2);font-size:14px;text-decoration:none">Feed</a></nav>
     </div>
   </header>
 
   <div class="wrap">
-    <h1 style="font-size:28px;font-weight:800;margin-bottom:8px">Статус сервисов KOL Studio</h1>
-    <p style="color:var(--text2);margin-bottom:24px">Обновляется каждые 60 секунд</p>
+    <h1 style="font-size:28px;font-weight:800;margin-bottom:8px">KOL Studio Service Status</h1>
+    <p style="color:var(--text2);margin-bottom:24px">Updates every 60 seconds</p>
 
     <div class="status-banner all-good" id="mainBanner">
       <div class="status-dot-large dot-green"></div>
       <div>
-        <h2 style="color:var(--green)">✅ Все системы работают нормально</h2>
-        <p>Последнее обновление: <span id="lastUpdate">только что</span></p>
+        <h2 style="color:var(--green)">✅ All systems operational</h2>
+        <p>Last updated: <span id="lastUpdate">just now</span></p>
       </div>
-      <button onclick="simulateDegraded()" style="margin-left:auto;background:none;border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text3);font-size:11px;cursor:pointer;font-family:inherit">Demo: сбой ⚠️</button>
+      <button onclick="simulateDegraded()" style="margin-left:auto;background:none;border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text3);font-size:11px;cursor:pointer;font-family:inherit">Demo: outage ⚠️</button>
     </div>
 
     <div class="services-grid">
-      <div class="svc-card"><span class="svc-icon">🌐</span><div class="svc-info"><div class="svc-name">Веб-сайт</div><div class="svc-status"><span class="status-dot dot-green"></span>Работает</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">99 мс</div><div class="svc-uptime">99.98%</div></div></div>
-      <div class="svc-card"><span class="svc-icon">📱</span><div class="svc-info"><div class="svc-name">Мобильное приложение</div><div class="svc-status"><span class="status-dot dot-green"></span>Работает</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">124 мс</div><div class="svc-uptime">99.95%</div></div></div>
-      <div class="svc-card"><span class="svc-icon">🎬</span><div class="svc-info"><div class="svc-name">Видеостриминг</div><div class="svc-status"><span class="status-dot dot-green"></span>Работает</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">89 мс</div><div class="svc-uptime">99.87%</div></div></div>
-      <div class="svc-card"><span class="svc-icon">💳</span><div class="svc-info"><div class="svc-name">Платёжная система</div><div class="svc-status"><span class="status-dot dot-green"></span>Работает</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">156 мс</div><div class="svc-uptime">99.99%</div></div></div>
-      <div class="svc-card"><span class="svc-icon">💬</span><div class="svc-info"><div class="svc-name">Сообщения</div><div class="svc-status"><span class="status-dot dot-green"></span>Работает</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">67 мс</div><div class="svc-uptime">99.94%</div></div></div>
-      <div class="svc-card"><span class="svc-icon">🔔</span><div class="svc-info"><div class="svc-name">Уведомления</div><div class="svc-status"><span class="status-dot dot-green"></span>Работает</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">45 мс</div><div class="svc-uptime">99.91%</div></div></div>
-      <div class="svc-card" id="svc-upload"><span class="svc-icon">📤</span><div class="svc-info"><div class="svc-name">Загрузка файлов</div><div class="svc-status" id="upload-status"><span class="status-dot dot-green"></span>Работает</div></div><div class="svc-meta"><div class="svc-ping" id="upload-ping" style="color:var(--green)">312 мс</div><div class="svc-uptime">99.82%</div></div></div>
-      <div class="svc-card"><span class="svc-icon">🔍</span><div class="svc-info"><div class="svc-name">Поиск</div><div class="svc-status"><span class="status-dot dot-green"></span>Работает</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">112 мс</div><div class="svc-uptime">99.76%</div></div></div>
-      <div class="svc-card"><span class="svc-icon">📊</span><div class="svc-info"><div class="svc-name">Аналитика</div><div class="svc-status"><span class="status-dot dot-green"></span>Работает</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">203 мс</div><div class="svc-uptime">99.88%</div></div></div>
-      <div class="svc-card"><span class="svc-icon">🔗</span><div class="svc-info"><div class="svc-name">CDN / Контент</div><div class="svc-status"><span class="status-dot dot-green"></span>Работает</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">34 мс</div><div class="svc-uptime">99.99%</div></div></div>
+      <div class="svc-card"><span class="svc-icon">🌐</span><div class="svc-info"><div class="svc-name">Website</div><div class="svc-status"><span class="status-dot dot-green"></span>Operational</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">99 ms</div><div class="svc-uptime">99.98%</div></div></div>
+      <div class="svc-card"><span class="svc-icon">📱</span><div class="svc-info"><div class="svc-name">Mobile App</div><div class="svc-status"><span class="status-dot dot-green"></span>Operational</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">124 ms</div><div class="svc-uptime">99.95%</div></div></div>
+      <div class="svc-card"><span class="svc-icon">🎬</span><div class="svc-info"><div class="svc-name">Video Streaming</div><div class="svc-status"><span class="status-dot dot-green"></span>Operational</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">89 ms</div><div class="svc-uptime">99.87%</div></div></div>
+      <div class="svc-card"><span class="svc-icon">💳</span><div class="svc-info"><div class="svc-name">Payment System</div><div class="svc-status"><span class="status-dot dot-green"></span>Operational</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">156 ms</div><div class="svc-uptime">99.99%</div></div></div>
+      <div class="svc-card"><span class="svc-icon">💬</span><div class="svc-info"><div class="svc-name">Messages</div><div class="svc-status"><span class="status-dot dot-green"></span>Operational</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">67 ms</div><div class="svc-uptime">99.94%</div></div></div>
+      <div class="svc-card"><span class="svc-icon">🔔</span><div class="svc-info"><div class="svc-name">Notifications</div><div class="svc-status"><span class="status-dot dot-green"></span>Operational</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">45 ms</div><div class="svc-uptime">99.91%</div></div></div>
+      <div class="svc-card" id="svc-upload"><span class="svc-icon">📤</span><div class="svc-info"><div class="svc-name">File Uploads</div><div class="svc-status" id="upload-status"><span class="status-dot dot-green"></span>Operational</div></div><div class="svc-meta"><div class="svc-ping" id="upload-ping" style="color:var(--green)">312 ms</div><div class="svc-uptime">99.82%</div></div></div>
+      <div class="svc-card"><span class="svc-icon">🔍</span><div class="svc-info"><div class="svc-name">Search</div><div class="svc-status"><span class="status-dot dot-green"></span>Operational</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">112 ms</div><div class="svc-uptime">99.76%</div></div></div>
+      <div class="svc-card"><span class="svc-icon">📊</span><div class="svc-info"><div class="svc-name">Analytics</div><div class="svc-status"><span class="status-dot dot-green"></span>Operational</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">203 ms</div><div class="svc-uptime">99.88%</div></div></div>
+      <div class="svc-card"><span class="svc-icon">🔗</span><div class="svc-info"><div class="svc-name">CDN / Content</div><div class="svc-status"><span class="status-dot dot-green"></span>Operational</div></div><div class="svc-meta"><div class="svc-ping" style="color:var(--green)">34 ms</div><div class="svc-uptime">99.99%</div></div></div>
     </div>
 
     <div class="uptime-section">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <h3>Аптайм за 90 дней</h3>
+        <h3>90-Day Uptime</h3>
         <span style="font-size:13px;color:var(--green);font-weight:600">99.94% avg</span>
       </div>
       <div class="uptime-bars" id="uptimeBars"></div>
-      <div class="uptime-labels"><span>90 дней назад</span><span>Сейчас</span></div>
+      <div class="uptime-labels"><span>90 days ago</span><span>Now</span></div>
       <div class="uptime-legend">
-        <span><div class="leg-dot" style="background:var(--green)"></div>Норма</span>
-        <span><div class="leg-dot" style="background:var(--gold)"></div>Частичный сбой</span>
-        <span><div class="leg-dot" style="background:#e74c3c"></div>Сбой</span>
+        <span><div class="leg-dot" style="background:var(--green)"></div>Normal</span>
+        <span><div class="leg-dot" style="background:var(--gold)"></div>Partial outage</span>
+        <span><div class="leg-dot" style="background:#e74c3c"></div>Outage</span>
       </div>
     </div>
 
     <div class="incidents-section">
-      <h3>История инцидентов (последние 7 дней)</h3>
+      <h3>Incident History (last 7 days)</h3>
       <div class="incident-day">
         <div class="incident-day-hdr" onclick="this.parentElement.classList.toggle('open')">
-          <span class="inc-date">Сегодня, 26 апреля 2026</span>
-          <span class="inc-badge ok">✓ Без инцидентов</span>
+          <span class="inc-date">Today, April 26, 2026</span>
+          <span class="inc-badge ok">✓ No incidents</span>
         </div>
-        <div class="incident-detail">Все системы работали в штатном режиме в течение всего дня.</div>
+        <div class="incident-detail">All systems operated normally throughout the day.</div>
       </div>
       <div class="incident-day">
         <div class="incident-day-hdr" onclick="this.parentElement.classList.toggle('open')">
-          <span class="inc-date">25 апреля 2026</span>
-          <span class="inc-badge warn">⚠️ Частичный сбой</span>
+          <span class="inc-date">April 25, 2026</span>
+          <span class="inc-badge warn">⚠️ Partial outage</span>
         </div>
-        <div class="incident-detail"><strong>14:00–15:30 UTC</strong> — Замедленная загрузка файлов. Причина: перегрузка CDN-узла в Европе. Решено переключением трафика на резервный узел. Пострадавшие пользователи: ~2,400. Статус: <strong style="color:var(--green)">Исправлено</strong></div>
+        <div class="incident-detail"><strong>14:00–15:30 UTC</strong> — Slow file uploads. Cause: overload of a CDN node in Europe. Resolved by rerouting traffic to a backup node. Affected users: ~2,400. Status: <strong style="color:var(--green)">Resolved</strong></div>
       </div>
       <div class="incident-day">
         <div class="incident-day-hdr" onclick="this.parentElement.classList.toggle('open')">
-          <span class="inc-date">23 апреля 2026</span>
-          <span class="inc-badge warn">⚠️ Кратковременный сбой</span>
+          <span class="inc-date">April 23, 2026</span>
+          <span class="inc-badge warn">⚠️ Brief outage</span>
         </div>
-        <div class="incident-detail"><strong>09:12–09:17 UTC</strong> — Платёжная система недоступна в течение 5 минут. Причина: плановое обновление на стороне Stripe. Транзакции были повторно обработаны автоматически. Статус: <strong style="color:var(--green)">Исправлено</strong></div>
+        <div class="incident-detail"><strong>09:12–09:17 UTC</strong> — Payment system unavailable for 5 minutes. Cause: scheduled maintenance on Stripe's side. Transactions were reprocessed automatically. Status: <strong style="color:var(--green)">Resolved</strong></div>
       </div>
       <div class="incident-day">
         <div class="incident-day-hdr" onclick="this.parentElement.classList.toggle('open')">
-          <span class="inc-date">22 апреля 2026</span>
-          <span class="inc-badge ok">✓ Без инцидентов</span>
+          <span class="inc-date">April 22, 2026</span>
+          <span class="inc-badge ok">✓ No incidents</span>
         </div>
-        <div class="incident-detail">Все системы работали в штатном режиме.</div>
+        <div class="incident-detail">All systems operated normally.</div>
       </div>
       <div class="incident-day">
         <div class="incident-day-hdr" onclick="this.parentElement.classList.toggle('open')">
-          <span class="inc-date">20 апреля 2026</span>
-          <span class="inc-badge ok">✓ Без инцидентов</span>
+          <span class="inc-date">April 20, 2026</span>
+          <span class="inc-badge ok">✓ No incidents</span>
         </div>
-        <div class="incident-detail">Все системы работали в штатном режиме.</div>
+        <div class="incident-detail">All systems operated normally.</div>
       </div>
     </div>
 
     <div class="sub-section">
-      <h3>🔔 Получать уведомления об инцидентах</h3>
-      <p>Мы уведомим вас немедленно при возникновении любых проблем с платформой</p>
+      <h3>🔔 Get incident notifications</h3>
+      <p>We will notify you immediately when any platform issues arise</p>
       <div class="sub-row">
         <input type="email" placeholder="your@email.com">
-        <button onclick="kolShowToast('Подписка оформлена! ✓','success')">Подписаться</button>
+        <button onclick="kolShowToast('Subscribed! ✓','success')">Subscribe</button>
       </div>
     </div>
   </div>
@@ -374,11 +374,11 @@ button,a,[role="button"]{min-height:36px}
   <footer>
     <div class="fi">
       <div class="fl">
-        <a href="../terms.html">Условия</a><a href="../privacy.html">Конфиденциальность</a>
-        <a href="../cookie.html">Cookie</a><a href="../help.html">Помощь</a>
+        <a href="terms.html">Terms</a><a href="privacy.html">Privacy</a>
+        <a href="cookie.html">Cookie</a><a href="help.html">Help</a>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
-        <div class="ls"><a href="../status.html" class="active">🇷🇺 RU</a><span>|</span><a href="status.html">🇬🇧 EN</a></div>
+        <div class="ls"><a href="status.html" class="active">🇷🇺 RU</a><span>|</span><a href="status.html">🇬🇧 EN</a></div>
         <span style="color:var(--text3);font-size:13px">© 2026 KOL Studio</span>
       </div>
     </div>
@@ -404,21 +404,21 @@ button,a,[role="button"]{min-height:36px}
       const up=document.getElementById('upload-ping');
       if(b.classList.contains('all-good')){
         b.classList.remove('all-good');b.classList.add('degraded');
-        b.querySelector('h2').textContent='⚠️ Частичные неполадки';b.querySelector('h2').style.color='var(--gold)';
+        b.querySelector('h2').textContent='⚠️ Partial disruption';b.querySelector('h2').style.color='var(--gold)';
         b.querySelector('.status-dot-large').className='status-dot-large dot-gold';
-        us.innerHTML='<span class="status-dot dot-gold"></span>Деградация производительности';
-        up.textContent='892 мс';up.style.color='var(--gold)';
+        us.innerHTML='<span class="status-dot dot-gold"></span>Performance degraded';
+        up.textContent='892 ms';up.style.color='var(--gold)';
       } else {
         b.classList.add('all-good');b.classList.remove('degraded');
-        b.querySelector('h2').textContent='✅ Все системы работают нормально';b.querySelector('h2').style.color='var(--green)';
+        b.querySelector('h2').textContent='✅ All systems operational';b.querySelector('h2').style.color='var(--green)';
         b.querySelector('.status-dot-large').className='status-dot-large dot-green';
-        us.innerHTML='<span class="status-dot dot-green"></span>Работает';
-        up.textContent='312 мс';up.style.color='var(--green)';
+        us.innerHTML='<span class="status-dot dot-green"></span>Operational';
+        up.textContent='312 ms';up.style.color='var(--green)';
       }
     }
 
     // Update time
-    function updateTime(){document.getElementById('lastUpdate').textContent=new Date().toLocaleTimeString('ru')}
+    function updateTime(){document.getElementById('lastUpdate').textContent=new Date().toLocaleTimeString('en')}
     updateTime();setInterval(updateTime,60000);
 
     document.addEventListener('DOMContentLoaded',()=>{
@@ -444,7 +444,7 @@ button,a,[role="button"]{min-height:36px}
 /* ── Theme Toggle ── */
 #kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
 #kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
-body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;--text-sub:#6060A0;--text-muted:#8080A8;background:#F5F5FA;color:#1A1A2E}
 
 /* ── PWA Install Prompt ── */
 #kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
@@ -481,54 +481,54 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
 
 <!-- GDPR Cookie Banner -->
 <div id="kol-cookie-banner">
-  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="../cookie.html">Подробнее</a> · <a href="../report.html">Report</a> · <a href="../api-docs.html">API</a></p>
+  <p>🍪 We use cookies to improve your experience and analyze traffic. <a href="cookie.html">Learn more</a> · <a href="report.html">Report</a> · <a href="api-docs.html">API</a></p>
   <div class="kol-cookie-btns">
-    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
-    <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
-    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Принять все</button>
+    <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Settings</button>
+    <button class="kol-cb-reject" onclick="kolRejectCookies()">Necessary only</button>
+    <button class="kol-cb-accept" onclick="kolAcceptCookies()">Accept all</button>
   </div>
 </div>
 
 <!-- Cookie Settings Modal -->
 <div id="kol-cookie-modal">
   <div class="kol-cm-card">
-    <h3>🍪 Настройки Cookie</h3>
-    <p>Выберите, какие файлы cookie вы разрешаете. Необходимые cookie всегда активны — без них сайт не может работать корректно.</p>
+    <h3>🍪 Cookie Settings</h3>
+    <p>Choose which cookies you allow. Necessary cookies are always active — without them the site cannot function properly.</p>
     <div class="kol-cm-row">
-      <div class="info"><strong>Необходимые</strong><span>Аутентификация, безопасность, основные функции</span></div>
+      <div class="info"><strong>Necessary</strong><span>Authentication, security, core features</span></div>
       <label class="kol-toggle-wrap"><input type="checkbox" checked disabled><span class="kol-toggle-slider"></span></label>
     </div>
     <div class="kol-cm-row">
-      <div class="info"><strong>Аналитические</strong><span>Статистика посещений, улучшение UX</span></div>
+      <div class="info"><strong>Analytics</strong><span>Visit statistics, UX improvements</span></div>
       <label class="kol-toggle-wrap"><input type="checkbox" id="kol-analytics-toggle" checked><span class="kol-toggle-slider"></span></label>
     </div>
     <div class="kol-cm-row">
-      <div class="info"><strong>Маркетинговые</strong><span>Персонализированная реклама, ретаргетинг</span></div>
+      <div class="info"><strong>Marketing</strong><span>Personalised ads, retargeting</span></div>
       <label class="kol-toggle-wrap"><input type="checkbox" id="kol-marketing-toggle"><span class="kol-toggle-slider"></span></label>
     </div>
     <div class="kol-cm-row">
-      <div class="info"><strong>Предпочтения</strong><span>Тема, язык, пользовательские настройки</span></div>
+      <div class="info"><strong>Preferences</strong><span>Theme, language, user settings</span></div>
       <label class="kol-toggle-wrap"><input type="checkbox" id="kol-prefs-toggle" checked><span class="kol-toggle-slider"></span></label>
     </div>
     <div class="kol-cm-btns">
-      <button class="kol-cm-all" onclick="kolAcceptCookies()">Принять все</button>
-      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Сохранить выбор</button>
+      <button class="kol-cm-all" onclick="kolAcceptCookies()">Accept all</button>
+      <button class="kol-cm-save" onclick="kolSaveCookieSettings()">Save preferences</button>
     </div>
   </div>
 </div>
 
 <!-- Theme Toggle Button -->
-<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Переключить тему">🌙</button>
+<button id="kol-theme-btn" onclick="kolToggleTheme()" title="Toggle theme">🌙</button>
 
 <!-- PWA Install Prompt -->
 <div id="kol-pwa-prompt">
   <div class="pwa-icon">📱</div>
   <div class="pwa-text">
-    <strong>Установить KOL Studio</strong>
-    <span>Работает офлайн • Быстрее браузера</span>
+    <strong>Install KOL Studio</strong>
+    <span>Works offline • Faster than the browser</span>
   </div>
-  <button class="kol-pwa-install" id="kol-pwa-install-btn">Установить</button>
-  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Закрыть">×</button>
+  <button class="kol-pwa-install" id="kol-pwa-install-btn">Install</button>
+  <button class="kol-pwa-dismiss" onclick="kolDismissPWA()" aria-label="Close">×</button>
 </div>
 
 <script>
@@ -556,7 +556,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
     }));
     kolHideBanner();
     document.getElementById('kol-cookie-modal').classList.remove('open');
-    kolShowToast('Настройки cookie сохранены ✓');
+    kolShowToast('Cookie settings saved ✓');
   };
 
   window.kolRejectCookies = function(){
@@ -565,7 +565,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
       date: new Date().toISOString(), version:'2.0'
     }));
     kolHideBanner();
-    kolShowToast('Только необходимые cookie активированы');
+    kolShowToast('Only necessary cookies activated');
   };
 
   window.kolSaveCookieSettings = function(){
@@ -578,7 +578,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
     }));
     kolHideBanner();
     document.getElementById('kol-cookie-modal').classList.remove('open');
-    kolShowToast('Настройки cookie сохранены ✓');
+    kolShowToast('Cookie settings saved ✓');
   };
 
   window.kolOpenCookieSettings = function(){
@@ -636,7 +636,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
       deferredPrompt.userChoice.then(function(result){
         if(result.outcome === 'accepted'){
           localStorage.setItem('kol_pwa_installed', '1');
-          kolShowToast('KOL Studio установлена! 🎉');
+          kolShowToast('KOL Studio installed! 🎉');
         }
         pwaPrompt.classList.remove('show');
         deferredPrompt = null;
@@ -720,40 +720,40 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
 
 <!-- FAB -->
 <div id="kol-fab-menu">
-  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
-  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
-  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Upload</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Message</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Search</a>
 </div>
-<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+<button id="kol-fab" aria-label="Quick actions" onclick="kolToggleFab()">＋</button>
 
 <!-- Keyboard shortcuts hint -->
-<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — keyboard shortcuts</div>
 
 <!-- Keyboard shortcuts modal -->
 <div id="kol-shortcuts-modal">
   <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
   <div id="kol-shortcuts-box">
-    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
-    <h3>⌨️ Горячие клавиши</h3>
+    <button id="kol-shortcuts-close" aria-label="Close" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Keyboard Shortcuts</h3>
     <div class="kol-sc-group">
-      <h4>Навигация</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+      <h4>Navigation</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Feed</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Search</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Messages</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Notifications</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Profile</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Creator dashboard</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Действия</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+      <h4>Actions</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Upload content</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Toggle theme</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Report</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Интерфейс</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+      <h4>Interface</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">This panel</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Close modal</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
     </div>
   </div>
 </div>
@@ -840,7 +840,7 @@ document.addEventListener('keydown', function(e){
       return;
     case '/':
       e.preventDefault();
-      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      var si = document.querySelector('input[type="search"],input[placeholder*="earch"],#searchInput');
       if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
       return;
     case 'n': case 'N':
