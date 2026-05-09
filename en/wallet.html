@@ -836,12 +836,12 @@ button,a,[role="button"]{min-height:36px}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <path d="M19 12H5M12 5l-7 7 7 7"/>
       </svg>
-      Назад
+      Back
     </a>
-    <div class="top-bar-title">Кошелёк</div>
+    <div class="top-bar-title">Wallet</div>
     <div class="role-toggle">
-      <button class="role-btn active" onclick="switchRole('model')" id="btnModel">Модель</button>
-      <button class="role-btn" onclick="switchRole('fan')" id="btnFan">Фан</button>
+      <button class="role-btn active" onclick="switchRole('model')" id="btnModel">Model</button>
+      <button class="role-btn" onclick="switchRole('fan')" id="btnFan">Fan</button>
     </div>
   </div>
 
@@ -852,13 +852,13 @@ button,a,[role="button"]{min-height:36px}
 
       <!-- HERO BALANCE -->
       <div class="hero-card">
-        <div class="hero-label">Доступно к выводу</div>
+        <div class="hero-label">Available for withdrawal</div>
         <div class="hero-amount">$3,847.20</div>
         <div class="hero-frozen">
-          <span>Заморожено (3 дня): $312.00</span>
+          <span>Frozen (3 days): $312.00</span>
           <div class="tooltip-wrap">
             <span class="tooltip-icon">?</span>
-            <div class="tooltip-text">Средства удерживаются 3 дня<br>на период рассмотрения споров</div>
+            <div class="tooltip-text">Funds are held for 3 days<br>during the dispute review period</div>
           </div>
         </div>
         <div class="hero-actions">
@@ -871,7 +871,7 @@ button,a,[role="button"]{min-height:36px}
       <div class="mini-cards">
         <div class="mini-card">
           <div class="mini-card-icon">📅</div>
-          <div class="mini-card-label">Этот месяц</div>
+          <div class="mini-card-label">This month</div>
           <div class="mini-card-value green">$1,240</div>
         </div>
         <div class="mini-card">
@@ -881,12 +881,12 @@ button,a,[role="button"]{min-height:36px}
         </div>
         <div class="mini-card">
           <div class="mini-card-icon">👥</div>
-          <div class="mini-card-label">Активных subscribers</div>
+          <div class="mini-card-label">Active subscribers</div>
           <div class="mini-card-value">847</div>
         </div>
         <div class="mini-card">
           <div class="mini-card-icon">💎</div>
-          <div class="mini-card-label">PPV продаж</div>
+          <div class="mini-card-label">PPV sales</div>
           <div class="mini-card-value">134</div>
         </div>
       </div>
@@ -894,12 +894,12 @@ button,a,[role="button"]{min-height:36px}
       <!-- WITHDRAW SECTION -->
       <div class="section-card" id="withdrawSection">
         <div class="section-title">
-          💳 Вывод средств
-          <span class="chip">Без комиссии</span>
+          💳 Withdraw Funds
+          <span class="chip">No fees</span>
         </div>
 
         <div class="input-group">
-          <label class="input-label">Amount вывода</label>
+          <label class="input-label">Withdrawal amount</label>
           <div class="input-amount-wrap">
             <span class="currency">$</span>
             <input type="number" class="input-field" id="withdrawAmount" value="3847.20" min="50" step="0.01">
@@ -915,27 +915,27 @@ button,a,[role="button"]{min-height:36px}
         <!-- BANK PANEL -->
         <div class="pay-panel active" id="panel-bank">
           <div class="input-group">
-            <label class="input-label">ИНН</label>
-            <input type="text" class="input-field" value="7701234567" placeholder="ИНН">
+            <label class="input-label">Tax ID</label>
+            <input type="text" class="input-field" value="7701234567" placeholder="Tax ID">
           </div>
           <div class="input-group">
-            <label class="input-label">БИК банка</label>
-            <input type="text" class="input-field" value="044525225" placeholder="БИК">
+            <label class="input-label">Bank routing number</label>
+            <input type="text" class="input-field" value="044525225" placeholder="Routing number">
           </div>
           <div class="input-group">
-            <label class="input-label">Расчётный счёт</label>
-            <input type="text" class="input-field" value="40817810099910004312" placeholder="Номер счёта">
+            <label class="input-label">Account number</label>
+            <input type="text" class="input-field" value="40817810099910004312" placeholder="Account number">
           </div>
         </div>
 
         <!-- CRYPTO PANEL -->
         <div class="pay-panel" id="panel-crypto">
           <div class="input-group">
-            <label class="input-label">USDT TRC20 адрес</label>
-            <input type="text" class="input-field" value="TJRabPrwbZy45sbavfcjinPJC2GqqdpsZE" placeholder="Tron адрес">
+            <label class="input-label">USDT TRC20 address</label>
+            <input type="text" class="input-field" value="TJRabPrwbZy45sbavfcjinPJC2GqqdpsZE" placeholder="Tron address">
           </div>
           <div style="font-size:12px;color:var(--text2);padding:8px 12px;background:rgba(255,179,0,0.08);border:1px solid rgba(255,179,0,0.2);border-radius:10px;">
-            ⚠️ Минимальный вывод: $50. Убедитесь в правильности адреса сети TRC20.
+            ⚠️ Minimum withdrawal: $50. Make sure the TRC20 network address is correct.
           </div>
         </div>
 
@@ -950,61 +950,61 @@ button,a,[role="button"]{min-height:36px}
         <div class="divider"></div>
 
         <div class="info-row">
-          <span class="info-row-label">Минимальная сумма</span>
+          <span class="info-row-label">Minimum amount</span>
           <span class="info-row-value">$50.00</span>
         </div>
         <div class="info-row">
-          <span class="info-row-label">Комиссия платформы</span>
+          <span class="info-row-label">Platform fee</span>
           <span class="info-row-value green">0%</span>
         </div>
         <div class="info-row">
-          <span class="info-row-label">Вы получите</span>
+          <span class="info-row-label">You will receive</span>
           <span class="info-row-value" id="willReceive">$3,847.20</span>
         </div>
 
-        <button class="btn-gradient" id="withdrawBtn" onclick="handleWithdraw()">Вывести $3,847.20</button>
+        <button class="btn-gradient" id="withdrawBtn" onclick="handleWithdraw()">Withdraw $3,847.20</button>
         <div class="notice">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>
           </svg>
-          Weekly payouts every Friday до 18:00 МСК
+          Weekly payouts every Friday by 6:00 PM UTC
         </div>
       </div>
 
       <!-- PENDING PAYOUTS TABLE -->
       <div class="section-card">
-        <div class="section-title">📋 Ожидающие выплаты</div>
+        <div class="section-title">📋 Pending Payouts</div>
         <div style="overflow-x:auto;">
           <table class="data-table">
             <thead>
               <tr>
                 <th>Date</th>
                 <th>Amount</th>
-                <th>Метод</th>
+                <th>Method</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>3 мая 2026</td>
+                <td>May 3, 2026</td>
                 <td style="font-weight:700;">$1,240.00</td>
-                <td>Банк</td>
+                <td>Bank</td>
                 <td><span class="status-badge status-paid">✅ Paid</span></td>
               </tr>
               <tr>
-                <td>26 апр 2026</td>
+                <td>Apr 26, 2026</td>
                 <td style="font-weight:700;">$890.50</td>
-                <td>Банк</td>
+                <td>Bank</td>
                 <td><span class="status-badge status-paid">✅ Paid</span></td>
               </tr>
               <tr>
-                <td>19 апр 2026</td>
+                <td>Apr 19, 2026</td>
                 <td style="font-weight:700;">$1,102.30</td>
                 <td>USDT</td>
                 <td><span class="status-badge status-paid">✅ Paid</span></td>
               </tr>
               <tr>
-                <td style="color:var(--gold);">Pendingся 10 мая</td>
+                <td style="color:var(--gold);">Pending — May 10</td>
                 <td style="font-weight:700;color:var(--gold);">$3,847.20</td>
                 <td>—</td>
                 <td><span class="status-badge status-pending">⏳ Pending</span></td>
@@ -1017,8 +1017,8 @@ button,a,[role="button"]{min-height:36px}
       <!-- INCOME HISTORY -->
       <div class="section-card" id="historySection">
         <div class="section-title">
-          💰 History доходов
-          <span class="section-title-badge">Последние 15</span>
+          💰 Income history
+          <span class="section-title-badge">Last 15</span>
         </div>
         <div class="tx-feed" id="txFeed">
           <!-- Transactions populated by JS -->
@@ -1045,19 +1045,19 @@ button,a,[role="button"]{min-height:36px}
 
       <!-- TOP UP SECTION -->
       <div class="section-card" id="topupSection">
-        <div class="section-title">💳 Пополнение кошелька</div>
+        <div class="section-title">💳 Top Up Wallet</div>
 
-        <div class="input-label" style="margin-bottom:8px;">Select сумму</div>
+        <div class="input-label" style="margin-bottom:8px;">Select amount</div>
         <div class="amount-presets">
           <button class="preset-btn" onclick="selectPreset(this, 10)">$10</button>
           <button class="preset-btn active" onclick="selectPreset(this, 25)">$25</button>
           <button class="preset-btn" onclick="selectPreset(this, 50)">$50</button>
           <button class="preset-btn" onclick="selectPreset(this, 100)">$100</button>
-          <button class="preset-btn" onclick="selectPreset(this, 'custom')" id="customPreset">Своя сумма</button>
+          <button class="preset-btn" onclick="selectPreset(this, 'custom')" id="customPreset">Custom</button>
         </div>
 
         <div class="input-group" id="customAmountWrap" style="display:none;">
-          <label class="input-label">Своя сумма</label>
+          <label class="input-label">Custom amount</label>
           <div class="input-amount-wrap">
             <span class="currency">$</span>
             <input type="number" class="input-field" id="customAmount" placeholder="0.00" min="5">
@@ -1066,7 +1066,7 @@ button,a,[role="button"]{min-height:36px}
 
         <div class="pay-tabs">
           <button class="pay-tab active" onclick="switchFanPayMethod(this,'card')">Visa / MC</button>
-          <button class="pay-tab" onclick="switchFanPayMethod(this,'sbp')">СБП</button>
+          <button class="pay-tab" onclick="switchFanPayMethod(this,'sbp')">SBP</button>
           <button class="pay-tab" onclick="switchFanPayMethod(this,'usdt')">USDT</button>
           <button class="pay-tab" onclick="switchFanPayMethod(this,'applepay')">Apple Pay</button>
         </div>
@@ -1079,8 +1079,8 @@ button,a,[role="button"]{min-height:36px}
           </div>
           <div class="card-form-row">
             <div class="input-group">
-              <label class="input-label">Срок</label>
-              <input type="text" class="input-field" placeholder="ММ / ГГ" maxlength="7" id="cardExp" oninput="formatExp(this)">
+              <label class="input-label">Expiry</label>
+              <input type="text" class="input-field" placeholder="MM / YY" maxlength="7" id="cardExp" oninput="formatExp(this)">
             </div>
             <div class="input-group">
               <label class="input-label">CVV</label>
@@ -1092,8 +1092,8 @@ button,a,[role="button"]{min-height:36px}
         <!-- SBP PANEL -->
         <div class="pay-panel" id="fpanel-sbp">
           <div class="sbp-info">
-            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Оплата через СБП</div>
-            <div style="font-size:12px;color:var(--text2);">Отсканируйте QR-код в приложении банка</div>
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Pay via SBP</div>
+            <div style="font-size:12px;color:var(--text2);">Scan the QR code in your banking app</div>
             <div class="sbp-qr">
               <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <rect width="100" height="100" fill="white"/>
@@ -1123,7 +1123,7 @@ button,a,[role="button"]{min-height:36px}
                 <rect x="25" y="75" width="5" height="5" fill="#000"/>
               </svg>
             </div>
-            <div style="font-size:12px;color:var(--text2);">Или переведите по номеру телефона</div>
+            <div style="font-size:12px;color:var(--text2);">Or transfer by phone number</div>
             <div style="font-size:14px;font-weight:700;margin-top:6px;">+7 (900) 123-45-67</div>
           </div>
         </div>
@@ -1131,12 +1131,12 @@ button,a,[role="button"]{min-height:36px}
         <!-- USDT PANEL -->
         <div class="pay-panel" id="fpanel-usdt">
           <div class="sbp-info">
-            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Депозит USDT TRC20</div>
-            <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Отправьте USDT на адрес ниже</div>
+            <div style="font-size:14px;font-weight:600;margin-bottom:4px;">USDT TRC20 Deposit</div>
+            <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Send USDT to the address below</div>
             <div style="font-size:12px;font-family:monospace;background:var(--bg);padding:12px;border-radius:10px;word-break:break-all;color:var(--green);">
               TJRabPrwbZy45sbavfcjinPJC2GqqdpsZE
             </div>
-            <div style="font-size:11px;color:var(--text3);margin-top:8px;">Только сеть TRC20. Минимум: $10</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:8px;">TRC20 network only. Minimum: $10</div>
           </div>
         </div>
 
@@ -1146,128 +1146,128 @@ button,a,[role="button"]{min-height:36px}
             <svg width="22" height="22" viewBox="0 0 24 24" fill="#000">
               <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
             </svg>
-            Pay через Apple Pay
+            Pay with Apple Pay
           </button>
         </div>
 
-        <button class="btn-gradient" onclick="handleTopup()">Top Up кошелёк</button>
+        <button class="btn-gradient" onclick="handleTopup()">Top Up Wallet</button>
       </div>
 
       <!-- SPENDING HISTORY -->
       <div class="section-card">
         <div class="section-title">
-          📊 History расходов
-          <span class="section-title-badge">10 транзакций</span>
+          📊 Spending history
+          <span class="section-title-badge">10 transactions</span>
         </div>
         <div class="tx-feed">
           <div class="tx-item">
             <div class="tx-icon">💜</div>
             <div class="tx-info">
-              <div class="tx-type">Подписка</div>
-              <div class="tx-desc">на @anna_m</div>
+              <div class="tx-type">Subscription</div>
+              <div class="tx-desc">to @anna_m</div>
             </div>
             <div class="tx-right">
               <div class="tx-amount negative">−$14.99</div>
-              <div class="tx-date">1 мая 2026</div>
+              <div class="tx-date">May 1, 2026</div>
             </div>
           </div>
           <div class="tx-item">
             <div class="tx-icon">💎</div>
             <div class="tx-info">
-              <div class="tx-type">PPV контент</div>
-              <div class="tx-desc">от @kira_s</div>
+              <div class="tx-type">PPV content</div>
+              <div class="tx-desc">from @kira_s</div>
             </div>
             <div class="tx-right">
               <div class="tx-amount negative">−$8.00</div>
-              <div class="tx-date">30 апр 2026</div>
+              <div class="tx-date">Apr 30, 2026</div>
             </div>
           </div>
           <div class="tx-item">
             <div class="tx-icon">💰</div>
             <div class="tx-info">
-              <div class="tx-type">Чаевые</div>
+              <div class="tx-type">Tip</div>
               <div class="tx-desc">@diana_v</div>
             </div>
             <div class="tx-right">
               <div class="tx-amount negative">−$20.00</div>
-              <div class="tx-date">29 апр 2026</div>
+              <div class="tx-date">Apr 29, 2026</div>
             </div>
           </div>
           <div class="tx-item">
             <div class="tx-icon">📺</div>
             <div class="tx-info">
               <div class="tx-type">Private Show</div>
-              <div class="tx-desc">45 мин с @stella_night</div>
+              <div class="tx-desc">45 min with @stella_night</div>
             </div>
             <div class="tx-right">
               <div class="tx-amount negative">−$59.85</div>
-              <div class="tx-date">28 апр 2026</div>
+              <div class="tx-date">Apr 28, 2026</div>
             </div>
           </div>
           <div class="tx-item">
             <div class="tx-icon">💜</div>
             <div class="tx-info">
-              <div class="tx-type">Подписка</div>
-              <div class="tx-desc">на @luna_x • Продление</div>
+              <div class="tx-type">Subscription</div>
+              <div class="tx-desc">to @luna_x • Renewal</div>
             </div>
             <div class="tx-right">
               <div class="tx-amount negative">−$9.99</div>
-              <div class="tx-date">27 апр 2026</div>
+              <div class="tx-date">Apr 27, 2026</div>
             </div>
           </div>
           <div class="tx-item">
             <div class="tx-icon">🎁</div>
             <div class="tx-info">
-              <div class="tx-type">Подарок</div>
-              <div class="tx-desc">Roses × 10 для @anna_m</div>
+              <div class="tx-type">Gift</div>
+              <div class="tx-desc">Roses × 10 for @anna_m</div>
             </div>
             <div class="tx-right">
               <div class="tx-amount negative">−$5.00</div>
-              <div class="tx-date">26 апр 2026</div>
+              <div class="tx-date">Apr 26, 2026</div>
             </div>
           </div>
           <div class="tx-item">
             <div class="tx-icon">💎</div>
             <div class="tx-info">
-              <div class="tx-type">PPV контент</div>
-              <div class="tx-desc">Video "Пляжный закат"</div>
+              <div class="tx-type">PPV content</div>
+              <div class="tx-desc">Video "Beach Sunset"</div>
             </div>
             <div class="tx-right">
               <div class="tx-amount negative">−$15.00</div>
-              <div class="tx-date">25 апр 2026</div>
+              <div class="tx-date">Apr 25, 2026</div>
             </div>
           </div>
           <div class="tx-item">
             <div class="tx-icon">💰</div>
             <div class="tx-info">
-              <div class="tx-type">Чаевые</div>
+              <div class="tx-type">Tip</div>
               <div class="tx-desc">@nova_girl</div>
             </div>
             <div class="tx-right">
               <div class="tx-amount negative">−$10.00</div>
-              <div class="tx-date">24 апр 2026</div>
+              <div class="tx-date">Apr 24, 2026</div>
             </div>
           </div>
           <div class="tx-item">
             <div class="tx-icon">🔒</div>
             <div class="tx-info">
-              <div class="tx-type">Закрытый контент</div>
-              <div class="tx-desc">Photoсет @kira_s</div>
+              <div class="tx-type">Exclusive content</div>
+              <div class="tx-desc">Photoset @kira_s</div>
             </div>
             <div class="tx-right">
               <div class="tx-amount negative">−$12.00</div>
-              <div class="tx-date">23 апр 2026</div>
+              <div class="tx-date">Apr 23, 2026</div>
             </div>
           </div>
           <div class="tx-item">
             <div class="tx-icon">⬆️</div>
             <div class="tx-info">
-              <div class="tx-type">Пополнение</div>
+              <div class="tx-type">Top Up</div>
               <div class="tx-desc">Visa •••• 4242</div>
             </div>
             <div class="tx-right">
               <div class="tx-amount" style="color:var(--green);">+$100.00</div>
-              <div class="tx-date">22 апр 2026</div>
+              <div class="tx-date">Apr 22, 2026</div>
             </div>
           </div>
         </div>
@@ -1278,14 +1278,14 @@ button,a,[role="button"]{min-height:36px}
   </div><!-- /container -->
 
   <!-- SUCCESS TOAST -->
-  <div id="toast" style="
+  <div style="
     position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);
     background:linear-gradient(135deg,var(--accent),var(--accent2));
     color:#fff;padding:14px 24px;border-radius:14px;font-size:14px;font-weight:700;
     box-shadow:0 8px 32px rgba(212,43,106,0.4);transition:transform 0.3s;
     z-index:1000;white-space:nowrap;pointer-events:none;
   " id="toastEl">
-    ✅ Запрос на вывод отправлен!
+    ✅ Withdrawal request sent!
   </div>
 
 <script>
@@ -1336,7 +1336,7 @@ button,a,[role="button"]{min-height:36px}
   withdrawAmountInput.addEventListener('input', function() {
     const v = parseFloat(this.value) || 0;
     const fmt = v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-    withdrawBtn.textContent = `Вывести $${fmt}`;
+    withdrawBtn.textContent = `Withdraw $${fmt}`;
     willReceive.textContent = `$${fmt}`;
   });
 
@@ -1370,40 +1370,40 @@ button,a,[role="button"]{min-height:36px}
   function handleWithdraw() {
     const amount = parseFloat(withdrawAmountInput.value) || 0;
     if(amount < 50) {
-      showToast('❌ Минимальная сумма вывода: $50');
+      showToast('❌ Minimum withdrawal amount: $50');
       return;
     }
-    showToast('✅ Запрос на вывод $' + amount.toFixed(2) + ' отправлен!');
+    showToast('✅ Withdrawal request sent: $' + amount.toFixed(2));
   }
 
   function handleTopup() {
     const amt = selectedAmount || parseFloat(document.getElementById('customAmount')?.value) || 0;
-    if(!amt || amt < 5) { showToast('❌ Минимальная сумма: $5'); return; }
-    showToast('✅ Счёт пополнен на $' + amt);
+    if(!amt || amt < 5) { showToast('❌ Minimum amount: $5'); return; }
+    showToast('✅ Balance topped up: $' + amt);
   }
 
   // ── TRANSACTION FEED ──
   const transactions = [
-    {icon:'💜', type:'Подписка', desc:'@phantom_leo • Premium 3 месяца', amount:'+$44.97', date:'3 мая, 14:22'},
-    {icon:'💎', type:'PPV', desc:"Photo-сет «Белое кружево»", amount:'+$12.00', date:'3 мая, 12:08'},
-    {icon:'💰', type:'Чаевые', desc:'@dark_wolf отправил чаевые', amount:'+$25.00', date:'2 мая, 23:41'},
-    {icon:'📺', type:'Private Show', desc:'30 мин с @cosmos_fan', amount:'+$119.70', date:'2 мая, 21:15'},
-    {icon:'🔄', type:'Продление', desc:'@user_kate • Basic', amount:'+$7.99', date:'2 мая, 18:30'},
-    {icon:'💜', type:'Подписка', desc:'@luna_reader • VIP 1 месяц', amount:'+$19.99', date:'2 мая, 15:00'},
-    {icon:'💎', type:'PPV', desc:"Video «Ночной город»", amount:'+$18.00', date:'1 мая, 22:47'},
-    {icon:'💰', type:'Чаевые', desc:'@midnight_x отправил чаевые', amount:'+$50.00', date:'1 мая, 20:10'},
-    {icon:'📺', type:'Private Show', desc:'60 мин с @neon_fan23', amount:'+$179.40', date:'1 мая, 17:55'},
-    {icon:'🔄', type:'Продление', desc:'@alex_sub • Premium', amount:'+$14.99', date:'1 мая, 10:00'},
-    {icon:'💜', type:'Подписка', desc:'@new_guy42 • Basic', amount:'+$7.99', date:'30 апр, 23:12'},
-    {icon:'💎', type:'PPV', desc:"Photo-сет «Розовый закат»", amount:'+$9.00', date:'30 апр, 20:33'},
-    {icon:'💰', type:'Чаевые', desc:'@phantom_leo отправил чаевые', amount:'+$100.00', date:'30 апр, 18:00'},
-    {icon:'📺', type:'Private Show', desc:'45 мин с @vibe_master', amount:'+$134.55', date:'30 апр, 15:20'},
-    {icon:'💜', type:'Подписка', desc:'@silent_watcher • VIP', amount:'+$29.99', date:'30 апр, 12:05'},
-    {icon:'🎁', type:'Подарок', desc:'Roses × 50 от @dark_wolf', amount:'+$25.00', date:'29 апр, 21:40'},
-    {icon:'💎', type:'PPV', desc:"Video «Летний бриз»", amount:'+$15.00', date:'29 апр, 19:00'},
-    {icon:'💰', type:'Чаевые', desc:'@cosmos_fan отправил чаевые', amount:'+$75.00', date:'29 апр, 17:30'},
-    {icon:'🔄', type:'Продление', desc:'@beta_user99 • Basic', amount:'+$7.99', date:'29 апр, 09:15'},
-    {icon:'💜', type:'Подписка', desc:'@night_owl • Premium', amount:'+$14.99', date:'28 апр, 22:00'},
+    {icon:'💜', type:'Subscription', desc:'@phantom_leo • Premium 3 months', amount:'+$44.97', date:'May 3, 14:22'},
+    {icon:'💎', type:'PPV', desc:'Photo set "White Lace"', amount:'+$12.00', date:'May 3, 12:08'},
+    {icon:'💰', type:'Tip', desc:'@dark_wolf sent a tip', amount:'+$25.00', date:'May 2, 23:41'},
+    {icon:'📺', type:'Private Show', desc:'30 min with @cosmos_fan', amount:'+$119.70', date:'May 2, 21:15'},
+    {icon:'🔄', type:'Renewal', desc:'@user_kate • Basic', amount:'+$7.99', date:'May 2, 18:30'},
+    {icon:'💜', type:'Subscription', desc:'@luna_reader • VIP 1 month', amount:'+$19.99', date:'May 2, 15:00'},
+    {icon:'💎', type:'PPV', desc:'Video "Night City"', amount:'+$18.00', date:'May 1, 22:47'},
+    {icon:'💰', type:'Tip', desc:'@midnight_x sent a tip', amount:'+$50.00', date:'May 1, 20:10'},
+    {icon:'📺', type:'Private Show', desc:'60 min with @neon_fan23', amount:'+$179.40', date:'May 1, 17:55'},
+    {icon:'🔄', type:'Renewal', desc:'@alex_sub • Premium', amount:'+$14.99', date:'May 1, 10:00'},
+    {icon:'💜', type:'Subscription', desc:'@new_guy42 • Basic', amount:'+$7.99', date:'Apr 30, 23:12'},
+    {icon:'💎', type:'PPV', desc:'Photo set "Pink Sunset"', amount:'+$9.00', date:'Apr 30, 20:33'},
+    {icon:'💰', type:'Tip', desc:'@phantom_leo sent a tip', amount:'+$100.00', date:'Apr 30, 18:00'},
+    {icon:'📺', type:'Private Show', desc:'45 min with @vibe_master', amount:'+$134.55', date:'Apr 30, 15:20'},
+    {icon:'💜', type:'Subscription', desc:'@silent_watcher • VIP', amount:'+$29.99', date:'Apr 30, 12:05'},
+    {icon:'🎁', type:'Gift', desc:'Roses × 50 from @dark_wolf', amount:'+$25.00', date:'Apr 29, 21:40'},
+    {icon:'💎', type:'PPV', desc:'Video "Summer Breeze"', amount:'+$15.00', date:'Apr 29, 19:00'},
+    {icon:'💰', type:'Tip', desc:'@cosmos_fan sent a tip', amount:'+$75.00', date:'Apr 29, 17:30'},
+    {icon:'🔄', type:'Renewal', desc:'@beta_user99 • Basic', amount:'+$7.99', date:'Apr 29, 09:15'},
+    {icon:'💜', type:'Subscription', desc:'@night_owl • Premium', amount:'+$14.99', date:'Apr 28, 22:00'},
   ];
 
   let shownTx = 15;
@@ -1461,7 +1461,7 @@ if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.se
 </script>
 
 
-<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../wallet.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="wallet.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="wallet.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="wallet.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
 
 <!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
 <style>
@@ -1483,7 +1483,7 @@ if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.se
 .kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
 </style>
 <div id="kol-cookie-banner">
-  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <p>🍪 We use cookies to improve your experience. <a href="cookie.html">Learn more</a></p>
   <div class="kol-cookie-btns">
     <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
     <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
@@ -1547,40 +1547,40 @@ if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.se
 
 <!-- FAB -->
 <div id="kol-fab-menu">
-  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
-  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
-  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Upload</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Message</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Search</a>
 </div>
-<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+<button id="kol-fab" aria-label="Quick actions" onclick="kolToggleFab()">＋</button>
 
 <!-- Keyboard shortcuts hint -->
-<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — keyboard shortcuts</div>
 
 <!-- Keyboard shortcuts modal -->
 <div id="kol-shortcuts-modal">
   <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
   <div id="kol-shortcuts-box">
-    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
-    <h3>⌨️ Горячие клавиши</h3>
+    <button id="kol-shortcuts-close" aria-label="Close" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Keyboard Shortcuts</h3>
     <div class="kol-sc-group">
-      <h4>Навигация</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+      <h4>Navigation</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Feed</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Search</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Messages</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Notifications</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Profile</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Creator dashboard</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Действия</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+      <h4>Actions</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Upload content</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Toggle theme</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Report</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Интерфейс</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+      <h4>Interface</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">This panel</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Close modal</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
     </div>
   </div>
 </div>
@@ -1667,7 +1667,7 @@ document.addEventListener('keydown', function(e){
       return;
     case '/':
       e.preventDefault();
-      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      var si = document.querySelector('input[type="search"],input[placeholder*="earch"],#searchInput');
       if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
       return;
     case 'n': case 'N':

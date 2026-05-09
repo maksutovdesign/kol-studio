@@ -432,18 +432,18 @@ button,a,[role="button"]{min-height:36px}
 </style>
 </head>
 <body>
-<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="../index.html">🏠 Главная</a><span class="sep">›</span><a href="../feed.html">Лента</a><span class="sep">›</span><span class="current">Видео</span></nav>
+<nav class="kol-breadcrumb" aria-label="breadcrumb"><a href="index.html">🏠 Главная</a><span class="sep">›</span><a href="feed.html">Лента</a><span class="sep">›</span><span class="current">Видео</span></nav>
   <header>
     <div class="header-inner">
-      <a href="../index.html" class="logo">KOL Studio</a>
+      <a href="index.html" class="logo">KOL Studio</a>
       <div class="hdr-search">
         <span style="color:var(--text3)">🔍</span>
         <input type="text" placeholder="Search контента...">
       </div>
       <nav class="hdr-nav">
-        <a href="../feed.html">Feed</a>
-        <a href="../messages.html">💬</a>
-        <a href="../user-cabinet.html">Cabinet</a>
+        <a href="feed.html">Feed</a>
+        <a href="messages.html">💬</a>
+        <a href="user-cabinet.html">Cabinet</a>
       </nav>
     </div>
   </header>
@@ -663,18 +663,18 @@ button,a,[role="button"]{min-height:36px}
   <footer>
     <div class="footer-inner">
       <div class="footer-links">
-        <a href="../terms.html">Terms</a>
-        <a href="../privacy.html">Privacy</a>
-        <a href="../cookie.html">Cookie</a>
-        <a href="../dmca.html">DMCA</a>
-        <a href="../2257.html">2257</a>
-        <a href="../help.html">Help</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="cookie.html">Cookie</a>
+        <a href="dmca.html">DMCA</a>
+        <a href="2257.html">2257</a>
+        <a href="help.html">Help</a>
       </div>
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
         <div class="lang-switcher">
-          <a href="../video.html" class="active">🇷🇺 RU</a>
+          <a href="video.html" class="active">🇷🇺 RU</a>
           <span>|</span>
-          <a href="../video.html">🇬🇧 EN</a>
+          <a href="video.html">🇬🇧 EN</a>
         </div>
         <span class="footer-copy">© 2026 KOL Studio. 18+ only.</span>
       </div>
@@ -749,8 +749,8 @@ button,a,[role="button"]{min-height:36px}
       document.getElementById(id).classList.toggle('open');
     }
 
-    function setQuality(q){ document.querySelector('.quality-btn').textContent=q+' ▾'; document.querySelectorAll('#qualMenu .dropdown-item').forEach(i=>i.classList.toggle('active',i.textContent.includes(q))); document.getElementById('qualMenu').classList.remove('open'); showToast('Качество: '+q); }
-    function setSpeed(s){ document.querySelector('.speed-btn').textContent=s+' ▾'; document.querySelectorAll('#speedMenu .dropdown-item').forEach(i=>i.classList.toggle('active',i.textContent.includes(s))); document.getElementById('speedMenu').classList.remove('open'); showToast('Скорость: '+s); }
+    function setQuality(q){ document.querySelector('.quality-btn').textContent=q+' ▾'; document.querySelectorAll('#qualMenu .dropdown-item').forEach(i=>i.classList.toggle('active',i.textContent.includes(q))); document.getElementById('qualMenu').classList.remove('open'); showToast('Quality: '+q); }
+    function setSpeed(s){ document.querySelector('.speed-btn').textContent=s+' ▾'; document.querySelectorAll('#speedMenu .dropdown-item').forEach(i=>i.classList.toggle('active',i.textContent.includes(s))); document.getElementById('speedMenu').classList.remove('open'); showToast('Speed: '+s); }
 
     function toggleFS(){ if(!document.fullscreenElement) document.getElementById('playerWrap').requestFullscreen().catch(()=>{}); else document.exitFullscreen(); }
     function togglePiP(){ showToast('PiP режим активирован'); }
@@ -759,11 +759,11 @@ button,a,[role="button"]{min-height:36px}
     function toggleLike(){ liked=!liked; document.getElementById('likeBtn').classList.toggle('liked',liked); document.getElementById('likeBtn').textContent='👍 '+(liked?'4,231':'4,230'); }
     function addLove(){ const el=document.getElementById('loveCount'); el.textContent=(parseInt(el.textContent.replace(',',''))+1).toLocaleString(); }
     function scrollToComments(){ document.getElementById('commentsSection').scrollIntoView({behavior:'smooth'}); }
-    function toggleBookmark(){ showToast('Добавлено в сохранённое 🔖','success'); }
+    function toggleBookmark(){ showToast('Saved 🔖','success'); }
 
     function shareVideo(){
       if(navigator.share) navigator.share({title:'Luna Vasiliev — KOL Studio',url:location.href}).catch(()=>{});
-      else { navigator.clipboard.writeText(location.href).then(()=>showToast('Ссылка скопирована!','success')); }
+      else { navigator.clipboard.writeText(location.href).then(()=>showToast('Link copied!','success')); }
     }
 
     function submitComment(){
@@ -775,13 +775,13 @@ button,a,[role="button"]{min-height:36px}
       div.innerHTML=`<div class="c-av" style="background:linear-gradient(135deg,var(--accent),var(--accent2))">A</div><div class="c-body"><div class="c-head"><span class="c-name">Вы</span><span class="c-time">Just now</span></div><p class="c-text">${text}</p><div class="c-actions"><button class="c-like" onclick="likeComment(this)">❤️ 0</button><button class="c-reply">Reply</button></div></div>`;
       document.getElementById('commentsList').prepend(div);
       ta.value=''; ta.style.height='auto';
-      showToast('Комментарий опубликован!','success');
+      showToast('Comment published!','success');
     }
 
     function likeComment(btn){ const n=parseInt(btn.textContent.replace(/[^\d]/g,''))||0; btn.classList.toggle('liked'); btn.textContent='❤️ '+(btn.classList.contains('liked')?n+1:n-1); }
     function replyTo(name){ document.getElementById('newComment').value='@'+name+' '; document.getElementById('newComment').focus(); }
     function autoResize(el){ el.style.height='auto'; el.style.height=(el.scrollHeight)+'px'; }
-    function loadMoreComments(){ showToast('Загрузка comments...'); }
+    function loadMoreComments(){ showToast('Loading comments...'); }
     function selectTip(el, amount){ document.querySelectorAll('.tip-opt').forEach(o=>o.classList.remove('selected')); el.classList.add('selected'); tipAmount=amount; }
     function sendTip(){ document.getElementById('tipModal').classList.remove('open'); showToast('Tip '+tipAmount+' монет отправлены! ⚡','success'); }
 
@@ -840,7 +840,7 @@ button,a,[role="button"]{min-height:36px}
 .kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
 </style>
 <div id="kol-cookie-banner">
-  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <p>🍪 We use cookies to improve your experience. <a href="cookie.html">Learn more</a></p>
   <div class="kol-cookie-btns">
     <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
     <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
@@ -904,9 +904,9 @@ button,a,[role="button"]{min-height:36px}
 
 <!-- FAB -->
 <div id="kol-fab-menu">
-  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
-  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
-  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Upload</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Message</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Search</a>
 </div>
 <button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
 
@@ -921,23 +921,23 @@ button,a,[role="button"]{min-height:36px}
     <h3>⌨️ Горячие клавиши</h3>
     <div class="kol-sc-group">
       <h4>Навигация</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Feed</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Search</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Messages</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Notifications</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Profile</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Creator dashboard</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
     </div>
     <div class="kol-sc-group">
       <h4>Действия</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Upload content</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Toggle theme</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Report</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
     </div>
     <div class="kol-sc-group">
       <h4>Интерфейс</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">This panel</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Close modal</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
     </div>
   </div>
 </div>

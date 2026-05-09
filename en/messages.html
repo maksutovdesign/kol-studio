@@ -12,10 +12,10 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KOL Studio">
 <meta property="og:title" content="KOL Studio — Messages">
-<meta property="og:description" content="Общайтесь с фанатами и зарабатывайте на PPV-контенте">
+<meta property="og:description" content="Connect with fans and earn on PPV content">
 <meta property="og:url" content="https://kolstudio.com/en/messages.html">
-<meta property="og:locale" content="ru_RU">
-<meta name="description" content="Messages и PPV-контент для модели KOL Studio">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Messages and PPV content for KOL Studio model">
 <title>KOL STUDIO — Messages</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -975,7 +975,7 @@ button,a,[role="button"]{min-height:36px}
       🔔
       <span class="badge">5</span>
     </button>
-    <a href="model-cabinet.html" class="avatar-btn">А</a>
+    <a href="model-cabinet.html" class="avatar-btn">A</a>
   </div>
 </header>
 
@@ -987,20 +987,20 @@ button,a,[role="button"]{min-height:36px}
     <div class="left-panel-header">
       <div class="left-panel-top">
         <h2>Messages</h2>
-        <button class="compose-btn" title="Новое сообщение" onclick="openComposeModal()">✏️</button>
+        <button class="compose-btn" title="New message" onclick="openComposeModal()">✏️</button>
       </div>
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input type="text" class="conv-search" placeholder="Search по переписке..." oninput="filterConversations(this.value)">
+        <input type="text" class="conv-search" placeholder="Search conversations..." oninput="filterConversations(this.value)">
       </div>
       <div class="filter-tabs">
-        <button class="filter-tab active" onclick="setFilter('all', this)">Все</button>
+        <button class="filter-tab active" onclick="setFilter('all', this)">All</button>
         <button class="filter-tab" onclick="setFilter('unread', this)">Unread</button>
         <button class="filter-tab" onclick="setFilter('ppv', this)">PPV</button>
-        <button class="filter-tab" onclick="setFilter('vip', this)">VIP-фаны</button>
+        <button class="filter-tab" onclick="setFilter('vip', this)">VIP Fans</button>
       </div>
       <button class="mass-msg-btn" onclick="openMassModal()">
-        📢 Write всем (847)
+        📢 Write to all (847)
       </button>
     </div>
     <div class="conv-list" id="convList">
@@ -1023,9 +1023,9 @@ button,a,[role="button"]{min-height:36px}
         </div>
       </div>
       <div class="chat-header-actions">
-        <button class="chat-action-btn disabled" title="Звонок (недоступно)">📞</button>
-        <a href="live.html" class="chat-action-btn" title="Videoзвонок">🎥</a>
-        <button class="chat-action-btn" title="Информация о фане" onclick="toggleRightPanel()">ℹ️</button>
+        <button class="chat-action-btn disabled" title="Call (unavailable)">📞</button>
+        <a href="live.html" class="chat-action-btn" title="Video call">🎥</a>
+        <button class="chat-action-btn" title="Fan info" onclick="toggleRightPanel()">ℹ️</button>
       </div>
     </div>
 
@@ -1035,7 +1035,7 @@ button,a,[role="button"]{min-height:36px}
 
     <div class="chat-input-area">
       <div class="quick-tips-row">
-        <span class="quick-tip-label">💰 Чаевые:</span>
+        <span class="quick-tip-label">💰 Tips:</span>
         <button class="quick-tip-btn" onclick="sendTipRequest(2)">$2</button>
         <button class="quick-tip-btn" onclick="sendTipRequest(5)">$5</button>
         <button class="quick-tip-btn" onclick="sendTipRequest(10)">$10</button>
@@ -1043,7 +1043,7 @@ button,a,[role="button"]{min-height:36px}
       </div>
       <div class="input-row">
         <div class="attach-wrap">
-          <button class="attach-btn" onclick="toggleAttach()" title="Прикрепить">📎</button>
+          <button class="attach-btn" onclick="toggleAttach()" title="Attach">📎</button>
           <div class="attach-dropdown" id="attachDropdown">
             <div class="attach-option" onclick="handleAttach('photo')">
               <span class="attach-option-icon">🖼️</span> Photo
@@ -1052,20 +1052,20 @@ button,a,[role="button"]{min-height:36px}
               <span class="attach-option-icon">🎬</span> Video
             </div>
             <div class="attach-option" onclick="openPPVModal(); toggleAttach()">
-              <span class="attach-option-icon">🔒</span> PPV-контент
+              <span class="attach-option-icon">🔒</span> PPV content
             </div>
             <div class="attach-option" onclick="handleAttach('voice')">
-              <span class="attach-option-icon">🎙️</span> Голосовое
+              <span class="attach-option-icon">🎙️</span> Voice note
             </div>
           </div>
         </div>
         <div class="msg-input-wrap">
-          <textarea class="msg-input" id="msgInput" placeholder="Write сообщение..." rows="1" onkeydown="handleMsgKey(event)" oninput="autoResizeInput(this)"></textarea>
+          <textarea class="msg-input" id="msgInput" placeholder="Write a message..." rows="1" onkeydown="handleMsgKey(event)" oninput="autoResizeInput(this)"></textarea>
           <button class="emoji-btn" onclick="insertEmoji()">😊</button>
         </div>
         <button class="send-btn" onclick="sendMessage()">➤</button>
       </div>
-      <div class="ppv-link-btn" onclick="openPPVModal()">🔒 PPV: Send платный контент</div>
+      <div class="ppv-link-btn" onclick="openPPVModal()">🔒 PPV: Send paid content</div>
     </div>
   </div>
 
@@ -1074,7 +1074,7 @@ button,a,[role="button"]{min-height:36px}
     <div class="fan-profile-card">
       <div class="fan-avatar-large" id="fanAvatarLarge">👤</div>
       <div class="fan-name" id="fanName">@phantom_leo</div>
-      <div class="fan-handle" id="fanHandle">Леонид К.</div>
+      <div class="fan-handle" id="fanHandle">Leonid K.</div>
       <div class="fan-badge-row">
         <span class="fan-badge">⭐ Top Fan</span>
         <span class="fan-badge premium">💎 Premium</span>
@@ -1082,25 +1082,25 @@ button,a,[role="button"]{min-height:36px}
     </div>
 
     <div class="info-card">
-      <div class="info-card-title">Статистика</div>
+      <div class="info-card-title">Statistics</div>
       <div class="stat-row">
-        <span class="stat-label">Подписчик с</span>
-        <span class="stat-value">12 янв 2024</span>
+        <span class="stat-label">Subscriber since</span>
+        <span class="stat-value">Jan 12, 2024</span>
       </div>
       <div class="stat-row">
-        <span class="stat-label">Всего потрачено</span>
+        <span class="stat-label">Total spent</span>
         <span class="stat-value green">$247</span>
       </div>
       <div class="stat-row">
-        <span class="stat-label">Чаевые</span>
+        <span class="stat-label">Tips</span>
         <span class="stat-value gold">$92</span>
       </div>
       <div class="stat-row">
-        <span class="stat-label">PPV куплено</span>
-        <span class="stat-value">8 шт.</span>
+        <span class="stat-label">PPV purchased</span>
+        <span class="stat-value">8 items</span>
       </div>
       <div class="stat-row">
-        <span class="stat-label">Сообщений</span>
+        <span class="stat-label">Messages</span>
         <span class="stat-value">234</span>
       </div>
     </div>
@@ -1108,41 +1108,41 @@ button,a,[role="button"]{min-height:36px}
     <div class="sub-status">
       <div class="sub-status-dot"></div>
       <div class="sub-status-text">
-        <span class="sub-status-plan">Premium</span> • истекает 15 мая
+        <span class="sub-status-plan">Premium</span> • expires May 15
       </div>
     </div>
 
     <div class="quick-actions">
-      <div class="info-card-title" style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Действия</div>
+      <div class="info-card-title" style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Actions</div>
       <button class="qa-btn primary" onclick="openPPVModal()">🔒 Send PPV</button>
-      <button class="qa-btn" onclick="showToast('Переход к сообщению с подарком...', 'gold')">🎁 Send подарок</button>
-      <button class="qa-btn" onclick="showToast('Функция VIP-доступа открыта', 'success')">⭐ VIP-доступ</button>
-      <button class="qa-btn danger" onclick="confirmBlock()">🚫 Заблокировать</button>
+      <button class="qa-btn" onclick="showToast('Going to gift message', 'gold')">🎁 Send gift</button>
+      <button class="qa-btn" onclick="showToast('VIP access feature opened', 'success')">⭐ VIP access</button>
+      <button class="qa-btn danger" onclick="confirmBlock()">🚫 Block</button>
     </div>
 
     <div class="info-card">
-      <div class="info-card-title">Последние покупки</div>
+      <div class="info-card-title">Recent purchases</div>
       <div class="purchase-item">
         <div class="purchase-thumb">🖼️</div>
         <div class="purchase-info">
-          <div class="purchase-name">Photo-сет #12</div>
-          <div class="purchase-date">22 апр 2025</div>
+          <div class="purchase-name">Photo set #12</div>
+          <div class="purchase-date">Apr 22, 2025</div>
         </div>
         <div class="purchase-amount">+$15</div>
       </div>
       <div class="purchase-item">
         <div class="purchase-thumb">🎬</div>
         <div class="purchase-info">
-          <div class="purchase-name">Video эксклюзив</div>
-          <div class="purchase-date">18 апр 2025</div>
+          <div class="purchase-name">Video exclusive</div>
+          <div class="purchase-date">Apr 18, 2025</div>
         </div>
         <div class="purchase-amount">+$25</div>
       </div>
       <div class="purchase-item">
         <div class="purchase-thumb">📸</div>
         <div class="purchase-info">
-          <div class="purchase-name">Приватные фото</div>
-          <div class="purchase-date">10 апр 2025</div>
+          <div class="purchase-name">Private photos</div>
+          <div class="purchase-date">Apr 10, 2025</div>
         </div>
         <div class="purchase-amount">+$12</div>
       </div>
@@ -1160,7 +1160,7 @@ button,a,[role="button"]{min-height:36px}
     <span class="nav-icon">🔍</span>
     <span>Search</span>
   </a>
-  <a href="model-cabinet.html" class="nav-post-btn" title="Создать пост">＋</a>
+  <a href="model-cabinet.html" class="nav-post-btn" title="Create post">＋</a>
   <a href="messages.html" class="nav-item active">
     <span class="nav-icon">💬</span>
     <span>Messages</span>
@@ -1176,16 +1176,16 @@ button,a,[role="button"]{min-height:36px}
 <div class="modal-overlay" id="ppvModal">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">🔒 Send платный контент</div>
+      <div class="modal-title">🔒 Send paid content</div>
       <button class="modal-close" onclick="closePPVModal()">×</button>
     </div>
     <div class="modal-body">
       <div>
-        <div class="form-label">Медиафайл</div>
-        <div class="upload-area" onclick="showToast('Выбор файла...', '')">
+        <div class="form-label">Media file</div>
+        <div class="upload-area" onclick="showToast('Selecting file...', '')">
           <div class="upload-icon">☁️</div>
-          <div class="upload-text">Перетащите файл или <strong>нажмите для выбора</strong></div>
-          <div style="font-size:12px;color:var(--text-dim);margin-top:6px;">Photo, видео до 2 ГБ</div>
+          <div class="upload-text">Drag a file or <strong>click to select</strong></div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:6px;">Photo, video up to 2 GB</div>
         </div>
       </div>
       <div>
@@ -1195,15 +1195,15 @@ button,a,[role="button"]{min-height:36px}
           <button class="price-opt selected" onclick="selectPrice(this, 10)">$10</button>
           <button class="price-opt" onclick="selectPrice(this, 15)">$15</button>
           <button class="price-opt" onclick="selectPrice(this, 25)">$25</button>
-          <input type="number" class="price-custom" placeholder="Своя" min="1" max="999">
+          <input type="number" class="price-custom" placeholder="Custom" min="1" max="999">
         </div>
       </div>
       <div>
-        <div class="form-label">Description (необязательно)</div>
-        <textarea class="form-textarea" placeholder="Расскажите фанату что внутри... он увидит это до покупки"></textarea>
+        <div class="form-label">Description (optional)</div>
+        <textarea class="form-textarea" placeholder="Tell the fan what's inside... they'll see this before purchasing"></textarea>
       </div>
       <div class="ppv-preview-note">
-        👁️ Фан увидит размытое превью до оплаты
+        👁️ Fan will see a blurred preview before payment
       </div>
     </div>
     <div class="modal-footer">
@@ -1217,41 +1217,41 @@ button,a,[role="button"]{min-height:36px}
 <div class="modal-overlay" id="massModal">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">📢 Рассылка</div>
+      <div class="modal-title">📢 Mass message</div>
       <button class="modal-close" onclick="closeMassModal()">×</button>
     </div>
     <div class="modal-body">
       <div style="background:rgba(139,43,226,0.08);border:1px solid rgba(139,43,226,0.2);border-radius:var(--radius-sm);padding:10px 14px;font-size:14px;">
-        📊 Рассылка всем subscriberам <strong>847 чел.</strong>
+        📊 Message to all subscribers <strong>847 people</strong>
       </div>
       <div>
-        <div class="form-label">Сообщение</div>
-        <textarea class="form-textarea" placeholder="Напишите сообщение для всех subscribers..." style="min-height:120px;"></textarea>
+        <div class="form-label">Message</div>
+        <textarea class="form-textarea" placeholder="Write a message for all subscribers..." style="min-height:120px;"></textarea>
       </div>
       <label class="checkbox-row">
         <input type="checkbox" id="massIncludePPV" onchange="toggleMassPPV()">
-        <span>Add PPV-контент к рассылке</span>
+        <span>Add PPV content to broadcast</span>
       </label>
       <div id="massPPVSection" style="display:none;">
-        <div class="form-label">PPV-контент</div>
-        <div class="upload-area" onclick="showToast('Выбор PPV файла...', '')">
+        <div class="form-label">PPV content</div>
+        <div class="upload-area" onclick="showToast('Selecting PPV file...', '')">
           <div class="upload-icon">🔒</div>
-          <div class="upload-text"><strong>Выбрать файл</strong> для платной рассылки</div>
+          <div class="upload-text"><strong>Select file</strong> for paid broadcast</div>
         </div>
         <div class="price-selector" style="margin-top:10px;">
           <button class="price-opt selected">$10</button>
           <button class="price-opt">$15</button>
           <button class="price-opt">$25</button>
-          <input type="number" class="price-custom" placeholder="Своя" min="1">
+          <input type="number" class="price-custom" placeholder="Custom" min="1">
         </div>
       </div>
       <div style="font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px;">
-        💡 Ожидаемый доход от PPV: <span style="color:var(--green);font-weight:700;">~$2,400</span> (при 30% конверсии)
+        💡 Expected PPV revenue: <span style="color:var(--green);font-weight:700;">~$2,400</span> (at 30% conversion)
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn-ghost" onclick="closeMassModal()">Cancel</button>
-      <button class="btn-primary" onclick="sendMass()">📢 Send всем</button>
+      <button class="btn-primary" onclick="sendMass()">📢 Send to all</button>
     </div>
   </div>
 </div>
@@ -1262,48 +1262,48 @@ button,a,[role="button"]{min-height:36px}
 <script>
 // ===== DATA =====
 const conversations = [
-  { id: 1, name: 'phantom_leo', display: 'Леонид К.', emoji: '😎', online: true, unread: 3, time: '2 мин', preview: 'Hello! Когда следующий эфир?', ppv: false, vip: true },
-  { id: 2, name: 'dark_wolf_99', display: 'Алексей В.', emoji: '🐺', online: true, unread: 7, time: '8 мин', preview: 'Обожаю твои фото 🔥🔥🔥', ppv: true, vip: false },
-  { id: 3, name: 'night_rider', display: 'Максим С.', emoji: '🌙', online: false, unread: 0, time: '15 мин', preview: 'Thank you за шоу, было супер!', ppv: true, vip: true },
-  { id: 4, name: 'cosmos_fan', display: 'Дмитрий Н.', emoji: '🚀', online: true, unread: 0, time: '1 ч', preview: '[PPV] Photo-сет куплено ✓', ppv: true, vip: false },
-  { id: 5, name: 'starfan_ru', display: 'Роман З.', emoji: '⭐', online: false, unread: 2, time: '2 ч', preview: 'Можно запросить персональное?', ppv: false, vip: false },
-  { id: 6, name: 'thunder77', display: 'Виктор П.', emoji: '⚡', online: false, unread: 0, time: '3 ч', preview: 'Ты просто 🔥', ppv: false, vip: false },
-  { id: 7, name: 'royal_fan', display: 'Игорь М.', emoji: '👑', online: true, unread: 0, time: '4 ч', preview: '[PPV] Жду новый контент!', ppv: true, vip: true },
-  { id: 8, name: 'velvet_sub', display: 'Сергей Т.', emoji: '🎩', online: false, unread: 0, time: '5 ч', preview: 'Hello, всё ок с эфиром?', ppv: false, vip: false },
-  { id: 9, name: 'blade_x', display: 'Павел К.', emoji: '🗡️', online: false, unread: 0, time: '6 ч', preview: 'Thank you за ответ!', ppv: false, vip: false },
-  { id: 10, name: 'arctic_storm', display: 'Антон Л.', emoji: '❄️', online: true, unread: 0, time: '8 ч', preview: 'Когда следующий live?', ppv: false, vip: false },
-  { id: 11, name: 'neo_knight', display: 'Алексей Д.', emoji: '🛡️', online: false, unread: 0, time: 'Yesterday', preview: '[Голосовое] 0:34', ppv: false, vip: false },
-  { id: 12, name: 'fire_dragon', display: 'Кирилл М.', emoji: '🐉', online: false, unread: 0, time: 'Yesterday', preview: 'Отличный контент!', ppv: true, vip: false },
-  { id: 13, name: 'shadow_x99', display: 'Никита В.', emoji: '🌑', online: false, unread: 0, time: 'Yesterday', preview: '💰 Чаевые $10 отправлены', ppv: false, vip: false },
-  { id: 14, name: 'golden_eye', display: 'Евгений С.', emoji: '👁️', online: false, unread: 0, time: 'Пн', preview: 'Ты самая лучшая 💖', ppv: true, vip: true },
-  { id: 15, name: 'omega_fan', display: 'Михаил К.', emoji: '🔱', online: false, unread: 0, time: 'Пн', preview: 'До следующего эфира!', ppv: false, vip: false },
-  { id: 16, name: 'vortex_44', display: 'Тимур Б.', emoji: '🌀', online: false, unread: 0, time: 'Вс', preview: 'Жду новый пост!', ppv: false, vip: false },
+  { id: 1, name: 'phantom_leo', display: 'Leonid K.', emoji: '😎', online: true, unread: 3, time: '2 min', preview: 'Hello! When is the next stream?', ppv: false, vip: true },
+  { id: 2, name: 'dark_wolf_99', display: 'Alexei V.', emoji: '🐺', online: true, unread: 7, time: '8 min', preview: 'Love your photos 🔥🔥🔥', ppv: true, vip: false },
+  { id: 3, name: 'night_rider', display: 'Maxim S.', emoji: '🌙', online: false, unread: 0, time: '15 min', preview: 'Thank you for the show, it was great!', ppv: true, vip: true },
+  { id: 4, name: 'cosmos_fan', display: 'Dmitry N.', emoji: '🚀', online: true, unread: 0, time: '1 hr', preview: '[PPV] Photo set purchased ✓', ppv: true, vip: false },
+  { id: 5, name: 'starfan_ru', display: 'Roman Z.', emoji: '⭐', online: false, unread: 2, time: '2 hr', preview: 'Can I request a custom?', ppv: false, vip: false },
+  { id: 6, name: 'thunder77', display: 'Viktor P.', emoji: '⚡', online: false, unread: 0, time: '3 hr', preview: 'You are just 🔥', ppv: false, vip: false },
+  { id: 7, name: 'royal_fan', display: 'Igor M.', emoji: '👑', online: true, unread: 0, time: '4 hr', preview: '[PPV] Waiting for new content!', ppv: true, vip: true },
+  { id: 8, name: 'velvet_sub', display: 'Sergei T.', emoji: '🎩', online: false, unread: 0, time: '5 hr', preview: 'Hello, is the stream OK?', ppv: false, vip: false },
+  { id: 9, name: 'blade_x', display: 'Pavel K.', emoji: '🗡️', online: false, unread: 0, time: '6 hr', preview: 'Thank you for the reply!', ppv: false, vip: false },
+  { id: 10, name: 'arctic_storm', display: 'Anton L.', emoji: '❄️', online: true, unread: 0, time: '8 hr', preview: 'When is the next live?', ppv: false, vip: false },
+  { id: 11, name: 'neo_knight', display: 'Alexei D.', emoji: '🛡️', online: false, unread: 0, time: 'Yesterday', preview: '[Voice] 0:34', ppv: false, vip: false },
+  { id: 12, name: 'fire_dragon', display: 'Kirill M.', emoji: '🐉', online: false, unread: 0, time: 'Yesterday', preview: 'Great content!', ppv: true, vip: false },
+  { id: 13, name: 'shadow_x99', display: 'Nikita V.', emoji: '🌑', online: false, unread: 0, time: 'Yesterday', preview: '💰 Tips $10 sent', ppv: false, vip: false },
+  { id: 14, name: 'golden_eye', display: 'Evgeny S.', emoji: '👁️', online: false, unread: 0, time: 'Mon', preview: 'You are the best 💖', ppv: true, vip: true },
+  { id: 15, name: 'omega_fan', display: 'Mikhail K.', emoji: '🔱', online: false, unread: 0, time: 'Mon', preview: 'Until the next stream!', ppv: false, vip: false },
+  { id: 16, name: 'vortex_44', display: 'Timur B.', emoji: '🌀', online: false, unread: 0, time: 'Sun', preview: 'Waiting for a new post!', ppv: false, vip: false },
 ];
 
 const seedMessages = [
-  { type: 'day', label: 'Понедельник' },
-  { type: 'fan', text: 'Hello Анна! Я только подписался и уже в восторге от твоего контента 🔥', time: '10:14' },
-  { type: 'me', text: 'Hello! Thank you, рада видеть тебя 😊 Надеюсь тебе понравится эксклюзив!', time: '10:18', seen: true },
-  { type: 'fan', text: 'Очень жду нового контента! Ты лучшая на платформе без преувеличений', time: '10:25' },
-  { type: 'me', text: 'Ты такой добрый! 💖 Готовлю кое-что особенное для топ-фанов', time: '10:31', seen: true },
-  { type: 'fan', text: 'Это звучит невероятно 😍 Когда будет следующий эфир?', time: '10:44', reaction: '🔥' },
-  { type: 'me', text: 'Планирую на пятницу вечером, примерно в 21:00 по МСК. Напомню заранее!', time: '10:47', seen: true },
+  { type: 'day', label: 'Monday' },
+  { type: 'fan', text: 'Hello Anna! I just subscribed and I\'m already blown away by your content 🔥', time: '10:14' },
+  { type: 'me', text: 'Hello! Thank you, glad to see you 😊 Hope you enjoy the exclusive!', time: '10:18', seen: true },
+  { type: 'fan', text: 'Can\'t wait for new content! You are the best on the platform, no exaggeration', time: '10:25' },
+  { type: 'me', text: 'You are so kind! 💖 Preparing something special for top fans', time: '10:31', seen: true },
+  { type: 'fan', text: 'That sounds incredible 😍 When is the next stream?', time: '10:44', reaction: '🔥' },
+  { type: 'me', text: 'Planning for Friday evening, around 9:00 PM. I\'ll remind you in advance!', time: '10:47', seen: true },
   { type: 'day', label: 'Yesterday' },
-  { type: 'system', text: '💰 Фан отправил чаевые $15' },
-  { type: 'fan', text: 'Держи чаевые! Ты заслуживаешь большего 💰', time: '14:02' },
-  { type: 'me', text: 'Ой, спасибо огромное! Ты просто золото 🥰✨', time: '14:05', seen: true },
-  { type: 'ppv-locked', thumb: '🖼️', title: '🔒 Photo • $8.00', desc: 'Эксклюзивный фото-сет, 8 фото' },
-  { type: 'fan', text: 'Хочу купить PPV! Это выглядит очень интригующе 🤤', time: '14:22' },
-  { type: 'me', text: 'Там очень горячий контент! 🔥 Думаю тебе понравится 😉', time: '14:24', seen: true },
+  { type: 'system', text: '💰 Fan sent a tip of $15' },
+  { type: 'fan', text: 'Here are your tips! You deserve more 💰', time: '14:02' },
+  { type: 'me', text: 'Oh, thank you so much! You are pure gold 🥰✨', time: '14:05', seen: true },
+  { type: 'ppv-locked', thumb: '🖼️', title: '🔒 Photo • $8.00', desc: 'Exclusive photo set, 8 photos' },
+  { type: 'fan', text: 'I want to buy PPV! This looks very intriguing 🤤', time: '14:22' },
+  { type: 'me', text: 'There is very hot content inside! 🔥 I think you\'ll love it 😉', time: '14:24', seen: true },
   { type: 'voice', duration: '0:34', time: '14:30' },
-  { type: 'fan', text: 'Услышал твоё голосовое, ты такая милая 🥺💕', time: '14:35', reaction: '💕' },
+  { type: 'fan', text: 'Heard your voice note, you are so sweet 🥺💕', time: '14:35', reaction: '💕' },
   { type: 'day', label: 'Today' },
-  { type: 'ppv-unlocked', thumb: '📸', title: '✓ Разблокировано', desc: 'Приватные фото • $12', amount: '$12' },
-  { type: 'fan', text: 'Я купил твой PPV — это просто огонь 🔥🔥🔥 Thank you!', time: '09:11' },
-  { type: 'me', text: 'Так рада что понравилось! Скоро добавлю ещё эксклюзива 😘', time: '09:15', seen: true },
-  { type: 'fan', text: 'Ты лучшая создательница контента которую я видел. Честно!', time: '11:42' },
-  { type: 'me', text: 'Это так приятно слышать! 💖 Стараюсь для вас', time: '11:46', seen: false },
-  { type: 'fan', text: 'Hello! Когда следующий эфир? Буду ждать с нетерпением 🎥', time: '12:03' },
+  { type: 'ppv-unlocked', thumb: '📸', title: '✓ Unlocked', desc: 'Private photos • $12', amount: '$12' },
+  { type: 'fan', text: 'I bought your PPV — it\'s just fire 🔥🔥🔥 Thank you!', time: '09:11' },
+  { type: 'me', text: 'So glad you liked it! I\'ll add more exclusive content soon 😘', time: '09:15', seen: true },
+  { type: 'fan', text: 'You are the best content creator I\'ve ever seen. Honestly!', time: '11:42' },
+  { type: 'me', text: 'It\'s so nice to hear that! 💖 I do my best for you', time: '11:46', seen: false },
+  { type: 'fan', text: 'Hello! When is the next stream? I\'ll be waiting eagerly 🎥', time: '12:03' },
 ];
 
 let currentConv = conversations[0];
@@ -1313,7 +1313,7 @@ let activeFilter = 'all';
 function renderConversations(list) {
   const el = document.getElementById('convList');
   if (!list.length) {
-    el.innerHTML = '<div style="text-align:center;padding:40px 16px;color:var(--text-muted);font-size:14px;">Нет переписок</div>';
+    el.innerHTML = '<div style="text-align:center;padding:40px 16px;color:var(--text-muted);font-size:14px;">No conversations</div>';
     return;
   }
   el.innerHTML = list.map((c, i) => `
@@ -1367,7 +1367,7 @@ function openConversation(id) {
   // update chat header
   document.getElementById('chatName').textContent = '@' + currentConv.name;
   document.getElementById('chatAvatar').textContent = currentConv.emoji;
-  document.getElementById('chatStatusText').textContent = currentConv.online ? 'прямо сейчас' : '2 min ago';
+  document.getElementById('chatStatusText').textContent = currentConv.online ? 'right now' : '2 min ago';
   // update right panel
   document.getElementById('fanName').textContent = '@' + currentConv.name;
   document.getElementById('fanHandle').textContent = currentConv.display;
@@ -1410,7 +1410,7 @@ function renderMessages() {
       </div>`;
     if (msg.type === 'ppv-locked') return `
       <div class="msg-row from-me">
-        <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+        <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">A</div>
         <div class="msg-content" style="align-items:flex-end">
           <div class="ppv-bubble">
             <div class="ppv-thumb">
@@ -1427,7 +1427,7 @@ function renderMessages() {
       </div>`;
     if (msg.type === 'ppv-unlocked') return `
       <div class="msg-row from-me">
-        <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+        <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">A</div>
         <div class="msg-content" style="align-items:flex-end">
           <div class="ppv-bubble">
             <div class="ppv-thumb" style="background:linear-gradient(135deg,#0a2a1a,#1a3a2a)">
@@ -1450,7 +1450,7 @@ function renderMessages() {
       </div>`;
     if (msg.type === 'me') return `
       <div class="msg-row from-me">
-        <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+        <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">A</div>
         <div class="msg-content">
           <div class="msg-bubble from-me">${msg.text}</div>
           <div class="msg-meta">
@@ -1477,7 +1477,7 @@ function sendMessage() {
   const area = document.getElementById('messagesArea');
   const msgHtml = `
     <div class="msg-row from-me" style="animation:kol-fade-in 0.25s ease">
-      <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+      <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">A</div>
       <div class="msg-content">
         <div class="msg-bubble from-me">${escapeHtml(text)}</div>
         <div class="msg-meta">${getTime()} <span class="seen-tick">✓✓</span></div>
@@ -1517,8 +1517,8 @@ document.addEventListener('click', e => {
 });
 function handleAttach(type) {
   toggleAttach();
-  const map = { photo: 'Выбор фото...', video: 'Выбор видео...', voice: 'Запись голосового...' };
-  showToast(map[type] || 'Открытие...', '');
+  const map = { photo: 'Selecting photo...', video: 'Selecting video...', voice: 'Recording voice note...' };
+  showToast(map[type] || 'Opening...', '');
 }
 
 // ===== VOICE PLAYBACK =====
@@ -1533,14 +1533,14 @@ function playVoice(btn) {
 function unlockPPV(btn) {
   const bubble = btn.closest('.ppv-bubble');
   const info = bubble.querySelector('.ppv-info');
-  btn.textContent = '⏳ Обработка...';
+  btn.textContent = '⏳ Processing...';
   setTimeout(() => {
     info.innerHTML = `
-      <div class="ppv-title">🔓 Разблокировано!</div>
-      <div class="ppv-unlocked-badge">✅ Content доступен</div>`;
+      <div class="ppv-title">🔓 Unlocked!</div>
+      <div class="ppv-unlocked-badge">✅ Content available</div>`;
     bubble.querySelector('.ppv-thumb').style.background = 'linear-gradient(135deg,#0a2a1a,#1a3a2a)';
     bubble.querySelector('.ppv-thumb').innerHTML = '<div style="font-size:48px;position:relative;z-index:1">🖼️</div>';
-    showToast('✅ PPV-контент разблокирован!', 'success');
+    showToast('✅ PPV content unlocked!', 'success');
   }, 1200);
 }
 
@@ -1549,15 +1549,15 @@ function sendTipRequest(amount) {
   const area = document.getElementById('messagesArea');
   const msgHtml = `
     <div class="msg-row from-me" style="animation:kol-fade-in 0.25s ease">
-      <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+      <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">A</div>
       <div class="msg-content">
-        <div class="msg-bubble from-me">💰 Запрос чаевых $${amount}</div>
+        <div class="msg-bubble from-me">💰 Tip request $${amount}</div>
         <div class="msg-meta">${getTime()} <span class="seen-tick">✓✓</span></div>
       </div>
     </div>`;
   area.insertAdjacentHTML('beforeend', msgHtml);
   area.scrollTop = area.scrollHeight;
-  showToast(`💰 Запрос чаевых $${amount} отправлен`, 'gold');
+  showToast(`💰 Tip request $${amount} sent`, 'gold');
 }
 
 // ===== EMOJI =====
@@ -1574,7 +1574,7 @@ function openPPVModal() { document.getElementById('ppvModal').classList.add('ope
 function closePPVModal() { document.getElementById('ppvModal').classList.remove('open'); }
 function openMassModal() { document.getElementById('massModal').classList.add('open'); }
 function closeMassModal() { document.getElementById('massModal').classList.remove('open'); }
-function openComposeModal() { showToast('Select фана для нового диалога', ''); }
+function openComposeModal() { showToast('Select a fan to start a new conversation', ''); }
 
 function toggleMassPPV() {
   const sec = document.getElementById('massPPVSection');
@@ -1591,7 +1591,7 @@ function sendPPV() {
   const area = document.getElementById('messagesArea');
   const msgHtml = `
     <div class="msg-row from-me" style="animation:kol-fade-in 0.25s ease">
-      <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">А</div>
+      <div class="msg-sender-avatar" style="background:linear-gradient(135deg,#8B2BE2,#D42B6A)">A</div>
       <div class="msg-content" style="align-items:flex-end">
         <div class="ppv-bubble">
           <div class="ppv-thumb">
@@ -1599,8 +1599,8 @@ function sendPPV() {
             <div class="ppv-lock-icon">🔒</div>
           </div>
           <div class="ppv-info">
-            <div class="ppv-title">🔒 Эксклюзивный контент • $10.00</div>
-            <div class="ppv-price">Новый PPV от Анны</div>
+            <div class="ppv-title">🔒 Exclusive content • $10.00</div>
+            <div class="ppv-price">New PPV from Anna</div>
             <button class="ppv-unlock-btn" onclick="unlockPPV(this)">💳 Unlock — $10.00</button>
           </div>
         </div>
@@ -1608,19 +1608,19 @@ function sendPPV() {
     </div>`;
   area.insertAdjacentHTML('beforeend', msgHtml);
   area.scrollTop = area.scrollHeight;
-  showToast('🔒 PPV-контент отправлен фану!', 'success');
+  showToast('🔒 PPV content sent to fan!', 'success');
 }
 
 function sendMass() {
   closeMassModal();
-  showToast('📢 Рассылка отправлена 847 subscriberам!', 'success');
+  showToast('📢 Mass message sent to 847 subscribers!', 'success');
 }
 
 // ===== RIGHT PANEL TOGGLE (mobile) =====
 function toggleRightPanel() {
   const rp = document.getElementById('rightPanel');
   if (window.innerWidth <= 900) {
-    showToast('Информация о фане', '');
+    showToast('Fan information', '');
   } else {
     rp.style.display = rp.style.display === 'none' ? '' : rp.style.display;
   }
@@ -1628,8 +1628,8 @@ function toggleRightPanel() {
 
 // ===== BLOCK =====
 function confirmBlock() {
-  if (confirm(`Заблокировать @${currentConv.name}? Они потеряют доступ к вашему контенту.`)) {
-    showToast('🚫 Пользователь заблокирован', '');
+  if (confirm(`Block @${currentConv.name}? They will lose access to your content.`)) {
+    showToast('🚫 User blocked', '');
   }
 }
 
@@ -1673,7 +1673,7 @@ setTimeout(() => {
 if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}
 </script>
 
-<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../messages.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="messages.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="messages.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="messages.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
 
 <!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
 <style>
@@ -1695,7 +1695,7 @@ if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.se
 .kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
 </style>
 <div id="kol-cookie-banner">
-  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <p>🍪 We use cookies to improve your experience. <a href="cookie.html">Learn more</a></p>
   <div class="kol-cookie-btns">
     <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
     <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
@@ -1759,40 +1759,40 @@ if("serviceWorker"in navigator){window.addEventListener("load",()=>{navigator.se
 
 <!-- FAB -->
 <div id="kol-fab-menu">
-  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
-  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
-  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Upload</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Message</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Search</a>
 </div>
-<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+<button id="kol-fab" aria-label="Quick actions" onclick="kolToggleFab()">＋</button>
 
 <!-- Keyboard shortcuts hint -->
-<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — keyboard shortcuts</div>
 
 <!-- Keyboard shortcuts modal -->
 <div id="kol-shortcuts-modal">
   <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
   <div id="kol-shortcuts-box">
-    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
-    <h3>⌨️ Горячие клавиши</h3>
+    <button id="kol-shortcuts-close" aria-label="Close" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Keyboard shortcuts</h3>
     <div class="kol-sc-group">
-      <h4>Навигация</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+      <h4>Navigation</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Feed</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Search</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Messages</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Notifications</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Profile</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Creator dashboard</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Действия</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+      <h4>Actions</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Upload content</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Toggle theme</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Report</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Интерфейс</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+      <h4>Interface</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">This panel</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Close modal</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
     </div>
   </div>
 </div>
@@ -1879,7 +1879,7 @@ document.addEventListener('keydown', function(e){
       return;
     case '/':
       e.preventDefault();
-      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      var si = document.querySelector('input[type="search"],input[placeholder*="earch"],#searchInput');
       if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
       return;
     case 'n': case 'N':
