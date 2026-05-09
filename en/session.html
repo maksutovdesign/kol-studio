@@ -9,18 +9,18 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="KOL Studio">
   <link rel="apple-touch-icon" href="../icons/icon.svg">
-  <meta name="description" content="Приватный чат и Live-шоу с моделями">
+  <meta name="description" content="Private chat and Live show with models">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="KOL Studio">
-  <meta property="og:title" content="KOL Studio — Приват-сессия">
-  <meta property="og:description" content="Приватный чат и Live-шоу с моделями">
+  <meta property="og:title" content="KOL Studio — Private Session">
+  <meta property="og:description" content="Private chat and Live show with models">
   <meta property="og:url" content="https://kolstudio.com/en/session.html">
   <meta property="og:image" content="https://kolstudio.com/en/icons/og-image.jpg">
-  <meta property="og:locale" content="ru_RU">
+  <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="KOL Studio — Приват-сессия">
-  <meta name="twitter:description" content="Приватный чат и Live-шоу с моделями">
-  <title>KOL Studio — Сессия</title>
+  <meta name="twitter:title" content="KOL Studio — Private Session">
+  <meta name="twitter:description" content="Private chat and Live show with models">
+  <title>KOL Studio — Session</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -1254,14 +1254,14 @@ button,a,[role="button"]{min-height:36px}
   <div class="modal-card">
     <button class="modal-close" onclick="closeSubModal()">✕</button>
     <div class="modal-title">Subscribe</div>
-    <div class="modal-sub" id="subModalSub">Select способ оплаты</div>
+    <div class="modal-sub" id="subModalSub">Select payment method</div>
     <div style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px">
       <div style="font-size:14px;font-weight:700;margin-bottom:4px" id="subModalPlanName"></div>
       <div style="font-size:24px;font-weight:800;color:var(--gold);margin-bottom:8px" id="subModalPrice"></div>
       <ul style="list-style:none" id="subModalPerks"></ul>
     </div>
     <div class="payment-methods">
-      <button class="pay-method selected" onclick="selPay(this)">💳 Карта</button>
+      <button class="pay-method selected" onclick="selPay(this)">💳 Card</button>
       <button class="pay-method" onclick="selPay(this)">₿ Crypto</button>
       <button class="pay-method" onclick="selPay(this)">💰 Balance</button>
     </div>
@@ -1286,10 +1286,10 @@ button,a,[role="button"]{min-height:36px}
 
 <!-- MODE TABS -->
 <div class="mode-tabs-bar">
-  <button class="mode-tab active" onclick="switchMode(this,'chat')" id="tab-chat">💬 Чат</button>
+  <button class="mode-tab active" onclick="switchMode(this,'chat')" id="tab-chat">💬 Chat</button>
   <button class="mode-tab" onclick="switchMode(this,'live')" id="tab-live">📺 Private Show</button>
   <button class="mode-tab" onclick="switchMode(this,'content')" id="tab-content">📸 Content</button>
-  <button class="mode-tab" onclick="switchMode(this,'special')" id="tab-special">✨ Запрос</button>
+  <button class="mode-tab" onclick="switchMode(this,'special')" id="tab-special">✨ Request</button>
 </div>
 
 <!-- MAIN LAYOUT -->
@@ -1297,12 +1297,12 @@ button,a,[role="button"]{min-height:36px}
 
   <!-- LEFT PANEL -->
   <div class="left-panel">
-    <div class="left-panel-header" id="leftPanelHeader">Превью</div>
+    <div class="left-panel-header" id="leftPanelHeader">Preview</div>
     <div class="left-panel-scroll">
 
       <!-- FREE PREVIEWS -->
       <div class="preview-cards" id="previewCards">
-        <div class="preview-label">Бесплатный контент</div>
+        <div class="preview-label">Free content</div>
         <div class="preview-card" id="prevCard1">
           <div class="preview-card-bg" id="prevBg1"></div>
           <div class="preview-card-overlay">
@@ -1325,33 +1325,33 @@ button,a,[role="button"]{min-height:36px}
 
       <!-- QUICK ACTIONS -->
       <div id="quickActions">
-        <div class="preview-label">Быстрые действия</div>
+        <div class="preview-label">Quick actions</div>
         <div class="quick-action" onclick="sendQuickMsg('Hello! 👋')">
           <span class="quick-action-icon">👋</span>
           <div>
-            <div class="quick-action-text">Поздороваться</div>
-            <div class="quick-action-sub">Начать общение</div>
+            <div class="quick-action-text">Say hello</div>
+            <div class="quick-action-sub">Start chatting</div>
           </div>
         </div>
-        <div class="quick-action" onclick="sendQuickMsg('Можешь сделать что-то особенное для меня? ✨')">
+        <div class="quick-action" onclick="sendQuickMsg('Can you do something special for me? ✨')">
           <span class="quick-action-icon">✨</span>
           <div>
-            <div class="quick-action-text">Особый запрос</div>
-            <div class="quick-action-sub">Попросить эксклюзив</div>
+            <div class="quick-action-text">Special request</div>
+            <div class="quick-action-sub">Ask for exclusive</div>
           </div>
         </div>
-        <div class="quick-action" onclick="sendQuickMsg('Хочу приватное шоу 🔥')">
+        <div class="quick-action" onclick="sendQuickMsg('I want a private show 🔥')">
           <span class="quick-action-icon">📺</span>
           <div>
             <div class="quick-action-text">Private Show</div>
-            <div class="quick-action-sub">Launch приват</div>
+            <div class="quick-action-sub">Launch private</div>
           </div>
         </div>
         <div class="quick-action" onclick="sendTipQuick(10)">
           <span class="quick-action-icon">💰</span>
           <div>
             <div class="quick-action-text">Send $10</div>
-            <div class="quick-action-sub">Быстрые чаевые</div>
+            <div class="quick-action-sub">Quick tip</div>
           </div>
         </div>
       </div>
@@ -1366,7 +1366,7 @@ button,a,[role="button"]{min-height:36px}
     <div class="video-area video-area-hidden" id="videoArea">
       <!-- Tips floating bar -->
       <div class="tips-floating-bar">
-        <span class="tips-bar-label">💰 Чаевые:</span>
+        <span class="tips-bar-label">💰 Tips:</span>
         <button class="tip-bar-btn" onclick="sendTipFromBar(2)">$2</button>
         <button class="tip-bar-btn" onclick="sendTipFromBar(5)">$5</button>
         <button class="tip-bar-btn" onclick="sendTipFromBar(10)">$10</button>
@@ -1377,15 +1377,15 @@ button,a,[role="button"]{min-height:36px}
         <div class="video-avatar-large" id="videoAvatar"></div>
         <div class="video-model-name" id="videoName">—</div>
         <div class="video-live-badge" id="liveBadge"><div class="timer-dot"></div> LIVE</div>
-        <div class="video-connecting" id="videoConnecting">Подключение к трансляции...</div>
+        <div class="video-connecting" id="videoConnecting">Connecting to stream...</div>
       </div>
 
       <div class="video-controls">
-        <button class="vctrl-btn" onclick="toggleMic(this)" id="micBtn">🎤 Микрофон</button>
-        <button class="vctrl-btn" onclick="toggleCam(this)" id="camBtn">📷 Камера</button>
-        <button class="vctrl-btn" id="watchLiveBtn" onclick="location.href='live.html'" style="background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:white;border-color:transparent;font-weight:700;">🔴 Смотреть эфир</button>
-        <button class="vctrl-btn active" onclick="toggleFullscreen()">⛶ Полный экран</button>
-        <button class="vctrl-btn vctrl-btn-exclusive" onclick="requestExclusive()">✨ Запросить эксклюзив</button>
+        <button class="vctrl-btn" onclick="toggleMic(this)" id="micBtn">🎤 Microphone</button>
+        <button class="vctrl-btn" onclick="toggleCam(this)" id="camBtn">📷 Camera</button>
+        <button class="vctrl-btn" id="watchLiveBtn" onclick="location.href='live.html'" style="background:linear-gradient(135deg,#D42B6A,#8B2BE2);color:white;border-color:transparent;font-weight:700;">🔴 Watch live</button>
+        <button class="vctrl-btn active" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+        <button class="vctrl-btn vctrl-btn-exclusive" onclick="requestExclusive()">✨ Request exclusive</button>
       </div>
     </div>
 
@@ -1394,11 +1394,11 @@ button,a,[role="button"]{min-height:36px}
       <div class="chat-messages" id="chatMessages"></div>
       <div class="chat-input-wrap">
         <div class="sub-banner" id="subBanner">
-          <span>🔓 Оформите подписку для полного доступа к контенту</span>
+          <span>🔓 Subscribe for full access to content</span>
           <button class="sub-banner-btn" onclick="openSubModal()">Subscribe</button>
         </div>
         <div class="chat-input-row">
-          <textarea class="chat-input" id="chatInput" placeholder="Write сообщение..." rows="1"
+          <textarea class="chat-input" id="chatInput" placeholder="Write a message..." rows="1"
             onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
           <button class="send-btn" onclick="sendMessage()">➤</button>
         </div>
@@ -1408,37 +1408,37 @@ button,a,[role="button"]{min-height:36px}
     <!-- CONTENT PANEL -->
     <div class="content-panel content-panel-hidden" id="contentPanel">
       <div style="margin-bottom:16px">
-        <div style="font-size:18px;font-weight:800;margin-bottom:4px">Content модели</div>
-        <div style="font-size:13px;color:var(--text-sub)">Photo и видео. Нажмите для разблокировки.</div>
+        <div style="font-size:18px;font-weight:800;margin-bottom:4px">Model content</div>
+        <div style="font-size:13px;color:var(--text-sub)">Photos and videos. Click to unlock.</div>
       </div>
       <div class="content-panel-grid" id="contentPanelGrid"></div>
     </div>
 
     <!-- REQUEST PANEL -->
     <div class="request-panel request-panel-hidden" id="requestPanel">
-      <div class="request-title">✨ Особый запрос</div>
-      <div class="request-subtitle">Опишите, что именно вы хотите. Модель ответит и согласует детали.</div>
+      <div class="request-title">✨ Special request</div>
+      <div class="request-subtitle">Describe exactly what you want. The model will respond and confirm the details.</div>
       <div class="request-form">
         <div>
-          <div class="req-label">Type запроса</div>
+          <div class="req-label">Request type</div>
           <div class="req-type-grid" id="reqTypeGrid">
             <button class="req-type-btn selected" onclick="selReqType(this)">📸 Photo</button>
             <button class="req-type-btn" onclick="selReqType(this)">🎬 Video</button>
-            <button class="req-type-btn" onclick="selReqType(this)">🎭 Ролевая</button>
-            <button class="req-type-btn" onclick="selReqType(this)">👗 Образ</button>
-            <button class="req-type-btn" onclick="selReqType(this)">💬 Общение</button>
-            <button class="req-type-btn" onclick="selReqType(this)">🔥 Другое</button>
+            <button class="req-type-btn" onclick="selReqType(this)">🎭 Roleplay</button>
+            <button class="req-type-btn" onclick="selReqType(this)">👗 Outfit</button>
+            <button class="req-type-btn" onclick="selReqType(this)">💬 Chat</button>
+            <button class="req-type-btn" onclick="selReqType(this)">🔥 Other</button>
           </div>
         </div>
         <div>
           <div class="req-label">Description</div>
-          <textarea class="req-input" placeholder="Опишите запрос подробно..." rows="4"></textarea>
+          <textarea class="req-input" placeholder="Describe your request in detail..." rows="4"></textarea>
         </div>
         <div>
-          <div class="req-label">Ваш бюджет</div>
-          <input class="req-input" type="number" placeholder="Amount в $..." min="1">
+          <div class="req-label">Your budget</div>
+          <input class="req-input" type="number" placeholder="Amount in $..." min="1">
         </div>
-        <button class="req-submit-btn" onclick="submitRequest()">Send запрос</button>
+        <button class="req-submit-btn" onclick="submitRequest()">Send request</button>
       </div>
     </div>
 
@@ -1447,7 +1447,7 @@ button,a,[role="button"]{min-height:36px}
   <!-- RIGHT PANEL -->
   <div class="right-panel">
     <div class="right-panel-section">
-      <div class="rp-title">Модель</div>
+      <div class="rp-title">Model</div>
       <div class="model-card-mini">
         <div class="model-mini-avatar" id="rpAvatar"></div>
         <div>
@@ -1459,20 +1459,20 @@ button,a,[role="button"]{min-height:36px}
     </div>
 
     <div class="right-panel-section">
-      <div class="rp-title" id="costTitle">Стоимость</div>
+      <div class="rp-title" id="costTitle">Cost</div>
       <div class="cost-display">
-        <div class="cost-label" id="costLabel">Тариф</div>
+        <div class="cost-label" id="costLabel">Rate</div>
         <div class="cost-val" id="costVal">—</div>
       </div>
     </div>
 
     <div class="right-panel-section">
-      <div class="rp-title">Languageи</div>
+      <div class="rp-title">Languages</div>
       <div id="rpLangs" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
     </div>
 
     <div style="padding:14px 14px 10px;border-bottom:1px solid var(--border)">
-      <div class="rp-title">Online сейчас</div>
+      <div class="rp-title">Online now</div>
       <div class="rp-scroll" id="viewerList" style="max-height:160px;overflow-y:auto;flex:none;padding:0;margin-top:6px;"></div>
     </div>
   </div>
@@ -1484,27 +1484,27 @@ button,a,[role="button"]{min-height:36px}
 // MODEL DATA
 // =====================
 const MODELS = [
-  {id:1,name:'Анна Морозова',verified:true,age:24,status:'online',viewers:142,followers:'18.4K',likes:'142K',posts:312,videos:28,bio:'Эксклюзивный fashion и lingerie контент',tags:['Fashion','Lingerie','Boudoir'],services:['photo','video','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['Весь фото-контент','Личные сообщения']},{name:'Premium',price:14.99,perks:['Всё из базового','HD видео','Live эфиры']},{name:'VIP',price:29.99,perks:['Всё из премиум','Private Show 30 мин','Особый запрос /month']}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~10 мин',g1:'#5C1A7A',g2:'#D42B6A',category:'Lingerie'},
-  {id:2,name:'Мария Козлова',verified:true,age:26,status:'live',viewers:318,followers:'9.2K',likes:'67K',posts:189,videos:41,bio:'Арт и лайфстайл контент',tags:['Art','Lifestyle','Creative'],services:['photo','video','live'],subPlans:[{name:'Basic',price:7.99,perks:['Все фото']},{name:'Premium',price:9.99,perks:['Photo + видео','Live']}],nat:'🇷🇺',langs:['RU','EN','DE'],responseTime:'~5 мин',g1:'#0D47A1',g2:'#7B1FA2',category:'Art'},
-  {id:3,name:'Дарья Петрова',verified:true,age:28,status:'offline',viewers:0,followers:'31.2K',likes:'289K',posts:547,videos:63,bio:'Топ-модель платформы',tags:['Boudoir','Studio','Glamour'],services:['photo','video','special'],subPlans:[{name:'Стандарт',price:14.99,perks:['Весь контент','Приоритет в чате']},{name:'VIP',price:24.99,perks:['Всё','Ежемесячный особый запрос']}],nat:'🇷🇺',langs:['RU'],responseTime:'~2 ч',g1:'#AD1457',g2:'#E65100',category:'Boudoir'},
-  {id:4,name:'Елена Соколова',verified:false,age:22,status:'online',viewers:87,followers:'5.8K',likes:'34K',posts:98,videos:15,bio:'Фитнес и lifestyle',tags:['Fitness','Bikini','Lifestyle'],services:['photo','video','chat'],subPlans:[{name:'Подписка',price:7.99,perks:['Весь контент','Messages']}],nat:'🇺🇦',langs:['RU','EN'],responseTime:'~8 мин',g1:'#00695C',g2:'#1565C0',category:'Fitness'},
-  {id:5,name:'Кристина Нова',verified:false,age:25,status:'live',viewers:204,followers:'7.1K',likes:'51K',posts:143,videos:22,bio:'Косплей и ролевые игры',tags:['Cosplay','Roleplay','Fetish'],services:['photo','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['Photo','Live эфиры']},{name:'Фан',price:12.99,perks:['Всё + приват-чат']}],nat:'🇧🇾',langs:['RU','EN'],responseTime:'~15 мин',g1:'#4E342E',g2:'#880E4F',category:'Cosplay'},
-  {id:6,name:'Виктория Лейн',verified:true,age:30,status:'offline',viewers:0,followers:'22.7K',likes:'198K',posts:421,videos:87,bio:'Доминантная модель',tags:['Dominant','Latex','Boudoir'],services:['photo','video','special'],subPlans:[{name:'Стандарт',price:19.99,perks:['Полный доступ']},{name:'VIP',price:39.99,perks:['Всё + 1 особый запрос']}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~3 ч',g1:'#37474F',g2:'#1A0A2E',category:'Boudoir'},
-  {id:7,name:'Алина Серова',verified:true,age:23,status:'online',viewers:196,followers:'41.3K',likes:'412K',posts:689,videos:124,bio:'Самая популярная на платформе',tags:['Fashion','Softcore','ASMR'],services:['photo','video','live','chat','special'],subPlans:[{name:'Basic',price:11.99,perks:['Photo + видео']},{name:'Premium',price:16.99,perks:['Всё + Live']},{name:'VIP',price:34.99,perks:['Всё + приват']}],nat:'🇰🇿',langs:['RU','EN'],responseTime:'~5 мин',g1:'#880E4F',g2:'#C2185B',category:'Lifestyle'},
-  {id:8,name:'Юлия Вих',verified:false,age:27,status:'online',viewers:63,followers:'3.2K',likes:'18K',posts:67,videos:8,bio:'Новенькая на платформе',tags:['Fitness','Sport','Bikini'],services:['photo','video','chat'],subPlans:[{name:'Подписка',price:6.99,perks:['Весь контент','Чат']}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~12 мин',g1:'#1B5E20',g2:'#2E7D32',category:'Fitness'},
-  {id:9,name:'Наташа Рей',verified:true,age:24,status:'live',viewers:421,followers:'14.8K',likes:'127K',posts:278,videos:51,bio:'Чувственные boudoir и тизинг',tags:['Boudoir','Tease','Requests'],services:['photo','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['Всё фото']},{name:'Premium',price:12.99,perks:['Photo + Live + чат']}],nat:'🇬🇪',langs:['RU','EN'],responseTime:'~8 мин',g1:'#4A148C',g2:'#6A1B9A',category:'Boudoir'},
-  {id:10,name:'Вика Морган',verified:false,age:21,status:'online',viewers:34,followers:'2.1K',likes:'9K',posts:34,videos:4,bio:'Совсем новенькая',tags:['Cute','Lifestyle','Teen18+'],services:['photo','video','chat'],subPlans:[{name:'Подписка',price:5.99,perks:['Весь контент']}],nat:'🇺🇦',langs:['RU','EN'],responseTime:'~20 мин',g1:'#1A237E',g2:'#283593',category:'Lifestyle'},
-  {id:11,name:'Лина Сой',verified:true,age:25,status:'online',viewers:289,followers:'28.9K',likes:'267K',posts:456,videos:78,bio:'K-Beauty и Asian fashion',tags:['Asian','Korean','Fashion'],services:['photo','video','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['Photo + видео']},{name:'Premium',price:13.99,perks:['Всё + Live + чат']},{name:'VIP',price:27.99,perks:['Всё + особые запросы']}],nat:'🇰🇷',langs:['KO','EN','RU'],responseTime:'~3 мин',g1:'#880E4F',g2:'#F06292',category:'Asian'},
-  {id:12,name:'Карина Лейс',verified:true,age:29,status:'offline',viewers:0,followers:'11.3K',likes:'89K',posts:198,videos:34,bio:'Латиноамериканская красотка',tags:['Latina','Dance','Hot'],services:['photo','video','special'],subPlans:[{name:'Подписка',price:10.99,perks:['Весь контент']}],nat:'🇲🇽',langs:['ES','EN','RU'],responseTime:'~1 ч',g1:'#00695C',g2:'#00838F',category:'Latina'}
+  {id:1,name:'Anna Morozova',verified:true,age:24,status:'online',viewers:142,followers:'18.4K',likes:'142K',posts:312,videos:28,bio:'Exclusive fashion and lingerie content',tags:['Fashion','Lingerie','Boudoir'],services:['photo','video','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['All photo content','Direct messages']},{name:'Premium',price:14.99,perks:['Everything in Basic','HD video','Live streams']},{name:'VIP',price:29.99,perks:['Everything in Premium','Private Show 30 min','Special request /month']}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~10 min',g1:'#5C1A7A',g2:'#D42B6A',category:'Lingerie'},
+  {id:2,name:'Maria Kozlova',verified:true,age:26,status:'live',viewers:318,followers:'9.2K',likes:'67K',posts:189,videos:41,bio:'Art and lifestyle content',tags:['Art','Lifestyle','Creative'],services:['photo','video','live'],subPlans:[{name:'Basic',price:7.99,perks:['All photos']},{name:'Premium',price:9.99,perks:['Photo + video','Live']}],nat:'🇷🇺',langs:['RU','EN','DE'],responseTime:'~5 min',g1:'#0D47A1',g2:'#7B1FA2',category:'Art'},
+  {id:3,name:'Darya Petrova',verified:true,age:28,status:'offline',viewers:0,followers:'31.2K',likes:'289K',posts:547,videos:63,bio:'Top model on the platform',tags:['Boudoir','Studio','Glamour'],services:['photo','video','special'],subPlans:[{name:'Standard',price:14.99,perks:['All content','Priority in chat']},{name:'VIP',price:24.99,perks:['Everything','Monthly special request']}],nat:'🇷🇺',langs:['RU'],responseTime:'~2 hr',g1:'#AD1457',g2:'#E65100',category:'Boudoir'},
+  {id:4,name:'Elena Sokolova',verified:false,age:22,status:'online',viewers:87,followers:'5.8K',likes:'34K',posts:98,videos:15,bio:'Fitness and lifestyle',tags:['Fitness','Bikini','Lifestyle'],services:['photo','video','chat'],subPlans:[{name:'Subscription',price:7.99,perks:['All content','Messages']}],nat:'🇺🇦',langs:['RU','EN'],responseTime:'~8 min',g1:'#00695C',g2:'#1565C0',category:'Fitness'},
+  {id:5,name:'Kristina Nova',verified:false,age:25,status:'live',viewers:204,followers:'7.1K',likes:'51K',posts:143,videos:22,bio:'Cosplay and roleplay',tags:['Cosplay','Roleplay','Fetish'],services:['photo','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['Photo','Live streams']},{name:'Fan',price:12.99,perks:['Everything + private chat']}],nat:'🇧🇾',langs:['RU','EN'],responseTime:'~15 min',g1:'#4E342E',g2:'#880E4F',category:'Cosplay'},
+  {id:6,name:'Victoria Lane',verified:true,age:30,status:'offline',viewers:0,followers:'22.7K',likes:'198K',posts:421,videos:87,bio:'Dominant model',tags:['Dominant','Latex','Boudoir'],services:['photo','video','special'],subPlans:[{name:'Standard',price:19.99,perks:['Full access']},{name:'VIP',price:39.99,perks:['Everything + 1 special request']}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~3 hr',g1:'#37474F',g2:'#1A0A2E',category:'Boudoir'},
+  {id:7,name:'Alina Serova',verified:true,age:23,status:'online',viewers:196,followers:'41.3K',likes:'412K',posts:689,videos:124,bio:'Most popular on the platform',tags:['Fashion','Softcore','ASMR'],services:['photo','video','live','chat','special'],subPlans:[{name:'Basic',price:11.99,perks:['Photo + video']},{name:'Premium',price:16.99,perks:['Everything + Live']},{name:'VIP',price:34.99,perks:['Everything + private']}],nat:'🇰🇿',langs:['RU','EN'],responseTime:'~5 min',g1:'#880E4F',g2:'#C2185B',category:'Lifestyle'},
+  {id:8,name:'Julia Vikh',verified:false,age:27,status:'online',viewers:63,followers:'3.2K',likes:'18K',posts:67,videos:8,bio:'New on the platform',tags:['Fitness','Sport','Bikini'],services:['photo','video','chat'],subPlans:[{name:'Subscription',price:6.99,perks:['All content','Chat']}],nat:'🇷🇺',langs:['RU','EN'],responseTime:'~12 min',g1:'#1B5E20',g2:'#2E7D32',category:'Fitness'},
+  {id:9,name:'Natasha Rey',verified:true,age:24,status:'live',viewers:421,followers:'14.8K',likes:'127K',posts:278,videos:51,bio:'Sensual boudoir and teasing',tags:['Boudoir','Tease','Requests'],services:['photo','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['All photos']},{name:'Premium',price:12.99,perks:['Photo + Live + chat']}],nat:'🇬🇪',langs:['RU','EN'],responseTime:'~8 min',g1:'#4A148C',g2:'#6A1B9A',category:'Boudoir'},
+  {id:10,name:'Vika Morgan',verified:false,age:21,status:'online',viewers:34,followers:'2.1K',likes:'9K',posts:34,videos:4,bio:'Brand new here',tags:['Cute','Lifestyle','Teen18+'],services:['photo','video','chat'],subPlans:[{name:'Subscription',price:5.99,perks:['All content']}],nat:'🇺🇦',langs:['RU','EN'],responseTime:'~20 min',g1:'#1A237E',g2:'#283593',category:'Lifestyle'},
+  {id:11,name:'Lina Soy',verified:true,age:25,status:'online',viewers:289,followers:'28.9K',likes:'267K',posts:456,videos:78,bio:'K-Beauty and Asian fashion',tags:['Asian','Korean','Fashion'],services:['photo','video','live','chat','special'],subPlans:[{name:'Basic',price:9.99,perks:['Photo + video']},{name:'Premium',price:13.99,perks:['Everything + Live + chat']},{name:'VIP',price:27.99,perks:['Everything + special requests']}],nat:'🇰🇷',langs:['KO','EN','RU'],responseTime:'~3 min',g1:'#880E4F',g2:'#F06292',category:'Asian'},
+  {id:12,name:'Karina Lace',verified:true,age:29,status:'offline',viewers:0,followers:'11.3K',likes:'89K',posts:198,videos:34,bio:'Latina beauty',tags:['Latina','Dance','Hot'],services:['photo','video','special'],subPlans:[{name:'Subscription',price:10.99,perks:['All content']}],nat:'🇲🇽',langs:['ES','EN','RU'],responseTime:'~1 hr',g1:'#00695C',g2:'#00838F',category:'Latina'}
 ];
 
 const MODEL_REPLIES = [
-  'Рада тебя видеть! 💋 Что хочешь сегодня?',
-  'Конечно, сейчас всё сделаю для тебя 😘',
-  'Отличный запрос! Займусь прямо сейчас ✨',
-  'Мне нравится твой вкус 🔥 Готовлюсь...',
-  'Ты мой любимый subscriber 💜 Уже делаю!',
-  'Горячий запрос! Не разочарую 😈'
+  'Happy to see you! 💋 What do you want today?',
+  'Of course, I\'ll do everything for you right now 😘',
+  'Great request! Getting on it right now ✨',
+  'I love your taste 🔥 Getting ready...',
+  'You\'re my favorite subscriber 💜 Already on it!',
+  'Hot request! I won\'t disappoint 😈'
 ];
 
 // =====================
@@ -1570,9 +1570,9 @@ function renderNav() {
 function renderNavBadge() {
   const badge = document.getElementById('navSessionBadge');
   if (isSubscribed) {
-    badge.innerHTML = `<div class="nav-subscribed-badge">✓ Подписка активна</div>`;
+    badge.innerHTML = `<div class="nav-subscribed-badge">✓ Subscription active</div>`;
   } else if (currentMode === 'live') {
-    badge.innerHTML = `<div class="nav-timer-badge"><div class="timer-dot"></div> Private Show: $2.99/мин · <span id="timerDisplay">00:00</span></div>`;
+    badge.innerHTML = `<div class="nav-timer-badge"><div class="timer-dot"></div> Private Show: $2.99/min · <span id="timerDisplay">00:00</span></div>`;
   } else {
     badge.innerHTML = '';
   }
@@ -1619,15 +1619,15 @@ function renderCostDisplay() {
 
   if (isSubscribed) {
     const plan = m.subPlans[Math.floor(m.subPlans.length / 2)] || m.subPlans[0];
-    label.textContent = 'Подписка активна';
-    val.textContent = `$${plan.price}/мес`;
+    label.textContent = 'Subscription active';
+    val.textContent = `$${plan.price}/mo`;
     val.style.color = 'var(--green)';
   } else if (currentMode === 'live') {
     label.textContent = 'Private Show';
-    val.textContent = '$2.99/мин';
+    val.textContent = '$2.99/min';
     val.style.color = 'var(--gold)';
   } else {
-    label.textContent = 'Basic доступ';
+    label.textContent = 'Basic access';
     val.textContent = 'Free';
     val.style.color = 'var(--text-sub)';
   }
@@ -1667,7 +1667,7 @@ function renderContentPanel() {
       <div class="cp-card" onclick="${locked ? `unlockContent(${i}, ${prices[i]})` : ''}">
         <div class="cp-card-bg" style="background:${c}; ${locked ? 'filter:blur(5px)' : ''}"></div>
         ${locked ? `<div class="cp-card-lock"><div class="cp-card-lock-icon">🔒</div><div class="cp-card-price">$${prices[i]} PPV</div></div>` : ''}
-        ${free ? `<div class="cp-card-free">✓ Свободно</div>` : ''}
+        ${free ? `<div class="cp-card-free">✓ Free</div>` : ''}
       </div>`;
   }).join('');
 }
@@ -1706,7 +1706,7 @@ function setMode(mode) {
   if (mode === 'live') {
     videoArea.classList.remove('video-area-hidden');
     startTimer();
-    document.getElementById('leftPanelHeader').textContent = 'Управление';
+    document.getElementById('leftPanelHeader').textContent = 'Controls';
     const m = currentModel;
     const va = document.getElementById('videoAvatar');
     va.style.background = `linear-gradient(135deg, ${m.g1}, ${m.g2})`;
@@ -1715,24 +1715,24 @@ function setMode(mode) {
     const lb = document.getElementById('liveBadge');
     lb.style.display = m.status === 'live' ? 'inline-flex' : 'none';
     if (m.status !== 'live') {
-      document.getElementById('videoConnecting').textContent = 'Запрос на приватное шоу...';
+      document.getElementById('videoConnecting').textContent = 'Requesting private show...';
     } else {
-      document.getElementById('videoConnecting').textContent = 'Подключение к трансляции...';
+      document.getElementById('videoConnecting').textContent = 'Connecting to stream...';
       setTimeout(() => {
-        document.getElementById('videoConnecting').textContent = '🔴 Вы в приватном шоу';
+        document.getElementById('videoConnecting').textContent = '🔴 You are in a private show';
       }, 1500);
     }
   } else {
     stopTimer();
     if (mode === 'chat') {
       chatArea.classList.remove('chat-area-hidden');
-      document.getElementById('leftPanelHeader').textContent = 'Превью и действия';
+      document.getElementById('leftPanelHeader').textContent = 'Preview & actions';
     } else if (mode === 'content') {
       contentPanel.classList.remove('content-panel-hidden');
-      document.getElementById('leftPanelHeader').textContent = 'Filterы';
+      document.getElementById('leftPanelHeader').textContent = 'Filters';
     } else if (mode === 'special') {
       requestPanel.classList.remove('request-panel-hidden');
-      document.getElementById('leftPanelHeader').textContent = 'Мои запросы';
+      document.getElementById('leftPanelHeader').textContent = 'My requests';
     }
   }
 
@@ -1786,7 +1786,7 @@ function addTipMessage(amount) {
   const div = document.createElement('div');
   div.className = 'chat-msg';
   div.style.alignSelf = 'center';
-  div.innerHTML = `<div class="chat-tip-msg">💰 Чаевые $${amount} отправлены!</div>`;
+  div.innerHTML = `<div class="chat-tip-msg">💰 Tip of $${amount} sent!</div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
@@ -1840,7 +1840,7 @@ function sendTipFromBar(amount) {
   if (currentMode === 'live') {
     const msgs = document.getElementById('chatMessages');
     addTipMessage(amount);
-    showToast(`💰 Чаевые $${amount} отправлены модели!`);
+    showToast(`💰 Tip of $${amount} sent to model!`);
   } else {
     sendTipQuick(amount);
   }
@@ -1850,9 +1850,9 @@ function sendTipQuick(amount) {
   if (currentMode !== 'chat') switchModeById('chat');
   setTimeout(() => {
     addTipMessage(amount);
-    showToast(`💰 Чаевые $${amount} отправлены!`);
+    showToast(`💰 Tip of $${amount} sent!`);
     setTimeout(() => {
-      addModelMessage(`Thank you за $${amount} чаевых! 💋 Ты такой щедрый! 🔥`);
+      addModelMessage(`Thank you for the $${amount} tip! 💋 You're so generous! 🔥`);
     }, 600);
   }, 100);
 }
@@ -1886,13 +1886,13 @@ function stopTimer() {
 function toggleMic(btn) {
   micOn = !micOn;
   btn.classList.toggle('active', micOn);
-  btn.textContent = micOn ? '🎤 Микрофон вкл' : '🎤 Микрофон';
+  btn.textContent = micOn ? '🎤 Microphone on' : '🎤 Microphone';
 }
 
 function toggleCam(btn) {
   camOn = !camOn;
   btn.classList.toggle('active', camOn);
-  btn.textContent = camOn ? '📷 Камера вкл' : '📷 Камера';
+  btn.textContent = camOn ? '📷 Camera on' : '📷 Camera';
 }
 
 function toggleFullscreen() {
@@ -1905,10 +1905,10 @@ function toggleFullscreen() {
 }
 
 function requestExclusive() {
-  showToast('✨ Запрос на эксклюзивный контент отправлен!');
+  showToast('✨ Exclusive content request sent!');
   switchModeById('chat');
   setTimeout(() => {
-    addModelMessage('Отличный запрос! Займусь прямо сейчас ✨');
+    addModelMessage('Great request! Getting on it right now ✨');
   }, 500);
 }
 
@@ -1920,12 +1920,12 @@ function unlockPreview(idx) {
   if (card) {
     card.querySelector('.preview-card-bg').style.filter = 'none';
     card.querySelector('.preview-card-overlay').style.display = 'none';
-    showToast(`🔓 Content разблокирован!`);
+    showToast(`🔓 Content unlocked!`);
   }
 }
 
 function unlockContent(idx, price) {
-  showToast(`🔓 Content $${price} разблокирован!`);
+  showToast(`🔓 Content $${price} unlocked!`);
   renderContentPanel();
 }
 
@@ -1938,7 +1938,7 @@ function selReqType(btn) {
 }
 
 function submitRequest() {
-  showToast('✨ Запрос отправлен! Модель ответит в ближайшее время.');
+  showToast('✨ Request sent! Model will respond shortly.');
   switchModeById('chat');
   setTimeout(() => {
     addModelMessage(MODEL_REPLIES[Math.floor(Math.random() * MODEL_REPLIES.length)]);
@@ -1953,11 +1953,11 @@ function openSubModal() {
   const plan = m.subPlans[Math.floor(m.subPlans.length / 2)] || m.subPlans[0];
   document.getElementById('subModalSub').textContent = m.name + ' · ' + plan.name;
   document.getElementById('subModalPlanName').textContent = plan.name;
-  document.getElementById('subModalPrice').innerHTML = `$${plan.price} <span style="font-size:14px;font-weight:400;color:var(--text-sub)">/месяц</span>`;
+  document.getElementById('subModalPrice').innerHTML = `$${plan.price} <span style="font-size:14px;font-weight:400;color:var(--text-sub)">/month</span>`;
   document.getElementById('subModalPerks').innerHTML = plan.perks.map(p =>
     `<li style="font-size:12px;color:var(--text-sub);padding:3px 0;display:flex;align-items:center;gap:6px"><span style="color:var(--green);font-weight:700">✓</span>${p}</li>`
   ).join('');
-  document.getElementById('subModalBtn').textContent = `Subscribe за $${plan.price}/мес`;
+  document.getElementById('subModalBtn').textContent = `Subscribe for $${plan.price}/mo`;
   document.getElementById('subModal').classList.add('open');
 }
 
@@ -1977,9 +1977,9 @@ function confirmSub() {
   renderNavBadge();
   renderCostDisplay();
   renderContentPanel();
-  showToast('🎉 Подписка оформлена! Content разблокирован ✓');
+  showToast('🎉 Subscribed! Content unlocked ✓');
   setTimeout(() => {
-    addModelMessage('Ты мой любимый subscriber 💜 Уже делаю!');
+    addModelMessage('You\'re my favorite subscriber 💜 Already on it!');
   }, 500);
 }
 
@@ -2044,7 +2044,7 @@ function showToast(msg) {
 })();
 </script>
 
-<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="../session.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="session.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
+<div style="position:fixed;bottom:80px;right:16px;z-index:999"><div class="lang-switcher" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.04);border:1px solid #22224A;border-radius:20px;padding:4px 12px"><a href="session.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;color:#6A6A8A;">🇷🇺 RU</a><span style="color:#22224A">|</span><a href="session.html" style="font-size:13px;font-weight:500;text-decoration:none;padding:2px 8px;border-radius:12px;background:#D42B6A;color:#fff;">🇬🇧 EN</a></div></div>
 
 <!-- ═══════════════════════════════ KOL Studio Global Components ═══ -->
 <style>
@@ -2066,7 +2066,7 @@ function showToast(msg) {
 .kol-pwa-dismiss{background:none;border:none;color:#6A6A8A;cursor:pointer;font-size:18px;padding:4px;line-height:1;flex-shrink:0}
 </style>
 <div id="kol-cookie-banner">
-  <p>🍪 We use cookies to improve your experience. <a href="../cookie.html">Learn more</a></p>
+  <p>🍪 We use cookies to improve your experience. <a href="cookie.html">Learn more</a></p>
   <div class="kol-cookie-btns">
     <button class="kol-cb-settings" onclick="document.getElementById('kol-cookie-banner').classList.remove('show')">Settings</button>
     <button class="kol-cb-reject" onclick="kolRejectCookies()">Essential only</button>
@@ -2130,40 +2130,40 @@ function showToast(msg) {
 
 <!-- FAB -->
 <div id="kol-fab-menu">
-  <a href="../upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Загрузить</a>
-  <a href="../messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Написать</a>
-  <a href="../search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Поиск</a>
+  <a href="upload.html" class="kol-fab-item"><span class="kol-fab-icon">📤</span>Upload</a>
+  <a href="messages.html" class="kol-fab-item"><span class="kol-fab-icon">💬</span>Message</a>
+  <a href="search.html" class="kol-fab-item"><span class="kol-fab-icon">🔍</span>Search</a>
 </div>
-<button id="kol-fab" aria-label="Быстрые действия" onclick="kolToggleFab()">＋</button>
+<button id="kol-fab" aria-label="Quick actions" onclick="kolToggleFab()">＋</button>
 
 <!-- Keyboard shortcuts hint -->
-<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — горячие клавиши</div>
+<div id="kol-shortcut-hint" onclick="kolShowShortcuts()">⌨️ <span>?</span> — keyboard shortcuts</div>
 
 <!-- Keyboard shortcuts modal -->
 <div id="kol-shortcuts-modal">
   <div id="kol-shortcuts-backdrop" onclick="kolCloseShortcuts()"></div>
   <div id="kol-shortcuts-box">
-    <button id="kol-shortcuts-close" aria-label="Закрыть" onclick="kolCloseShortcuts()">✕</button>
-    <h3>⌨️ Горячие клавиши</h3>
+    <button id="kol-shortcuts-close" aria-label="Close" onclick="kolCloseShortcuts()">✕</button>
+    <h3>⌨️ Keyboard shortcuts</h3>
     <div class="kol-sc-group">
-      <h4>Навигация</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Лента</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Поиск</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Сообщения</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Уведомления</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Профиль</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Дашборд создателя</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
+      <h4>Navigation</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Feed</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">F</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Search</span><div class="kol-sc-keys"><span class="kol-key">/</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Messages</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">M</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Notifications</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Profile</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">P</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Creator dashboard</span><div class="kol-sc-keys"><span class="kol-key">G</span><span class="kol-key">D</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Действия</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Загрузить контент</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Переключить тему</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Пожаловаться</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
+      <h4>Actions</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Upload content</span><div class="kol-sc-keys"><span class="kol-key">N</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Toggle theme</span><div class="kol-sc-keys"><span class="kol-key">T</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Report</span><div class="kol-sc-keys"><span class="kol-key">Shift</span><span class="kol-key">R</span></div></div>
     </div>
     <div class="kol-sc-group">
-      <h4>Интерфейс</h4>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Эта панель</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
-      <div class="kol-sc-row"><span class="kol-sc-desc">Закрыть модальное окно</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
+      <h4>Interface</h4>
+      <div class="kol-sc-row"><span class="kol-sc-desc">This panel</span><div class="kol-sc-keys"><span class="kol-key">?</span></div></div>
+      <div class="kol-sc-row"><span class="kol-sc-desc">Close modal</span><div class="kol-sc-keys"><span class="kol-key">Esc</span></div></div>
     </div>
   </div>
 </div>
@@ -2250,7 +2250,7 @@ document.addEventListener('keydown', function(e){
       return;
     case '/':
       e.preventDefault();
-      var si = document.querySelector('input[type="search"],input[placeholder*="оиск"],#searchInput');
+      var si = document.querySelector('input[type="search"],input[placeholder*="earch"],#searchInput');
       if(si){ si.focus(); si.select(); } else { location.href='../search.html'; }
       return;
     case 'n': case 'N':

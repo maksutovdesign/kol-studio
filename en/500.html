@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -458,7 +458,7 @@ button,a,[role="button"]{min-height:36px}
 <body>
   <div class="page-wrap">
     <!-- Logo -->
-    <a href="../index.html" class="logo">
+    <a href="index.html" class="logo">
       <div class="logo-mark">
         <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 10L8.5 5.5L13 10L8.5 14.5L4 10Z" fill="white" opacity="0.9"/>
@@ -551,11 +551,11 @@ button,a,[role="button"]{min-height:36px}
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5c1.5 0 2.9.6 3.9 1.6L10 6h4V2l-1.5 1.5A7 7 0 1 0 15 8h-1.5z" fill="currentColor"/></svg>
         Обновить страницу
       </button>
-      <a href="../index.html" class="btn btn-outline">
+      <a href="index.html" class="btn btn-outline">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L1 7h2v7h4v-4h2v4h4V7h2L8 1z" fill="currentColor"/></svg>
         На главную
       </a>
-      <a href="../help.html" class="btn btn-text">Написать в поддержку →</a>
+      <a href="help.html" class="btn btn-text">Написать в поддержку →</a>
     </div>
 
     <!-- Countdown -->
@@ -567,7 +567,7 @@ button,a,[role="button"]{min-height:36px}
     </div>
 
     <!-- Status link -->
-    <a href="../status.html" class="status-link">
+    <a href="status.html" class="status-link">
       <span class="status-dot"></span>
       Проверить статус сервисов →
     </a>
@@ -628,7 +628,7 @@ button,a,[role="button"]{min-height:36px}
 /* ── Theme Toggle ── */
 #kol-theme-btn{position:fixed;top:72px;right:16px;z-index:9980;width:36px;height:36px;border-radius:50%;border:1px solid #22224A;background:#111128;color:#E8E8F0;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.4)}
 #kol-theme-btn:hover{border-color:#D42B6A;background:#181835}
-body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;background:#F5F5FA;color:#1A1A2E}
+body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--text:#1A1A2E;--text2:#4A4A6A;--text3:#8A8AAA;--text-sub:#6060A0;--text-muted:#8080A8;background:#F5F5FA;color:#1A1A2E}
 
 /* ── PWA Install Prompt ── */
 #kol-pwa-prompt{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120%);z-index:9985;background:#111128;border:1px solid #22224A;border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:360px;width:calc(100% - 32px);transition:transform 0.4s ease}
@@ -665,7 +665,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
 
 <!-- GDPR Cookie Banner -->
 <div id="kol-cookie-banner">
-  <p>🍪 Мы используем файлы cookie для улучшения работы сайта и анализа трафика. <a href="../cookie.html">Подробнее</a> · <a href="../report.html">Report</a> · <a href="../api-docs.html">API</a></p>
+  <p>🍪 We use cookies to improve your experience and analyze traffic. <a href="cookie.html">Learn more</a> · <a href="report.html">Report</a> · <a href="api-docs.html">API</a></p>
   <div class="kol-cookie-btns">
     <button class="kol-cb-settings" onclick="kolOpenCookieSettings()">Настройки</button>
     <button class="kol-cb-reject" onclick="kolRejectCookies()">Только необходимые</button>
@@ -740,7 +740,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
     }));
     kolHideBanner();
     document.getElementById('kol-cookie-modal').classList.remove('open');
-    kolShowToast('Настройки cookie сохранены ✓');
+    kolShowToast('Cookie settings saved ✓');
   };
 
   window.kolRejectCookies = function(){
@@ -749,7 +749,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
       date: new Date().toISOString(), version:'2.0'
     }));
     kolHideBanner();
-    kolShowToast('Только необходимые cookie активированы');
+    kolShowToast('Only necessary cookies activated');
   };
 
   window.kolSaveCookieSettings = function(){
@@ -762,7 +762,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
     }));
     kolHideBanner();
     document.getElementById('kol-cookie-modal').classList.remove('open');
-    kolShowToast('Настройки cookie сохранены ✓');
+    kolShowToast('Cookie settings saved ✓');
   };
 
   window.kolOpenCookieSettings = function(){
@@ -820,7 +820,7 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
       deferredPrompt.userChoice.then(function(result){
         if(result.outcome === 'accepted'){
           localStorage.setItem('kol_pwa_installed', '1');
-          kolShowToast('KOL Studio установлена! 🎉');
+          kolShowToast('KOL Studio installed! 🎉');
         }
         pwaPrompt.classList.remove('show');
         deferredPrompt = null;
@@ -888,9 +888,9 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
 </style>
 <div id="kol-fab" aria-label="Быстрые действия">
   <div id="kol-fab-menu" role="menu">
-    <button class="kol-fab-item" onclick="location.href='upload.html'" role="menuitem">📤 Загрузить</button>
+    <button class="kol-fab-item" onclick="location.href='upload.html'" role="menuitem">📤 Upload</button>
     <button class="kol-fab-item" onclick="location.href='messages.html'" role="menuitem">💬 Сообщение</button>
-    <button class="kol-fab-item" onclick="location.href='search.html'" role="menuitem">🔍 Поиск</button>
+    <button class="kol-fab-item" onclick="location.href='search.html'" role="menuitem">🔍 Search</button>
   </div>
   <button id="kol-fab-btn" onclick="window.kolToggleFab()" aria-label="Меню действий" aria-expanded="false">＋</button>
 </div>
@@ -898,8 +898,8 @@ body.kol-light{--bg:#F5F5FA;--card:#FFFFFF;--card2:#F0F0F8;--border:#E0E0F0;--te
   <div class="kol-sp-box">
     <div class="kol-sp-title">⌨️ Горячие клавиши</div>
     <div class="kol-sp-row"><span>Показать это меню</span><span class="kol-sp-key">?</span></div>
-    <div class="kol-sp-row"><span>Поиск</span><span class="kol-sp-key">/</span></div>
-    <div class="kol-sp-row"><span>Загрузить контент</span><span class="kol-sp-key">N</span></div>
+    <div class="kol-sp-row"><span>Search</span><span class="kol-sp-key">/</span></div>
+    <div class="kol-sp-row"><span>Upload content</span><span class="kol-sp-key">N</span></div>
     <div class="kol-sp-row"><span>Переключить тему</span><span class="kol-sp-key">T</span></div>
     <div class="kol-sp-row"><span>Пожаловаться</span><span class="kol-sp-key">Shift+R</span></div>
     <div class="kol-sp-row"><span>Перейти: Лента</span><span class="kol-sp-key">G F</span></div>
